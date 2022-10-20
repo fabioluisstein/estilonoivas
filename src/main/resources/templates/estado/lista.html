@@ -16,7 +16,7 @@
  <div class="container">
   <div class="row">
         <div style="text-align:right" >
-  <a class="waves-effect waves-light btn">Adicionar</a>
+  <a  href="/cadastroestado" class="waves-effect waves-light btn">Adicionar</a>
 
   </div>
       <div class="col s12 card-panel teal lighten-2"><span class="flow-text">Estados </span>
@@ -58,9 +58,9 @@
 	   <td th:text = "${estado.id}"></td>
 	   <td th:text = "${estado.sigla}"></td>
 	   <td  th:text = "${estado.nome}" ></td>
-	   <td> <a th:href="@{/editarestado/{idestado}(estado=${estado.id})}"> <i class="material-icons">edit</i></a> 
-	   <a th:href="@{/removerestado/{idestado}(estado=${estado.id})}"><i class="material-icons">delete_forever</i></a>
-	   </td>
+
+	   <td><a th:href="@{/editarestado/{idestado}(idestado=${estado.id})}"><i class="material-icons">edit</i></a> 
+	   <a th:href="@{/removerestado/{idestado}(idestado=${estado.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
 	 </table>   
