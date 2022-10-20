@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Lista de Locações</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  <a  href="/cadastrolocacao" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+
+  </div>
+      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Locações </span>
+        <br>
+      </div>
+      
+   
+  </div>
+    </div>
+    
+    <div style="position: relative">
+
+<div id="toast-container"></div>
+</div>
+
+<br>
+      <div class="container" style="border:1px">
+		<form action="pesquisarlocacao" method="post" class="col s12">
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nomepesquisa" class="active">Pesquia por Cliente </label>
+					<input name="nomepesquisa" id="nomepesquisa" class="validate">
+					
+					</div>
+						<div class="input-field col s6">
+					    <input name="dataInicio" id="datapesquisa" type="date" >
+						<label for="datapesquisaInicio" class="active">Data Inicio </label>
+						</div>
+						<div class="input-field col s6">
+					    <input name="dataFinal" id="datapesquisa" type="date" >
+						<label for="datapesquisaFim" class="active">Data Final </label>
+						</div>
+						
+			
+						
+					<div class="input-field col s12">
+					<input class="waves-effect waves-light btn grey darken-1" type="submit"
+					     onclick="M.toast({html: 'Pesquisando Locação Específica',classes: 'blue rounded'})"
+						value="Buscar">
+  <a onclick="M.toast({html: 'Pesquisando todas Locações',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listalocacoes">Lista Locações</a>	
+        
+				</div>
+				
+	
+				
+			</div>	
+			
+	
+		</form>
+	</div>
+ <br/>
+
+<div class="container col s12">
+ 
+ <table class="striped #e0e0e0 grey lighten-2 highlight col s12">
+   <thead>
+	   <tr>
+	    <th>Código</th>
+	    <th>Data Contrato</th>
+	    <th>Valor Total</th>
+	    <th>Saldo</th>
+	    <th>Cliente</th>
+	    <th>Data Retirada</th>
+	    <th>Contrato</th>
+	    <th>Excluir</th>
+	   </tr>
+	</thead>
+	
+	 <tbody>
+	  <tr th:each = "locacao : ${locacoes}">
+	   <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${locacao.id}"></a>
+	   </td>
+	   <td>
+	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_locacao, 'dd/MM/yyyy')}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(100.00), '.00', '')}"></a>
+	   </td>
+	   
+         <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(100.00), '.00', '')}"></a>
+	   </td>
+	   
+	   <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${locacao.cliente}"></a>
+	   </td>
+        <td>
+	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_retirada, 'dd/MM/yyyy')}"></a>
+	   </td>
+	   <td> Contatro </td> 
+	  <td> <a onclick="M.toast({html: 'Deletando locacao',classes: 'red rounded'})" th:href="@{/removerlocacao/{idlocacao}(idlocacao=${locacao.id})}"><i class="material-icons">delete_forever</i></a></td>
+	  </tr>
+	 </tbody>
+	 </table>   
+ </div>
+ 
+<br>
+
+</body>
+<div th:replace="fragments :: footer"/>
+</html>

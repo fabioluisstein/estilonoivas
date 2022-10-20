@@ -27,6 +27,10 @@ const instanceTooltip = M.Tooltip.init(elemsTooltip, {
 });
 
 
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+
 
 $("#valorCompra").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 $("#valorVenda").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});

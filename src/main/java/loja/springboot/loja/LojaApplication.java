@@ -26,7 +26,7 @@ public class LojaApplication {
 		SpringApplication.run(LojaApplication.class, args);
 	}
 
-	
+	 
 	 @Bean
 	    public LocaleResolver localeResolver(){
 	        return new FixedLocaleResolver(new Locale("pt", "BR"));

@@ -12,7 +12,8 @@ import loja.springboot.model.Locacao;
 @Repository
 @Transactional
 public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
-	@Query(value="select c.* from locacao c where UPPER(c.observacao) like %?1%", nativeQuery=true)
+	@Query(value="select l.* from locacao l, cliente c where l.cliente_id = c.id and "
+			+ " (  UPPER(c.nome)  like %?1% or l.id like %?1% )", nativeQuery=true)
 	List<Locacao> findLocacaoByName(String nome);
 	
 	@Query(value="Select * from locacao p  where  p.data_locacao  BETWEEN ?1 AND  ?2 ", nativeQuery=true)
@@ -21,4 +22,4 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	@Query(value="select * from locacao order by id desc limit 10", nativeQuery=true)
 	List<Locacao> top10();
 }
- 
+  

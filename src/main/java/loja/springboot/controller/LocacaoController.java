@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,12 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import loja.springboot.model.Locacao;
-import loja.springboot.model.Pagamento;
-import loja.springboot.repository.CategoriaRepository;
+import loja.springboot.model.Parcela;
 import loja.springboot.repository.ClienteRepository;
-import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.LocacaoRepository;
-import loja.springboot.repository.PagamentoRepository;
+import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.PessoaRepository;
 
 @Controller
@@ -39,6 +35,9 @@ public class LocacaoController {
 	
 	@Autowired
 	private LocacaoRepository locacaoRepository;
+	
+	@Autowired
+	private ParcelaRepository parcelaRepository;
  
 	@Cacheable("locacoes") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
@@ -68,9 +67,9 @@ public class LocacaoController {
 	
 	@Cacheable("locacoes")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
-	public ModelAndView cadastro(Pagamento locacao) {
+	public ModelAndView cadastro(Locacao locacao) {
 		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
-		modelAndView.addObject("locacaobj", new Pagamento());
+		modelAndView.addObject("locacaobj", new Locacao());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
 		return modelAndView;
@@ -95,9 +94,23 @@ public class LocacaoController {
 		andView.addObject("locacaobj",locacao);
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("clientes", clienteRepository.findAll());
-		
+		andView.addObject("parcelas", parcelaRepository.findLocacaoById(idlocacao));
 		return andView;
 	}
+	
+	
+	@GetMapping("/editarparcela/{idparcela}")
+	public ModelAndView editarParcela(@PathVariable("idparcela") Long idparcela)  {
+		Optional<Parcela> parcela = parcelaRepository.findById(idparcela);
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		andView.addObject("locacaobj",parcela.get().getLocacao());
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("parcelas", parcelaRepository.findLocacaoById(parcela.get().getLocacao().getId()));
+		return andView;
+	}
+	
+	
 	
 	
 	@GetMapping("/removerlocacao/{idlocacao}")
@@ -107,5 +120,19 @@ public class LocacaoController {
 		andView.addObject("locacoes", locacaoRepository.top10());
 		return andView;
 	}
+	
+	
+	@GetMapping("/removerparcela/{idparcela}")
+	public ModelAndView excluirParcela(@PathVariable("idparcela") Long idparcela) {
+		parcelaRepository.deleteById(idparcela);	
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		Optional<Parcela> parcela = parcelaRepository.findById(idparcela);
+		andView.addObject("locacaobj",parcela.get().getLocacao());
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("parcelas", parcelaRepository.findLocacaoById(parcela.get().getLocacao().getId()));
+		return andView;
+	}
+	
 	
 }

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Cadastro Locação</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  </div>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Locação </span>
+        <br>
+      </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+ 
+   <div class="row" >
+   <form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}" enctype="multipart/form-data" >
+      <div class="row">
+      
+    <div class="input-field col s12">
+      <label for="id" class="active">ID</label> 
+      <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+    </div>
+      
+       <div class="input-field col s6">
+    <label for="categoria" class="active">Atendente</label> 
+    <br>
+    <select th:field="*{colaborador}" class="browser-default" required>
+    <option th:each="cid: ${colaboradores}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>  
+      
+      <div class="input-field col s6">
+    <label for="Cliente" class="active">Cliente</label> 
+    <br>
+    <select th:field="*{cliente}" class="browser-default" required>
+    <option th:each="cid: ${clientes}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>
+     
+    <div class="col s12">
+      <label for="observacao" class="active">Observações</label> 
+      <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
+    </div>
+    
+
+     
+    <div class="col s6">
+      <label for="pickdate" class="active">Data Evento</label> 
+      <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  >
+    </div>
+      
+
+     <div class="col s6">
+      <label for="pickdate" class="active">Data Devolução</label> 
+      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  >
+    </div>
+      
+    <div class="col s6">
+      <label for="pickdate" class="active">Data Locação</label> 
+      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  >
+    </div>
+      
+     
+     
+    <div class="col s6">
+      <label for="pickdate" class="active">Data Retirada</label> 
+      <input type="text" class="datepicker" th:field="*{data_retirada}"  name="data_retirada"  >
+    </div>
+      
+   <div class="col s12">
+   <br>
+    <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listalocacoes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+   
+    </div>
+  
+
+     </div>    
+    </form>
+  </div>
+  
+  
+    <div class="col s12">
+   <ul class="collapsible">
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">payments</i>
+      Plano de Pagamento
+      
+      <span class="new badge">4.</span></div>
+    
+    <div class="collapsible-body col s6">
+   
+   <table class="striped #e0e0e0 grey lighten-2 highlight">
+   <thead>
+	   <tr>
+	    
+	    <th>Vencimento</th>
+	    <th>Pagamento</th>
+	    <th>Valor Total</th>
+	    <th>Excluir</th>
+	   </tr>
+	</thead>
+	
+	 <tbody>
+	  <tr th:each = "parcela : ${parcelas}">
+	   
+	   <td>
+	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
+	   </td>
+	      
+	   <td>
+	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
+	   </td>
+	   
+      
+	  <td> <a onclick="M.toast({html: 'Deletando parcela',classes: 'red rounded'})" th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}"><i class="material-icons">delete_forever</i></a></td>
+	  </tr>
+	 </tbody>
+	 </table> 
+   
+    </div>
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">shopping_cart</i>
+      Produtos
+
+      <span class="badge">1</span></div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul>
+ </div>
+  
+    </div>
+
+
+<div th:replace="fragments :: footer"/>
+</body>
+</html>
