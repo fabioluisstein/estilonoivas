@@ -26,7 +26,7 @@ public class EstadoController {
 		andView.addObject("estados", estadoRepository.findAll());
 		return andView;
 	}
-	
+	 
 	
 	@PostMapping("/pesquisarestado")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
