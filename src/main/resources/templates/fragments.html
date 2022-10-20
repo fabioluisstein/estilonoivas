@@ -10,20 +10,16 @@
  <!--Import materialize.css-->
  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 
-
  <!--JavaScript at end of body for optimized loading-->
  <script type="text/javascript" src="/materialize/js/materialize.js"></script>
       
-
 </head> 
-
-<body>
-
-<div th:fragment="menu">
+ <body>
+ <div th:fragment="menu">
         <nav>
-            <div class="nav-wrapper deep-purple darken-2">
+            <div class="nav-wrapper cyan darken-2">
                 <!-- Logo -->
-                <a href="#" class="brand-logo">Logo</a>
+                <a href="/" class="brand-logo">Fibonatti</a>
 
                 <!-- Ícone para abrir no Mobile -->
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
@@ -32,26 +28,23 @@
 
                 <ul id="navbar-items" class="right hide-on-med-and-down">
                     <li><a href="/cadastropessoa">Cliente</a></li>
-                    <li><a href="/listaestados">Estados</a></li> 
                     <li><a href="#">Sobre</a></li>
                     <li>
                         <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
-                            Cadastro <i class="material-icons right">arrow_drop_down</i>
+                            Localização <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
                 </ul>
 
                 <!-- Dropdown -->
                 <ul id="dropdown-menu" class="dropdown-content">
-                    <li><a href="#">Telefone</a></li>
-                    <li><a href="#">E-mail</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Redes sociais</a></li>
+                    <li><a href="/listaestados">Estado</a></li>
+                    <li><a href="#">Cidade</a></li>
+                    <!-- Logo  <li class="divider"></li> -->
                 </ul>
             </div>
         </nav>
         
-
     <!-- Menu Mobile -->
     <ul id="mobile-navbar" class="sidenav">
         <li><a href="/">Início</a></li>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import loja.springboot.model.Estado;
-import loja.springboot.model.Pessoa;
 import loja.springboot.repository.EstadoRepository;
 
 @Controller
@@ -27,7 +26,7 @@ public class EstadoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listaestados")
 	public ModelAndView estados() {
 		ModelAndView andView = new ModelAndView("estado/lista");
-		andView.addObject("estados", estadoRepository.findAll());
+		andView.addObject("estados", estadoRepository.top10());
 		return andView;
 	}
 	 
@@ -42,8 +41,6 @@ public class EstadoController {
 		return modelAndView;
 	}
 
-	
-	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroestado")
 	public ModelAndView cadastro(Estado estado) {
 		ModelAndView modelAndView = new ModelAndView("estado/cadastroestado");
@@ -51,22 +48,19 @@ public class EstadoController {
 		return modelAndView;
 	}
 	
-	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarestado")
 	public ModelAndView salvar(Estado estado) {
 		ModelAndView andView = new ModelAndView("estado/cadastroestado");
 		andView.addObject("estadobj",estadoRepository.saveAndFlush(estado));
 		return andView;
-
 	}
 	
-	
+
 	@GetMapping("/editarestado/{idestado}")
 	public ModelAndView editar(@PathVariable("idestado") Long idestado) {
 		Optional<Estado> estado = estadoRepository.findById(idestado);
 		return salvar(estado.get());
 	}
-	
 	
 	@GetMapping("/removerestado/{idestado}")
 	public ModelAndView excluir(@PathVariable("idestado") Long idestado) {
@@ -76,8 +70,5 @@ public class EstadoController {
 		return andView;
 		
 	}
-	
-	
-	
 	
 }
