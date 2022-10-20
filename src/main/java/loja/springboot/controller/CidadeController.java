@@ -3,6 +3,8 @@ package loja.springboot.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ public class CidadeController {
 	@Autowired
 	private EstadoRepository estadoRepository;
  
-
+	@Cacheable("cidades") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listacidades")
 	public ModelAndView cidades() {
 		ModelAndView andView = new ModelAndView("cidade/lista");
@@ -43,6 +45,7 @@ public class CidadeController {
 		return modelAndView;
 	}
 
+	@Cacheable("estatos") 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocidade")
 	public ModelAndView cadastro(Cidade cidade) {
 		ModelAndView modelAndView = new ModelAndView("cidade/cadastrocidade");
@@ -51,6 +54,7 @@ public class CidadeController {
 		return modelAndView;
 	}
 	
+	@CacheEvict(value="cidades",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public ModelAndView salvar(Cidade cidade) {
 		ModelAndView andView = new ModelAndView("cidade/cadastrocidade");
@@ -58,7 +62,7 @@ public class CidadeController {
 		andView.addObject("cidadebj",cidadeRepository.saveAndFlush(cidade));
 		return andView;
 	}
-	
+	 
 	@GetMapping("/editarcidade/{idcidade}")
 	public ModelAndView editar(@PathVariable("idcidade") Long idcidade) {
 		Optional<Cidade> cidade = cidadeRepository.findById(idcidade);

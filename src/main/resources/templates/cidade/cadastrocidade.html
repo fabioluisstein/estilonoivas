@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF8">
-<title>Cadastro Estado</title>
+<title>Cadastro Cidade</title>
 
 
 <head th:replace="fragments :: html_head"/>
@@ -17,7 +17,7 @@
   <div class="row">
         <div style="text-align:right" >
   </div>
-      <div class="col s12 card-panel teal lighten-2"><span class="flow-text">Cadastro de Cidade </span>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Cidade </span>
         <br>
       </div>
     </div>
@@ -51,16 +51,14 @@
     </div>
         <br>
    
-       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listacidades" class="waves-effect waves-light btn">Voltar</a>
-       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn" type="submit" value="Salvar">
-          </div> 
+       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listacidades" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+        
     </form>
   </div>
- 
 
- 
- 
  </div>
 
+<div th:replace="fragments :: footer"/>
 </body>
 </html>

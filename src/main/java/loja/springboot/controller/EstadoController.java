@@ -3,6 +3,8 @@ package loja.springboot.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,7 @@ public class EstadoController {
 	@Autowired
 	private EstadoRepository estadoRepository;
  
-
+    @Cacheable("estados") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaestados")
 	public ModelAndView estados() {
 		ModelAndView andView = new ModelAndView("estado/lista");
@@ -48,14 +50,14 @@ public class EstadoController {
 		return modelAndView;
 	}
 	
+	@CacheEvict(value="estados",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarestado")
-	public ModelAndView salvar(Estado estado) {
+	public ModelAndView salvar(Estado estado) { 
 		ModelAndView andView = new ModelAndView("estado/cadastroestado");
 		andView.addObject("estadobj",estadoRepository.saveAndFlush(estado));
 		return andView;
 	}
 	
-
 	@GetMapping("/editarestado/{idestado}")
 	public ModelAndView editar(@PathVariable("idestado") Long idestado) {
 		Optional<Estado> estado = estadoRepository.findById(idestado);

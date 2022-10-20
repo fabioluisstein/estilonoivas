@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.cache.annotation.Cacheable;
+
 @Entity
+@Cacheable
 @Table(name="cidade")
 public class Cidade implements Serializable {
 

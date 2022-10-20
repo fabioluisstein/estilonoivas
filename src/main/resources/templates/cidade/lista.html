@@ -7,6 +7,7 @@
 
 <head th:replace="fragments :: html_head"/>
 
+
 <body>
 
 <div th:replace="fragments :: menu"/>
@@ -16,10 +17,10 @@
  <div class="container">
   <div class="row">
         <div style="text-align:right" >
-  <a  href="/cadastrocidade" class="waves-effect waves-light btn">Adicionar</a>
+  <a  href="/cadastrocidade" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
 
   </div>
-      <div class="col s12 card-panel teal lighten-2"><span class="flow-text">Cidades </span>
+      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Cidades </span>
   
         <br>
       </div>
@@ -27,6 +28,11 @@
    
   </div>
     </div>
+    
+    <div style="position: relative">
+
+<div id="toast-container"></div>
+</div>
 
 <br>
       <div class="container" style="border:1px">
@@ -35,15 +41,11 @@
 				<div class="input-field col s12">
 					<label for="nomepesquisa" class="active">Pesquia por Nome</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
-					<input class="waves-effect waves-light btn" type="submit"
+					<input class="waves-effect waves-light btn grey darken-1" type="submit"
+					     onclick="M.toast({html: 'Pesquisando Cidade Específica',classes: 'blue rounded'})"
 						value="Buscar">
-						
-
-  
-  <a class="waves-effect waves-light btn indeterminate" href="/listacidades">Lista Cidades</a>	
+  <a onclick="M.toast({html: 'Pesquisando todas Cidades',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listacidades">Lista Cidades</a>	
         
-        
-					
 				</div>
 			</div>			
 		</form>
@@ -52,13 +54,14 @@
 
 <div class="container">
  
- <table class="striped card-panel green lighten-3" border="1">
+ <table class="striped #e0e0e0 grey lighten-2" border="1">
    <thead>
 	   <tr>
 	    <th>Id</th>
 	    <th>Nome</th>
 	    <th>Estado</th>
-	    <th>Operação</th>
+	    <th>Editar</th>
+	    <th>Excluir</th>
 	   </tr>
 	</thead>
 	
@@ -68,12 +71,15 @@
 	   <td th:text = "${cidade.nome}"></td>
 	   <td  th:text = "${cidade.estado}" ></td>
 
-	   <td><a onclick="M.toast({html: 'Editando Registro',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">edit</i></a> 
-	   <a th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
+	   <td><a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons"><i class="material-icons">edit</i></i></a> 
+	  </td>
+	  <td> <a onclick="M.toast({html: 'Deletando Cidade',classes: 'red rounded'})" th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
 	 </table>   
  </div>
-
+ 
+<br>
+<div th:replace="fragments :: footer"/>
 </body>
 </html>

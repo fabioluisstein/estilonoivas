@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Cadastro Cliente</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  </div>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Cliente </span>
+        <br>
+      </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+ 
+   <div class="row" >
+   <form action="/salvarcliente" id="formcliente" method="post" th:object="${clientebj}" >
+      <div class="row">
+      
+       <div class="input-field col s12">
+           <label for="id" class="active">ID</label> 
+          	<input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+        </div>
+        
+      
+    <div class="input-field col s12">
+      <label for="nome" class="active">Nome</label> 
+      <input name="nome" th:field="*{nome}" id="nome" class="validate" required>
+    </div>
+
+       
+
+   
+      <div class="col s6">    
+      <label for="telefone" class="active">Telefone</label> 
+      <input name="nome" th:field="*{telefone}" id="telefone" class="validate" required>
+      </div>
+    
+      <div class="col s6"> 
+      <label for="email" class="active">E-mail</label> 
+      <input name="email" th:field="*{email}" type="email" id="email" class="validate" >
+      </div>
+  
+     
+     
+   
+      <div class="col s6">     
+      <label for="cpf" class="active">CPF</label> 
+      <input name="cpf" th:field="*{cpf}" id="cpf" class="validate" >
+      </div>
+      
+      <div class="col s6"> <label for="rg" class="active">RG</label> 
+       <input name="rg" th:field="*{rg}" id="rg" class="validate" >
+      </div>
+
+         
+   <div class="input-field col s12">
+    <label for="estado" class="active">Cidade</label> 
+    <br>
+    <select th:field="*{cidade}" class="browser-default" required>
+    <option th:each="cid: ${cidades}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>
+    
+        <div class="input-field col s12">
+      <label for="bairro" class="active">Bairro</label> 
+      <input name="bairro" th:field="*{bairro}" id="bairro" class="validate" >
+    </div>
+              
+    
+    <div class="input-field col s12">
+      <label for="bairro" class="active">Loggradouro</label> 
+      <input name="logradouro" th:field="*{logradouro}" id="logradouro" class="validate" >
+    </div>
+    
+        <br>
+   
+       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listaclientes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+        
+    </form>
+  </div>
+
+ </div>
+
+<div th:replace="fragments :: footer"/>
+</body>
+</html>

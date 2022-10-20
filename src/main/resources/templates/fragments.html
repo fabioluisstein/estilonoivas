@@ -2,30 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="html_head">
 <meta charset="UTF8">
-<title>Menu</title>
-
+<title>Fibonatti Termos & Costumes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <!DOCTYPE html>
+ <html lang="pt">
+<head>
 
  <!--Import Google Icon Font-->
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
  <!--Import materialize.css-->
  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
-
+ 
  <!--JavaScript at end of body for optimized loading-->
  <script type="text/javascript" src="/materialize/js/materialize.js"></script>
-      
+ 
+ 
 </head> 
  <body>
- <div th:fragment="menu">
+  <div th:fragment="menu">
         <nav>
-            <div class="nav-wrapper cyan darken-2">
+            <div class="nav-wrapper grey darken-2">
                 <!-- Logo -->
                 <a href="/" class="brand-logo">Fibonatti</a>
-
                 <!-- Ícone para abrir no Mobile -->
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
-
                 <ul id="navbar-items" class="right hide-on-med-and-down">
                     <li><a href="/cadastropessoa">Cliente</a></li>
                     <li><a href="#">Sobre</a></li>
@@ -34,14 +37,28 @@
                             Localização <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
+                    
+                              <li>
+                        <a class="dropdown-trigger" data-target="dropdown-menu1" href="#">
+                            Cliente/Forncedor <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                    
                 </ul>
-
                 <!-- Dropdown -->
                 <ul id="dropdown-menu" class="dropdown-content">
                     <li><a href="/listaestados">Estado</a></li>
                     <li><a href="/listacidades">Cidade</a></li>
                     <!-- Logo  <li class="divider"></li> -->
                 </ul>
+                
+                          <!-- Dropdown -->
+                <ul id="dropdown-menu1" class="dropdown-content">
+                    <li><a href="/listaclientes">Cliente</a></li>
+                    <li><a href="/listafornecedores">Fornecedor</a></li>
+                    <!-- Logo  <li class="divider"></li> -->
+                </ul>
+                
             </div>
         </nav>
         
@@ -50,34 +67,56 @@
         <li><a href="/">Início</a></li>
         <li><a href="#">Sobre</a></li>
         <li> <a class="dropdown-trigger" data-target="dropdown-menu2" href="#">
-             Cadastro <i class="material-icons right">arrow_drop_down</i>
+             Localização <i class="material-icons right">arrow_drop_down</i>
+             </a>
+         </li>
+            <li> <a class="dropdown-trigger" data-target="dropdown-menu3" href="#">
+             Cliente/Forncedor <i class="material-icons right">arrow_drop_down</i>
              </a>
          </li>
     </ul>
             
-               <!-- Dropdown -->
-                <ul id="dropdown-menu2" class="dropdown-content">
-                    <li><a href="/cadastropessoa">Cliente</a></li>
-                    <li><a href="/listaestados">Estados</a></li> 
-                    <li><a href="#">E-mail</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Redes sociais</a></li>
-                </ul> 
-
-
- <!--JavaScript at end of body for optimized loading-->
- <script type="text/javascript" src="/materialize/main.js"></script>
- 
-
-   
-
- 
+    <!-- Dropdown -->
+      <ul id="dropdown-menu2" class="dropdown-content">
+           <li><a href="/listaestados">Estados</a></li> 
+           <li><a href="/listacidades">Cidades</a></li>
+     
+      </ul> 
+      
+          <!-- Dropdown -->
+      <ul id="dropdown-menu3" class="dropdown-content">
+           <li><a href="/listaclientes">Clientes</a></li> 
+           <li><a href="/listaclientes">Fornecedores</a></li>
+     
+      </ul> 
+      
  </div>
-
-
 
 </body>
 
 
+ <div th:fragment="footer">
+ 
+ <footer class="page-footer grey darken-2">
+    <div class="container">
+      <div class="row">
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Fibonatti <a class="brown-text text-lighten-3" href="/">Ternos & Costumes</a>
+      </div>
+    </div>
+  </footer>
 
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+ <!--JavaScript at end of body for optimized loading-->
+ <script type="text/javascript" src="/materialize/main.js"></script>
+ 
+ </div>
+ 
 </html>
