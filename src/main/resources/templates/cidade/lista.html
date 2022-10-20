@@ -16,25 +16,34 @@
  <div class="container">
   <div class="row">
         <div style="text-align:right" >
-  <a  href="/cadastroestado" class="waves-effect waves-light btn">Adicionar</a>
+  <a  href="/cadastrocidade" class="waves-effect waves-light btn">Adicionar</a>
 
   </div>
-      <div class="col s12 card-panel teal lighten-2"><span class="flow-text">Estados </span>
+      <div class="col s12 card-panel teal lighten-2"><span class="flow-text">Cidades </span>
   
         <br>
       </div>
+      
+   
+  </div>
     </div>
-</div>
+
 <br>
       <div class="container" style="border:1px">
-		<form action="pesquisarestado" method="post" class="col s12">
+		<form action="pesquisarcidade" method="post" class="col s12">
 			<div class="row">
 				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Nome ou Sigla</label>
+					<label for="nomepesquisa" class="active">Pesquia por Nome</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
 					<input class="waves-effect waves-light btn" type="submit"
 						value="Buscar">
-					<a class="waves-effect waves-light btn" href="/listaestados">Lista Estados</a>	
+						
+
+  
+  <a class="waves-effect waves-light btn indeterminate" href="/listacidades">Lista Cidades</a>	
+        
+        
+					
 				</div>
 			</div>			
 		</form>
@@ -47,20 +56,20 @@
    <thead>
 	   <tr>
 	    <th>Id</th>
-	    <th>Sigla</th>
 	    <th>Nome</th>
+	    <th>Estado</th>
 	    <th>Operação</th>
 	   </tr>
 	</thead>
 	
 	 <tbody>
-	  <tr th:each = "estado : ${estados}">
-	   <td th:text = "${estado.id}"></td>
-	   <td th:text = "${estado.sigla}"></td>
-	   <td  th:text = "${estado.nome}" ></td>
+	  <tr th:each = "cidade : ${cidades}">
+	   <td th:text = "${cidade.id}"></td>
+	   <td th:text = "${cidade.nome}"></td>
+	   <td  th:text = "${cidade.estado}" ></td>
 
-	   <td><a th:href="@{/editarestado/{idestado}(idestado=${estado.id})}"><i class="material-icons">edit</i></a> 
-	   <a th:href="@{/removerestado/{idestado}(idestado=${estado.id})}"><i class="material-icons">delete_forever</i></a></td>
+	   <td><a onclick="M.toast({html: 'Editando Registro',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">edit</i></a> 
+	   <a th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
 	 </table>   
