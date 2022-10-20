@@ -29,7 +29,13 @@
                 </a>
                 <ul id="navbar-items" class="right hide-on-med-and-down">
                     <li><a href="/cadastropessoa">Cliente</a></li>
-                    <li><a href="/listaprodutos">Produto</a></li>
+                 
+                    
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdown-menu5" href="#">
+                            Pagamento/Produto <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
                     <li>
                         <a class="dropdown-trigger" data-target="dropdown-menu1" href="#">
                             Cliente/Forncedor <i class="material-icons right">arrow_drop_down</i>
@@ -54,13 +60,24 @@
                     <li><a href="/listafornecedores">Fornecedor</a></li>
                     <!-- Logo  <li class="divider"></li> -->
                 </ul>
+                
+                <!-- Dropdown -->
+                <ul id="dropdown-menu5" class="dropdown-content">
+                    <li><a href="/listapagamentos">Pagamento</a></li>
+                    <li><a href="/listaprodutos">Cliente</a></li>
+                 
+                </ul>
+                
             </div>
         </nav>
         
     <!-- Menu Mobile -->
     <ul id="mobile-navbar" class="sidenav">
         <li><a href="/">Início</a></li>
-       <li><a href="/listaprodutos">Produto</a></li>
+     <li> <a class="dropdown-trigger" data-target="dropdown-menu4" href="#">
+             Pagamento/Cliente <i class="material-icons right">arrow_drop_down</i>
+             </a>
+         </li>
         <li> <a class="dropdown-trigger" data-target="dropdown-menu2" href="#">
              Localização <i class="material-icons right">arrow_drop_down</i>
              </a>
@@ -81,6 +98,12 @@
       <ul id="dropdown-menu3" class="dropdown-content">
            <li><a href="/listaclientes">Clientes</a></li> 
            <li><a href="/listafornecedores">Fornecedores</a></li>
+     </ul>  
+     
+           <!-- Dropdown -->
+      <ul id="dropdown-menu4" class="dropdown-content">
+           <li><a href="/listapagamentos">Pagamento</a></li> 
+           <li><a href="/listaprodutos">Produtos</a></li>
      </ul>  
  </div>
 

@@ -30,6 +30,7 @@ const instanceTooltip = M.Tooltip.init(elemsTooltip, {
 
 $("#valorCompra").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 $("#valorVenda").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+$("#valor").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 
 const formatter = new Intl.NumberFormat('pt-BR', {
     currency : 'BRL',
@@ -38,9 +39,14 @@ const formatter = new Intl.NumberFormat('pt-BR', {
 $("#valorCompra").val(formatter.format($("#valorCompra").val()));
 $("#valorCompra").focus();
 $("#valorCompra").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+
 $("#valorVenda").val(formatter.format($("#valorVenda").val()));
 $("#valorVenda").focus();
 $("#valorVenda").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+
+$("#valor").val(formatter.format($("#valor").val()));
+$("#valor").focus();
+$("#valor").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 
 
 $(document).ready(function(){	

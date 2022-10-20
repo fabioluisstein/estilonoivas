@@ -18,9 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Cacheable
-@Table(name="produto")
-public class Produto implements Serializable {
-
+@Table(name="pagamento")
+public class Pagamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -28,20 +27,18 @@ public class Produto implements Serializable {
 	private Long id;
 
 	private String descricao;
-	private Double valorCompra;
-	private Double valorVenda;
-
-	private String cor;  
-	private String tamanho;
+	private Double valor;
+	
+	private String origem;  
+	
+	private String restrito;  
+	
+	private String moeda;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	private Date data_compra;
+	private Date data;
 		
-	private Integer quantidade_acesso;
-	
-
-	private Integer quantidadeEstoque;
 	private String nomeArquivo;
 	
 	private String tipoArquivo;
@@ -54,7 +51,6 @@ public class Produto implements Serializable {
 	@ManyToOne
 	private Fornecedor fornecedor;
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -87,12 +83,44 @@ public class Produto implements Serializable {
 		this.arquivo = arquivo;
 	}
 
-	public Integer getQuantidadeEstoque() {
-		return quantidadeEstoque;
+	public Double getValor() {
+		return valor;
 	}
 
-	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public String getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+
+	public String getRestrito() {
+		return restrito;
+	}
+
+	public void setRestrito(String restrito) {
+		this.restrito = restrito;
+	}
+
+	public String getMoeda() {
+		return moeda;
+	}
+
+	public void setMoeda(String moeda) {
+		this.moeda = moeda;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public String getDescricao() {
@@ -101,59 +129,6 @@ public class Produto implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-
-	public Double getValorCompra() {
-		return valorCompra;
-	}
-
-	public void setValorCompra(Double valorCompra) {
-		this.valorCompra = valorCompra;
-	}
-
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
-
-	public Double getValorVenda() {
-		return valorVenda;
-	}
-
-	public void setValorVenda(Double valorVenda) {
-		this.valorVenda = valorVenda;
-	}
-
-	public String getCor() {
-		return cor;
-	}
-
-	public void setCor(String cor) {
-		this.cor = cor;
-	}
-
-	public String getTamanho() {
-		return tamanho;
-	}
-
-	public void setTamanho(String tamanho) {
-		this.tamanho = tamanho;
-	}
-
-	public Date getData_compra() {
-		return data_compra;
-	}
-
-	public void setData_compra(Date data_compra) {
-		this.data_compra = data_compra;
-	}
-
-	public Integer getQuantidade_acesso() {
-		return quantidade_acesso;
-	}
-
-	public void setQuantidade_acesso(Integer quantidade_acesso) {
-		this.quantidade_acesso = quantidade_acesso;
 	}
 
 	public Categoria getCategoria() {

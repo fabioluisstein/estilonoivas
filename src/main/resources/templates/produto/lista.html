@@ -38,7 +38,7 @@
 		<form action="pesquisarproduto" method="post" class="col s12">
 			<div class="row">
 				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Código,  descrição ou produto </label>
+					<label for="nomepesquisa" class="active">Pesquia por Código,  ou Fornecedor </label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
 					<input class="waves-effect waves-light btn grey darken-1" type="submit"
 					     onclick="M.toast({html: 'Pesquisando produto Específica',classes: 'blue rounded'})"
@@ -53,13 +53,15 @@
 
 <div class="container col s12">
  
- <table class="striped #e0e0e0 grey lighten-2 highlight" border="1">
+ <table class="striped #e0e0e0 grey lighten-2 highlight col s12">
    <thead>
 	   <tr>
 	    <th>Id</th>
 	    <th>Fornecedor</th>
 	    <th>Tipo</th>
 	    <th>Data Compra</th>
+	    <th>Valor</th>
+	    <th>Foto</th>
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
@@ -78,6 +80,10 @@
        <td>
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#dates.format(produto.data_compra, 'dd/MM/yyyy')}"></a>
 	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produto.valorCompra), '.00', '')}"></a>
+	   </td>
+	   <td><a th:if="${produto.arquivo !=null}"  th:href="@{/baixarArquivo/{idproduto}(idproduto=${produto.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
 	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removerproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>

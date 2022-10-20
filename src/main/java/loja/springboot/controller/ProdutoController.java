@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,7 +51,7 @@ public class ProdutoController {
 		if(nomepesquisa.isEmpty()) {
 			modelAndView.addObject("produtos", produtoRepository.top10());
 		}
-		modelAndView.addObject("produtos", fornecedorRepository.findFornecedorByName(nomepesquisa.toUpperCase()));
+		modelAndView.addObject("produtos", produtoRepository.findProdutoByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
 	}
 
@@ -59,7 +61,7 @@ public class ProdutoController {
 		ModelAndView modelAndView = new ModelAndView("produto/cadastroproduto");
 		modelAndView.addObject("produtobj", new Produto());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
-		modelAndView.addObject("categorias", categoriaRepository.findAll());
+		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
 		return modelAndView;
 	}
 	
@@ -68,23 +70,32 @@ public class ProdutoController {
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {	
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findAll());
+		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
 		
 		if(produto.getId()==null) {
 			if(file.getSize()>0) {
-				produto.setImagem(file.getBytes());	  
+				produto.setArquivo(file.getBytes());	  
+				produto.setTipoArquivo(file.getContentType());	
+				produto.setNomeArquivo(file.getOriginalFilename());	  
+				
 		    }  
 			andView.addObject("produtobj",produtoRepository.saveAndFlush(produto));
+			return andView;
 		}
 		
 		if (produto.getId() != null) {
 			Optional<Produto> pdt = produtoRepository.findById(produto.getId());
 			if (file.getSize() > 0) {
-				produto.setImagem(file.getBytes());
+				produto.setArquivo(file.getBytes());
+				produto.setTipoArquivo(file.getContentType());	
+				produto.setNomeArquivo(file.getOriginalFilename());	 
 			}
 
-			if (pdt.get().getImagem() != null) {
-				produto.setImagem(pdt.get().getImagem());
+			if (pdt.get().getArquivo() != null && file.getSize()==0) {
+				produto.setArquivo(pdt.get().getArquivo());
+				produto.setTipoArquivo(pdt.get().getTipoArquivo());	
+				produto.setNomeArquivo(pdt.get().getNomeArquivo());	 
+				
 			}
 
 			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
@@ -102,6 +113,34 @@ public class ProdutoController {
 	
 	}
 	
+
+	@GetMapping("/baixarArquivo/{idproduto}")
+	public void baixarArquivo(@PathVariable("idproduto") Long idproduto, 
+			HttpServletResponse response) throws IOException {
+		
+		/*Consultar o obejto pessoa no banco de dados*/
+		Produto produto = produtoRepository.findById(idproduto).get();
+		if (produto.getArquivo() != null) {
+	
+			/*Setar tamanho da resposta*/
+			response.setContentLength(produto.getArquivo().length);
+			
+			/*Tipo do arquivo para download ou pode ser generica application/octet-stream*/
+			response.setContentType(produto.getTipoArquivo());
+			
+			/*Define o cabeçalho da resposta*/
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", produto.getNomeArquivo());
+			response.setHeader(headerKey, headerValue);
+			
+			/*Finaliza a resposta passando o arquivo*/
+			response.getOutputStream().write(produto.getArquivo());
+			
+		}
+		
+	} 
+	
+	
 	
  
 	@GetMapping("/editarproduto/{idproduto}")
@@ -110,7 +149,7 @@ public class ProdutoController {
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
 		andView.addObject("produtobj",produto);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findAll());
+		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
 		
 		return andView;
 	}
