@@ -33,17 +33,15 @@
                     <li><a href="/cadastropessoa">Cliente</a></li>
                     <li><a href="#">Sobre</a></li>
                     <li>
-                        <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
-                            Localização <i class="material-icons right">arrow_drop_down</i>
-                        </a>
-                    </li>
-                    
-                              <li>
                         <a class="dropdown-trigger" data-target="dropdown-menu1" href="#">
                             Cliente/Forncedor <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
-                    
+                    <li>
+                        <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
+                            Localização <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
                 </ul>
                 <!-- Dropdown -->
                 <ul id="dropdown-menu" class="dropdown-content">
@@ -52,13 +50,12 @@
                     <!-- Logo  <li class="divider"></li> -->
                 </ul>
                 
-                          <!-- Dropdown -->
+                <!-- Dropdown -->
                 <ul id="dropdown-menu1" class="dropdown-content">
                     <li><a href="/listaclientes">Cliente</a></li>
                     <li><a href="/listafornecedores">Fornecedor</a></li>
                     <!-- Logo  <li class="divider"></li> -->
                 </ul>
-                
             </div>
         </nav>
         
@@ -80,20 +77,16 @@
       <ul id="dropdown-menu2" class="dropdown-content">
            <li><a href="/listaestados">Estados</a></li> 
            <li><a href="/listacidades">Cidades</a></li>
-     
       </ul> 
       
-          <!-- Dropdown -->
+      <!-- Dropdown -->
       <ul id="dropdown-menu3" class="dropdown-content">
            <li><a href="/listaclientes">Clientes</a></li> 
-           <li><a href="/listaclientes">Fornecedores</a></li>
-     
-      </ul> 
-      
+           <li><a href="/listafornecedores">Fornecedores</a></li>
+     </ul>  
  </div>
 
 </body>
-
 
  <div th:fragment="footer">
  
@@ -112,8 +105,7 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
-
+ 
  <!--JavaScript at end of body for optimized loading-->
  <script type="text/javascript" src="/materialize/main.js"></script>
  

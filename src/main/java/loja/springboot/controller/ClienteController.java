@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import loja.springboot.model.Cidade;
 import loja.springboot.model.Cliente;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
@@ -50,7 +49,7 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocliente")
 	public ModelAndView cadastro(Cliente cliente) {
 		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
-		modelAndView.addObject("clientebj", new Cidade());
+		modelAndView.addObject("clientebj", new Cliente());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
 		return modelAndView;
 	}

@@ -60,18 +60,21 @@
 	    <th>Id</th>
 	    <th>Nome</th>
 	    <th>Estado</th>
-	    <th>Editar</th>
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
 	
 	 <tbody>
 	  <tr th:each = "cidade : ${cidades}">
-	   <td th:text = "${cidade.id}"></td>
-	   <td th:text = "${cidade.nome}"></td>
-	   <td  th:text = "${cidade.estado}" ></td>
-
-	   <td><a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons"><i class="material-icons">edit</i></i></a> 
+	   
+	  <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.id}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.nome}"></a>
+	   </td>
+	  <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.estado}"></a>
 	  </td>
 	  <td> <a onclick="M.toast({html: 'Deletando Cidade',classes: 'red rounded'})" th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
