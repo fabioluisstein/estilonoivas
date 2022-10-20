@@ -75,21 +75,18 @@
       <input name="tamanho" th:field="*{tamanho}" type="text" id="tamanho" class="validate" >
       </div>
       
-<label for="dinheiro">R$</label><input type="text" id="dinheiro" name="dinheiro" class="dinheiro form-control" style="display:inline-block" />
+
       
        <div class="col s6">
        <label for="valorCompra" class="active">Valor Compra</label> 
        <input name="valorCompra" th:field="*{valorCompra}" id="valorCompra" class="validate" >
       </div>
-  
-  
-      <div class="col s6"> <label for="valorVenda" class="active">Valor Venda</label> 
+        
+       <div class="col s6">
+       <label for="valorVenda" class="active">Valor Venda</label> 
        <input name="valorVenda" th:field="*{valorVenda}" id="valorVenda" class="validate" >
       </div>
   
-     
-         
-   
         <br>
    
        <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listaprodutos" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>

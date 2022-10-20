@@ -28,16 +28,24 @@ const instanceTooltip = M.Tooltip.init(elemsTooltip, {
 
 
 
-$(document).ready(function(){
-	$('.dinheiro').mask('#.##0,00', {reverse: true});
-	
+$("#valorCompra").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+$("#valorVenda").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+
+const formatter = new Intl.NumberFormat('pt-BR', {
+    currency : 'BRL',
+    minimumFractionDigits : 2
+});
+$("#valorCompra").val(formatter.format($("#valorCompra").val()));
+$("#valorCompra").focus();
+$("#valorCompra").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+$("#valorVenda").val(formatter.format($("#valorVenda").val()));
+$("#valorVenda").focus();
+$("#valorVenda").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+
+
+$(document).ready(function(){	
 	$('.datepicker').datepicker({
-	 
-	 
-   
 	    format: 'dd/mm/yyyy',
-	    
-	    
 		 i18n: {
 			 today: 'Hoje',
 			    clear: 'Limpar',

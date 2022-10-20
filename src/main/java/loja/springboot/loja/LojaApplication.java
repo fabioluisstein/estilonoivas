@@ -14,7 +14,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 
 @SpringBootApplication
-@EntityScan(basePackages="loja.springboot.model")
+@EntityScan(basePackages="loja.springboot.*")
 @ComponentScan(basePackages= {"loja.*"})
 @EnableJpaRepositories(basePackages = {"loja.springboot.repository"})
 @EnableTransactionManagement
