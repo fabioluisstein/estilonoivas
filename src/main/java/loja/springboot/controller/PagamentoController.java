@@ -24,12 +24,9 @@ import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.PagamentoRepository;
 
-
-
 @Controller
 public class PagamentoController {
  
-
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
@@ -46,33 +43,23 @@ public class PagamentoController {
 	}
 	 
 	@PostMapping("/pesquisarpagamento")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, @RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal) {
-		
-		System.out.println(dataInicio);
-		System.out.println(dataFinal);
-		
-		ModelAndView modelAndView = new ModelAndView("pagamento/lista");
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
+			                      @RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
+	  
+	  ModelAndView modelAndView = new ModelAndView("pagamento/lista");
 		if(nomepesquisa.isEmpty() && dataInicio.isEmpty() && dataFinal.isEmpty()) {
 			modelAndView.addObject("pagamentos", pagamentoRepository.top10());
 		}
 		
-		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {
+		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
 			modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoDatas(dataInicio,dataFinal));
+			return modelAndView;
 		}
-		
-		
-		
 		
 		modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
 	}
 	
-	
-	
-
-	
-	
-
 	@Cacheable("pagamentos")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastropagamento")
 	public ModelAndView cadastro(Pagamento pagamento) {
