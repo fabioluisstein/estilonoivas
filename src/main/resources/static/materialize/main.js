@@ -26,21 +26,29 @@ const instanceTooltip = M.Tooltip.init(elemsTooltip, {
     position: "right"
 });
 
-// Toast
-const elemnsToast = document.querySelector("#toast");
-const instanceToast = () => {
-    M.toast( {
-        html: "Também sou uma notificação",
-        classes: "rounded"
-    })
-}
 
-elemnsToast.addEventListener("click", () => {
-    instanceToast();
+
+$(document).ready(function(){
+	$('.dinheiro').mask('#.##0,00', {reverse: true});
+	
+	$('.datepicker').datepicker({
+	 
+	 
+   
+	    format: 'dd/mm/yyyy',
+	    
+	    
+		 i18n: {
+			 today: 'Hoje',
+			    clear: 'Limpar',
+			 months: [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+		        monthsShort: [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+		        weekdaysFull: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
+		        weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+             weekdaysAbbrev: ["D","S", "T", "Q", "Q", "S", "S"],
+         
+         }
+	
+	});
+
 });
-
-
-
-
-
-
