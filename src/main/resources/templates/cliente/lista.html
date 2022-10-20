@@ -73,14 +73,18 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.nome}"></a>
 	   </td>
-	  
-	   <td  th:text = "${cliente.telefone}" ></td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.telefone}"></a>
+	   </td>  
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cpf}"></a>
+	   </td>  	
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cidade}"></a>
+	   </td>     
 	   
-	   <td  th:text = "${cliente.cpf}" ></td>
-	   <td  th:text = "${cliente.cidade}" ></td>
-
 	  <td> <a onclick="M.toast({html: 'Deletando Cliente',classes: 'red rounded'})" th:href="@{/removercliente/{idcliente}(idcliente=${cliente.id})}"><i class="material-icons">delete_forever</i></a></td>
-	  </tr>
+	  </tr> 
 	 </tbody>
 	 </table>   
  </div>

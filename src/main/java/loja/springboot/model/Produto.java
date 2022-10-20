@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,6 +43,10 @@ public class Produto implements Serializable {
 
 	private Integer quantidadeEstoque;
 	private String nomeImagem;
+	
+	@Lob
+	private byte[] imagem;
+	
 	@ManyToOne
 	private Categoria categoria;
 	@ManyToOne
@@ -56,7 +61,13 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 
-	
+	public byte[] getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
+	}
 
 	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;

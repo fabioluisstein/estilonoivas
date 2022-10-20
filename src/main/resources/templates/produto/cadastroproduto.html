@@ -27,7 +27,7 @@
 <div class="container">
  
    <div class="row" >
-   <form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}" >
+   <form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}" enctype="multipart/form-data" >
       <div class="row">
       
     <div class="input-field col s12">
@@ -65,18 +65,28 @@
 
     
 
-      <div class="col s6">    
+      <div class="col s3">    
       <label for="cor" class="active">Cor</label> 
       <input name="cor" th:field="*{cor}" id="cor" class="validate" required>
       </div>
     
-      <div class="col s6"> 
+      <div class="col s3"> 
       <label for="tamanho" class="active">Tamanho</label> 
       <input name="tamanho" th:field="*{tamanho}" type="text" id="tamanho" class="validate" >
       </div>
-      
-
-      
+     
+     <div class="col s6">  
+     <div class="file-field input-field">
+      <div class="btn">
+        <span>Foto</span>
+        <input type="file" name="file" id="file">
+     </div>
+     <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+     </div>
+     </div>
+       
        <div class="col s6">
        <label for="valorCompra" class="active">Valor Compra</label> 
        <input name="valorCompra" th:field="*{valorCompra}" id="valorCompra" class="validate" >
