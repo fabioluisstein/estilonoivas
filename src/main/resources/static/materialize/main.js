@@ -51,10 +51,55 @@ function openModal(id) {
 	  
 }
 	
-	
 
 
+$(document).ready(function gerarGrafico() {
+	var myChart = new Chart(document.getElementById('myChart'));
 
+	 $.ajax({
+		 method : "GET",
+		 url : "/buscargrafico",
+		 success: function (response) {
+		 var json = JSON.parse(response);
+		 //  console.log(response);
+		 
+		 myChart.destroy();
+		
+	  
+		    myChart = new Chart(
+			    document.getElementById('myChart'),
+			    {
+				  type: 'line',
+				  data: {
+				      labels: json.meses,
+				      datasets: [{
+				        label: 'Despesas',
+				        backgroundColor: 'rgb(255, 99, 132)',
+				        borderColor: 'rgb(255, 99, 132)', 
+				        data: json.pagamentos,
+				      }, 
+				      
+				      { type: 'bar',
+				        label: 'Entadas',
+				        data: json.entradas,
+				       }
+				      
+				      ]
+				    },
+				  options: {}
+				}
+			);
+		  
+	     }
+	     
+	 }).fail(function(xhr, status, errorThrown){
+	    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
+	 });
+    
+      
+});
+
+ 
 
 function consultaPrecoProduto(id) {
   var id = $("#produto").val();
