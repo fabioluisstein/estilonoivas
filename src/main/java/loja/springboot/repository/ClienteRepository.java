@@ -16,4 +16,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	@Query(value="select * from cliente order by id desc limit 10", nativeQuery=true)
 	List<Cliente> top10();
+	
+	
+	@Query(value="select l.* from cliente l  where l.id = ?1 ", nativeQuery=true)
+	List<Cliente> findLocacaoById(Long id);
+	
+	
 }

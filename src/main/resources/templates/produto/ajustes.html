@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Controle de Ajustes de Produtos</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+
+ <div class="container">
+  <div class="row">
+
+      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Ajustes de Produtos </span>
+        <br>
+      </div>
+      
+   
+  </div>
+    </div>
+    
+    <div style="position: relative">
+
+<div id="toast-container"></div>
+</div>
+
+<br>
+      <div class="container" style="border:1px">
+		<form action="pesquisarprodutoId" method="post" class="col s12">
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nomepesquisa" class="active">Pesquia por Código do Produto </label>
+					<input name="nomepesquisa" id="nomepesquisa" class="validate">
+					<input class="waves-effect waves-light btn grey darken-1" type="submit"
+					     onclick="M.toast({html: 'Pesquisando produto Específica',classes: 'blue rounded'})"
+						value="Buscar">
+  <a onclick="M.toast({html: 'Pesquisando todas Produtos',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listaAjustes">Lista Produtos</a>	
+        
+				</div>
+			</div>			
+		</form>
+	</div>
+ <br/>
+
+<div class="container col s12">
+ 
+ <table class="striped #e0e0e0 grey lighten-2 highlight col s12">
+   <thead>
+	   <tr>
+	    <th>Código Locacao</th>
+	    <th>Código Produto</th>
+	    <th>Tipo Produto</th>
+	    <th>Cliente</th>
+	    <th>Data Liberacao</th>
+	    <th>Data Limite</th>
+
+	   </tr>
+	</thead>
+	
+	 <tbody>
+	  <tr th:each = "produto : ${produtosContrato}">
+	   <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}" th:text="${produto.locacao}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.produto.id})}" th:text="${produto.produto.id}"></a>
+	   </td> 
+	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.produto.id})}" th:text="${produto.produto.categoria.nome}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${produto.locacao.cliente.id})}"  th:text="${produto.locacao.cliente.nome}"></a>
+	   </td>
+       <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}"  th:text="${#dates.format(produto.data_liberacao, 'dd/MM/yyyy')}"></a>
+	   </td>
+       <td>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}"  th:text="${#dates.format(produto.locacao.data_retirada, 'dd/MM/yyyy')}"></a>
+	   </td>
+	
+	  </tr>
+	 </tbody>
+	 </table>   
+ </div>
+ 
+<br>
+
+</body>
+<div th:replace="fragments :: footer"/>
+</html>

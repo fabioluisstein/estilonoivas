@@ -98,6 +98,27 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
+	
+	
+	
+
+
+	
+	@Cacheable("locacoes")  
+	@GetMapping("/cadastrolocacao/{idCliente}")
+	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Long idCliente) {
+		locacao.setData_locacao(new Date());
+		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
+		locacao.setCliente(clienteRepository.findById(idCliente).get());
+		modelAndView.addObject("locacaobj", locacao);
+		modelAndView.addObject("parcelabj", new Parcela());
+		modelAndView.addObject("produtobj", new LocacaoProduto());
+		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
+		modelAndView.addObject("clientes", clienteRepository.findAll());
+		return modelAndView;
+	}
+	
+	
 	@CacheEvict(value="locacoes",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarlocacao")
 	public String salvar(Locacao locacao) throws IOException {	

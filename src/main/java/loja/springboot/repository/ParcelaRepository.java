@@ -20,5 +20,12 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	 
 	@Query(value="select * from parcela order by id desc limit 10", nativeQuery=true)
 	List<Parcela> top10();
+	
+	
+	 
+	@Query(value="select * from parcela where month(data_pagamento) = month(NOW()) ", nativeQuery=true)
+	List<Parcela> parcelaMesAtual();
+	
+	
 }
     

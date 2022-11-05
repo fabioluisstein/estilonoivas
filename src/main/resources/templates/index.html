@@ -1,54 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: html_head"/>
-
-
 <body>
-
-
-
   <div th:replace="fragments :: menu"/>
-
-
-  <div class="container">
-    <div class="section">
-
-      <!--   Icon Section   -->
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-    <div>
-           <canvas id="myChart2" width="400" height="50"></canvas>
-       </div>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-
-    <div>
-           <canvas id="myChart2" width="400" height="50"></canvas>
-       </div>
-
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-        <div>
-           <canvas id="myChart2" width="400" height="50"></canvas>
-       </div>
-       
-       
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-
 
   <div class="container">
     <div class="section">
@@ -57,9 +11,8 @@
         <div class="col s12 center">
           <h3><i class="mdi-content-send brown-text"></i></h3>
        
-       <div>
-           <canvas id="myChart" width="400" height="120"></canvas>
-       </div>
+  
+           <canvas id="myChart" width="100" height="60%"></canvas>
        
         </div>
       </div>
@@ -69,16 +22,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
-
-
-
-
-  <div th:replace="fragments :: footer"/>
-
-
-
-
   </body>
+  
+  <div th:replace="fragments :: footer"/>
 </html>

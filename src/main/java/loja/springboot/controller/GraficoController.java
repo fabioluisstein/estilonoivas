@@ -3,7 +3,6 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import loja.springboot.model.Grafico;
-import loja.springboot.model.Locacao;
 import loja.springboot.model.Pagamento;
+import loja.springboot.model.Parcela;
 import loja.springboot.repository.PagamentoRepository;
 import loja.springboot.repository.ParcelaRepository;
 
@@ -40,7 +39,7 @@ public class GraficoController {
 		
 		
 		List<Double> entradas = new ArrayList<Double>();
-		entradas.add(10.00);
+		
 		List<Double> pagamentos = new ArrayList<Double>();
 	
 		
@@ -53,6 +52,15 @@ public class GraficoController {
 		
 		pagamentos.add(valor);
 		
+		Double valorParcela = 0.00;
+	    List<Parcela> listPar = parcelaRepository.parcelaMesAtual();
+		
+		for(Parcela parcela: listPar) {  
+			valorParcela = valorParcela + parcela.getValor();
+		}
+		
+		entradas.add(valorParcela);
+			
 		Grafico grafico = new Grafico(); 
 		
 		grafico.setMeses(meses);

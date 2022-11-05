@@ -20,5 +20,10 @@ public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, 
 	 
 	@Query(value="select * from locacao_produto order by id desc limit 10", nativeQuery=true)
 	List<LocacaoProduto> top10();
+	
+	
+	@Query(value="select l.* from locacao_produto l  where l.produto_id = ?1 ", nativeQuery=true)
+	List<LocacaoProduto> findProdutoById(Long id);
+	
 }
    

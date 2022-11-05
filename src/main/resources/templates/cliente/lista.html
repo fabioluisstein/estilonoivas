@@ -61,6 +61,7 @@
 	    <th>Telefone</th>
 	    <th>Cpf</th>
 	    <th>Cidade</th>
+	    <th>Locação</th>
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
@@ -82,7 +83,7 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cidade}"></a>
 	   </td>     
-	   
+	   <td>  <a th:href="@{/cadastrolocacao/{idCliente}(idCliente=${cliente.id})}"> <i class="material-icons">shopping_cart_checkout</i> </a></td>
 	  <td> <a onclick="M.toast({html: 'Deletando Cliente',classes: 'red rounded'})" th:href="@{/removercliente/{idcliente}(idcliente=${cliente.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr> 
 	 </tbody>

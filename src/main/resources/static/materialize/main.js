@@ -69,7 +69,7 @@ $(document).ready(function gerarGrafico() {
 		    myChart = new Chart(
 			    document.getElementById('myChart'),
 			    {
-				  type: 'line',
+				  type: 'bar',
 				  data: {
 				      labels: json.meses,
 				      datasets: [{
@@ -93,7 +93,7 @@ $(document).ready(function gerarGrafico() {
 	     }
 	     
 	 }).fail(function(xhr, status, errorThrown){
-	    alert('Erro ao buscar dados para o grafico ' + xhr.responseText);
+	   
 	 });
     
       
