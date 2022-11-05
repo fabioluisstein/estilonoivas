@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_locacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="10d38a39-2bac-4449-bdd9-ca8ef62a95ba">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[Select locacao.id,
+       cliente.nome as nome_cliente, 
+	   cliente.id as id_cliente, 
+       cidade.nome as cidade_cliente,  
+       cliente.logradouro as logradouro_cliente, 
+       cliente.bairro as bairro_cliente,
+       cliente.cpf as cpf_cliente, 
+       cliente.telefone as telefone_cliente, 
+       pessoa.nome as nome_funcionario,
+       produto.id as id_produto,
+       produto.tamanho as tamanho,
+       produto.cor as cor,
+       DATE_FORMAT (locacao.data_locacao,'%d/%m/%Y') as data_locacao,
+       DATE_FORMAT (locacao.data_evento,'%d/%m/%Y') as data_evento,
+	   DATE_FORMAT (locacao.data_retirada,'%d/%m/%Y') as data_retirada,
+       replace(concat('R$:',cast(round(sum(locacao_produto.valor),2) as char)),'.',',') as valor_produto,
+       categoria.nome as descricao_produto,
+	   replace(locacao_produtos.valor_formatado,'.',',') as total_produtos,
+       replace(parcelas.valor_formatado,'.',',')  as total_pago,
+      5  as falta_pagar
+
+from locacao inner join cliente 
+on locacao.cliente_id = cliente.id
+left join cidade on  cliente.cidade_id = cidade.id
+inner join pessoa  on pessoa.id = locacao.colaborador_id
+left join parcela on parcela.idlocacao = locacao.id
+left join locacao_produto on locacao_produto.idlocacao = locacao.id
+left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+       round(sum(valor),2) as valor_normal   
+ from locacao_produto group by idlocacao) as locacao_produtos on locacao_produtos.idlocacao  = locacao.id
+ left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+       round(sum(valor),2) as valor_normal   
+ from parcela group by idlocacao) as parcelas on parcelas.idlocacao  = locacao.id
+left join produto on produto.id = locacao_produto.produto_id
+left join categoria on categoria.id = produto.categoria_id
+
+Where locacao.id = 104
+group by locacao.id,
+       cliente.nome , 
+	   cliente.id, 
+       cidade.nome ,  
+       cliente.logradouro , 
+       cliente.bairro ,
+       cliente.cpf, 
+       cliente.telefone,  
+       pessoa.nome,
+       produto.id,
+       produto.tamanho ,
+       produto.cor,
+       locacao.data_locacao,
+       locacao.data_evento,
+	   locacao.data_retirada,
+      locacao_produto.valor,
+	  categoria.nome]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="locacao"/>
+	</field>
+	<field name="nome_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="id_cliente" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cidade_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="cidade_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cidade"/>
+	</field>
+	<field name="logradouro_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="logradouro"/>
+		<property name="com.jaspersoft.studio.field.label" value="logradouro_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="bairro_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bairro"/>
+		<property name="com.jaspersoft.studio.field.label" value="bairro_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cpf_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
+		<property name="com.jaspersoft.studio.field.label" value="cpf_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="telefone_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telefone"/>
+		<property name="com.jaspersoft.studio.field.label" value="telefone_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="nome_funcionario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_funcionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<field name="id_produto" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_produto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="tamanho" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tamanho"/>
+		<property name="com.jaspersoft.studio.field.label" value="tamanho"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="cor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cor"/>
+		<property name="com.jaspersoft.studio.field.label" value="cor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="data_locacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data_locacao"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_locacao"/>
+	</field>
+	<field name="data_evento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data_evento"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_evento"/>
+	</field>
+	<field name="data_retirada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data_retirada"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_retirada"/>
+	</field>
+	<field name="valor_produto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="valor_produto"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_produto"/>
+	</field>
+	<field name="descricao_produto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao_produto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoria"/>
+	</field>
+	<field name="total_produtos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="total_produtos"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_produtos"/>
+	</field>
+	<field name="total_pago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="total_pago"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_pago"/>
+	</field>
+	<field name="falta_pagar" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="falta_pagar"/>
+		<property name="com.jaspersoft.studio.field.label" value="falta_pagar"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="278" splitType="Stretch">
+			<staticText>
+				<reportElement x="33" y="-19" width="480" height="47" uuid="b6e06571-b3f7-41a1-b516-0671cceb8af1"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<text><![CDATA[Contrato de Locação
+Fibonatii Ternos & Costumes]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="26" width="554" height="40" backcolor="#CCC4C4" uuid="2a1adcab-aacb-4333-95c6-965f0de63a96"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement x="441" y="2" width="110" height="18" uuid="f180c557-f324-4a18-b832-46cc9dacbb35"/>
+					<textFieldExpression><![CDATA[$F{nome_funcionario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="2" width="140" height="18" uuid="301733a4-56fd-4717-81d0-9e2b2d8f3a66"/>
+					<text><![CDATA[CNPJ: 28.538.969/0001-30]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="25" width="140" height="15" uuid="36f858a7-2314-4217-93b9-0f5dbbc46262"/>
+					<text><![CDATA[Cidade: Passo Fundo - RS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="381" y="2" width="53" height="18" uuid="8cfb7a1b-09af-400c-9f35-66f24127a5b3"/>
+					<text><![CDATA[Atendente: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="381" y="23" width="166" height="17" uuid="a44df9c3-6704-4f26-b2eb-83e7c710ab27"/>
+					<text><![CDATA[Telefone: (54) 3045-1721]]></text>
+				</staticText>
+			</frame>
+			<rectangle>
+				<reportElement x="0" y="66" width="554" height="24" uuid="1506e15a-d7b2-498e-94cc-660e9cb172ca"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="70" width="100" height="21" uuid="813d1bdf-3b8e-4fe6-82b4-0434eda1c072"/>
+				<text><![CDATA[Dados do Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="203" width="100" height="20" uuid="a62eab99-55ba-4bc2-83bc-9350a69f0bda">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Nº da Locação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="203" width="100" height="20" uuid="3546f553-96d9-4bff-9df0-70de0bfb80a1"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="223" width="85" height="20" uuid="299acb10-05be-4553-bb4d-8881ba6cfd9a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Data da Locação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="224" width="100" height="16" uuid="63a9333d-c216-4dd8-b908-dc082670d268"/>
+				<textFieldExpression><![CDATA[$F{data_locacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="241" width="100" height="20" uuid="7e7d37e0-f6fe-427c-b5ea-445849f31955">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Data do Evento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="240" width="100" height="18" uuid="9a2f461a-4d79-479d-962c-7697c5747024"/>
+				<textFieldExpression><![CDATA[$F{data_evento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="258" width="84" height="20" uuid="92eadcbf-3eef-4b0d-856f-e06b8edcbf79">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Data do Retirada:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="259" width="100" height="17" uuid="9ee867e3-e54c-4758-aeba-cefd73b8727a"/>
+				<textFieldExpression><![CDATA[$F{data_retirada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="203" width="100" height="20" uuid="774821e4-42d6-44ab-8dee-ac2cc2dc228e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Valor total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="205" width="100" height="20" uuid="790bea99-7487-4830-b623-86be5c3a280e"/>
+				<textFieldExpression><![CDATA[$F{total_produtos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="231" width="100" height="20" uuid="3cbc3652-c4d6-415f-86f3-decd37bdae05">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Valor pago:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="231" width="100" height="30" uuid="4dd892ae-6413-4a75-b61f-d1c708cb63a3"/>
+				<textFieldExpression><![CDATA[$F{total_pago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="255" width="100" height="20" uuid="6962228b-37f2-4bb0-a0bf-fcd4f7dd1c99">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Valor a pagar:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="255" width="100" height="20" uuid="cfbd3599-9417-489d-ab99-688152d932d5"/>
+				<textFieldExpression><![CDATA[$F{falta_pagar}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="227" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="-101" width="100" height="22" uuid="5f92af9a-3cf3-4dc9-9f47-e1fb4391567c"/>
+				<text><![CDATA[Detalhes da Locação]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="-189" width="554" height="86" uuid="89860c9c-a7e8-4682-bf38-b432949eb64e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="-188" width="38" height="20" uuid="64616992-3d41-4786-9b07-c027f026d0c1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="-188" width="335" height="18" uuid="b3105941-67b2-4d10-8a98-91e409ffcd31"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="-167" width="468" height="13" uuid="ea921cd1-1cca-48f5-a7bc-3e4844f8d41e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{logradouro_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="-149" width="48" height="20" uuid="7983984c-7886-4b12-b5fa-bce02fdd66d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Cidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="-151" width="100" height="24" uuid="6a485d58-e06a-48c3-9185-229c8a7e028f"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidade_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="-130" width="37" height="24" uuid="b2079c85-5817-4663-8db3-34b2253289a8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Bairro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="47" y="-130" width="100" height="24" uuid="b90e04ab-8bbc-4053-a237-c757162854db"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="-155" width="52" height="24" uuid="91b0d26c-5184-4233-9fc3-c175734417c4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="-155" width="100" height="24" uuid="adf60807-a0ef-41fb-a2bf-ca0d337f704a"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefone_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="383" y="-127" width="37" height="24" uuid="7aba0a47-6fb2-4f31-bcb5-45addca32ce4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[CPF:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="431" y="-127" width="100" height="20" uuid="0085b56b-94f6-4758-9b22-86eb5b1b5723"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpf_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="383" y="-187" width="74" height="20" uuid="18377b1b-601e-4f23-8d0d-d55973c4d910">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.0" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+					<paragraph leftIndent="1"/>
+				</textElement>
+				<text><![CDATA[Código Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="462" y="-187" width="80" height="17" uuid="9638d134-cc18-4d4b-a519-739a2ee49123"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="-168" width="55" height="16" uuid="f9497443-8374-4f2f-b672-4e39e866712c"/>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="256" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

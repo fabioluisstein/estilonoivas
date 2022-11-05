@@ -5,6 +5,7 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="348"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="641"/>
+	<import value="net.sf.jasperreports.engine.fonts.*"/>
 	<subDataset name="Dataset1" uuid="2c1cb997-2f6f-4dc0-a341-487fc90ec0a9">
 		<queryString>
 			<![CDATA[]]>
@@ -27,11 +28,11 @@
        DATE_FORMAT (locacao.data_locacao,'%d/%m/%Y') as data_locacao,
        DATE_FORMAT (locacao.data_evento,'%d/%m/%Y') as data_evento,
 	   DATE_FORMAT (locacao.data_retirada,'%d/%m/%Y') as data_retirada,
-       replace(concat('R$:',cast(round(sum(locacao_produto.valor),2) as char)),'.',',') as valor_produto,
+       CONCAT('R$ ', REPLACE(REPLACE(REPLACE(FORMAT(locacao_produto.valor, 2),'.',';'),',','.'),';',',')) as valor_produto,
        categoria.nome as descricao_produto,
-	   replace(locacao_produtos.valor_formatado,'.',',') as total_produtos,
-       replace(parcelas.valor_formatado,'.',',')  as total_pago,
-       replace(concat('R$:',cast(round((locacao_produtos.valor_normal) - (parcelas.valor_normal),2) as char)),'.',',')  as falta_pagar
+	   CONCAT('R$ ', REPLACE(REPLACE(REPLACE(FORMAT(locacao_produtos.valor_formatado, 2),'.',';'),',','.'),';',',')) as total_produtos,
+       CONCAT('R$ ', REPLACE(REPLACE(REPLACE(FORMAT(parcelas.valor_formatado, 2),'.',';'),',','.'),';',',')) as total_pago,
+       CONCAT('R$ ', REPLACE(REPLACE(REPLACE(FORMAT((locacao_produtos.valor_normal) - (parcelas.valor_normal), 2),'.',';'),',','.'),';',',')) as falta_pagar
 
 from locacao inner join cliente 
 on locacao.cliente_id = cliente.id
@@ -39,16 +40,16 @@ left join cidade on  cliente.cidade_id = cidade.id
 inner join pessoa  on pessoa.id = locacao.colaborador_id
 left join parcela on parcela.idlocacao = locacao.id
 left join locacao_produto on locacao_produto.idlocacao = locacao.id
-left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+left join (Select idlocacao as idlocacao, sum(valor) as valor_formatado,
        round(sum(valor),2) as valor_normal   
  from locacao_produto group by idlocacao) as locacao_produtos on locacao_produtos.idlocacao  = locacao.id
- left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+ left join (Select idlocacao as idlocacao, sum(valor) as valor_formatado,
        round(sum(valor),2) as valor_normal   
  from parcela group by idlocacao) as parcelas on parcelas.idlocacao  = locacao.id
 left join produto on produto.id = locacao_produto.produto_id
 left join categoria on categoria.id = produto.categoria_id
 
-Where locacao.id =  '$P!{idLocacao}'
+Where locacao.id = '$P!{idLocacao}'
 group by locacao.id,
        cliente.nome , 
 	   cliente.id, 
@@ -111,22 +112,22 @@ group by locacao.id,
 	<field name="nome_funcionario" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nome"/>
 		<property name="com.jaspersoft.studio.field.label" value="nome_funcionario"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
 	</field>
 	<field name="id_produto" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id_produto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="produtos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
 	</field>
 	<field name="tamanho" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="tamanho"/>
 		<property name="com.jaspersoft.studio.field.label" value="tamanho"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="produtos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
 	</field>
 	<field name="cor" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="cor"/>
 		<property name="com.jaspersoft.studio.field.label" value="cor"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="produtos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
 	</field>
 	<field name="data_locacao" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="data_locacao"/>
@@ -149,7 +150,7 @@ group by locacao.id,
 		<property name="com.jaspersoft.studio.field.tree.path" value="locacao_produto"/>
 	</field>
 	<field name="descricao_produto" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
 		<property name="com.jaspersoft.studio.field.label" value="descricao_produto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="categoria"/>
 	</field>
@@ -170,19 +171,16 @@ group by locacao.id,
 	</background>
 	<title>
 		<band height="356" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="228" width="554" height="23" uuid="22b3b356-187e-4a2b-8657-8be97040b8db"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="137" y="0" width="280" height="40" uuid="e3d356e0-97f3-4dcd-95f5-338470487bde"/>
-				<textElement>
-					<font size="30"/>
+				<reportElement x="80" y="0" width="390" height="60" uuid="e3d356e0-97f3-4dcd-95f5-338470487bde"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
 				</textElement>
-				<text><![CDATA[Contrato de Locação]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="149" y="38" width="251" height="30" uuid="9d504c01-8db6-4bae-b5b8-fc07dd2507df"/>
-				<textElement>
-					<font size="18"/>
-				</textElement>
-				<text><![CDATA[Fibonatti Ternos & Costumes]]></text>
+				<text><![CDATA[Contrato de Locação 
+Fibonatti Ternos e Costumes]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="80" width="168" height="30" uuid="9fdda973-23c3-4d4f-a7a2-f4dc3d4e6ad6"/>
@@ -219,6 +217,9 @@ group by locacao.id,
 			</rectangle>
 			<staticText>
 				<reportElement x="2" y="122" width="100" height="19" uuid="ee07e98d-134a-4e66-8a61-3b82007f38fa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Dados do Cliente]]></text>
 			</staticText>
 			<rectangle>
@@ -242,10 +243,11 @@ group by locacao.id,
 				<text><![CDATA[Nome:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="167" width="48" height="20" uuid="7394d8a5-b7b5-40de-b2ac-a8e3bb295ed8">
+				<reportElement x="2" y="167" width="62" height="18" uuid="7394d8a5-b7b5-40de-b2ac-a8e3bb295ed8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Double"/>
@@ -255,6 +257,7 @@ group by locacao.id,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
+					<font fontName="Serif"/>
 					<paragraph leftIndent="1"/>
 				</textElement>
 				<text><![CDATA[Endereço:]]></text>
@@ -279,7 +282,7 @@ group by locacao.id,
 				<text><![CDATA[Cidade:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="204" width="37" height="24" uuid="341dc926-c437-4e38-9715-ef7991a56a5d">
+				<reportElement x="3" y="207" width="37" height="16" uuid="341dc926-c437-4e38-9715-ef7991a56a5d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -302,15 +305,18 @@ group by locacao.id,
 				<textFieldExpression><![CDATA[$F{nome_cliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="167" width="498" height="13" uuid="a1f3bbb2-8e2d-4bc3-976f-f8bc659d5271"/>
+				<reportElement x="66" y="167" width="485" height="13" uuid="a1f3bbb2-8e2d-4bc3-976f-f8bc659d5271"/>
 				<textFieldExpression><![CDATA[$F{logradouro_cliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="49" y="183" width="100" height="24" uuid="c19fef3b-ccd3-4384-9883-df7ad2eba6c7"/>
+				<reportElement x="49" y="186" width="311" height="15" uuid="c19fef3b-ccd3-4384-9883-df7ad2eba6c7">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textFieldExpression><![CDATA[$F{cidade_cliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="46" y="204" width="100" height="24" uuid="b2968036-345f-433b-ac17-25247b950549"/>
+				<reportElement x="46" y="205" width="100" height="24" uuid="b2968036-345f-433b-ac17-25247b950549"/>
 				<textFieldExpression><![CDATA[$F{bairro_cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -381,18 +387,25 @@ group by locacao.id,
 				<textFieldExpression><![CDATA[$F{cpf_cliente}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="0" y="228" width="554" height="23" uuid="22b3b356-187e-4a2b-8657-8be97040b8db"/>
+				<reportElement x="0" y="330" width="554" height="23" uuid="c314cfe8-9857-450d-a443-7b266291862a"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="5" y="231" width="100" height="19" uuid="fed18f8b-f90e-4df9-8567-59468bc61fe4"/>
-				<text><![CDATA[Detalhes da Locação]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="0" y="331" width="554" height="23" uuid="c314cfe8-9857-450d-a443-7b266291862a"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="6" y="337" width="100" height="19" uuid="ea31f898-b798-414f-ae67-29eee773ff5d"/>
+				<reportElement x="5" y="334" width="150" height="19" uuid="ea31f898-b798-414f-ae67-29eee773ff5d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
 				<text><![CDATA[Produtos do contrato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="231" width="100" height="19" uuid="4477ef9e-cdd7-4e82-86a1-bdc1e6d6c391">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalhes Locação]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -436,7 +449,7 @@ group by locacao.id,
 				<text><![CDATA[Data da Locação:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="-62" width="100" height="20" uuid="17c4a125-c02b-4400-8552-9163c6ab243c">
+				<reportElement x="6" y="-62" width="81" height="20" uuid="17c4a125-c02b-4400-8552-9163c6ab243c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -474,7 +487,7 @@ group by locacao.id,
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="370" y="-100" width="100" height="20" uuid="478c090f-53cd-4e09-bc92-67dffa19ef24">
+				<reportElement x="370" y="-100" width="61" height="20" uuid="478c090f-53cd-4e09-bc92-67dffa19ef24">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -491,9 +504,10 @@ group by locacao.id,
 				<text><![CDATA[Valor total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="-72" width="100" height="20" uuid="b0b63c8e-e612-47af-90d5-0059efca0586">
+				<reportElement x="370" y="-72" width="63" height="18" uuid="b0b63c8e-e612-47af-90d5-0059efca0586">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.0" lineStyle="Double"/>
@@ -507,33 +521,23 @@ group by locacao.id,
 				</textElement>
 				<text><![CDATA[Valor pago:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="370" y="-48" width="100" height="20" uuid="ece565a7-dbb8-4af7-aa13-5f074005bb6e">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
-					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-				</reportElement>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<pen lineWidth="0.0" lineStyle="Double"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement>
-					<paragraph leftIndent="1"/>
-				</textElement>
-				<text><![CDATA[Valor a pagar:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="438" y="-98" width="100" height="20" uuid="10a4b045-b892-4578-9a8f-632f7fd2f616"/>
+				<reportElement x="446" y="-100" width="100" height="25" uuid="10a4b045-b892-4578-9a8f-632f7fd2f616">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{total_produtos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="438" y="-72" width="100" height="30" uuid="5f84d8de-dc6a-4073-bf40-21393702096d"/>
+				<reportElement x="446" y="-72" width="100" height="20" uuid="5f84d8de-dc6a-4073-bf40-21393702096d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textFieldExpression><![CDATA[$F{total_pago}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="438" y="-48" width="100" height="20" uuid="7bb8b225-ae34-4ffa-8db9-f74b87344e15"/>
+				<reportElement x="447" y="-48" width="100" height="20" uuid="7bb8b225-ae34-4ffa-8db9-f74b87344e15"/>
 				<textFieldExpression><![CDATA[$F{falta_pagar}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -548,11 +552,13 @@ group by locacao.id,
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="-2" width="101" height="26" uuid="3d03511a-078d-48a1-a15e-67d9535bfdec"/>
+				<reportElement x="0" y="-2" width="101" height="26" uuid="3d03511a-078d-48a1-a15e-67d9535bfdec">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -592,17 +598,24 @@ group by locacao.id,
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="87" y="-79" width="100" height="16" uuid="b816ece0-6a5f-40ca-9cc8-3fc88f984921"/>
+				<reportElement x="88" y="-79" width="100" height="16" uuid="b816ece0-6a5f-40ca-9cc8-3fc88f984921"/>
 				<textFieldExpression><![CDATA[$F{data_locacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="87" y="-63" width="100" height="18" uuid="1dea6f14-1708-4fee-9fd2-3f6b1904a545"/>
+				<reportElement x="89" y="-63" width="100" height="18" uuid="1dea6f14-1708-4fee-9fd2-3f6b1904a545"/>
 				<textFieldExpression><![CDATA[$F{data_evento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="88" y="-45" width="100" height="17" uuid="fb4000e2-23fb-43f7-b19f-1cbf69b1bd14"/>
 				<textFieldExpression><![CDATA[$F{data_retirada}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="360" y="-48" width="80" height="15" uuid="12410f1e-9770-4218-808a-a664953287a8"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pendente:]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -670,7 +683,9 @@ group by locacao.id,
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{valor_produto}]]></textFieldExpression>
 			</textField>
 		</band>

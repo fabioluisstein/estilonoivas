@@ -73,6 +73,32 @@ public class Locacao implements Serializable {
 
 	
 
+	public double getValorTotal() {
+		Double valor = 0.00;
+		for(Parcela parcela : getParcelas()) {  
+		   if(parcela.getData_pagamento()!=null) {
+			 valor = valor +	parcela.getValor();
+		   }
+		
+		}  
+		return valor;
+	}
+	
+	
+	public double getValorTotalProdutos() {
+		Double valor = 0.00;
+		for(LocacaoProduto produtosLocao : getProdutos()) {  
+			valor = valor +	produtosLocao.getValor();
+		}  
+		return valor;
+	}
+	
+	public double getDiferencaPagar() {
+		Double valor = 0.00;
+		valor = getValorTotalProdutos() - getValorTotal();
+		return valor;
+	}
+	
 	
 
 	public List<LocacaoProduto> getProdutos() {

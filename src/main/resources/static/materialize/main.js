@@ -57,29 +57,29 @@ function openModal(id) {
 
 
 function consultaPrecoProduto(id) {
-	  
-	
-
-	
-	
-	var id = $("#produto").val();
-	
-
-	
-	  $.ajax({
+  var id = $("#produto").val();
+  $.ajax({
 			method : "GET",
 			url : "/buscarprodutoid",
 			data : "idproduto="+id,
 			success : function(response) {
 
+			$("#valorProduto").val(response.valorVenda).maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 			
-				$("#valorProduto").val(response.valorVenda);
-				
+
+			const formatter = new Intl.NumberFormat('pt-BR', {
+			    currency : 'BRL',
+			    minimumFractionDigits : 2
+			});
+			
+			$("#valorProduto").val(formatter.format($("#valorProduto").val()));
+			$("#valorProduto").focus();
+			$("#valorProduto").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+		
 			}
 		}).fail(function(xhr, status, errorThrown) {
 			alert("Erro ao buscar produto por id: " + xhr.responseText);
 		});
-	  
 	  
 }
 	

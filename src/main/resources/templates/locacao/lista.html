@@ -77,7 +77,7 @@
 	    <th>Código</th>
 	    <th>Data Contrato</th>
 	    <th>Valor Total</th>
-	    <th>Saldo</th>
+	    <th>Pendente</th>
 	    <th>Cliente</th>
 	    <th>Data Retirada</th>
 	    <th>Contrato</th>
@@ -91,14 +91,14 @@
 	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${locacao.id}"></a>
 	   </td>
 	   <td>
-	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_locacao, 'dd/MM/yyyy')}"></a>
+	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_locacao, 'dd/MM/yyyy')}"></a> 
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(100.00), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.getValorTotalProdutos()), '.00', '')}"></a>
 	   </td>
 	   
          <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(100.00), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.getDiferencaPagar()), '.00', '')}"></a>
 	   </td>
 	   
 	   <td>
@@ -106,13 +106,7 @@
 	   </td>
         <td>
 	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_retirada, 'dd/MM/yyyy')}"></a>
-	    
-	     
-	     <td>  <a th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacao.id})}"> Relatorio </a></td>
-	     
-       
-	
-	
+	    <td>  <a th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacao.id})}"> <i class="material-icons">cloud_download</i> </a></td>
 	  <td> <a onclick="M.toast({html: 'Deletando locacao',classes: 'red rounded'})" th:href="@{/removerlocacao/{idlocacao}(idlocacao=${locacao.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>

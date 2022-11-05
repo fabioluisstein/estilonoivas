@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.apache.tomcat.util.codec.binary.Base64;
+
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -114,12 +114,14 @@ public class LocacaoController {
 		andView.addObject("locacaobj",parcela.get().getLocacao());
 		andView.addObject("produtobj", new LocacaoProduto());
 		andView.addObject("parcelabj", parcela);	
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("clientes", clienteRepository.findAll());
 		andView.addObject("produtos", produtoRepository.findAll());
 		return andView;
 	}
 	
 	
-	
+	@CacheEvict(value="locacoes",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.saveAndFlush(parcela);
@@ -134,6 +136,8 @@ public class LocacaoController {
 		andView.addObject("locacaobj",locacaoProduto.get().getLocacao());
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("parcelabj", new Parcela());	
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("clientes", clienteRepository.findAll());
 		andView.addObject("produtos", produtoRepository.findAll());
 		return andView;
 	} 
@@ -148,58 +152,25 @@ public class LocacaoController {
 		
       Map<String,Object> paramMap = new HashMap<String, Object>();
       paramMap.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
-
+      
 		byte[] pdf = reportUtil.gerarRelatorio( "contrato",paramMap, request.getServletContext());
-		
-
 		response.setContentLength(pdf.length);
-		
-
-		response.setContentType("application/octet-stream");
-		
-		
+		// envia a resposta com o MIME Type
+		response.setContentType("application/pdf");
 		String headerKey = "Content-Disposition";
 		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
 		response.setHeader(headerKey, headerValue);
-		
-		
 		response.getOutputStream().write(pdf);
 		
 	} 
 	
 	
-	
-	
-	
-	
-	@PostMapping(value="/gerarRelatorio/{idlocacao}", produces = "application/text")
-	public ResponseEntity<String> downloadRelatorioParam(@PathVariable("idlocacao") Long idlocacao, HttpServletRequest request) throws Exception {
-				
-		Map<String,Object> params = new HashMap<String, Object>();
-		
-		params.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
-		
-		byte[] pdf = reportUtil.gerarRelatorio( "contrato",params, request.getServletContext());
-		
-		String base64Pdf = "data:application/pdf;base64," + Base64.encodeBase64String(pdf);
-		
-		return new ResponseEntity<String>(base64Pdf, HttpStatus.OK);
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	@CacheEvict(value="locacoes",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.saveAndFlush(produtoLocacao);
 		    return "redirect:/voltar/"+produtoLocacao.getLocacao().getId().toString()+"";
 	} 
-	
 	
 	@GetMapping("/voltar/{idlocacao}")
 	public ModelAndView voltar(@PathVariable("idlocacao") Long idlocacao)  {
@@ -220,10 +191,6 @@ public class LocacaoController {
 		return andView;
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/iniciaLocao/{idlocacao}")
 	public ModelAndView iniciaLocao(@PathVariable("idlocacao") Long idlocacao)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
@@ -242,11 +209,7 @@ public class LocacaoController {
 		andView.addObject("produtos", produtoRepository.findAll());	
 		return andView;
 	}
-	
-	
-	
-
-	
+		
 	@GetMapping("/editarlocacao/{idlocacao}")
 	public String editar(@PathVariable("idlocacao") Long idlocacao)  {
 	    return "redirect:/iniciaLocao/"+idlocacao.toString()+"";
@@ -261,14 +224,11 @@ public class LocacaoController {
     
 	}   
 	
-	
-	
 	@GetMapping(value = "/buscarprodutoid") /* mapeia a url */
 	@ResponseBody /* Descricao da resposta */
 	public ResponseEntity<Produto> buscarprodutoid(@RequestParam(name = "idproduto") Long idproduto) { 
-		Produto produto = produtoRepository.findById(idproduto).get();
+		Produto produto = produtoRepository.findById(idproduto).get();	
 		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
-    
 	}   
 	
 	
@@ -279,7 +239,7 @@ public class LocacaoController {
 		return "redirect:/listalocacoes";
 	}
 	 
-	
+	@CacheEvict(value="locacoes",allEntries=true)
 	@GetMapping("/removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();

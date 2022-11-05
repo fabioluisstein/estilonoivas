@@ -1,27 +1,126 @@
-2022-11-05 10:23:44 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Column count does not match; SQL statement:
-insert into ESTADO values (2,'teste') [21002-214]
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
+2022-11-05 10:47:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Function "DATE_FORMAT" not found; SQL statement:
+Select locacao.id,
+       cliente.nome as nome_cliente, 
+	   cliente.id as id_cliente, 
+       cidade.nome as cidade_cliente,  
+       cliente.logradouro as logradouro_cliente, 
+       cliente.bairro as bairro_cliente,
+       cliente.cpf as cpf_cliente, 
+       cliente.telefone as telefone_cliente, 
+       pessoa.nome as nome_funcionario,
+       produto.id as id_produto,
+       produto.tamanho as tamanho,
+       produto.cor as cor,
+       DATE_FORMAT (locacao.data_locacao,'%d/%m/%Y') as data_locacao,
+       DATE_FORMAT (locacao.data_evento,'%d/%m/%Y') as data_evento,
+	   DATE_FORMAT (locacao.data_retirada,'%d/%m/%Y') as data_retirada,
+       replace(concat('R$:',cast(round(sum(locacao_produto.valor),2) as char)),'.',',') as valor_produto,
+       categoria.nome as descricao_produto,
+	   replace(locacao_produtos.valor_formatado,'.',',') as total_produtos,
+       replace(parcelas.valor_formatado,'.',',')  as total_pago,
+       replace(concat('R$:',cast(round((locacao_produtos.valor_normal) - (parcelas.valor_normal),2) as char)),'.',',')  as falta_pagar
+
+from locacao inner join cliente 
+on locacao.cliente_id = cliente.id
+left join cidade on  cliente.cidade_id = cidade.id
+inner join pessoa  on pessoa.id = locacao.colaborador_id
+left join parcela on parcela.idlocacao = locacao.id
+left join locacao_produto on locacao_produto.idlocacao = locacao.id
+left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+       round(sum(valor),2) as valor_normal   
+ from locacao_produto group by idlocacao) as locacao_produtos on locacao_produtos.idlocacao  = locacao.id
+ left join (Select idlocacao as idlocacao, concat('R$:',cast(round(sum(valor),2) as char)) as valor_formatado,
+       round(sum(valor),2) as valor_normal   
+ from parcela group by idlocacao) as parcelas on parcelas.idlocacao  = locacao.id
+left join produto on produto.id = locacao_produto.produto_id
+left join categoria on categoria.id = produto.categoria_id
+
+Where locacao.id =  '8'
+group by locacao.id,
+       cliente.nome , 
+	   cliente.id, 
+       cidade.nome ,  
+       cliente.logradouro , 
+       cliente.bairro ,
+       cliente.cpf, 
+       cliente.telefone,  
+       pessoa.nome,
+       produto.id,
+       produto.tamanho ,
+       produto.cor,
+       locacao.data_locacao,
+       locacao.data_evento,
+	   locacao.data_retirada,
+      locacao_produto.valor,
+	  categoria.nome [90022-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	at org.h2.message.DbException.get(DbException.java:223)
 	at org.h2.message.DbException.get(DbException.java:199)
-	at org.h2.message.DbException.get(DbException.java:188)
-	at org.h2.command.dml.Insert.doPrepare(Insert.java:295)
-	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
-	at org.h2.command.Parser.prepareCommand(Parser.java:575)
+	at org.h2.command.Parser.readFunction(Parser.java:3847)
+	at org.h2.command.Parser.readTermWithIdentifier(Parser.java:5211)
+	at org.h2.command.Parser.readTerm(Parser.java:4901)
+	at org.h2.command.Parser.readFactor(Parser.java:3398)
+	at org.h2.command.Parser.readSum(Parser.java:3385)
+	at org.h2.command.Parser.readConcat(Parser.java:3350)
+	at org.h2.command.Parser.readCondition(Parser.java:3132)
+	at org.h2.command.Parser.readExpression(Parser.java:3053)
+	at org.h2.command.Parser.parseSelectExpressions(Parser.java:2853)
+	at org.h2.command.Parser.parseSelect(Parser.java:2871)
+	at org.h2.command.Parser.parseQueryPrimary(Parser.java:2762)
+	at org.h2.command.Parser.parseQueryTerm(Parser.java:2633)
+	at org.h2.command.Parser.parseQueryExpressionBody(Parser.java:2612)
+	at org.h2.command.Parser.parseQueryExpressionBodyAndEndOfQuery(Parser.java:2605)
+	at org.h2.command.Parser.parseQueryExpression(Parser.java:2598)
+	at org.h2.command.Parser.parseQuery(Parser.java:2567)
+	at org.h2.command.Parser.parsePrepared(Parser.java:724)
+	at org.h2.command.Parser.parse(Parser.java:689)
+	at org.h2.command.Parser.parse(Parser.java:661)
+	at org.h2.command.Parser.prepareCommand(Parser.java:569)
 	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
 	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
-	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
-	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
-	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
-	at org.h2.server.web.WebApp.query(WebApp.java:1137)
-	at org.h2.server.web.WebApp.query(WebApp.java:1113)
-	at org.h2.server.web.WebApp.process(WebApp.java:244)
-	at org.h2.server.web.WebApp.processRequest(WebApp.java:176)
-	at org.h2.server.web.WebServlet.doGet(WebServlet.java:129)
-	at org.h2.server.web.WebServlet.doPost(WebServlet.java:166)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:92)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:288)
+	at com.zaxxer.hikari.pool.ProxyConnection.prepareStatement(ProxyConnection.java:337)
+	at com.zaxxer.hikari.pool.HikariProxyConnection.prepareStatement(HikariProxyConnection.java)
+	at net.sf.jasperreports.engine.query.JRJdbcQueryExecuter.createStatement(JRJdbcQueryExecuter.java:404)
+	at net.sf.jasperreports.engine.query.JRJdbcQueryExecuter.createDatasource(JRJdbcQueryExecuter.java:299)
+	at net.sf.jasperreports.engine.fill.JRFillDataset.createQueryDatasource(JRFillDataset.java:1273)
+	at net.sf.jasperreports.engine.fill.JRFillDataset.initDatasource(JRFillDataset.java:734)
+	at net.sf.jasperreports.engine.fill.BaseReportFiller.setParameters(BaseReportFiller.java:457)
+	at net.sf.jasperreports.engine.fill.JRBaseFiller.fill(JRBaseFiller.java:585)
+	at net.sf.jasperreports.engine.fill.BaseReportFiller.fill(BaseReportFiller.java:414)
+	at net.sf.jasperreports.engine.fill.JRFiller.fill(JRFiller.java:120)
+	at net.sf.jasperreports.engine.fill.JRFiller.fill(JRFiller.java:103)
+	at net.sf.jasperreports.engine.JasperFillManager.fill(JasperFillManager.java:530)
+	at net.sf.jasperreports.engine.JasperFillManager.fill(JasperFillManager.java:491)
+	at net.sf.jasperreports.engine.JasperFillManager.fillReport(JasperFillManager.java:929)
+	at loja.springboot.controller.ReportUtil.gerarRelatorio(ReportUtil.java:38)
+	at loja.springboot.controller.LocacaoController.imprimePdf(LocacaoController.java:154)
+	at loja.springboot.controller.LocacaoController$$FastClassBySpringCGLIB$$9421edf5.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
+	at loja.springboot.controller.LocacaoController$$EnhancerBySpringCGLIB$$46daa15.imprimePdf(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
 	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)

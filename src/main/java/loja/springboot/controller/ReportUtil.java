@@ -32,6 +32,8 @@ public class ReportUtil implements Serializable {
 		
 		/*Carregar o caminho do arquivo Jasper*/
 		
+
+		
 		ClassPathResource reportResource = new ClassPathResource("relatorios/contrato.jasper");
 	    JasperPrint jasperPrint = JasperFillManager.fillReport(reportResource.getInputStream(), params, connection);
         	
