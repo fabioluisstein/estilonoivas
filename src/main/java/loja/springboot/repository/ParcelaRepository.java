@@ -21,4 +21,4 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	@Query(value="select * from parcela order by id desc limit 10", nativeQuery=true)
 	List<Parcela> top10();
 }
-   
+    

@@ -51,6 +51,7 @@ public class ClienteController {
 		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
 		modelAndView.addObject("clientebj", new Cliente());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.findAll());
 		return modelAndView;
 	}
 	

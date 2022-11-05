@@ -11,7 +11,7 @@
 	<groupId>loja.springboot</groupId>
 	<artifactId>loja</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>loja</name>
+	<name>loja</name> 
 	<description>Fibonatti</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,6 +33,19 @@
 		    <groupId>javax.xml.bind</groupId>
 		    <artifactId>jaxb-api</artifactId>
 		    </dependency>
+		    
+		    <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    </dependency>
 
 
           <dependency>

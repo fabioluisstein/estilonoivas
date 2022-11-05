@@ -55,6 +55,9 @@ public class Locacao implements Serializable {
 	@OneToMany(mappedBy = "locacao")
 	List<Parcela> parcelas;	
 	
+	@OneToMany(mappedBy = "locacao")
+	List<LocacaoProduto> produtos;	
+	
 	
 	public Long getId() {
 		return id;
@@ -66,6 +69,18 @@ public class Locacao implements Serializable {
 
 	public List<Parcela> getParcelas() {
 		return parcelas;
+	}
+
+	
+
+	
+
+	public List<LocacaoProduto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<LocacaoProduto> produtos) {
+		this.produtos = produtos;
 	}
 
 	public void setParcelas(List<Parcela> parcelas) {

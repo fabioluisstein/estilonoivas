@@ -25,92 +25,86 @@
 <br>
 
 <div class="container">
- 
-   <div class="row" >
-   <form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}" enctype="multipart/form-data" >
-      <div class="row">
-      
+   <div class="row">
+   <form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}">
+    
+  
     <div class="input-field col s12">
       <label for="id" class="active">ID</label> 
       <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
     </div>
       
-       <div class="input-field col s6">
-    <label for="categoria" class="active">Atendente</label> 
-    <br>
-    <select th:field="*{colaborador}" class="browser-default" required>
-    <option th:each="cid: ${colaboradores}"
-			th:value="${cid.id}" th:text="${cid.nome}" ></option>
-     </select> 
+    <div class="input-field col s6">
+      <label for="categoria" class="active">Atendente</label> 
+      <br>
+	    <select th:field="*{colaborador}" class="browser-default" required>
+	    <option th:each="cid: ${colaboradores}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+	    </select> 
     </div>  
       
-      <div class="input-field col s6">
-    <label for="Cliente" class="active">Cliente</label> 
-    <br>
-    <select th:field="*{cliente}" class="browser-default" required>
-    <option th:each="cid: ${clientes}"
-			th:value="${cid.id}" th:text="${cid.nome}" ></option>
-     </select> 
+    <div class="input-field col s6">
+     <label for="Cliente" class="active">Cliente</label> 
+     <br>
+       <select th:field="*{cliente}" class="browser-default" required>
+       <option th:each="cid: ${clientes}"
+			   th:value="${cid.id}" th:text="${cid.nome}" ></option>
+       </select> 
     </div>
      
     <div class="col s12">
       <label for="observacao" class="active">Observações</label> 
       <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
     </div>
-    
-
      
     <div class="col s6">
       <label for="pickdate" class="active">Data Evento</label> 
-      <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  >
+      <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  required>
     </div>
-      
-
-     <div class="col s6">
+    
+    <div class="col s6">
       <label for="pickdate" class="active">Data Devolução</label> 
-      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  >
+      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  required>
     </div>
       
     <div class="col s6">
       <label for="pickdate" class="active">Data Locação</label> 
-      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  >
+      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  readonly="readonly">
     </div>
-      
-     
-     
+       
     <div class="col s6">
       <label for="pickdate" class="active">Data Retirada</label> 
-      <input type="text" class="datepicker" th:field="*{data_retirada}"  name="data_retirada"  >
+      <input type="text" class="datepicker" th:field="*{data_retirada}"  name="data_retirada" required >
     </div>
       
    <div class="col s12">
    <br>
     <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listalocacoes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
-       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
-   
-    </div>
-  
-
-     </div>    
+    <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+   </div>
     </form>
   </div>
+
   
-  
-    <div class="col s12">
+  <div class="col s12">
    <ul class="collapsible">
   <li>
+      <div style="text-align:right" >
+    <a id="btnModal" class="waves-effect waves-light btn modal-trigger" href="#modal1"> + </a> 
+    </div> 
     <div class="collapsible-header">
+
       <i class="material-icons">payments</i>
-      Plano de Pagamento
-      
-      <span class="new badge">4.</span></div>
-    
+      Plano de Pagamento  
+     
+    </div> 
+
     <div class="collapsible-body col s6">
-   
+      
    <table class="striped #e0e0e0 grey lighten-2 highlight">
    <thead>
 	   <tr>
-	    
+	    <th>id</th>
 	    <th>Vencimento</th>
 	    <th>Pagamento</th>
 	    <th>Valor Total</th>
@@ -120,39 +114,218 @@
 	
 	 <tbody>
 	  <tr th:each = "parcela : ${parcelas}">
-	   
+	    <td>
+	   	  <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.id}"></a>
+	   	     <!-- 
+	    <input type="button"  class="waves-effect waves-light btn grey darken-1" th:value="${parcela.id}" onclick="openModal(this.value)">
+	     -->
+	   </td> 
 	   <td>
-	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
+        <a th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
 	   </td>
-	      
 	   <td>
 	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
 	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
 	   </td>
-	   
-      
-	  <td> <a onclick="M.toast({html: 'Deletando parcela',classes: 'red rounded'})" th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}"><i class="material-icons">delete_forever</i></a></td>
+	  <td> 
+	   <a onclick="M.toast({html: 'Deletando parcela',classes: 'red rounded'})" th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}"> <i class="material-icons">delete_forever</i></a>
+	  </td>
 	  </tr>
 	 </tbody>
 	 </table> 
    
     </div>
   <li>
+        <div style="text-align:right" >
+    <a id="btnModalProdutos" class="waves-effect waves-light btn modal-trigger" href="#modalProdutos"> + </a> 
+    </div> 
     <div class="collapsible-header">
-      <i class="material-icons">shopping_cart</i>
-      Produtos
-
+      <i class="material-icons">shopping_cart</i> Produtos
       <span class="badge">1</span></div>
-    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+    
+    
+    <div class="collapsible-body col s6">
+    
+  <table class="striped #e0e0e0 grey lighten-2 highlight">
+   <thead>
+	   <tr>
+	     <th>id</th>
+	    <th>Produto</th>
+	    <th>Data Liberação </th>
+	    <th>Valor</th>
+	    <th>Excluir</th>
+	   </tr>
+	</thead>
+	
+	 <tbody>
+	  <tr th:each = "produtoLocacao : ${produtosLocacoes}">
+	   
+	   
+	   	<td>   
+	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.id}"></a>
+	   </td>
+	   	 
+          <td>   
+	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.categoria.nome}"></a>
+	   </td>
+	   	   
+	   <td>
+        <a th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></a>
+	   </td>
+	      
+	 
+	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
+	   </td>
+	   
+	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereditarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
+	  </tr>
+	 </tbody>
+	 </table> 
+  
+  
   </li>
 </ul>
  </div>
   
+</div>
+
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+
+     <h4>Incluir Parcela</h4>
+ 
+   <form action="/salvarparcela" id="formparcela" method="post" th:object="${parcelabj}">
+    
+      <div class="row">  
+    <div class="input-field col s10">
+      <label for="id_parcela" class="active">ID</label> 
+      <input name="id_parcela" th:field="*{id}" id="id_parcela" class="validate" readonly="readonly">
+    </div>
+       
+   <div class="col s5">
+	 <label for="moeda">Moeda</label>  
+	 <select th:field="*{moeda}" class="browser-default" required>
+	  <option value="Dinheiro">Dinheiro</option>
+	  <option value="Cartao">Cartão</option>
+	  <option value="Pix">Pix</option>
+	  <option value="Cheque">Cheque</option>
+	</select>
+    </div> 
+          
+    <div class="col s5">
+       <label for="valor" class="active">Valor</label> 
+       <input name="valor" th:field="*{valor}" id="valor" class="validate" required>
+    </div>
+
+   <div class="col s10">
+      <label for="observacaoNovo" class="active">Observações</label> 
+      <input name="observacaoParcela" th:field="*{observacao}" id="observacaoParcela" >
+    </div> 
+    <div class="col s5">
+      <label for="pickdate" class="active">Data Pagamento</label> 
+      <input type="text" class="datepicker" th:field="*{data_pagamento}"  name="data_pagamento"  >
+    </div>
+      
+
+     <div class="col s5">
+      <label for="pickdate" class="active">Data Vencimento</label> 
+      <input type="text" class="datepicker" th:field="*{data_vencimento}"  name="data_vencimento" required >
+    </div>
+      
+      
+      
+     <div class="col s10" style="visibility:hidden">
+      <label for="locacao" class="active">Locacao</label> 
+      <input name="locacao" th:field="*{locacao}" id="locacao" class="validate" required>
+    </div> 
+      
+   
+   <div class="col s10">
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+   </div>
+  </div> 
+  </form>
+
+    </div>
+          
     </div>
 
 
-<div th:replace="fragments :: footer"/>
+
+
+
+
+<!-- Modal Structure -->
+  <div id="modalProdutos" class="modal bottom-sheet">
+    <div class="modal-content">
+
+     <h4>Incluir Produtos</h4>
+ 
+   <form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}">
+    
+      <div class="row">  
+    <div class="input-field col s10">
+      <label for="id_locacao_produto" class="active">ID</label> 
+      <input name="id_locacao_produto" th:field="*{id}" id="id_locacao_produto" class="validate" readonly="readonly">
+    </div>
+       
+    <div class="input-field col s5">
+     <label for="Produto" class="active">Produto</label> 
+     <br>
+       <select onblur="consultaPrecoProduto()" th:field="*{produto}" class="browser-default" required>
+       <option th:each="prod: ${produtos}"
+			   th:value="${prod.id}"  th:text="${prod.id} + ' - ' + ${prod.categoria.nome}">   </option>
+       </select> 
+    </div>
+          
+    <div class="col s5">
+       <label for="valor" class="active">Valor</label> 
+       <input name="valorProduto" th:field="*{valor}" id="valorProduto"  class="validate" required>
+    </div>
+
+   <div class="col s10">
+      <label for="observacaoProduto" class="active">Observações</label> 
+      <input name="observacaoProduto" th:field="*{observacao}" id="observacaoProduto" >
+    </div> 
+  
+
+     <div class="col s5">
+      <label for="pickdate" class="active">Data Liberação</label> 
+      <input type="text" class="datepicker" th:field="*{data_liberacao}"  name="data_liberacao"  >
+    </div>
+      
+      
+     <div class="col s10" style="visibility:hidden">
+      <label for="locacao" class="active">Locacao</label> 
+      <input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" class="validate" required>
+    </div> 
+      
+   
+   <div class="col s10">
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+   </div>
+  </div> 
+  </form>
+
+    </div>
+          
+    </div>
+
+
+
+ 
+
+<div th:replace="fragments :: footer"/> </div>
+
+
+
+
 </body>
 </html>

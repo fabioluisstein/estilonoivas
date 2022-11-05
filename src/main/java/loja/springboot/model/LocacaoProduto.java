@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Cacheable
-@Table(name="parcela")
-public class Parcela implements Serializable {
+@Table(name="locacaoProduto")
+public class LocacaoProduto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -30,11 +30,7 @@ public class Parcela implements Serializable {
 
 	private Double valor;
 	private String observacao;
-	private String moeda;
-	
-	
-	
-	
+		
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "idlocacao", nullable = false)
@@ -42,14 +38,17 @@ public class Parcela implements Serializable {
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	private Date data_vencimento;
+	private Date data_liberacao;
+	
+	
+	@ManyToOne
+	private Produto produto;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_ajuste", nullable = true)
+	private Categoria categoriaAjuste;
 	
 
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
-	private Date data_pagamento;
-
-	
 	public Long getId() {
 		return id;
 	}
@@ -58,21 +57,31 @@ public class Parcela implements Serializable {
 		this.id = id;
 	}
 
-	public String getMoeda() {
-		return moeda;
-	}
-
-	public void setMoeda(String moeda) {
-		this.moeda = moeda;
-	}
-
 	public Double getValor() {
 		return valor;
+	}
+
+	
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Categoria getCategoriaAjuste() {
+		return categoriaAjuste;
+	}
+
+	public void setCategoriaAjuste(Categoria categoriaAjuste) {
+		this.categoriaAjuste = categoriaAjuste;
 	}
 
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+
 
 	public String getObservacao() {
 		return observacao;
@@ -82,32 +91,26 @@ public class Parcela implements Serializable {
 		this.observacao = observacao;
 	}
 
-	
 	public Locacao getLocacao() {
 		return locacao;
 	}
+
 
 	public void setLocacao(Locacao locacao) {
 		this.locacao = locacao;
 	}
 
-	public Date getData_vencimento() {
-		return data_vencimento;
-	}
-
-	public void setData_vencimento(Date data_vencimento) {
-		this.data_vencimento = data_vencimento;
+	public Date getData_liberacao() {
+		return data_liberacao;
 	}
 
 
-	public Date getData_pagamento() {
-		return data_pagamento;
+	public void setData_liberacao(Date data_liberacao) {
+		this.data_liberacao = data_liberacao;
 	}
 
-	public void setData_pagamento(Date data_pagamento) {
-		this.data_pagamento = data_pagamento;
-	}
 
+	
 
 	@Override
 	public String toString() {

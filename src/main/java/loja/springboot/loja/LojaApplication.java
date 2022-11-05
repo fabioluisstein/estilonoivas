@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 
+
 @SpringBootApplication
 @EntityScan(basePackages="loja.springboot.*")
 @ComponentScan(basePackages= {"loja.*"})
@@ -31,6 +32,6 @@ public class LojaApplication {
 	    public LocaleResolver localeResolver(){
 	        return new FixedLocaleResolver(new Locale("pt", "BR"));
 	    }
-	
+	  
 }
  
