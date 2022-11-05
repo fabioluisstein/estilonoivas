@@ -21,5 +21,8 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	 
 	@Query(value="select * from locacao order by id desc limit 10", nativeQuery=true)
 	List<Locacao> top10();
+	
+
+	
 }
   

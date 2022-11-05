@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Grafico implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+   
+    
 	List<String> meses = new ArrayList<String>();
+	
 	List<Double> pagamentos = new ArrayList<Double>();
 	List<Double> entradas = new ArrayList<Double>();
-	
-	
-	
 	public List<String> getMeses() {
 		return meses;
 	}
@@ -33,5 +33,7 @@ public class Grafico implements Serializable {
 	public void setEntradas(List<Double> entradas) {
 		this.entradas = entradas;
 	}
-		
+	
+	
+	
 }

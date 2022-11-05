@@ -20,5 +20,10 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	 
 	@Query(value="select * from pagamento order by id desc limit 10", nativeQuery=true)
 	List<Pagamento> top10();
+	
+	 
+	@Query(value="select * from pagamento where month(data) = month(NOW()) ", nativeQuery=true)
+	List<Pagamento> pagamentoMesAtual();
+	
 }
  

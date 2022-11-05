@@ -1,10 +1,8 @@
 package loja.springboot.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,9 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import loja.springboot.model.Grafico;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -231,38 +226,6 @@ public class LocacaoController {
 	
 	
 	
-	
-	
-	
-	@GetMapping(value = "/buscargrafico") /* mapeia a url */
-	@ResponseBody /* Descricao da resposta */
-	public void buscargraficoid( HttpServletResponse response) throws IOException { 
-		List<String> meses = new ArrayList<String>();
-		meses.add("10");
-		meses.add("11");
-		meses.add("12");
-		
-		List<Double> entradas = new ArrayList<Double>();
-		entradas.add(10.00);
-		entradas.add(15.00);
-		entradas.add(20.00);
-		
-		
-		List<Double> pagamentos = new ArrayList<Double>();
-		pagamentos.add(8.00);
-		pagamentos.add(9.00);
-		pagamentos.add(15.00);
-		
-		Grafico grafico = new Grafico(); 
-		grafico.setMeses(meses);
-		grafico.setEntradas(entradas);
-		grafico.setPagamentos(pagamentos);
-		
-		 ObjectMapper mapper = new ObjectMapper();
-		 String json = mapper.writeValueAsString(grafico);
-		 response.getWriter().write(json);
-	
-	}   
 	
 	
 	@GetMapping(value = "/buscarprodutoid") /* mapeia a url */
