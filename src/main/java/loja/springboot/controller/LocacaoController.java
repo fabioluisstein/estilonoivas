@@ -2,7 +2,12 @@ package loja.springboot.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.apache.tomcat.util.codec.binary.Base64;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -50,6 +55,9 @@ public class LocacaoController {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private ReportUtil reportUtil;
  
 	@Cacheable("locacoes") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
@@ -129,6 +137,61 @@ public class LocacaoController {
 		andView.addObject("produtos", produtoRepository.findAll());
 		return andView;
 	} 
+	
+
+	@GetMapping("/gerarRelatorio/{idlocacao}")
+	public void imprimePdf(@PathVariable("idlocacao") Long idlocacao, 
+			
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	
+		
+      Map<String,Object> paramMap = new HashMap<String, Object>();
+      paramMap.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
+
+		byte[] pdf = reportUtil.gerarRelatorio( "contrato",paramMap, request.getServletContext());
+		
+
+		response.setContentLength(pdf.length);
+		
+
+		response.setContentType("application/octet-stream");
+		
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+		
+		
+		response.getOutputStream().write(pdf);
+		
+	} 
+	
+	
+	
+	
+	
+	
+	@PostMapping(value="/gerarRelatorio/{idlocacao}", produces = "application/text")
+	public ResponseEntity<String> downloadRelatorioParam(@PathVariable("idlocacao") Long idlocacao, HttpServletRequest request) throws Exception {
+				
+		Map<String,Object> params = new HashMap<String, Object>();
+		
+		params.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
+		
+		byte[] pdf = reportUtil.gerarRelatorio( "contrato",params, request.getServletContext());
+		
+		String base64Pdf = "data:application/pdf;base64," + Base64.encodeBase64String(pdf);
+		
+		return new ResponseEntity<String>(base64Pdf, HttpStatus.OK);
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")

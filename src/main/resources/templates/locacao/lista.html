@@ -35,7 +35,7 @@
 
 <br>
       <div class="container" style="border:1px">
-		<form action="pesquisarlocacao" method="post" class="col s12">
+		<form action="pesquisarlocacao" id="pesquisarlocacao" method="post" class="col s12">
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="nomepesquisa" class="active">Pesquia por Cliente </label>
@@ -50,8 +50,7 @@
 					    <input name="dataFinal" id="datapesquisa" type="date" >
 						<label for="datapesquisaFim" class="active">Data Final </label>
 						</div>
-						
-			
+		
 						
 					<div class="input-field col s12">
 					<input class="waves-effect waves-light btn grey darken-1" type="submit"
@@ -107,8 +106,13 @@
 	   </td>
         <td>
 	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_retirada, 'dd/MM/yyyy')}"></a>
-	   </td>
-	   <td> Contatro </td> 
+	    
+	     
+	     <td>  <a th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacao.id})}"> Relatorio </a></td>
+	     
+       
+	
+	
 	  <td> <a onclick="M.toast({html: 'Deletando locacao',classes: 'red rounded'})" th:href="@{/removerlocacao/{idlocacao}(idlocacao=${locacao.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
