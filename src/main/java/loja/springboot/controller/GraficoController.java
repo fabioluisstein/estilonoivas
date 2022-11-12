@@ -2,6 +2,7 @@ package loja.springboot.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +35,12 @@ public class GraficoController {
 	@ResponseBody /* Descricao da resposta */
 	public void buscargraficoid( HttpServletResponse response) throws IOException { 
 		List<String> meses = new ArrayList<String>();
-		meses.add("10");
+	
 
+		Calendar c = Calendar.getInstance();
+
+				meses.add(""+c.get(Calendar.MONTH));
+		
 		
 		
 		List<Double> entradas = new ArrayList<Double>();

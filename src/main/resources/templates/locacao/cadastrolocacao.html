@@ -180,7 +180,7 @@
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
 	   </td>
 	   
-	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereditarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
+	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
 	 </table> 
