@@ -2,7 +2,6 @@ package loja.springboot.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,22 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import loja.springboot.dto.GraficoDTO;
 import loja.springboot.model.Grafico;
-import loja.springboot.model.Pagamento;
-import loja.springboot.model.Parcela;
 import loja.springboot.repository.GraficoRepository;
-import loja.springboot.repository.PagamentoRepository;
-import loja.springboot.repository.ParcelaRepository;
 
 @Controller
 public class GraficoController {
  
 
-
-	@Autowired
-	private ParcelaRepository parcelaRepository;
-	
-	@Autowired
-	private PagamentoRepository pagamentoRepository;
 	
 	@Autowired
 	private GraficoRepository graficoRepository;
@@ -48,7 +37,6 @@ public class GraficoController {
 	@ResponseBody /* Descricao da resposta */
 	public void buscargraficoid( HttpServletResponse response) throws IOException { 
 		
-	    List<Parcela> listPar = parcelaRepository.parcelaMesAtual();
 	    List<GraficoDTO> grafico = new ArrayList<GraficoDTO>();
 	    grafico = graficoRepository.findAll();
 	    
@@ -66,7 +54,6 @@ public class GraficoController {
 	    graf.setEntradas(entradas);
 	    graf.setPagamentos(saidas);
 	    
-	 
 		
 		 ObjectMapper mapper = new ObjectMapper();
 		 String json = mapper.writeValueAsString(graf);
