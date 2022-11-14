@@ -70,6 +70,7 @@ public class FornecedorController {
 		return salvar(fornecedor.get());
 	}
 	
+	@CacheEvict(value="fornecedores",allEntries=true)
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public ModelAndView excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		fornecedorRepository.deleteById(idfornecedor);	

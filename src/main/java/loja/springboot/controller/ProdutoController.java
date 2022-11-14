@@ -154,7 +154,7 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	
+	@CacheEvict(value="produtos",allEntries=true)
 	@GetMapping("/removerproduto/{idproduto}")
 	public ModelAndView excluir(@PathVariable("idproduto") Long idproduto) {
 		produtoRepository.deleteById(idproduto);	

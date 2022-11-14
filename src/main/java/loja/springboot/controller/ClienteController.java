@@ -71,6 +71,7 @@ public class ClienteController {
 		return salvar(cliente.get());
 	}
 	
+	@CacheEvict(value="clientes",allEntries=true)
 	@GetMapping("/removercliente/{idcliente}")
 	public ModelAndView excluir(@PathVariable("idcliente") Long idcliente) {
 		clienteRepository.deleteById(idcliente);	

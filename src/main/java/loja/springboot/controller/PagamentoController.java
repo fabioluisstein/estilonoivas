@@ -157,7 +157,7 @@ public class PagamentoController {
 		return andView;
 	}
 	
-	
+	@CacheEvict(value="pagamentos",allEntries=true)
 	@GetMapping("/removerpagamento/{idpagamento}")
 	public ModelAndView excluir(@PathVariable("idpagamento") Long idpagamento) {
 		pagamentoRepository.deleteById(idpagamento);	
