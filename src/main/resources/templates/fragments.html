@@ -6,14 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 
- <!--Import Google Icon Font-->
- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- <!--Import materialize.css-->
- <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css" />
 
- 
-  
+
+   
 </head> 
  <body>
   <div th:fragment="menu">
@@ -68,7 +70,7 @@
             </div>
         </nav>
         
-    <!-- Menu Mobile -->
+  <!-- Menu Mobile -->
     <ul id="mobile-navbar" class="sidenav">
         <li><a href="/">Início</a></li>
      <li> <a class="dropdown-trigger" data-target="dropdown-menu4" href="#">
@@ -83,7 +85,7 @@
              Cliente/Forncedor <i class="material-icons right">arrow_drop_down</i>
              </a>
          </li>
-    </ul>
+   </ul>
             
     <!-- Dropdown -->
       <ul id="dropdown-menu2" class="dropdown-content">
@@ -122,10 +124,10 @@
   </footer>
 
 
-     <!--  Scripts-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <!--  Scripts-->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <!--JavaScript at end of body for optimized loading-->
+ <!--JavaScript at end of body for optimized loading-->
  <script type="text/javascript" src="/materialize/js/materialize.js"></script>
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -136,8 +138,52 @@
 <!--JavaScript at end of body for optimized loading-->
  <script type="text/javascript" src="/materialize/titulo.autocomplete-estidade.js"></script>
  
-
+ </div>
  
+ <div th:fragment="footerScript">
+ 
+ <!--JavaScript at end of body for optimized loading-->
+ <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+ 
+ <!--JavaScript at end of body for optimized loading-->
+ <script type="text/javascript" src="/materialize/main.js"></script>
+
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+        <script type="text/javascript">
+        $(document).ready(function () {
+        	$('#tabFilter').DataTable( {
+        		"lengthMenu": [ [5, 10, 20, -1], [5, 10, 20, "All"] ],
+        		
+        	    language: {
+        	    	"emptyTable": "Nenhum registro encontrado",
+        	        "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        	        "infoFiltered": "(Filtrados de _MAX_ registros)",
+        	        "infoThousands": ".",
+        	        "loadingRecords": "Carregando...",
+        	        "zeroRecords": "Nenhum registro encontrado",
+        	        "search": "Pesquisar",
+        	        "lengthMenu": " Mostrar  _MENU_ por página",
+                    "zeroRecords": "Sem resultados",
+                    "info": "Página _PAGE_ de _PAGES_",
+        	        "paginate": {
+        	            "next": "Próximo",
+        	            "previous": "Anterior",
+        	            "first": "Primeiro",
+        	            "last": "Último"
+        	        },
+        	        "aria": {
+        	            "sortAscending": ": Ordenar colunas de forma ascendente",
+        	            "sortDescending": ": Ordenar colunas de forma descendente"
+        	        }
+        	        
+        	    }
+        	} );
+          }
+        );
+        </script> 
  </div>
  
 </html>

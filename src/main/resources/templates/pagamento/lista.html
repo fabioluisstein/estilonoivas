@@ -4,78 +4,57 @@
 <meta charset="UTF8">
 <title>Lista de Pagamentos</title>
 
-
 <head th:replace="fragments :: html_head"/>
-
 
 <body>
 
 <div th:replace="fragments :: menu"/>
-<br>
-
-
- <div class="container">
-  <div class="row">
-        <div style="text-align:right" >
-  <a  href="/cadastropagamento" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
-
-  </div>
-      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Pagamentos </span>
-        <br>
-      </div>
-      
-   
-  </div>
-    </div>
-    
-    <div style="position: relative">
-
-<div id="toast-container"></div>
-</div>
 
 <br>
-      <div class="container" style="border:1px">
-		<form action="pesquisarpagamento" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Fornecedor </label>
-					<input name="nomepesquisa" id="nomepesquisa" class="validate">
-					
-					</div>
-						<div class="input-field col s6">
-					    <input name="dataInicio" id="datapesquisa" type="date" >
-						<label for="datapesquisaInicio" class="active">Datas Inicio </label>
-						</div>
-						<div class="input-field col s6">
-					    <input name="dataFinal" id="datapesquisa" type="date" >
-						<label for="datapesquisaFim" class="active">Datas Final </label>
-						</div>
-						
-			
-						
-					<div class="input-field col s12">
-					<input class="waves-effect waves-light btn grey darken-1" type="submit"
-					     onclick="M.toast({html: 'Pesquisando pagamento Específica',classes: 'blue rounded'})"
-						value="Buscar">
-  <a onclick="M.toast({html: 'Pesquisando todos Pagamentos',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listapagamentos">Lista Pagamentos</a>	
-        
-				</div>
-				
-	
-				
-			</div>	
-			
-	
-		</form>
-	</div>
- <br/>
-
-<div class="container col s12">
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
  
- <table class="striped #e0e0e0 grey lighten-2 highlight col s12">
+     <div class="row">
+      <div style="text-align:left"  class="col s6">
+       <h5 class="white-text">Pagamentos</h5>
+      
+      </div>
+       <div style="text-align:right">
+         <a  href="/cadastropagamento" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+       </div>
+        
+   
+    </div>
+   
+  </nav>
+
+
+  <div class="row grey lighten-2" style="margin:auto; padding:auto; max-width: 98%">
+  
+  <form action="pesquisarpagamento" method="post">
+
+  <div class="row">
+  
+  <div class="input-field col s6">
+	 <input name="dataInicio" id="datapesquisa" type="date" >
+	 <label for="datapesquisaInicio" class="active">Datas Inicio </label>
+  </div>
+  <div class="input-field col s6">
+	 <input name="dataFinal" id="datapesquisa" type="date" >
+	 <label for="datapesquisaFim" class="active">Datas Final </label>
+  </div>
+  <div class="col s12"> 
+     <input class="waves-effect waves-light btn grey darken-1" 
+            type="submit" onclick="M.toast({html: 'Pesquisando pagamento Específica',classes: 'blue rounded'})" value="Buscar">
+  </div>
+  </div>
+ </form>
+  </div>
+           
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+<table id="tabFilter" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
    <thead>
-	   <tr>
-	    <th>Tipo</th>
+     <tr>
+     <th>Tipo</th>
 	    <th>Data</th>
 	    <th>Fornecedor</th>
 	    <th>Moeda</th>
@@ -83,10 +62,9 @@
 	    <th>Valor</th>
 	    <th>Anexo</th> 
 	    <th>Excluir</th>
-	   </tr>
-	</thead>
-	
-	 <tbody>
+	 </tr>
+    </thead>	
+	<tbody>
 	  <tr th:each = "pagamento : ${pagamentos}">
 	   <td>
 	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.categoria}"></a>
@@ -113,11 +91,13 @@
 	  <td> <a onclick="M.toast({html: 'Deletando pagamento',classes: 'red rounded'})" th:href="@{/removerpagamento/{idpagamento}(idpagamento=${pagamento.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
-	 </table>   
- </div>
- 
-<br>
+	 
+</table>
+
+ </div>  
+  
+<div th:replace="fragments :: footerScript"/>
 
 </body>
-<div th:replace="fragments :: footer"/>
+
 </html>

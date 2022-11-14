@@ -43,12 +43,11 @@ public class PagamentoController {
 	}
 	 
 	@PostMapping("/pesquisarpagamento")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
-			                      @RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
+	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 	  
 	  ModelAndView modelAndView = new ModelAndView("pagamento/lista");
-		if(nomepesquisa.isEmpty() && dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoRepository.top10());
+		if(dataInicio.isEmpty() && dataFinal.isEmpty()) {
+			modelAndView.addObject("pagamentos", pagamentoRepository.findAll());
 		}
 		
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
@@ -56,7 +55,7 @@ public class PagamentoController {
 			return modelAndView;
 		}
 		
-		modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoByName(nomepesquisa.toUpperCase()));
+		modelAndView.addObject("pagamentos", pagamentoRepository.findAll());
 		return modelAndView;
 	}
 	

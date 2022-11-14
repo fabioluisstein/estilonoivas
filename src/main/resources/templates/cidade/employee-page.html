@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Lista de Estados</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+
+
+ 
+
+ <!--Import materialize.css-->
+ <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css" />
+
+
+<br>
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  <a  href="/cadastrocidade" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+  </div>
+      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Cidades </span>
+  
+        <br>
+      </div>
+      
+   
+  </div>
+    </div>
+    
+    <div style="position: relative">
+
+<div id="toast-container"></div>
+</div>
+
+
+
+<div class="container">
+ 
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 100%">
+        <table id="example"  class="table table-striped">
+   <thead>
+     <tr>
+     <th>Id</th>
+	    <th>Nome</th>
+	    <th>Estado</th>
+	    <th>Excluir</th>  
+	      </tr>
+ </thead>
+    	
+	  <tbody>
+      
+      
+	  <tr th:each = "cidade : ${page.content}">
+	   
+	  <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.id}"></a>
+	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.nome}"></a>
+	   </td>
+	  <td>
+	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.estado}"></a>
+	  </td>
+	  <td> <a onclick="M.toast({html: 'Deletando Cidade',classes: 'red rounded'})" th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
+	 
+	  </tr>
+	 </tbody>
+	
+	 
+</table>
+
+ </div>  
+  
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+        <script type="text/javascript">
+        $(document).ready(function () {
+        	$('#example').DataTable( {
+        	    language: {
+        	    	"emptyTable": "Nenhum registro encontrado",
+        	        "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        	        "infoFiltered": "(Filtrados de _MAX_ registros)",
+        	        "infoThousands": ".",
+        	        "loadingRecords": "Carregando...",
+        	        "zeroRecords": "Nenhum registro encontrado",
+        	        "search": "Pesquisar",
+        	        
+        	        "lengthMenu": " Mostrar  _MENU_ por página",
+                    "zeroRecords": "Sem resultados",
+                    "info": "Página _PAGE_ de _PAGES_",
+                   
+        	        
+        	        "paginate": {
+        	            "next": "Próximo",
+        	            "previous": "Anterior",
+        	            "first": "Primeiro",
+        	            "last": "Último"
+        	        },
+        	        "aria": {
+        	            "sortAscending": ": Ordenar colunas de forma ascendente",
+        	            "sortDescending": ": Ordenar colunas de forma descendente"
+        	        }
+        	    }
+        	} );
+        }
+        
+        
+        );
+        </script>
+ 
+<br>
+
+</body>
+</html>

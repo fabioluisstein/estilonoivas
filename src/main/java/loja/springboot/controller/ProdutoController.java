@@ -41,7 +41,7 @@ public class ProdutoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/lista");
-		andView.addObject("produtos", produtoRepository.top10());
+		andView.addObject("produtos", produtoRepository.listaTodos());
 		return andView;
 	}
 	 
@@ -49,7 +49,7 @@ public class ProdutoController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("produto/lista");
 		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("produtos", produtoRepository.top10());
+			modelAndView.addObject("produtos", produtoRepository.listaTodos());
 		}
 		modelAndView.addObject("produtos", produtoRepository.findProdutoByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
@@ -140,9 +140,6 @@ public class ProdutoController {
 		
 	} 
 	
-	
-	
- 
 	@GetMapping("/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto") Long idproduto) throws ParseException, IOException {
 		Optional<Produto> produto = produtoRepository.findById(idproduto);
@@ -159,7 +156,7 @@ public class ProdutoController {
 	public ModelAndView excluir(@PathVariable("idproduto") Long idproduto) {
 		produtoRepository.deleteById(idproduto);	
 		ModelAndView andView = new ModelAndView("produto/lista");
-		andView.addObject("produtos", produtoRepository.top10());
+		andView.addObject("produtos", produtoRepository.listaTodos());
 		return andView;
 	}
 	

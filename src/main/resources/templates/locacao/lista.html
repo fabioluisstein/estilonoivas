@@ -4,77 +4,59 @@
 <meta charset="UTF8">
 <title>Lista de Locações</title>
 
-
 <head th:replace="fragments :: html_head"/>
-
 
 <body>
 
 <div th:replace="fragments :: menu"/>
-<br>
-
-
- <div class="container">
-  <div class="row">
-        <div style="text-align:right" >
-  <a  href="/cadastrolocacao" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
-
-  </div>
-      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Locações </span>
-        <br>
-      </div>
-      
-   
-  </div>
-    </div>
-    
-    <div style="position: relative">
-
-<div id="toast-container"></div>
-</div>
 
 <br>
-      <div class="container" style="border:1px">
-		<form action="pesquisarlocacao" id="pesquisarlocacao" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Cliente </label>
-					<input name="nomepesquisa" id="nomepesquisa" class="validate">
-					
-					</div>
-						<div class="input-field col s6">
-					    <input name="dataInicio" id="datapesquisa" type="date" >
-						<label for="datapesquisaInicio" class="active">Data Inicio </label>
-						</div>
-						<div class="input-field col s6">
-					    <input name="dataFinal" id="datapesquisa" type="date" >
-						<label for="datapesquisaFim" class="active">Data Final </label>
-						</div>
-		
-						
-					<div class="input-field col s12">
-					<input class="waves-effect waves-light btn grey darken-1" type="submit"
-					     onclick="M.toast({html: 'Pesquisando Locação Específica',classes: 'blue rounded'})"
-						value="Buscar">
-  <a onclick="M.toast({html: 'Pesquisando todas Locações',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listalocacoes">Lista Locações</a>	
-        
-				</div>
-				
-	
-				
-			</div>	
-			
-	
-		</form>
-	</div>
- <br/>
-
-<div class="container col s12">
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
  
- <table class="striped #e0e0e0 grey lighten-2 highlight col s12">
+     <div class="row">
+      <div style="text-align:left"  class="col s6">
+       <h5 class="white-text">Locações</h5>
+      
+      </div>
+       <div style="text-align:right">
+         <a  href="/cadastrolocacao" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+       </div>
+        
+   
+    </div>
+   
+  </nav>
+
+
+  <div class="row grey lighten-2" style="margin:auto; padding:auto; max-width: 98%">
+  
+  <form action="pesquisarlocacao" method="post">
+
+  <div class="row">
+  
+  <div class="input-field col s6">
+	 <input name="dataInicio" id="datapesquisa" type="date" >
+	 <label for="datapesquisaInicio" class="active">Data Inicio </label>
+  </div>
+  <div class="input-field col s6">
+	 <input name="dataFinal" id="datapesquisa" type="date" >
+	 <label for="datapesquisaFim" class="active">Data Final </label>
+  </div>
+  <div class="col s12"> 
+     <input class="waves-effect waves-light btn grey darken-1" 
+            type="submit" onclick="M.toast({html: 'Pesquisando locação Específica',classes: 'blue rounded'})" value="Buscar">
+  </div>
+  </div>
+ </form>
+  </div>
+           
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+   <table id="tabFilter"  class="table table-striped">
+  <div style="text-align:right" >
+  </div>
    <thead>
-	   <tr>
-	    <th>Código</th>
+     <tr>
+        <th>Código</th>
 	    <th>Data Contrato</th>
 	    <th>Valor Total</th>
 	    <th>Pendente</th>
@@ -82,10 +64,9 @@
 	    <th>Data Retirada</th>
 	    <th>Contrato</th>
 	    <th>Excluir</th>
-	   </tr>
-	</thead>
-	
-	 <tbody>
+	 </tr>
+    </thead>	
+	<tbody>
 	  <tr th:each = "locacao : ${locacoes}">
 	   <td>
 	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${locacao.id}"></a>
@@ -110,11 +91,13 @@
 	  <td> <a onclick="M.toast({html: 'Deletando locacao',classes: 'red rounded'})" th:href="@{/removerlocacao/{idlocacao}(idlocacao=${locacao.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
-	 </table>   
- </div>
- 
-<br>
+	 
+</table>
+
+ </div>  
+  
+<div th:replace="fragments :: footerScript"/>
 
 </body>
-<div th:replace="fragments :: footer"/>
+
 </html>

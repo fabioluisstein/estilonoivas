@@ -14,6 +14,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	@Query(value="select distinct c.* from produto c, fornecedor f where c.fornecedor_id = f.id and  UPPER(f.nome) like %?1% OR 	c.id like %?1%", nativeQuery=true)
 	List<Produto> findProdutoByName(String nome);
 	
-	@Query(value="select * from produto order by id desc limit 10", nativeQuery=true)
-	List<Produto> top10();
+	@Query(value="select * from produto order by id desc", nativeQuery=true)
+	List<Produto> listaTodos();
 }

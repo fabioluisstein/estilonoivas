@@ -4,69 +4,43 @@
 <meta charset="UTF8">
 <title>Lista de Clientes</title>
 
-
 <head th:replace="fragments :: html_head"/>
-
 
 <body>
 
 <div th:replace="fragments :: menu"/>
+
 <br>
-
-
- <div class="container">
-  <div class="row">
-        <div style="text-align:right" >
-  <a  href="/cadastrocliente" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
-
-  </div>
-      <div class="col s12 card-panel teal lighten-2 grey darken-1"><span class="flow-text">Clientes </span>
-        <br>
-      </div>
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
+ 
+     <div class="row">
+      <div style="text-align:left"  class="col s6">
+       <h5 class="white-text">Lista de Clientes</h5>
       
-   
-  </div>
+      </div>
+       <div style="text-align:right"  class="col s6">
+         <a  href="/cadastrocliente" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+       </div>
     </div>
     
-    <div style="position: relative">
+  </nav>
 
-<div id="toast-container"></div>
-</div>
-
-<br>
-      <div class="container" style="border:1px">
-		<form action="pesquisarcliente" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomepesquisa" class="active">Pesquia por Nome, Telefone ou CPF</label>
-					<input name="nomepesquisa" id="nomepesquisa" class="validate">
-					<input class="waves-effect waves-light btn grey darken-1" type="submit"
-					     onclick="M.toast({html: 'Pesquisando Cliente Específica',classes: 'blue rounded'})"
-						value="Buscar">
-  <a onclick="M.toast({html: 'Pesquisando todas Clientes',classes: 'blue rounded'})" class="waves-effect waves-light btn indeterminate grey darken-1" href="/listaclientes">Lista Clientes</a>	
-        
-				</div>
-			</div>			
-		</form>
-	</div>
- <br/>
-
-<div class="container col s12">
- 
- <table class="striped #e0e0e0 grey lighten-2 highlight" border="1">
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+   <table id="tabFilter"  class="table table-striped">
+   <div style="text-align:right" >
+  </div>
    <thead>
-	   <tr>
-	    <th>Id</th>
-	    <th>Nome.</th>
+     <tr>
+        <th>Id</th>
+	    <th>Nome</th>
 	    <th>Telefone</th>
 	    <th>Cpf</th>
 	    <th>Cidade</th>
 	    <th>Locação</th>
-	    <th>Excluir</th>
-	   </tr>
-	</thead>
-	
-	 <tbody>
+	    <th>Excluir</th> 
+	 </tr>
+    </thead>	
+	<tbody>
 	  <tr th:each = "cliente : ${clientes}">
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.id}"></a>
@@ -87,11 +61,18 @@
 	  <td> <a onclick="M.toast({html: 'Deletando Cliente',classes: 'red rounded'})" th:href="@{/removercliente/{idcliente}(idcliente=${cliente.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr> 
 	 </tbody>
-	 </table>   
- </div>
- 
-<br>
+	
+	 
+</table>
+
+ </div>  
+  
+
+
+<div th:replace="fragments :: footerScript"/>
 
 </body>
-<div th:replace="fragments :: footer"/>
+
+
+
 </html>

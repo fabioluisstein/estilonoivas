@@ -6,7 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +45,9 @@ public class CidadeController {
 		return andView;
 	}
 	 
+	
+
+	
 	@PostMapping("/pesquisarcidade")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cidade/lista");
@@ -59,6 +66,8 @@ public class CidadeController {
 		return modelAndView;
 	}
 	
+	
+	
 	@CacheEvict(value="cidades",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
@@ -69,6 +78,22 @@ public class CidadeController {
 		
 	} 
 	
+	  
+	
+	@GetMapping("employees")
+	  public String getEmployees(@PageableDefault(size = 3) Pageable pageable, Model model) {
+	      Page<Cidade> page = cidadeRepository.findAll(pageable);
+	      model.addAttribute("page", page);
+	      return "cidade/employee-page";
+	  }
+	
+	
+	@GetMapping("telanova")
+	  public String getEEmployees() {
+	 
+	    
+	      return "cidade/lista2";
+	  }
  	
 	@GetMapping("/editarcidade/{idcidade}")
 	public ModelAndView editar(@PathVariable("idcidade") Long idcidade) {

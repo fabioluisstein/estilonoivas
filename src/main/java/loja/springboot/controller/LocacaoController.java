@@ -63,17 +63,16 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {
 		ModelAndView andView = new ModelAndView("locacao/lista");
-		andView.addObject("locacoes", locacaoRepository.top10());
+		andView.addObject("locacoes", locacaoRepository.topTodas());
 		return andView;
 	}
 	 
 	@PostMapping("/pesquisarlocacao")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
-			                      @RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
+	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 	  
 	  ModelAndView modelAndView = new ModelAndView("locacao/lista");
-		if(nomepesquisa.isEmpty() && dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("locacoes", locacaoRepository.top10());
+		if(dataInicio.isEmpty() && dataFinal.isEmpty()) {
+			modelAndView.addObject("locacoes", locacaoRepository.topTodas());
 		}
 		
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
@@ -81,7 +80,7 @@ public class LocacaoController {
 			return modelAndView;
 		}
 		
-		modelAndView.addObject("locacoes", locacaoRepository.findLocacaoByName(nomepesquisa.toUpperCase()));
+		modelAndView.addObject("locacoes", locacaoRepository.topTodas());
 		return modelAndView;
 	}
 	

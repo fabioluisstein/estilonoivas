@@ -19,8 +19,8 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	@Query(value="Select * from locacao p  where  p.data_locacao  BETWEEN ?1 AND  ?2 ", nativeQuery=true)
 	List<Locacao> findLocacaoDatas(String dataInicial, String DataFinal);
 	 
-	@Query(value="select * from locacao order by id desc limit 10", nativeQuery=true)
-	List<Locacao> top10();
+	@Query(value="select * from locacao order by id desc", nativeQuery=true)
+	List<Locacao> topTodas();
 	
 
 	
