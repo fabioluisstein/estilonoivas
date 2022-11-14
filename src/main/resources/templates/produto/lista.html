@@ -26,7 +26,7 @@
   </nav>
 
 <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
-   <table id="tabFilter"  class="table table-striped">
+   <table id="tabFilterProdutos"  class="table table-striped table-bordered">
    <div style="text-align:right" >
   </div>
    <thead>
@@ -34,6 +34,8 @@
         <th>Id</th>
 	    <th>Fornecedor</th>
 	    <th>Tipo</th>
+	    <th>Cor</th>
+	    <th>Tamanho</th>
 	    <th>Data Compra</th>
 	    <th>Valor</th>
 	    <th>Foto</th>
@@ -51,11 +53,17 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${produto.categoria}"></a>
 	   </td>
+	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${produto.cor}"></a>
+	   </td>
+	   	   <td>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${produto.tamanho}"></a>
+	   </td>
        <td>
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#dates.format(produto.data_compra, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produto.valorCompra), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produto.valorVenda), '.00', '')}"></a>
 	   </td>
 	   <td><a th:if="${produto.arquivo !=null}"  th:href="@{/baixarArquivo/{idproduto}(idproduto=${produto.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
 	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removerproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">delete_forever</i></a></td>
@@ -67,6 +75,10 @@
   
 
 <div th:replace="fragments :: footerScript"/>
+
+
+
+
 
 </body>
 

@@ -8,8 +8,15 @@ public class IndexController {
 
 	@RequestMapping("/")
 	public String index() {
-		return "index";
+		return "principal";
 	}
+	
+	
+	@RequestMapping("/administrativo")
+	public String indexSistma() {
+		return "administrativo";
+	}
+	
 	
 	
 }

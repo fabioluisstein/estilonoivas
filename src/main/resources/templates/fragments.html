@@ -22,7 +22,7 @@
         <nav>
             <div class="nav-wrapper grey darken-2">
                 <!-- Logo -->
-                <a href="/" class="brand-logo">Fibonatti</a>
+                <a href="/administrativo" class="brand-logo">Fibonatti</a>
                 <!-- Ícone para abrir no Mobile -->
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
@@ -72,7 +72,7 @@
         
   <!-- Menu Mobile -->
     <ul id="mobile-navbar" class="sidenav">
-        <li><a href="/">Início</a></li>
+        <li><a href="/administrativo">Início</a></li>
      <li> <a class="dropdown-trigger" data-target="dropdown-menu4" href="#">
              Pagamento/Cliente <i class="material-icons right">arrow_drop_down</i>
              </a>
@@ -156,6 +156,44 @@
         $(document).ready(function () {
         	$('#tabFilter').DataTable( {
         		"lengthMenu": [ [5, 10, 20, -1], [5, 10, 20, "All"] ],
+        		 "order": [1, "desc"],
+        	    language: {
+        	    	"emptyTable": "Nenhum registro encontrado",
+        	        "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        	        "infoFiltered": "(Filtrados de _MAX_ registros)",
+        	        "infoThousands": ".",
+        	        "loadingRecords": "Carregando...",
+        	        "zeroRecords": "Nenhum registro encontrado",
+        	        "search": "Pesquisar",
+        	        "lengthMenu": " Mostrar  _MENU_ por página",
+                    "zeroRecords": "Sem resultados",
+                    "info": "Página _PAGE_ de _PAGES_",
+        	        "paginate": {
+        	            "next": "Próximo",
+        	            "previous": "Anterior",
+        	            "first": "Primeiro",
+        	            "last": "Último"
+        	        },
+        	        "aria": {
+        	            "sortAscending": ": Ordenar colunas de forma ascendente",
+        	            "sortDescending": ": Ordenar colunas de forma descendente"
+        	        }
+        	        
+        	    }
+        	} );
+          }
+        );
+     </script> 
+     
+     
+     
+     
+     
+      <script type="text/javascript">
+        $(document).ready(function () {
+        	$('#tabFilterProdutos').DataTable( {
+        		 "order": [0, "desc"] ,
+        		"lengthMenu": [ [5, 10, 20, -1], [5, 10, 20, "All"] ],
         		
         	    language: {
         	    	"emptyTable": "Nenhum registro encontrado",
@@ -183,7 +221,47 @@
         	} );
           }
         );
-        </script> 
+     </script> 
+     
+     
+     
+      <script type="text/javascript">
+        $(document).ready(function () {
+        	$('#tabFilterPagamentos').DataTable( {
+        		 "order": [1, "desc"] ,
+        		"lengthMenu": [ [5, 10, 20, -1], [5, 10, 20, "All"] ],
+        		
+        	    language: {
+        	    	"emptyTable": "Nenhum registro encontrado",
+        	        "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        	        "infoFiltered": "(Filtrados de _MAX_ registros)",
+        	        "infoThousands": ".",
+        	        "loadingRecords": "Carregando...",
+        	        "zeroRecords": "Nenhum registro encontrado",
+        	        "search": "Pesquisar",
+        	        "lengthMenu": " Mostrar  _MENU_ por página",
+                    "zeroRecords": "Sem resultados",
+                    "info": "Página _PAGE_ de _PAGES_",
+        	        "paginate": {
+        	            "next": "Próximo",
+        	            "previous": "Anterior",
+        	            "first": "Primeiro",
+        	            "last": "Último"
+        	        },
+        	        "aria": {
+        	            "sortAscending": ": Ordenar colunas de forma ascendente",
+        	            "sortDescending": ": Ordenar colunas de forma descendente"
+        	        }
+        	        
+        	    }
+        	} );
+          }
+        );
+     </script> 
+     
+     
+     
+     
  </div>
  
 </html>

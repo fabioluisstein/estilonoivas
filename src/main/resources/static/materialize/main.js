@@ -79,6 +79,7 @@ $(document).ready(function gerarGrafico() {
 				        data: json.pagamentos,
 				      }, 
 				      
+				      
 				      { type: 'bar',
 				        label: 'Entadas',
 				        data: json.entradas,

@@ -10,11 +10,19 @@ public class Grafico implements Serializable {
 
 	private static final long serialVersionUID = 1L;
    
-    
+	private Long id;
 	List<String> meses = new ArrayList<String>();
-	
 	List<Double> pagamentos = new ArrayList<Double>();
 	List<Double> entradas = new ArrayList<Double>();
+	
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public List<String> getMeses() {
 		return meses;
 	}
