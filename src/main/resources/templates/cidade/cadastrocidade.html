@@ -39,6 +39,8 @@
       <label for="nome" class="active">Nome</label> 
       <input name="nome" th:field="*{nome}" id="nome" class="validate" required>
     </div>
+ 
+ <!--   
         
    <div class="input-field col s12">
     <label for="estado" class="active">Estado</label> 
@@ -48,7 +50,19 @@
 			th:value="${est.id}" th:text="${est.nome}" ></option>
      </select> 
     </div>
+   -->
+    
+    
         <br>
+    <div class="input-field col s12">
+     <input type="text" id="autocomplete-input-estado"
+            placeholder="Pesquise por Estado"
+            autocomplete="off"
+            required="required"
+            class="autocomplete"/>
+            <label for="autocomplete-input-estado">Estado</label>
+     <input type="hidden"   id="estado"  name="estado"/>
+    </div>
    
        <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listacidades" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
        <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
@@ -60,4 +74,11 @@
 
 <div th:replace="fragments :: footer"/>
 </body>
+
+
+<!--JavaScript at end of body for optimized loading-->
+ <script type="text/javascript" src="materialize/titulo.autocomplete-estidade.js"></script>
+
+
+
 </html>
