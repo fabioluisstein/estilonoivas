@@ -14,10 +14,15 @@
 
 
  <div class="container">
+ 
+ 
+
   <div class="row">
         <div style="text-align:right" >
   </div>
       <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Cidade </span>
+  
+              
         <br>
       </div>
     </div>
@@ -51,34 +56,37 @@
      </select> 
     </div>
    -->
-    
-    
-        <br>
-    <div class="input-field col s12">
-     <input type="text" id="autocomplete-input-estado"
-            placeholder="Pesquise por Estado"
+   
+    <br>
+    <div class="input-field col s12"> 
+     <input type="text" id="estadodto" th:value="${estadodto}" name ="estadodto"
             autocomplete="off"
             required="required"
+            onblur="validaCampos()" 
             class="autocomplete"/>
             <label for="autocomplete-input-estado">Estado</label>
-     <input type="hidden"   id="estado"  name="estado"/>
+            <input type="hidden" required="required"  id="estadoId"  name="estadoId"   th:value="${estadoId}"/>
+               
     </div>
    
        <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listacidades" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
-       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+       <input  class="waves-effect waves-light btn grey darken-1" id="btn" type="submit" value="Salvar">
      </div>
     </form>
 
-</div>
+</div> 
 
 
 <div th:replace="fragments :: footer"/>
 </body>
 
-
-<!--JavaScript at end of body for optimized loading-->
- <script type="text/javascript" src="materialize/titulo.autocomplete-estidade.js"></script>
-
+<script>
+function validaCampos() {
+ if(document.getElementById("estadoId").value ===''){
+	document.getElementById('estadodto').value = null;
+ } 
+}
+</script>
 
 
 </html>

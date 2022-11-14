@@ -65,7 +65,7 @@ public class PagamentoController {
 	public ModelAndView cadastro(Pagamento pagamento) {
 		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
 		modelAndView.addObject("pagamentobj", new Pagamento());
-		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
+		modelAndView.addObject("fornecedores", fornecedorRepository.forcedorOrderBy());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
 		return modelAndView;
 	}
@@ -74,7 +74,7 @@ public class PagamentoController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarpagamento",consumes= {"multipart/form-data"})
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {	
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
-		andView.addObject("fornecedores", fornecedorRepository.findAll());
+		andView.addObject("fornecedores", fornecedorRepository.forcedorOrderBy());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
 		
 		if(pagamento.getId()==null) {

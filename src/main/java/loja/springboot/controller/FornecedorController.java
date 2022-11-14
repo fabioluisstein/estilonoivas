@@ -45,6 +45,7 @@ public class FornecedorController {
 		return modelAndView;
 	}
 
+	
 	@Cacheable("fornecedores")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrofornecedor")
 	public ModelAndView cadastro(Fornecedor fornecedor) {

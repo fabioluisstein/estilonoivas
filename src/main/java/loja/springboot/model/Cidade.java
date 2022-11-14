@@ -3,7 +3,6 @@ package loja.springboot.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,10 +23,10 @@ public class Cidade implements Serializable {
 	private Long id;
 	private String nome;
 	
-	@ManyToOne (fetch = FetchType.LAZY)
+	@ManyToOne()
 	private Estado estado;
-
-
+	  
+	
 	public Long getId() {
 		return id;
 	}

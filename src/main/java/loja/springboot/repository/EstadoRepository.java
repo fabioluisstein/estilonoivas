@@ -18,8 +18,7 @@ public interface EstadoRepository extends JpaRepository<Estado, Long> {
 	@Query(value="select * from estado order by id desc limit 10", nativeQuery=true)
 	List<Estado> top10();
 
-	
-	 @Query("select new loja.springboot.dto.EntidadeDTO(id, nome) from Estado where lower(nome) like %?1%")
-	    List<EntidadeDTO> filtradas(String nome);
+	@Query("select new loja.springboot.dto.EntidadeDTO(id, nome) from Estado where lower(nome) like %?1%")
+	List<EntidadeDTO> filtradas(String nome);
 
 }

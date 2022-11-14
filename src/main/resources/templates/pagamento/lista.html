@@ -77,10 +77,11 @@
 	   <tr>
 	    <th>Tipo</th>
 	    <th>Data</th>
+	    <th>Fornecedor</th>
 	    <th>Moeda</th>
 	    <th>Origem</th>
 	    <th>Valor</th>
-	    <th>Comprovate</th>
+	    <th>Anexo</th> 
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
@@ -93,6 +94,9 @@
 	   
 	   <td>
 	    <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#dates.format(pagamento.data, 'dd/MM/yyyy')}"></a>
+	   </td>
+	   	   <td>
+	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.abbreviate(pagamento.fornecedor,20)}"></a>
 	   </td>
 	   
 	   <td>

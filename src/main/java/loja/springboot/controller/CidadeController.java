@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import loja.springboot.dto.EntidadeDTO;
 import loja.springboot.model.Cidade;
+import loja.springboot.model.Estado;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.EstadoRepository;
 
@@ -32,6 +31,7 @@ public class CidadeController {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
  
 	@Cacheable("cidades") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listacidades")
@@ -51,46 +51,43 @@ public class CidadeController {
 		return modelAndView;
 	}
 
-	@Cacheable("estatos") 
+
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocidade")
 	public ModelAndView cadastro(Cidade cidade) {
 		ModelAndView modelAndView = new ModelAndView("cidade/cadastrocidade");
 		modelAndView.addObject("cidadebj", new Cidade());
-		modelAndView.addObject("estados", estadoRepository.findAll());
 		return modelAndView;
 	}
 	
 	@CacheEvict(value="cidades",allEntries=true)
-	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
-	public ModelAndView salvar( @Validated Cidade cidade, BindingResult result, RedirectAttributes attributes) {	
-		  if (result.hasErrors()){
-	            return null;
-	        }
-		ModelAndView andView = new ModelAndView("cidade/cadastrocidade");
-		andView.addObject("estados", estadoRepository.findAll());
-		andView.addObject("cidadebj",cidadeRepository.saveAndFlush(cidade));
-		return andView;
-	}
-	 
+	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
 
+		cidade.setEstado(new Estado(estadoId));
+		Cidade cdCidade = cidadeRepository.saveAndFlush(cidade);		
+		return "redirect:/editarcidade/"+cdCidade.getId().toString();
+		
+	} 
 	
-	
+ 	
 	@GetMapping("/editarcidade/{idcidade}")
 	public ModelAndView editar(@PathVariable("idcidade") Long idcidade) {
 		Optional<Cidade> cidade = cidadeRepository.findById(idcidade);
 		ModelAndView andView = new ModelAndView("cidade/cadastrocidade");
 		andView.addObject("cidadebj",cidade);
-		andView.addObject("estados", estadoRepository.findAll());
+		andView.addObject("estadodto", cidade.get().getEstado().getNome());
+		andView.addObject("estadoId", cidade.get().getEstado().getId());
+		
+		  
 		return andView;
-	}
+	}  
 	
     @RequestMapping("/filtro")
     public @ResponseBody
     List<EntidadeDTO> filtradas(String nome) {
-        return estadoRepository.filtradas(nome.toLowerCase());
-       
+        return estadoRepository.filtradas(nome.toLowerCase());   
     }
+    
 	@CacheEvict(value="cidades",allEntries=true)
 	@GetMapping("/removercidade/{idcidade}")
 	public ModelAndView excluir(@PathVariable("idcidade") Long idcidade) {

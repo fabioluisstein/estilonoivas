@@ -16,4 +16,7 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
 	@Query(value="select * from fornecedor order by id desc limit 10", nativeQuery=true)
 	List<Fornecedor> top10();
+	
+	@Query(value="select * from fornecedor order by nome asc", nativeQuery=true)
+	List<Fornecedor> forcedorOrderBy();
 }

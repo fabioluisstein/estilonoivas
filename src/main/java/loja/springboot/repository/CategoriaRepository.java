@@ -18,7 +18,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 	List<Categoria> top10();
 	
 	
-	@Query(value="select * from categoria where tabela  = ?1 order by id desc", nativeQuery=true)
+	@Query(value="select * from categoria where tabela  = ?1 order by nome asc", nativeQuery=true)
 	List<Categoria> findCategoriaByTable(String tabela);
 	
 }

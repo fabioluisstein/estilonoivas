@@ -38,7 +38,7 @@ public class GraficoController {
 	
 
 		Calendar c = Calendar.getInstance();
-
+ 
 				meses.add(""+c.get(Calendar.MONTH));
 		
 		
@@ -54,7 +54,7 @@ public class GraficoController {
 		for(Pagamento pagamento: listPag) {  
 			valor = valor + pagamento.getValor();
 		}
-		
+		 
 		pagamentos.add(valor);
 		
 		Double valorParcela = 0.00;

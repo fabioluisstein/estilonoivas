@@ -7,12 +7,12 @@ Financeiro.Autocomplete = (function () {
     }
 
     Autocomplete.prototype.iniciar = function () {
-    	
+    	 
         $.ajax({
-
+        
         	   type: 'GET',
                url:  '/filtro?nome=',
-               
+            
           success: function (response) {
               var entidadesServidor = response;
               var entidadesSugestao = {};
@@ -35,13 +35,23 @@ Financeiro.Autocomplete = (function () {
                   entidadesServidor.filter(function (obj) {
                       if(obj.nome === texto){
                         id = obj.id;
+                     
+                     
                       }
+
                   });
 
                   if(id > 0){
-                      console.log('id', id);
-                      $('#estado').attr('value', id);
+                	//  const nome = document.querySelector("#autocomplete-input-estado");
+                	  
+                //	console.log(nome.value);
+                      $('#estadoId').attr('value', id);
                   }
+                  
+                  
+        
+                  
+                  
               }
 
           }
@@ -59,4 +69,4 @@ $(function () {
     autocomplete.iniciar();
 
 
-});
+}  );

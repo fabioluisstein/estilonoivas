@@ -193,6 +193,7 @@ public class LocacaoController {
 		    return "redirect:/voltar/"+produtoLocacao.getLocacao().getId().toString()+"";
 	} 
 	
+	
 	@GetMapping("/voltar/{idlocacao}")
 	public ModelAndView voltar(@PathVariable("idlocacao") Long idlocacao)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
