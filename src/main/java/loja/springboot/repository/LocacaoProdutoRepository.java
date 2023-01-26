@@ -18,8 +18,8 @@ public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, 
 	@Query(value="Select * from locacao_produto p  where  p.data_liberacao  BETWEEN ?1 AND  ?2 ", nativeQuery=true)
 	List<LocacaoProduto> findLocacaoDatas(String dataInicial, String DataFinal);
 	 
-	@Query(value="select * from locacao_produto order by id desc limit 10", nativeQuery=true)
-	List<LocacaoProduto> top10();
+	@Query(value="select locacao_produto.* from locacao_produto, locacao where  locacao_produto.idlocacao = locacao.id AND  locacao.data_retirada BETWEEN ADDDATE(now(), INTERVAL -5 DAY) and ADDDATE(now(), INTERVAL +25 DAY) order by  locacao.data_retirada asc", nativeQuery=true)
+	List<LocacaoProduto> locacoesProdutos();
 	
 	
 	@Query(value="select l.* from locacao_produto l  where l.produto_id = ?1 ", nativeQuery=true)

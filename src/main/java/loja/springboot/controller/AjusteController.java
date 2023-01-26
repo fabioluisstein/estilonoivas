@@ -1,7 +1,6 @@
 package loja.springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +20,10 @@ public class AjusteController {
 	
 	
 	
-	
-	@Cacheable("produtosAjustes") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaAjustes")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/ajustes");
-		andView.addObject("produtosContrato", locacaoProdutoRepository.top10());
+		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
 		return andView;
 	}
 	 
@@ -36,7 +33,7 @@ public class AjusteController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") Long nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("produto/ajustes");
 		if(nomepesquisa==null) {
-			modelAndView.addObject("produtos", locacaoProdutoRepository.top10());
+			modelAndView.addObject("produtos", locacaoProdutoRepository.locacoesProdutos());
 		}
 		modelAndView.addObject("produtos", locacaoProdutoRepository.findProdutoById(nomepesquisa));
 		return modelAndView;

@@ -151,10 +151,13 @@
   <table class="striped #e0e0e0 grey lighten-2 highlight">
    <thead>
 	   <tr>
-	     <th>id</th>
+	    <th>Cod. Produto</th>
 	    <th>Produto</th>
+	    <th>Tamanho</th>
+	    <th>Cor</th> 
 	    <th>Data Liberação </th>
 	    <th>Valor</th>
+	    <th>Atalho</th>
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
@@ -164,12 +167,21 @@
 	   
 	   
 	   	<td>   
-	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.id}"></a>
+	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.id}"></a>
 	   </td>
 	   	 
           <td>   
 	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.categoria.nome}"></a>
 	   </td>
+	   
+	   <td>   
+	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.tamanho}"></a>
+	   </td>
+	   
+	   <td>   
+	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.cor}"></a>
+	   </td>
+	   
 	   	   
 	   <td>
         <a th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></a>
@@ -179,6 +191,8 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
 	   </td>
+	   
+	   <td>  <a th:href="@{/editarproduto/{idproduto}(idproduto=${produtoLocacao.produto.id})}"> <i class="material-icons">shopping_cart_checkout</i> </a></td>
 	   
 	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
 	  </tr>
@@ -287,7 +301,7 @@
           
     <div class="col s5">
        <label for="valor" class="active">Valor</label> 
-       <input name="valorProduto" th:field="*{valor}" id="valorProduto"  class="validate" required>
+       <input name="valorProduto" th:field="*{valor}" id="valorProduto"  class="validate" >
     </div>
 
    <div class="col s10">

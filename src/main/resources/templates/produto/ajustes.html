@@ -24,7 +24,7 @@
   </nav>
 
 <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
-   <table id="tabFilter"  class="table table-striped">
+   <table id="tabFilterAjustes"  class="table table-striped">
    <div style="text-align:right" >
   </div>
    <thead>
@@ -33,6 +33,7 @@
 	    <th>Código Produto</th>
 	    <th>Tipo Produto</th>
 	    <th>Cliente</th>
+	   
 	    <th>Data Liberacao</th>
 	    <th>Data Limite</th>
 	 </tr>
@@ -51,9 +52,8 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${produto.locacao.cliente.id})}"  th:text="${produto.locacao.cliente.nome}"></a>
 	   </td>
-       <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}"  th:text="${#dates.format(produto.data_liberacao, 'dd/MM/yyyy')}"></a>
-	   </td>
+	    <td th:if="${produto.data_liberacao}!= null "   style="background-color:#00a000" th:text="${#dates.format(produto.data_liberacao, 'dd/MM/yyyy')}"> </td>	
+	    <td th:if="${produto.data_liberacao}== null "   style="background-color:#FF0000" th:text="'Ajustes Pendentes'"> </td>
        <td>
 	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}"  th:text="${#dates.format(produto.locacao.data_retirada, 'dd/MM/yyyy')}"></a>
 	   </td>
