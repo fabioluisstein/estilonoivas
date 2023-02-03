@@ -60,7 +60,7 @@
     
    <div class="col s6">
 	 <label for="moeda">Moeda</label>  
-	 <select th:field="*{moeda}" class="browser-default">
+	 <select th:field="*{moeda}" class="browser-default" required >
 	  <option value="Dinheiro">Dinheiro</option>
 	  <option value="Cartao">Cartão</option>
 	  <option value="Pix">Pix</option>
@@ -70,12 +70,12 @@
     
     <div class="col s6">
        <label for="valor" class="active">Valor</label> 
-       <input name="valor" th:field="*{valor}" id="valor" class="validate" >
+       <input name="valor" th:field="*{valor}" id="valor" class="validate" required>
     </div>
      
     <div class="col s6">
       <label for="pickdate" class="active">Data</label> 
-      <input type="text" class="datepicker" th:field="*{data}"  name="data"  >
+      <input type="text" class="datepicker" th:field="*{data}"  name="data" required >
     </div>
       
      <div class="col s6">  

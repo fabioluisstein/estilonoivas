@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import loja.springboot.dto.PagamentoDTO;
 import loja.springboot.model.Pagamento;
 
 @Transactional
@@ -21,5 +22,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 
 	@Query(value = "select * from pagamento where month(data) = month(NOW()) ", nativeQuery = true)
 	List<Pagamento> pagamentoMesAtual();
+
+	@Query("select new loja.springboot.dto.PagamentoDTO( id,  moeda, origem, valor ) from Pagamento ")
+	List<PagamentoDTO> dtoListPagamentos();
 
 }

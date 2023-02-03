@@ -88,7 +88,7 @@
 	   </td>
        <td>
 
-	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.replace(#numbers.formatCurrency(pagamento.valor), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.replace(#numbers.formatCurrency(pagamento.valor), '.00,00', '')}"></a>
 	   </td>
 	   <td><a th:if="${pagamento.arquivo !=null}"  th:href="@{/baixarArquivoPagamento/{idpagamento}(idpagamento=${pagamento.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
 	  <td> <a onclick="M.toast({html: 'Deletando pagamento',classes: 'red rounded'})" th:href="@{/removerpagamento/{idpagamento}(idpagamento=${pagamento.id})}"><i class="material-icons">delete_forever</i></a></td>

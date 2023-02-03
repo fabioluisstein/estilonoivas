@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import loja.springboot.model.Parcela;
 
+@Repository
 @Transactional
 public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	@Query(value = "select l.* from parcela l  where l.idlocacao = ?1 ", nativeQuery = true)
