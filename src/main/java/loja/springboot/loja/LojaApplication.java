@@ -13,11 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 
-
 @SpringBootApplication
-@EntityScan(basePackages="loja.springboot.*")
-@ComponentScan(basePackages= {"loja.*"})
-@EnableJpaRepositories(basePackages = {"loja.springboot.repository"})
+@EntityScan(basePackages = "loja.springboot.*")
+@ComponentScan(basePackages = { "loja.*" })
+@EnableJpaRepositories(basePackages = { "loja.springboot.repository" })
 @EnableTransactionManagement
 @EnableCaching
 
@@ -25,11 +24,13 @@ public class LojaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);
 	}
-	   
-	 @Bean 
-	    public LocaleResolver localeResolver(){
-	        return new FixedLocaleResolver(new Locale("pt", "BR"));
-	    }
-	  
+
+	/**
+	 * @return
+	 */
+	@Bean
+	public LocaleResolver localeResolver() {
+		return new FixedLocaleResolver(new Locale("pt", "BR"));
+	}
+
 }
-      

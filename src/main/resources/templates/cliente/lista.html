@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF8">
-<title>Lista de Clientes</title>
+<title>Clientes</title>
 
 <head th:replace="fragments :: html_head"/>
 
@@ -12,7 +12,6 @@
 
 <br>
   <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
- 
      <div class="row">
       <div style="text-align:left"  class="col s6">
        <h5 class="white-text">Clientes</h5>
@@ -34,6 +33,7 @@
         <th>Id</th>
 	    <th>Nome</th>
 	    <th>Telefone</th>
+		<th>Whats</th>
 	    <th>Cpf</th>
 	    <th>Cidade</th>
 	    <th>Locação</th>
@@ -52,6 +52,9 @@
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.telefone}"></a>
 	   </td>  
 	   <td>
+		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +${cliente.telefone}"	 <i class="material-icons">phone_android</i>  </a>
+		</td>  
+	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cpf}"></a>
 	   </td>  	
 	   <td>
@@ -61,14 +64,10 @@
 	  <td> <a onclick="M.toast({html: 'Deletando Cliente',classes: 'red rounded'})" th:href="@{/removercliente/{idcliente}(idcliente=${cliente.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr> 
 	 </tbody>
-	
-	 
 </table>
 
  </div>  
   
-
-
 <div th:replace="fragments :: footerScript"/>
 
 </body>

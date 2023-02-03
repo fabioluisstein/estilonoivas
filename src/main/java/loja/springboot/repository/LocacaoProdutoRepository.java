@@ -1,29 +1,25 @@
 package loja.springboot.repository;
 
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import loja.springboot.model.LocacaoProduto;
-@Repository
+
 @Transactional
 public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, Long> {
-	@Query(value="select l.* from locacao_produto l  where l.idlocacao = ?1 ", nativeQuery=true)
+	@Query(value = "select l.* from locacao_produto l  where l.idlocacao = ?1 ", nativeQuery = true)
 	List<LocacaoProduto> findLocacaoById(Long id);
-	
-	@Query(value="Select * from locacao_produto p  where  p.data_liberacao  BETWEEN ?1 AND  ?2 ", nativeQuery=true)
+
+	@Query(value = "Select * from locacao_produto p  where  p.data_liberacao  BETWEEN ?1 AND  ?2 ", nativeQuery = true)
 	List<LocacaoProduto> findLocacaoDatas(String dataInicial, String DataFinal);
-	 
-	@Query(value="select locacao_produto.* from locacao_produto, locacao where  locacao_produto.idlocacao = locacao.id AND  locacao.data_retirada BETWEEN ADDDATE(now(), INTERVAL -5 DAY) and ADDDATE(now(), INTERVAL +25 DAY) order by  locacao.data_retirada asc", nativeQuery=true)
+
+	@Query(value = "select locacao_produto.* from locacao_produto, locacao where  locacao_produto.idlocacao = locacao.id AND  locacao.data_retirada BETWEEN ADDDATE(now(), INTERVAL -5 DAY) and ADDDATE(now(), INTERVAL +25 DAY) order by  locacao.data_retirada asc", nativeQuery = true)
 	List<LocacaoProduto> locacoesProdutos();
-	
-	
-	@Query(value="select l.* from locacao_produto l  where l.produto_id = ?1 ", nativeQuery=true)
+
+	@Query(value = "select l.* from locacao_produto l  where l.produto_id = ?1 ", nativeQuery = true)
 	List<LocacaoProduto> findProdutoById(Long id);
-	
+
 }
-   
