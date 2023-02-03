@@ -31,7 +31,7 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listaclientes")
 	public ModelAndView clientes() {
 		ModelAndView andView = new ModelAndView("cliente/lista");
-		andView.addObject("clientes", clienteRepository.top10());
+		andView.addObject("clientes", clienteRepository.listaClientes());
 		return andView;
 	}
 	 
@@ -39,7 +39,7 @@ public class ClienteController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cliente/lista");
 		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("clientes", clienteRepository.top10());
+			modelAndView.addObject("clientes", clienteRepository.listaClientes());
 		}
 		modelAndView.addObject("clientes", clienteRepository.findClienteByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
@@ -76,8 +76,8 @@ public class ClienteController {
 	public ModelAndView excluir(@PathVariable("idcliente") Long idcliente) {
 		clienteRepository.deleteById(idcliente);	
 		ModelAndView andView = new ModelAndView("cliente/lista");
-		andView.addObject("clientes", clienteRepository.top10());
+		andView.addObject("clientes", clienteRepository.listaClientes());
 		return andView;
 	}
 	
-}
+} 

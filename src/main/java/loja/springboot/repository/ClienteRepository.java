@@ -14,8 +14,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Query(value="select c.* from cliente c where UPPER(c.nome) like %?1% OR  UPPER(c.cpf) like %?1% OR UPPER(c.telefone) like %?1%", nativeQuery=true)
 	List<Cliente> findClienteByName(String nome);
 
-	@Query(value="select * from cliente order by id desc limit 10", nativeQuery=true)
-	List<Cliente> top10();
+	@Query(value="select * from cliente ", nativeQuery=true)
+	List<Cliente> listaClientes();
 	
 	
 	@Query(value="select l.* from cliente l  where l.id = ?1 ", nativeQuery=true)

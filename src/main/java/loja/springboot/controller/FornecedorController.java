@@ -31,7 +31,7 @@ public class FornecedorController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listafornecedores")
 	public ModelAndView fornecedores() {
 		ModelAndView andView = new ModelAndView("fornecedor/lista");
-		andView.addObject("fornecedores", fornecedorRepository.top10());
+		andView.addObject("fornecedores", fornecedorRepository.listaForcenedores());
 		return andView;
 	}
 	 
@@ -39,7 +39,7 @@ public class FornecedorController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/lista");
 		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("fornecedores", fornecedorRepository.top10());
+			modelAndView.addObject("fornecedores", fornecedorRepository.listaForcenedores());
 		}
 		modelAndView.addObject("fornecedores", fornecedorRepository.findFornecedorByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
@@ -76,7 +76,7 @@ public class FornecedorController {
 	public ModelAndView excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		fornecedorRepository.deleteById(idfornecedor);	
 		ModelAndView andView = new ModelAndView("fornecedor/lista");
-		andView.addObject("fornecedores", fornecedorRepository.top10());
+		andView.addObject("fornecedores", fornecedorRepository.listaForcenedores());
 		return andView;
 	}
 	
