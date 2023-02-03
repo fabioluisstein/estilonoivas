@@ -18,8 +18,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	@Query(value="Select * from pagamento p  where  p.data  BETWEEN ?1 AND  ?2 ", nativeQuery=true)
 	List<Pagamento> findPagamentoDatas(String dataInicial, String DataFinal);
 	 
-	@Query(value="select * from pagamento order by id desc limit 10", nativeQuery=true)
-	List<Pagamento> top10();
+	@Query(value="select * from pagamento", nativeQuery=true)
+	List<Pagamento> listaPagamentos();
 	
 	 
 	@Query(value="select * from pagamento where month(data) = month(NOW()) ", nativeQuery=true)

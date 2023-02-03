@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Pagamento;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
@@ -38,7 +37,7 @@ public class PagamentoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoRepository.top10());
+		andView.addObject("pagamentos", pagamentoRepository.listaPagamentos());
 		return andView;
 	}
 	 
@@ -107,8 +106,6 @@ public class PagamentoController {
 	  return andView;
 	} 
 	
-	
-	
 	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
 		if(file!=null && file.getSize()>0) {
 			
@@ -144,7 +141,7 @@ public class PagamentoController {
 		
 	} 
 	
-	
+	@CacheEvict(value="pagamentos",allEntries=true)
 	@GetMapping("/editarpagamento/{idpagamento}")
 	public ModelAndView editar(@PathVariable("idpagamento") Long idpagamento) throws ParseException, IOException {
 		Optional<Pagamento> pagamento = pagamentoRepository.findById(idpagamento);
@@ -161,7 +158,7 @@ public class PagamentoController {
 	public ModelAndView excluir(@PathVariable("idpagamento") Long idpagamento) {
 		pagamentoRepository.deleteById(idpagamento);	
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoRepository.top10());
+		andView.addObject("pagamentos", pagamentoRepository.listaPagamentos());
 		return andView;
 	}
 	
