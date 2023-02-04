@@ -47,7 +47,7 @@
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.nome}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.telefone}"></a>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}"  target="_blank" th:text="${cliente.telefone}"></a>
 	   </td>  
 	   <td>
 		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +${cliente.telefone}"	 <i class="material-icons">phone_android</i>  </a>
