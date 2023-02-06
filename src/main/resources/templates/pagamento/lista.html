@@ -49,17 +49,17 @@
  </form>
   </div>
            
-<div class="card" style="margin: 20px auto; padding:20px; max-width: 100%">
-<table id="tabFilterOrderId" class="table table-striped table-bordered dt-responsive nowrap" style="width:97%">
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+<table id="tabFilterOrderId" class="table table-striped table-bordered dt-responsive nowrap">
    <thead>
      <tr>
         <th>Id</th>
         <th>Tipo</th>
 	    <th>Data</th>
-	    <th>Fornecedor</th>
+		<th>Fornecedor</th>
 	    <th>Moeda</th>
 	    <th>Origem</th>
-	    <th>Valor</th>
+		<th>Valor</th>
 	    <th>Anexo</th> 
 	    <th>Excluir</th>
 	 </tr>
@@ -70,28 +70,25 @@
 	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.id}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.categoria}"></a>
+	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.tipo}"></a>
 	   </td>
-	   
 	   <td>
 	    <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#dates.format(pagamento.data, 'dd/MM/yyyy')}"></a>
 	   </td>
-	   	   <td>
-	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.abbreviate(pagamento.fornecedor,20)}"></a>
-	   </td>
-	   
+	   <td>
+		<a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.abbreviate(pagamento.fornecedor,20)}"></a>
+	 </td>
 	   <td>
 	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.moeda}"></a>
 	   </td>
 	   <td>
 	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.origem}"></a>
 	   </td>
-       <td>
-
-	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.replace(#numbers.formatCurrency(pagamento.valor), '.00,00', '')}"></a>
-	   </td>
-	   <td><a th:if="${pagamento.arquivo !=null}"  th:href="@{/baixarArquivoPagamento/{idpagamento}(idpagamento=${pagamento.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
-	  <td> <a onclick="M.toast({html: 'Deletando pagamento',classes: 'red rounded'})" th:href="@{/removerpagamento/{idpagamento}(idpagamento=${pagamento.id})}"><i class="material-icons">delete_forever</i></a></td>
+	   <td>
+		<a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.replace(#numbers.formatCurrency(pagamento.valor), '.00,00', '')}"></a>
+		</td>
+        <td><a th:if="${pagamento.anexo !=null}"  th:href="@{/baixarArquivoPagamento/{idpagamento}(idpagamento=${pagamento.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
+	   <td> <a onclick="M.toast({html: 'Deletando pagamento',classes: 'red rounded'})" th:href="@{/removerpagamento/{idpagamento}(idpagamento=${pagamento.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
 	 

@@ -51,6 +51,29 @@
 			   th:value="${cid.id}" th:text="${cid.nome}" ></option>
        </select> 
     </div>
+
+    <div class="col s6">
+      <label for="papel">Papel</label>  
+      <select th:field="*{papel}" class="browser-default" required >
+       <option value="Não Informado">Não Informado</option>
+       <option value="Convidado">Convidado</option>
+       <option value="Formando">Formando</option>
+       <option value="Noivo">Noivo</option>
+       <option value="Outros">Outros</option>
+     </select>
+  </div>
+
+    <div class="col s6">
+      <label for="origem">Origem</label>  
+      <select th:field="*{origem}" class="browser-default" required >
+       <option value="Não Informado">Não Informado</option>
+       <option value="Indicação">Indicação</option>
+       <option value="Instagram">Instagram</option>
+       <option value="Google Ads">Google Ads</option>
+       <option value="Facebook">Facebook</option>
+       <option value="WhatsAPP">WhatsAPP</option>
+     </select>
+  </div>
      
     <div class="col s12">
       <label for="observacao" class="active">Observações</label> 

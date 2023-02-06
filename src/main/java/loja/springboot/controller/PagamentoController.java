@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Pagamento;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.PagamentoRepository;
+import loja.springboot.repository.dtoPagamentoRepository;
 
 @Controller
 public class PagamentoController {
@@ -31,13 +33,16 @@ public class PagamentoController {
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
 	@Autowired
+	private dtoPagamentoRepository pagamentoDtoRepository;
+	
+	@Autowired
 	private CategoriaRepository categoriaRepository;
 
 	@Cacheable("pagamentos")
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoRepository.listaPagamentos());
+		andView.addObject("pagamentos", pagamentoDtoRepository.findAll());
 		return andView;
 	}
 

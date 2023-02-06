@@ -58,7 +58,26 @@ public class Locacao implements Serializable {
 	@OneToMany(mappedBy = "locacao")
 	List<LocacaoProduto> produtos;	
 	
+	private String origem;  
 	
+	private String papel;
+
+	public String getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+
+	public String getPapel() {
+		return papel;
+	}
+
+	public void setPapel(String papel) {
+		this.papel = papel;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -180,11 +180,11 @@ group by locacao.id,
 					<font size="22"/>
 				</textElement>
 				<text><![CDATA[Contrato de Locação 
-Fibonatti Ternos e Costumes]]></text>
+Fibonatti Ternos & Costumes]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="80" width="168" height="30" uuid="9fdda973-23c3-4d4f-a7a2-f4dc3d4e6ad6"/>
-				<text><![CDATA[CNPJ: 28.538.969/0001-30]]></text>
+				<text><![CDATA[CNPJ: 22.139.903/0001-90]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="100" width="168" height="20" uuid="4981ee8e-4cad-4876-bf98-f5a55ba6fff3"/>
