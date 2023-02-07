@@ -42,7 +42,7 @@ public class PagamentoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoDtoRepository.findAll());
+		andView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
 		return andView;
 	}
 
@@ -52,15 +52,15 @@ public class PagamentoController {
 
 		ModelAndView modelAndView = new ModelAndView("pagamento/lista");
 		if (dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoRepository.findAll());
+			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
 		}
 
 		if (!dataInicio.isEmpty() && !dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoDatas(dataInicio, dataFinal));
+			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findPagamentoDatas(dataInicio, dataFinal));
 			return modelAndView;
 		}
 
-		modelAndView.addObject("pagamentos", pagamentoRepository.findAll());
+		modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
 		return modelAndView;
 	}
 
@@ -165,7 +165,7 @@ public class PagamentoController {
 	public ModelAndView excluir(@PathVariable("idpagamento") Long idpagamento) {
 		pagamentoRepository.deleteById(idpagamento);
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoRepository.listaPagamentos());
+		andView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
 		return andView;
 	}
 

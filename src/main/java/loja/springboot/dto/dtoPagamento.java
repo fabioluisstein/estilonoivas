@@ -1,24 +1,15 @@
 package loja.springboot.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Subselect;
 import org.springframework.data.annotation.Immutable;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Immutable
-@Subselect("SELECT * FROM vw_pagamentos order by id desc")
 @Cacheable
 
 public class dtoPagamento implements Serializable {
@@ -28,14 +19,13 @@ public class dtoPagamento implements Serializable {
 	@Id
 	private Long id;
 	private String tipo;
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
 	private Date data;
+	private String data_param;
 	private String fornecedor;  
 	private String moeda;  
 	private String origem;
 	private Double valor;
-	private String anexo;
+	private String anexo; 
 	
 	public Long getId() {
 		return id;
@@ -54,9 +44,16 @@ public class dtoPagamento implements Serializable {
 	public Date getData() {
 		return data;
 	}
-
 	public String getAnexo() {
 		return anexo;
+	}
+
+	public String getData_param() {
+		return data_param;
+	}
+
+	public void setData_param(String data_param) {
+		this.data_param = data_param;
 	}
 
 	public void setAnexo(String anexo) {

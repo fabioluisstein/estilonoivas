@@ -15,7 +15,6 @@
 <link type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css" />
 
 
-   
 </head> 
  <body>
   <div th:fragment="menu">
@@ -151,6 +150,7 @@
  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+ 
 
   <script type="text/javascript">
         $(document).ready(function () {
@@ -189,6 +189,8 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#tabFilterOrderId').DataTable( {
+            scrollY: false,
+            scrollX: true,
 			"lengthMenu": [ [15,30,-1], [15,30,"Todos"] ],
 			 "order": [0, "desc"],
 			language: {
@@ -219,6 +221,26 @@
 	);
  </script> 
      
+
+
+     <script type="text/javascript">
+       $(document).ready(function() {
+    $('#example').DataTable( {
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr'
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0
+        } ],
+        order: [ 1, 'asc' ]
+    } );
+} );
+     </script> 
      
     <script type="text/javascript">
         $(document).ready(function () {
