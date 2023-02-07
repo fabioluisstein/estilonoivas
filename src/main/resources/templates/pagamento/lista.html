@@ -60,15 +60,15 @@
 <table id="tabFilterOrderId" class="table table-striped" style="width:100%">
    <thead>
      <tr>
-        <th>Id</th>
-        <th>Tipo</th>
-	    <th>Data</th>
-		<th>Fornecedor</th>
-	    <th>Moeda</th>
-	    <th>Origem</th>
-		<th>Valor</th>
-	    <th>Anexo</th> 
-	    <th>Excluir</th>
+        <th style="max-width: 3%">Id</th>
+        <th  style="max-width: 20%">Tipo</th>
+	    <th style="max-width: 5%">Data</th>
+		<th >Fornecedor</th>
+	    <th  style="max-width: 5%">Moeda</th>
+	    <th  style="max-width: 5%">Origem</th>
+		<th style="max-width: 5%" >Valor</th>
+	    <th  style="max-width: 3%">Anexo</th> 
+	    <th style="max-width: 3%">Excluir</th>
 	 </tr>
     </thead>	
 	<tbody>
@@ -83,7 +83,7 @@
 	    <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#dates.format(pagamento.data, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
-		<a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.abbreviate(pagamento.fornecedor,20)}"></a>
+		<a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${#strings.abbreviate(pagamento.fornecedor,50)}"></a>
 	 </td>
 	   <td>
 	   <a onclick="M.toast({html: 'Editando pagamento',classes: 'blue rounded'})" th:href="@{/editarpagamento/{idpagamento}(idpagamento=${pagamento.id})}" th:text="${pagamento.moeda}"></a>
