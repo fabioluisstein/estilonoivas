@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f4bbbd8f-0241-4b5c-9f3c-a0fa90f51cca">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -196,7 +196,7 @@ Fibonatti Ternos & Costumes]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="380" y="100" width="168" height="20" uuid="04b11056-9259-42a0-82f7-768f9e83ebd8"/>
-				<text><![CDATA[Telefone: (54) 3045-1721]]></text>
+				<text><![CDATA[Telefone: (54) 9184-5016]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="0" y="70" width="554" height="49" backcolor="#CCC4C4" uuid="75e1f793-0289-427f-88c2-0dbfe8e4c120"/>
@@ -243,7 +243,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<text><![CDATA[Nome:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="167" width="62" height="18" uuid="7394d8a5-b7b5-40de-b2ac-a8e3bb295ed8">
+				<reportElement x="2" y="207" width="48" height="18" uuid="7394d8a5-b7b5-40de-b2ac-a8e3bb295ed8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -263,7 +263,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<text><![CDATA[Endereço:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="185" width="48" height="20" uuid="2df2e3df-26dc-4194-b5a3-03ec36620d60">
+				<reportElement x="2" y="163" width="44" height="17" uuid="2df2e3df-26dc-4194-b5a3-03ec36620d60">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -282,7 +282,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<text><![CDATA[Cidade:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="207" width="37" height="16" uuid="341dc926-c437-4e38-9715-ef7991a56a5d">
+				<reportElement x="3" y="184" width="37" height="16" uuid="341dc926-c437-4e38-9715-ef7991a56a5d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -304,23 +304,23 @@ Fibonatti Ternos & Costumes]]></text>
 				<reportElement x="40" y="146" width="335" height="18" uuid="fe62cce0-ced7-4ca1-99ab-4efb7fb4ad3c"/>
 				<textFieldExpression><![CDATA[$F{nome_cliente}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="66" y="167" width="485" height="13" uuid="a1f3bbb2-8e2d-4bc3-976f-f8bc659d5271"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="53" y="207" width="489" height="18" uuid="a1f3bbb2-8e2d-4bc3-976f-f8bc659d5271"/>
 				<textFieldExpression><![CDATA[$F{logradouro_cliente}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="49" y="186" width="311" height="15" uuid="c19fef3b-ccd3-4384-9883-df7ad2eba6c7">
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="163" width="334" height="15" uuid="c19fef3b-ccd3-4384-9883-df7ad2eba6c7">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cidade_cliente}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="46" y="205" width="100" height="24" uuid="b2968036-345f-433b-ac17-25247b950549"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="184" width="100" height="18" uuid="b2968036-345f-433b-ac17-25247b950549"/>
 				<textFieldExpression><![CDATA[$F{bairro_cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="383" y="145" width="74" height="20" uuid="65aa23f6-abbd-4763-8c21-c13186da1113">
+				<reportElement x="382" y="145" width="74" height="20" uuid="65aa23f6-abbd-4763-8c21-c13186da1113">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -341,7 +341,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<textFieldExpression><![CDATA[$F{id_cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="380" y="179" width="52" height="24" uuid="28407108-ec6c-4b61-b828-85617dc8ab1e">
+				<reportElement x="381" y="166" width="52" height="16" uuid="28407108-ec6c-4b61-b828-85617dc8ab1e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -360,11 +360,11 @@ Fibonatti Ternos & Costumes]]></text>
 				<text><![CDATA[Telefone:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="432" y="179" width="100" height="24" uuid="53e900f5-74ce-46d9-8efd-3be6710fad2a"/>
+				<reportElement x="432" y="166" width="110" height="16" uuid="53e900f5-74ce-46d9-8efd-3be6710fad2a"/>
 				<textFieldExpression><![CDATA[$F{telefone_cliente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="383" y="207" width="37" height="24" uuid="12874ad8-b802-44b4-bb07-cc14c99c6816">
+				<reportElement x="383" y="184" width="48" height="16" uuid="12874ad8-b802-44b4-bb07-cc14c99c6816">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50ae81e2-cc5c-4198-9080-1778502bddeb"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -383,7 +383,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<text><![CDATA[CPF:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="431" y="207" width="100" height="20" uuid="25a8e9bd-13f1-48ee-999a-05c7fe15a311"/>
+				<reportElement x="433" y="184" width="109" height="20" uuid="25a8e9bd-13f1-48ee-999a-05c7fe15a311"/>
 				<textFieldExpression><![CDATA[$F{cpf_cliente}]]></textFieldExpression>
 			</textField>
 			<rectangle>
@@ -627,7 +627,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{descricao_produto}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="247" y="0" width="100" height="20" uuid="28f3ab5d-fc18-430d-ba62-7a7fb86f70d9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a25df09a-16db-4905-85df-9a0a741e5664"/>
 				</reportElement>
@@ -640,7 +640,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tamanho}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="347" y="0" width="105" height="20" uuid="0dbda1ff-4404-4c67-96bb-ebbd6dc9b19a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5e7668b3-5b63-4e77-b67e-07d2f349eff7"/>
 				</reportElement>
@@ -653,7 +653,7 @@ Fibonatti Ternos & Costumes]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cor}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="452" y="0" width="102" height="20" uuid="b34f5430-8f81-4240-8fad-0f69e64e4b99">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5a5adc4-7641-4953-99c8-a68c6af65039"/>
 				</reportElement>
@@ -699,7 +699,7 @@ pagará R$ 100,00 a cada dia de atraso.
 			<line>
 				<reportElement x="414" y="151" width="139" height="1" uuid="03c5d452-7a14-4f0d-919c-1cc7f49518ff"/>
 			</line>
-			<textField pattern="MMMMM dd, yyyy">
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="454" y="177" width="100" height="16" uuid="19507a93-8f80-4f9f-bb26-af56940e14c8"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

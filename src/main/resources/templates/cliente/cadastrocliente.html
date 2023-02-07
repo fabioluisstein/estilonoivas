@@ -9,6 +9,7 @@
 
 <body>
 
+
 <div th:replace="fragments :: menu"/>
 <br>
 
@@ -41,12 +42,9 @@
       <input name="nome" th:field="*{nome}" id="nome" class="validate" required>
     </div>
 
-       
-
-   
       <div class="col s6">    
       <label for="telefone" class="active">Telefone</label> 
-      <input name="nome" th:field="*{telefone}" id="telefone" class="validate" required>
+      <input name="nome" th:field="*{telefone}" id="telefone" >
       </div>
     
       <div class="col s6"> 
@@ -56,7 +54,7 @@
       
       <div class="col s6">     
       <label for="cpf" class="active">CPF</label> 
-      <input name="cpf" th:field="*{cpf}" id="cpf" class="validate" >
+      <input name="cpf_cnpj" th:field="*{cpf}" id="cpf_cnpj" >
       </div>
       
       <div class="col s6"> <label for="rg" class="active">RG</label> 
