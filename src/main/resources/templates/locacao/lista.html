@@ -84,7 +84,7 @@
 	   </td>
 
 	   <td>
-		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +${locacao.cliente.telefone}"	 <i class="material-icons">phone_android</i>  </a>
+		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +  ${#strings.replace(#strings.replace(#strings.replace(#strings.replace(locacao.cliente.telefone,'(',''),')',''),' ',''),'-','')} "	 <i class="material-icons">phone_android</i>  </a>
 		</td>  
 
         <td>
