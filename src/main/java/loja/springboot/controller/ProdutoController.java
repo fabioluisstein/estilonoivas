@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
@@ -39,16 +40,35 @@ public class ProdutoController {
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
-	
+
+
+	private int quantidadeLocacoes;
+	private double valorFinanceiro;
  
 
-/* 
-    public Long quantidadeLocacoes(Longo id){
-		//locacaoProdutoRepository.findProdutoById(null)
-return null;
+    public void quantidadeLocacoes(Long id){
+		quantidadeLocacoes = 0;
+		valorFinanceiro = 0;
+	  for(LocacaoProduto locacaoProduto : locacaoProdutoRepository.findProdutoById(id)) {  
+		quantidadeLocacoes = quantidadeLocacoes + 1;
+		valorFinanceiro = valorFinanceiro + locacaoProduto.getValor();
+	}  
 
-	} 
-*/
+	}
+  
+
+	
+    public void updateVisitas(Produto produtoAcesso ) throws ParseException, IOException {
+		Integer quantidadeVisitas = produtoAcesso.getQuantidade_acesso();
+		if( produtoAcesso.getQuantidade_acesso() == null){
+			 quantidadeVisitas = 0;
+		}
+    
+	  produtoAcesso.setQuantidade_acesso(quantidadeVisitas+1);
+	  produtoRepository.save(produtoAcesso);
+	}
+	
+
 
 	@Cacheable("produtos") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
@@ -63,32 +83,32 @@ return null;
 	@RequestMapping(method = RequestMethod.GET, value = "/consultaprodutos")
 	public ModelAndView produtosPesquisa() {
 		ModelAndView andView = new ModelAndView("produto/pesquisaProd");
-		andView.addObject("produtos", produtoRepository.listaTodos());
 		return andView;
 	}
 
 	 
 	@PostMapping("/pesquisaprodutocustom")
-	public ModelAndView pesquisaprodutocustom(@RequestParam("idProduto") Long idProduto) {
+	public ModelAndView pesquisaprodutocustom(@RequestParam("idProduto") Long idProduto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/produto");
-		if(idProduto != null) {
-			Optional<Produto> produto = produtoRepository.findById(idProduto);
-	
+		if(idProduto != null && !produtoRepository.findById(idProduto).isEmpty() ) {
+		quantidadeLocacoes(idProduto);
+		Optional<Produto> produto = produtoRepository.findById(idProduto);
+		updateVisitas(produto.get());
 		andView.addObject("produtobj",produto);
-		andView.addObject("quantidadeLocacoes",locacaoProdutoRepository.findProdutoById(idProduto).size());
-
-		
+		andView.addObject("locacoes", locacaoProdutoRepository.findProdutoLocacacoesById(idProduto));
+		andView.addObject("quantidadeLocacoes",quantidadeLocacoes);
+		andView.addObject("valorFinanceiro",valorFinanceiro);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
-		
 		return andView;
+		}
+ 
+		else {
+			andView = new ModelAndView("produto/pesquisaProd");	
 		}
 
 		return andView;
 	}
-
-	
-
 	 
 	@PostMapping("/pesquisarproduto")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
@@ -188,6 +208,7 @@ return null;
 	@GetMapping("/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto") Long idproduto) throws ParseException, IOException {
 		Optional<Produto> produto = produtoRepository.findById(idproduto);
+		updateVisitas(produto.get());
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
 		andView.addObject("produtobj",produto);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());

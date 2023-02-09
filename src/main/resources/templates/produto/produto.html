@@ -12,15 +12,13 @@
 <div th:replace="fragments :: menu"/>
 <br>
 
- <div class="container">
-  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
- 
+
     <div class="row" style="margin:auto; padding:auto; max-width: 100%">
      <div style="text-align:center"  class="col s12">
       <h5 class="white-text">Consulta de produtos</h5>
      </div>
 
-   </div> 
+   </div>  
    
  </nav>
 </div>
@@ -90,14 +88,57 @@
         <input name="quantidadeLocacoes"  th:value="${quantidadeLocacoes}"  id="quantidadeLocacoes" readonly="readonly" >
        </div>
 
-  
-     <br>
-       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/consultaprodutos" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <div class="col s6">
+        <label for="quantidadeLocacaoes" class="active">Retorno Financeiro</label> 
+        <input name="valorFinanceiro"  th:value="${#strings.replace(#numbers.formatCurrency(valorFinanceiro), '.00,00', '')}"  id="valorFinanceiro" readonly="readonly" >
+       </div> 
+
+
+       <div class="col s6">
+        <label for="quantidade_acesso" class="active">Quantidade de Pesquisas</label> 
+        <input name="quantidade_acesso"  th:field="*{quantidade_acesso}"  id="quantidade_acesso" readonly="readonly" >
+       </div>
        
+
+  
         
     </form>
   </div>
-
+  <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+    <table id="tabFilterOrderId" class="table table-striped" style="width:100%">
+    <div style="text-align:right" >
+    </div>
+     <thead>
+       <tr>
+        <th style="width:3%">Código</th>
+        <th style="width:20%">Data Contrato</th>
+        <th>Cliente</th>
+        <th style="width:10%">Data Retirada</th>
+     </tr>
+      </thead>	
+    <tbody>
+      <tr th:each = "locacaoProduto : ${locacoes}">
+       <td>
+       <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacaoProduto.locacao.id})}" th:text="${locacaoProduto.locacao.id}"></a>
+       </td>
+       <td>
+        <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacaoProduto.locacao})}" th:text="${#dates.format(locacaoProduto.locacao.data_locacao, 'dd/MM/yyyy')}"></a> 
+       </td>
+       <td>
+       <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacaoProduto.locacao})}" th:text="${locacaoProduto.locacao.cliente}"></a>
+       </td>
+          <td>
+        <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacaoProduto.locacao})}" th:text="${#dates.format(locacaoProduto.locacao.data_retirada, 'dd/MM/yyyy')}"></a>
+      </td>
+      </tr>
+     </tbody>
+     
+  </table>
+  
+   </div>  
+   <br>
+       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/consultaprodutos" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       
  </div>
 
 <div th:replace="fragments :: footer"/>

@@ -29,13 +29,20 @@
    <div class="row" >
    <form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}" enctype="multipart/form-data" >
       <div class="row">
-      
-    <div class="input-field col s12">
-      <label for="id" class="active">ID</label> 
-      <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+
+        <div class="input-field col s6">
+          <label for="id" class="active">ID</label> 
+          <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+        </div>
+
+        <div class="col s6">
+          <label for="quantidade_acesso" class="active">Pesquisas</label> 
+          <input name="quantidade_acesso" th:field="*{quantidade_acesso}" id="id" class="validate" readonly="readonly">
+        </div>
     </div>
-      
-       <div class="input-field col s6">
+
+
+    <div class="input-field col s6">
     <label for="categoria" class="active">Tipo</label> 
     <br>
     <select th:field="*{categoria}" class="browser-default" required>
