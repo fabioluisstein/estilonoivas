@@ -40,6 +40,10 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 	@Override // Ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/materialize/**");
+		web.ignoring().antMatchers("/consultaprodutos/**");
+		web.ignoring().antMatchers("/pesquisaprodutocustom/**");
+		
+		
 	}
 
 }

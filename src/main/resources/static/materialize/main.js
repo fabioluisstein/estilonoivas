@@ -133,6 +133,8 @@ function consultaPrecoProduto(id) {
 
 
 
+
+
 // Tooltip
 const elemsTooltip = document.querySelectorAll(".tooltipped");
 const instanceTooltip = M.Tooltip.init(elemsTooltip, {
@@ -142,18 +144,6 @@ const instanceTooltip = M.Tooltip.init(elemsTooltip, {
 
 
 
-/* Máscaras de cpf/cnpj */
-    document.getElementById('cpf_cnpj').addEventListener('input', function(e) {
-    
-        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
-        e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '/' : x[4]) + x[4] + (x[5] ? '-' + x[5] : '');
-        
-        if(e.target.value.length < 15) {
-            x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-            e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '-' + x[4] : '');
-        }
-
-    });
 
 
 
@@ -180,6 +170,8 @@ window.onload = function(){
 		mascara( this, mtel );
 	}
 }
+
+
 
 $(document).ready(function(){
     $('.collapsible').collapsible();

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Pesquisa Produtos</title>
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+
+<br>
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
+ 
+     <div class="row">
+      <div style="text-align:center"  class="col s12">
+       <h5 class="white-text">Consulta de produtos</h5>
+      </div>
+
+    </div> 
+    
+  </nav>
+
+  <div class="row grey lighten-2" style="margin:auto; padding:auto; max-width: 100%;">
+  
+	<form action="pesquisaprodutocustom" method="post">
+  
+	<div class="row">
+	
+	<div class="input-field col s12">
+	   <input name="idProduto" id="idProduto" type="number" autocomplete="off">
+	   <label  for="idProduto" class="active">Código do Produto </label>
+	</div> 
+	
+	<div class="col s12" style="text-align:center"> 
+	   <input class="waves-effect waves-light btn grey darken-1" 
+			  type="submit" onclick="M.toast({html: 'Pesquisando pagamento Específica',classes: 'blue rounded'})" value="Buscar">
+	</div>
+	</div>
+   </form>
+	</div>
+			 
+
+<div th:replace="fragments :: footerScript"/>
+
+
+
+
+
+</body>
+
+
+
+</html>

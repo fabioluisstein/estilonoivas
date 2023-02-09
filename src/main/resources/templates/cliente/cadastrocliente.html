@@ -54,7 +54,7 @@
       
       <div class="col s6">     
       <label for="cpf" class="active">CPF</label> 
-      <input name="cpf_cnpj" th:field="*{cpf}" id="cpf_cnpj" >
+      <input name="cpf" th:field="*{cpf}" id="cpf"  maxlength="13" >
       </div>
       
       <div class="col s6"> <label for="rg" class="active">RG</label> 
@@ -93,5 +93,22 @@
  </div>
 
 <div th:replace="fragments :: footer"/>
+
+<script>
+    const input = document.getElementById("cpf");
+    input.addEventListener("keyup", formatarCPF);
+
+    function formatarCPF(e){
+    
+    var v=e.target.value.replace(/\D/g,"");
+    v=v.replace(/(\d{3})(\d)/,"$1.$2");
+    v=v.replace(/(\d{3})(\d)/,"$1.$2");
+    v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+    e.target.value = v;
+} ;
+
+</script>
+
+
 </body>
 </html>

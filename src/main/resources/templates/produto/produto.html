@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Cadastro Produtos</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+ <div class="container">
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
+ 
+    <div class="row" style="margin:auto; padding:auto; max-width: 100%">
+     <div style="text-align:center"  class="col s12">
+      <h5 class="white-text">Consulta de produtos</h5>
+     </div>
+
+   </div> 
+   
+ </nav>
+</div>
+<br>
+
+<div class="container">
+ 
+   <div class="row" >
+   <form  id="formproduto" method="post" th:object="${produtobj}" >
+      <div class="row">
+      
+    <div class="input-field col s12">
+      <label for="id" class="active">ID</label> 
+      <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+    </div>
+      
+       <div class="input-field col s6">
+    <label for="categoria" class="active">Tipo</label> 
+    <br>
+    <select th:field="*{categoria}" class="browser-default"  disabled="true">
+    <option th:each="cid: ${categorias}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>  
+      
+      <div class="input-field col s6">
+    <label for="fornecedor" class="active">Forncedor</label> 
+    <br>
+    <select th:field="*{fornecedor}" class="browser-default" disabled="true">
+    <option th:each="cid: ${fornecedores}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>
+     
+    <div class="col s12">
+      <label for="descricao" class="active">Descrição</label> 
+      <input name="descricao" th:field="*{descricao}" id="descricao" readonly="readonly">
+    </div>
+    
+      <div class="col s6">    
+      <label for="cor" class="active">Cor</label> 
+      <input name="cor" th:field="*{cor}" id="cor" readonly="readonly">
+      </div>
+    
+      <div class="col s6"> 
+      <label for="tamanho" class="active">Tamanho</label> 
+      <input name="tamanho" th:field="*{tamanho}" type="text" id="tamanho" readonly="readonly" >
+      </div>
+     
+         <div class="col s6">
+      <label for="pickdate" class="active">Data Compra</label> 
+      <input type="text" class="datepicker" th:field="*{data_compra}"  name="data_compra"  readonly="readonly" >
+    </div>
+     
+       <div class="col s6">
+       <label for="valorCompra" class="active">Valor Compra</label> 
+       <input name="valorCompra" th:field="*{valorCompra}" id="valorCompra" readonly="readonly" >
+      </div>
+        
+       <div class="col s6">
+       <label for="valorVenda" class="active">Valor Venda</label> 
+       <input name="valorVenda" th:field="*{valorVenda}" id="valorVenda" readonly="readonly" >
+      </div>
+
+      <div class="col s6">
+        <label for="quantidadeLocacaoes" class="active">Quantidade Locações</label> 
+        <input name="quantidadeLocacoes"  th:value="${quantidadeLocacoes}"  id="quantidadeLocacoes" readonly="readonly" >
+       </div>
+
+  
+     <br>
+       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/consultaprodutos" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       
+        
+    </form>
+  </div>
+
+ </div>
+
+<div th:replace="fragments :: footer"/>
+</body>
+</html>

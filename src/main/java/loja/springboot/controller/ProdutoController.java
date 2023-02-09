@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
+import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.ProdutoRepository;
 
 
@@ -36,7 +37,19 @@ public class ProdutoController {
 	private FornecedorRepository fornecedorRepository;
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private LocacaoProdutoRepository locacaoProdutoRepository;
+	
  
+
+/* 
+    public Long quantidadeLocacoes(Longo id){
+		//locacaoProdutoRepository.findProdutoById(null)
+return null;
+
+	} 
+*/
+
 	@Cacheable("produtos") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
 	public ModelAndView produtos() {
@@ -44,6 +57,38 @@ public class ProdutoController {
 		andView.addObject("produtos", produtoRepository.listaTodos());
 		return andView;
 	}
+
+
+	@Cacheable("produtosConsulta") 
+	@RequestMapping(method = RequestMethod.GET, value = "/consultaprodutos")
+	public ModelAndView produtosPesquisa() {
+		ModelAndView andView = new ModelAndView("produto/pesquisaProd");
+		andView.addObject("produtos", produtoRepository.listaTodos());
+		return andView;
+	}
+
+	 
+	@PostMapping("/pesquisaprodutocustom")
+	public ModelAndView pesquisaprodutocustom(@RequestParam("idProduto") Long idProduto) {
+		ModelAndView andView = new ModelAndView("produto/produto");
+		if(idProduto != null) {
+			Optional<Produto> produto = produtoRepository.findById(idProduto);
+	
+		andView.addObject("produtobj",produto);
+		andView.addObject("quantidadeLocacoes",locacaoProdutoRepository.findProdutoById(idProduto).size());
+
+		
+		andView.addObject("fornecedores", fornecedorRepository.findAll());
+		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
+		
+		return andView;
+		}
+
+		return andView;
+	}
+
+	
+
 	 
 	@PostMapping("/pesquisarproduto")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
