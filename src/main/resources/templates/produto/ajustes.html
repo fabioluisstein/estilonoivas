@@ -33,8 +33,7 @@
 	    <th>Código Produto</th>
 	    <th>Tipo Produto</th>
 	    <th>Cliente</th>
-	   
-	    <th>Data Liberacao</th>
+	    <th>Status</th>
 	    <th>Data Limite</th>
 	 </tr>
     </thead>	
@@ -52,12 +51,21 @@
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${produto.locacao.cliente.id})}"  th:text="${produto.locacao.cliente.nome}"></a>
 	   </td>
-	    <td th:if="${produto.data_liberacao}!= null "   style="background-color:#00a000" th:text="${#dates.format(produto.data_liberacao, 'dd/MM/yyyy')}"> </td>	
-	    <td th:if="${produto.data_liberacao}== null "   style="background-color:#FF0000" th:text="'Ajustes Pendentes'"> </td>
+	   <td th:if="${produto.data_liberacao}!= null"
+		th:text="${#dates.format(produto.data_liberacao, 'dd/MM/yyyy')}"> 
+	   </td>
+
+	   <td th:if="${produto.data_liberacao}== null">
+		<a onclick="M.toast({html: 'Librar Produto',classes: 'red rounded'})" th:href="@{/liberarProduto/{idprodutoLocacao}(idprodutoLocacao=${produto.id})}"
+		  <i class="material-icons">check_circle</i>
+	   </a>
+		</td>
+	
+
        <td>
 	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}"  th:text="${#dates.format(produto.locacao.data_retirada, 'dd/MM/yyyy')}"></a>
 	   </td>
-	  </tr>
+	  </tr> 
 	 </tbody>
 </table>
 
