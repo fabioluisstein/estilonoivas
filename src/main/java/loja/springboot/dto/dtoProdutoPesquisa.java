@@ -14,14 +14,10 @@ public class dtoProdutoPesquisa implements Serializable {
 	private String descricao;
 	private Double valorCompra;
 	private Double valorVenda;
-
 	private String cor;  
 	private String tamanho;
 	private Date data_compra;
-		
 	private Integer quantidade_acesso;
-	
-
 	private Integer quantidadeEstoque;
 	
 	 
