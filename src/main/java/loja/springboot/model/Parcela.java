@@ -1,8 +1,7 @@
 package loja.springboot.model;
-
 import java.io.Serializable;
 import java.util.Date;
-
+import javax.persistence.Lob;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,10 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -32,9 +29,6 @@ public class Parcela implements Serializable {
 	private String observacao;
 	private String moeda;
 	
-	
-	
-	
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name = "idlocacao", nullable = false)
@@ -44,11 +38,16 @@ public class Parcela implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date data_vencimento;
 	
-
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data_pagamento;
 
+	private String nomeArquivo;
+	
+	private String tipoArquivo;
+	
+	@Lob
+	private byte[] arquivo;
 	
 	public Long getId() {
 		return id;
@@ -82,7 +81,6 @@ public class Parcela implements Serializable {
 		this.observacao = observacao;
 	}
 
-	
 	public Locacao getLocacao() {
 		return locacao;
 	}
@@ -108,6 +106,29 @@ public class Parcela implements Serializable {
 		this.data_pagamento = data_pagamento;
 	}
 
+	public String getNomeArquivo() {
+		return nomeArquivo;
+	}
+
+	public void setNomeArquivo(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
+	}
+
+	public String getTipoArquivo() {
+		return tipoArquivo;
+	}
+
+	public void setTipoArquivo(String tipoArquivo) {
+		this.tipoArquivo = tipoArquivo;
+	}
+
+	public byte[] getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(byte[] arquivo) {
+		this.arquivo = arquivo;
+	}
 
 	@Override
 	public String toString() {

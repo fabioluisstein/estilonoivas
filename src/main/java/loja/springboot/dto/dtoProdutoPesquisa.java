@@ -26,37 +26,25 @@ public class dtoProdutoPesquisa implements Serializable {
 		return id;
 	}
 
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public String getDescricao() {
 		return descricao;
 	}
 
-
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-
 
 	public Double getValorCompra() {
 		return valorCompra;
 	}
 
-
-
 	public void setValorCompra(Double valorCompra) {
 		this.valorCompra = valorCompra;
 	}
-
-
 
 	public Double getValorVenda() {
 		return valorVenda;

@@ -154,6 +154,7 @@ public class LocacaoController {
 		Optional<LocacaoProduto> locacaoProduto = locacaoProdutoRepository.findById(idproduto);
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		andView.addObject("locacaobj",locacaoProduto.get().getLocacao());
+		
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("parcelabj", new Parcela());	
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
@@ -202,6 +203,7 @@ public class LocacaoController {
 		locacaoProduto.setLocacao(locacao.get());
 	    parcela.setLocacao(locacao.get());
 	    andView.addObject("locacaobj",locacao);
+		andView.addObject("locacaoId",locacao.get().getId());
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("parcelabj", parcela);
 		andView.addObject("produtobj", locacaoProduto);
@@ -221,6 +223,7 @@ public class LocacaoController {
 		locacaoProduto.setLocacao(locacao.get());
 	    parcela.setLocacao(locacao.get());
 	    andView.addObject("locacaobj",locacao);
+		andView.addObject("locacaoId",locacao.get().getId());
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("parcelabj", parcela);
 		andView.addObject("produtobj", locacaoProduto);

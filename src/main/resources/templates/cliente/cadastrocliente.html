@@ -21,6 +21,7 @@
       <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Cliente </span>
         <br>
       </div>
+
     </div>
 </div>
 <br>
@@ -86,7 +87,9 @@
    
        <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listaclientes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
        <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
-        
+          
+       <td><a th:if="${clientebj.id !=null}"  th:href="@{/cadastrolocacao/{idCliente}(idCliente=${clientebj.id})}" class="waves-effect waves-light btn grey darken-1 ">Nova Locação</a> </td> 
+   
     </form>
   </div>
 

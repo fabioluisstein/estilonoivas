@@ -104,6 +104,11 @@
    <br>
     <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listalocacoes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
     <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+    
+    <td><a th:if="${locacaoId !=null}"  th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacaoId})}" class="waves-effect waves-light btn grey darken-1 ">Contrato</a> </td> 
+    
+
+
    </div>
     </form>
   </div>
@@ -131,6 +136,7 @@
 	    <th>Vencimento</th>
 	    <th>Pagamento</th>
 	    <th>Valor Total</th>
+      <th>Anexo</th> 
 	    <th>Excluir</th>
 	   </tr>
 	</thead>
@@ -138,22 +144,20 @@
 	 <tbody>
 	  <tr th:each = "parcela : ${parcelas}">
 	    <td>
-	   	  <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.id}"></a>
-	   	     <!-- 
-	    <input type="button"  class="waves-effect waves-light btn grey darken-1" th:value="${parcela.id}" onclick="openModal(this.value)">
-	     -->
+	   	  <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.id}"></a>
 	   </td> 
 	   <td>
-        <a th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
+      <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
-	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></a>
+	    <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarparcela/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
 	   </td>
+     <td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
 	  <td> 
-	   <a onclick="M.toast({html: 'Deletando parcela',classes: 'red rounded'})" th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}"> <i class="material-icons">delete_forever</i></a>
+	   <a onclick="M.toast({html: 'Deletando parcela',classes: 'red rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}"> <i class="material-icons">delete_forever</i></a>
 	  </td>
 	  </tr>
 	 </tbody>
