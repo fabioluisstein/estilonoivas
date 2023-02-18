@@ -49,6 +49,10 @@ public class LocacaoProdutoController {
     return andView;
 	} 
 
+	/**
+	 * @param idprodutoLocacao
+	 * @return
+	 */
 	@GetMapping("/liberarProduto/{idprodutoLocacao}")
 	public ModelAndView liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.getById(idprodutoLocacao);

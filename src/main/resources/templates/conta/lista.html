@@ -32,10 +32,10 @@
    <thead>
      <tr>
      <th style="max-width: 3%">Id</th>
-	    <th style="max-width: 5%">Instituicao</th>
-	    <th>tipo</th>
-		<th>valor</th>
-		<th>data</th>
+	    <th style="max-width: 5%">Instituição</th>
+	    <th>Tipo</th>
+		<th>Valor</th>
+		<th>Data</th>
 	    <th style="max-width: 3%">Excluir</th>
 	 </tr>
     </thead>	
@@ -51,12 +51,11 @@
 	   <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.tipo}"></a>
 	  </td>
 	  <td>
-		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.valor}"></a>
+		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#strings.replace(#numbers.formatCurrency(conta.valor), '.00,', '')}"></a>
 	   </td>
 	   <td>
-		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.data}"></a>
+		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></a> 
 	   </td>
-
 	    <td><a th:href="@{/removerconta/{idconta}(idconta=${conta.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>
