@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Cadastro de Contas</title>
+
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+<br>
+
+
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  </div>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Contas </span>
+        <br>
+      </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+ 
+   <div class="row" >
+   <form action="/salvarconta" id="formconta" method="post" th:object="${contabj}" >
+      <div class="row">
+      
+       <div class="input-field col s12">
+           <label for="id" class="active">ID</label> 
+          	<input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+        </div>
+      
+        <div class="input-field col s12">
+          <label for="instituicao" class="active">Instituição</label> 
+          	<input name="instituicao" th:field="*{instituicao}" id="instituicao" class="validate">
+        </div>
+
+        <div class="col s6">
+          <label for="tipo">Tipo</label>  
+          <select th:field="*{tipo}" class="browser-default">
+           <option value="Corrente">Corrente</option>
+           <option value="Investimento">Investimento</option>
+         </select>
+         
+
+         <div class="col s6">
+          <label for="valorCompra" class="active">Valor </label> 
+          <input name="valorCompra" th:field="*{valor}" id="valorCompra" class="validate" >
+         </div>
+
+         <div class="col s6">
+          <label for="pickdate" class="active">Data</label> 
+          <input type="text" class="datepicker" th:field="*{data}"  name="data_compra"  >
+        </div>
+         
+
+      </div>
+       <a  href="/listacontasBancarias" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <input class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+        
+    </form>
+  </div>
+ <div th:replace="fragments :: footer"/>
+ 
+ </div>
+
+</body>
+</html>
