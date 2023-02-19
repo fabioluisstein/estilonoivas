@@ -2,7 +2,7 @@ package loja.springboot.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import javax.persistence.Lob;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,6 +49,14 @@ public class LocacaoProduto implements Serializable {
 	private Categoria categoriaAjuste;
 	
 
+	private String nomeArquivo;
+	
+	private String tipoArquivo;
+	
+	@Lob
+	private byte[] arquivo;
+	
+
 	public Long getId() {
 		return id;
 	}
@@ -62,6 +70,30 @@ public class LocacaoProduto implements Serializable {
 	}
 
 	
+	public String getNomeArquivo() {
+		return nomeArquivo;
+	}
+
+	public void setNomeArquivo(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
+	}
+
+	public String getTipoArquivo() {
+		return tipoArquivo;
+	}
+
+	public void setTipoArquivo(String tipoArquivo) {
+		this.tipoArquivo = tipoArquivo;
+	}
+
+	public byte[] getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(byte[] arquivo) {
+		this.arquivo = arquivo;
+	}
+
 	public Produto getProduto() {
 		return produto;
 	}

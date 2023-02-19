@@ -114,23 +114,85 @@
   </div>
 
   
-  <div class="col s12">
-   <ul class="collapsible">
-  <li>
-      <div style="text-align:right" >
-    <a id="btnModal" class="waves-effect waves-light btn modal-trigger" href="#modal1"> + </a> 
-    </div> 
-    <div class="collapsible-header">
-
-      <i class="material-icons">payments</i>
-      Plano de Pagamento  
+  <div class="card" style="margin: 20px auto; padding:20px; max-width: 100%" >
+    <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
+      <div class="row">
+       <div style="text-align:left"  class="col s6">
+        <h6 class="white-text">Produtos do Contrato</h6>       
+       </div>
+        <div style="text-align:right"  class="col s6">
+          <a th:if="${locacaoId !=null}"   id="btnModalProdutos" class="waves-effect waves-light btn modal-trigger" href="#modalProdutos"> Adicionar </a>
+        </div>
+     </div>
      
-    </div> 
+   </nav>
 
-    <div class="collapsible-body col s6">
+    <table id="tabFilterOrderId" class="table table-striped" style="width:100%" rendered="false">
+    <div style="text-align:right" >
+    </div>
+     <thead>
+   <tr>
+    <th>Cod. Produto</th>
+    <th>Produto</th>
+    <th>Tamanho</th>
+    <th>Cor</th> 
+    <th>Data Liberação </th>
+    <th>Valor</th>
+    <th>Anexo</th>
+    <th>Atalho</th>
+    <th>Excluir</th>
+   </tr>
+</thead>
+
+ <tbody>
+  <tr th:each = "produtoLocacao : ${produtosLocacoes}">
+  <td>   
+     <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.id}"></a>
+  </td>
       
-   <table class="striped #e0e0e0 grey lighten-2 highlight">
-   <thead>
+  <td>   
+     <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.categoria.nome}"></a>
+   </td>
+   <td>   
+     <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.tamanho}"></a>
+   </td>
+   <td>   
+     <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.cor}"></a>
+   </td>
+   <td>
+      <a th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></a>
+   </td>
+   <td>
+   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
+   </td> 
+  </td>
+  <td><a th:if="${produtoLocacao.arquivo !=null}"  th:href="@{/baixarArquivoProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
+ <td> 
+  <td> <a th:href="@{/editarproduto/{idproduto}(idproduto=${produtoLocacao.produto.id})}"> <i class="material-icons">shopping_cart_checkout</i> </a></td>
+  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
+  </tr>
+ </tbody>
+ </table> 
+
+</div>
+
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 100%" >
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
+    <div class="row">
+     <div style="text-align:left"  class="col s6">
+      <h6 class="white-text">Plano de Pagamento</h6>       
+     </div>
+      <div style="text-align:right"  class="col s6">
+        <a th:if="${locacaoId !=null}"  id="btnModal" class="waves-effect waves-light btn modal-trigger" href="#modal1"> Adicionar </a>
+      </div>
+   </div>
+   
+ </nav>
+
+      <table id="tabFilterOrderId" class="table table-striped" style="width:100%">
+      <div style="text-align:right" >
+      </div>
+       <thead>
 	   <tr>
 	    <th>id</th>
 	    <th>Vencimento</th>
@@ -164,76 +226,9 @@
 	 </table> 
    
     </div>
-  <li>
-        <div style="text-align:right" >
-    <a id="btnModalProdutos" class="waves-effect waves-light btn modal-trigger" href="#modalProdutos"> + </a> 
-    </div> 
-    <div class="collapsible-header">
-      <i class="material-icons">shopping_cart</i> Produtos
-      <span class="badge">1</span></div>
-    
-    
-    <div class="collapsible-body col s6">
-    
-  <table class="striped #e0e0e0 grey lighten-2 highlight">
-   <thead>
-	   <tr>
-	    <th>Cod. Produto</th>
-	    <th>Produto</th>
-	    <th>Tamanho</th>
-	    <th>Cor</th> 
-	    <th>Data Liberação </th>
-	    <th>Valor</th>
-	    <th>Atalho</th>
-	    <th>Excluir</th>
-	   </tr>
-	</thead>
-	
-	 <tbody>
-	  <tr th:each = "produtoLocacao : ${produtosLocacoes}">
-	   
-	   
-	   	<td>   
-	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.id}"></a>
-	   </td>
-	   	 
-          <td>   
-	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.categoria.nome}"></a>
-	   </td>
-	   
-	   <td>   
-	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.tamanho}"></a>
-	   </td>
-	   
-	   <td>   
-	   	<a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.cor}"></a>
-	   </td>
-	   
-	   	   
-	   <td>
-        <a th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></a>
-	   </td>
-	      
-	 
-	   <td>
-	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
-	   </td>
-	   
-	   <td>  <a th:href="@{/editarproduto/{idproduto}(idproduto=${produtoLocacao.produto.id})}"> <i class="material-icons">shopping_cart_checkout</i> </a></td>
-	   
-	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
-	  </tr>
-	 </tbody>
-	 </table> 
-  
-  
-  </li>
-</ul>
- </div>
-  
-</div>
 
-
+   
+    
 
 
   <!-- Modal Structure -->

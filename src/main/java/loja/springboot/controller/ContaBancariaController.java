@@ -23,7 +23,7 @@ public class ContaBancariaController {
 	@Autowired
 	private ContaBancariaRepository contaBancariaRepository;
  
-    @Cacheable("contasBancarias") 
+    @Cacheable("contas") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listacontasBancarias")
 	public ModelAndView listacontasBancarias() {
 		ModelAndView andView = new ModelAndView("conta/lista");
@@ -31,7 +31,7 @@ public class ContaBancariaController {
 		return andView;
 	}
 	 
-	
+	@Cacheable("contas") 
 	@PostMapping("/pesquisarcontas")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("conta/lista");
@@ -49,7 +49,7 @@ public class ContaBancariaController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value="contasBancarias",allEntries=true)
+	@CacheEvict(value="contas",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarconta")
 	public ModelAndView salvarConta(ContaBancaria conta) { 
 		ModelAndView andView = new ModelAndView("conta/cadastroconta");
@@ -71,12 +71,11 @@ public class ContaBancariaController {
 		return salvar(conta.get());
 	}
 	
-	@GetMapping("/removeconta/{idconta}")
-	public ModelAndView excluir(@PathVariable("idconta") Long idconta) {
+	@CacheEvict(value="contas",allEntries=true)
+	@GetMapping("/removerconta/{idconta}")
+	public String excluir(@PathVariable("idconta") Long idconta) {
 		contaBancariaRepository.deleteById(idconta);	
-		ModelAndView andView = new ModelAndView("conta/lista");
-		andView.addObject("contas", contaBancariaRepository.top10());
-		return andView;
+		return "redirect:/listacontasBancarias/";
 		
 	}
 	
