@@ -77,25 +77,38 @@
       <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
     </div>
      
+
+
+    
     <div class="col s6">
       <label for="pickdate" class="active">Data Evento</label> 
       <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  required>
     </div>
-    
-    <div class="col s6">
-      <label for="pickdate" class="active">Data Devolução</label> 
-      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  required>
-    </div>
-      
-    <div class="col s6">
-      <label for="pickdate" class="active">Data Locação</label> 
-      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  readonly="readonly">
-    </div>
-       
+
+        
     <div class="col s6">
       <label for="pickdate" class="active">Data Retirada</label> 
       <input type="text" class="datepicker" th:field="*{data_retirada}"  name="data_retirada" required >
     </div>
+
+
+      
+    <div class="col s3">
+      <label for="pickdate" class="active">Data Locação</label> 
+      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  readonly="readonly">
+    </div>
+    
+    <div class="col s3">
+      <label for="pickdate" class="active">Data Prova</label> 
+      <input type="text" class="datepicker" th:field="*{data_prova}"  name="data_prova" required >
+    </div>
+
+
+    <div class="col s6">
+      <label for="pickdate" class="active">Data Devolução</label> 
+      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  required>
+    </div>
+    
       
    <div class="col s12">
    <br>

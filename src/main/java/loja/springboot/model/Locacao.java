@@ -43,7 +43,10 @@ public class Locacao implements Serializable {
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data_retirada;
-	
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date data_prova;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
@@ -90,14 +93,21 @@ public class Locacao implements Serializable {
 		return parcelas;
 	}
 
-	
+
+	public Date getData_prova() {
+		return data_prova;
+	}
+
+	public void setData_prova(Date data_prova) {
+		this.data_prova = data_prova;
+	}
 
 	public double getValorTotal() {
 		Double valor = 0.00;
 		for(Parcela parcela : getParcelas()) {  
 		   if(parcela.getData_pagamento()!=null) {
 			 valor = valor +	parcela.getValor();
-		   }
+		   } 
 		
 		}  
 		return valor;
