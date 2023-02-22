@@ -4,14 +4,12 @@
 <meta charset="UTF8">
 <title>Cadastro Locação</title>
 
-
 <head th:replace="fragments :: html_head"/>
 
 <body>
 
 <div th:replace="fragments :: menu"/>
 <br>
-
 
  <div class="container">
   <div class="row">
@@ -28,7 +26,6 @@
    <div class="row">
    <form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}">
     
-  
     <div class="input-field col s12">
       <label for="id" class="active">ID</label> 
       <input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
@@ -107,13 +104,10 @@
     
     <td><a th:if="${locacaoId !=null}"  th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacaoId})}" class="waves-effect waves-light btn grey darken-1 ">Contrato</a> </td> 
     
-
-
    </div>
     </form>
   </div>
 
-  
   <div class="card" style="margin: 20px auto; padding:20px; max-width: 100%" >
     <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 100%">
       <div class="row">
@@ -138,7 +132,7 @@
     <th>Cor</th> 
     <th>Data Liberação </th>
     <th>Valor</th>
-    <th>Anexo</th>
+    <th>Foto</th>
     <th>Atalho</th>
     <th>Excluir</th>
    </tr>
@@ -149,7 +143,6 @@
   <td>   
      <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.id}"></a>
   </td>
-      
   <td>   
      <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${produtoLocacao.produto.categoria.nome}"></a>
    </td>
@@ -227,10 +220,6 @@
    
     </div>
 
-   
-    
-
-
   <!-- Modal Structure -->
   <div id="modal1" class="modal bottom-sheet">
     <div class="modal-content">
@@ -239,7 +228,7 @@
  
    <form action="/salvarparcela" id="formparcela" method="post" th:object="${parcelabj}">
     
-      <div class="row">  
+   <div class="row">  
     <div class="input-field col s10">
       <label for="id_parcela" class="active">ID</label> 
       <input name="id_parcela" th:field="*{id}" id="id_parcela" class="validate" readonly="readonly">
@@ -288,15 +277,9 @@
    </div>
   </div> 
   </form>
-
-    </div>
+  </div>
           
     </div>
-
-
-
-
-
 
 <!-- Modal Structure -->
   <div id="modalProdutos" class="modal bottom-sheet">
@@ -354,14 +337,7 @@
           
     </div>
 
-
-
- 
-
 <div th:replace="fragments :: footer"/> </div>
-
-
-
 
 </body>
 </html>

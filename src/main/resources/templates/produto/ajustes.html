@@ -43,7 +43,7 @@
 	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${produto.locacao.id})}" th:text="${produto.locacao}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.produto.id})}" th:text="${produto.produto.id}"></a>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produto.id})}" th:text="${produto.produto.id}"></a>
 	   </td> 
 	   <td>
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.produto.id})}" th:text="${produto.produto.categoria.nome}"></a>
