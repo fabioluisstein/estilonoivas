@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Contas Bancarias</title>
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+
+<div th:replace="fragments :: menu"/>
+
+<br>
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
+ 
+     <div class="row">
+      <div style="text-align:left"  class="col s6">
+       <h5 class="white-text">Parcelas</h5>
+      </div>
+    </div>
+  </nav>
+
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+	<table id="tabFilterAjustes" class="table table-striped" style="width:100%">
+		<div style="text-align:right" >
+		</div>
+		 <thead>
+		 <tr>
+		  <th>Id Locação</th>
+		  <th>Cliente</th>
+		  <th>Observações</th>
+		  <th>Vencimento</th>
+		  <th>Pagamento</th>
+		 <th>Moeda</th>
+		  <th>Valor Total</th>
+		 <th>Anexo</th> 
+		 </tr>
+	  </thead>
+	  
+	   <tbody>
+		<tr th:each = "parcela : ${parcelas}">
+		  <td>
+			   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.locacao.id}"></a>
+		 </td> 
+	   <td>
+			<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.locacao.cliente.nome}"></a>
+	  </td> 
+	  <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.abbreviate(parcela.observacao,50)}"></a>
+       </td> 
+		 <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}"></a>
+		 </td>
+	   <td>
+		  <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></a>
+		 </td>
+	   <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.moeda}"></a>
+	</td> 
+	   <td>
+		 <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
+		 </td>
+	<td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="material-icons">cloud_download</i></a>  </td> 		
+	</tr>
+	   </tbody>
+	   </table> 
+
+ </div>  
+  
+<div th:replace="fragments :: footerScript"/>
+
+</body>
+
+</html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.ContaBancaria;
 import loja.springboot.repository.ContaBancariaRepository;
+import loja.springboot.repository.ParcelaRepository;
 
 @Controller
 public class ContaBancariaController {
@@ -22,6 +23,11 @@ public class ContaBancariaController {
 
 	@Autowired
 	private ContaBancariaRepository contaBancariaRepository;
+
+	
+	@Autowired
+	private ParcelaRepository parcelaRepository;
+ 
  
     @Cacheable("contas") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listacontasBancarias")
@@ -31,6 +37,17 @@ public class ContaBancariaController {
 		return andView;
 	}
 	 
+
+
+	@RequestMapping(method = RequestMethod.GET, value = "/listaParcelas")
+	public ModelAndView listaPagamentos() {
+		ModelAndView andView = new ModelAndView("conta/listaParcelas");
+		andView.addObject("parcelas", parcelaRepository.parcelaMesAtual()); 
+		return andView;
+	}
+	 
+
+
 	@Cacheable("contas") 
 	@PostMapping("/pesquisarcontas")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {

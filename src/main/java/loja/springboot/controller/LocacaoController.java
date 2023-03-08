@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponse; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -84,6 +84,11 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
+
+
+
+
+
 	@Cacheable("locacoes")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
@@ -94,6 +99,18 @@ public class LocacaoController {
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
+		return modelAndView;
+	}
+	
+	
+
+
+
+
+	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
+	public ModelAndView locacoesVencidas() {
+		ModelAndView modelAndView = new ModelAndView("locacao/lista");
+		modelAndView.addObject("locacoes", locacaoRepository.locacoesVencidas());
 		return modelAndView;
 	}
 	

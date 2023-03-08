@@ -18,7 +18,7 @@
        <h5 class="white-text">Locações</h5>
       
       </div>
-       <div style="text-align:right">
+       <div style="text-align:right" class="col s6">
          <a  href="/cadastrolocacao" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
        </div>
         
@@ -38,10 +38,16 @@
 	 <input name="dataFinal" id="datapesquisa" type="date" >
 	 <label for="datapesquisaFim" class="active">Data Final </label>
   </div>
-  <div class="col s12"> 
+  <div class="col s6"> 
      <input class="waves-effect waves-light btn grey darken-1" 
             type="submit" onclick="M.toast({html: 'Pesquisando locação Específica',classes: 'blue rounded'})" value="Buscar">
   </div>
+
+  <div style="text-align:right" class="col s6"> 
+	<a  href="/locacoesVencidas" class="waves-effect waves-light btn grey darken-1">Vencidas</a>
+ </div>
+
+
   </div>
  </form>
   </div>
