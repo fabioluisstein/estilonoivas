@@ -28,7 +28,7 @@ public class EstadoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listaestados")
 	public ModelAndView estados() {
 		ModelAndView andView = new ModelAndView("estado/lista");
-		andView.addObject("estados", estadoRepository.top10());
+		andView.addObject("estados", estadoRepository.listEstados());
 		return andView;
 	}
 	 
@@ -37,7 +37,7 @@ public class EstadoController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("estado/lista");
 		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("estados", estadoRepository.top10());
+			modelAndView.addObject("estados", estadoRepository.listEstados());
 		}
 		modelAndView.addObject("estados", estadoRepository.findEstadoByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
@@ -68,7 +68,7 @@ public class EstadoController {
 	public ModelAndView excluir(@PathVariable("idestado") Long idestado) {
 		estadoRepository.deleteById(idestado);	
 		ModelAndView andView = new ModelAndView("estado/lista");
-		andView.addObject("estados", estadoRepository.top10());
+		andView.addObject("estados", estadoRepository.listEstados());
 		return andView;
 		
 	}

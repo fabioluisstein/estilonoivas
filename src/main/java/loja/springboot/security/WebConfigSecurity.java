@@ -27,7 +27,7 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	
 	}
-	 
+	  
 	
 	@Override // Cria autenticação do usuário com banco de dados ou em memória
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

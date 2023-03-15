@@ -21,7 +21,7 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	List<Locacao> topTodas();
 
  
-	@Query(value = "Select locacao.* from locacao, parcela, locacao_produto where data_retirada < now() and parcela.idlocacao = locacao.id and locacao_produto.idlocacao  = locacao.id  group by locacao.id having SUM(locacao_produto.valor) > SUM(parcela.valor)", nativeQuery = true)
+	@Query(value = "Select  * from locacao  where locacao.data_retirada < now() and (select sum(parcela.valor) as valor_parcela from parcela where  parcela.idlocacao = locacao.id ) < (select sum(locacao_produto.valor) as valor_produto from locacao_produto where  locacao_produto.idlocacao = locacao.id ) ", nativeQuery = true)
 	List<Locacao> locacoesVencidas();
 
 

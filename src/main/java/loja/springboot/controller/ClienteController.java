@@ -35,6 +35,15 @@ public class ClienteController {
 		return andView;
 	}
 	 
+
+
+	@GetMapping("/listaClienteCidade/{idcidade}")
+	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
+		ModelAndView andView = new ModelAndView("cliente/lista");
+		andView.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
+		return andView;
+	}
+
 	@PostMapping("/pesquisarcliente")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cliente/lista");

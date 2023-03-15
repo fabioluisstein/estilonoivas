@@ -22,7 +22,6 @@
          <a  href="/cadastrocidade" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
        </div>
     </div>
-    
   </nav>
 
 <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
@@ -34,6 +33,7 @@
      <th style="max-width: 5%">Id</th>
 	    <th>Nome</th>
 	    <th>Estado</th>
+		<th>Quantidade de Clientes</th>
 	    <th style="max-width: 5%">Excluir</th>  
 	 </tr>
     </thead>	
@@ -48,8 +48,10 @@
 	  <td>
 	   <a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/editarcidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.estado}"></a>
 	  </td>
+	  <td>  
+		<a onclick="M.toast({html: 'Editando Cidade',classes: 'blue rounded'})" th:href="@{/listaClienteCidade/{idcidade}(idcidade=${cidade.id})}" th:text="${cidade.quantidadeCliente}"></a>
+	   </td>
 	  <td> <a onclick="M.toast({html: 'Deletando Cidade',classes: 'red rounded'})" th:href="@{/removercidade/{idcidade}(idcidade=${cidade.id})}"><i class="material-icons">delete_forever</i></a></td>
-	 
 	  </tr>
 	 </tbody>
 	

@@ -121,11 +121,6 @@ public class LocacaoProdutoController {
 
 	}
 
-
-
-
-
-
 	@GetMapping("/editarprodutolocacaoCustoms/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") Long idproduto)  {
 		Optional<LocacaoProduto> locacaoProduto = locacaoProdutoRepository.findById(idproduto);
@@ -148,7 +143,7 @@ public class LocacaoProdutoController {
 	 */
 	@GetMapping("/liberarProduto/{idprodutoLocacao}")
 	public ModelAndView liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
-		LocacaoProduto locacaoProduto = locacaoProdutoRepository.getById(idprodutoLocacao);
+		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findProdutoLocaoById(idprodutoLocacao).get(0);
 		locacaoProduto.setData_liberacao(new Date());
 		locacaoProdutoRepository.saveAndFlush(locacaoProduto);
 		ModelAndView andView = new ModelAndView("produto/ajustes");

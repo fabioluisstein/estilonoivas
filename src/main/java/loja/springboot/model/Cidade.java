@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.transaction.TransactionScoped;
 
 import org.springframework.cache.annotation.Cacheable;
 
@@ -26,7 +27,18 @@ public class Cidade implements Serializable {
 	@ManyToOne()
 	private Estado estado;
 	  
-	
+  @TransactionScoped
+	private Long quantidadeCliente; 
+
+
+	public Long getQuantidadeCliente() {
+		return quantidadeCliente;
+	}
+
+	public void setQuantidadeCliente(Long quantidadeCliente) {
+		this.quantidadeCliente = quantidadeCliente;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -108,7 +108,7 @@ public class LocacaoController {
 
 
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
-	public ModelAndView locacoesVencidas() {
+	public ModelAndView locacoesVencidas() {	
 		ModelAndView modelAndView = new ModelAndView("locacao/lista");
 		modelAndView.addObject("locacoes", locacaoRepository.locacoesVencidas());
 		return modelAndView;
