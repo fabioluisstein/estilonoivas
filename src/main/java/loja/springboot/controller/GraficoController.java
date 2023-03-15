@@ -22,7 +22,6 @@ import loja.springboot.repository.GraficoRepository;
 public class GraficoController {
  
 
-	
 	@Autowired
 	private GraficoRepository graficoRepository;
 	
