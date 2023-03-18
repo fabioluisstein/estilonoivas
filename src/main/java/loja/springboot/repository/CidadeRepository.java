@@ -13,4 +13,8 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
 	@Query(value = "select  id,   nome,  estado,  estado_id , quantidadeCliente as quantidade_cliente   from vw_dataTable_cidades  order by id desc ", nativeQuery = true)
 	List<Cidade> top10();
+
+	@Query(value = "select  *   from cidade  order by  nome asc ", nativeQuery = true)
+	List<Cidade> cidadesOrdem();
+
 }

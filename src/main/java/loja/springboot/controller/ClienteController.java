@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import loja.springboot.model.Cliente;
 import loja.springboot.repository.CidadeRepository;
+import loja.springboot.repository.ClienteDtoRepository;
 import loja.springboot.repository.ClienteRepository;
 
 @Controller
@@ -26,21 +27,22 @@ public class ClienteController {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private ClienteDtoRepository clientedtoRepository;
  
 	@Cacheable("clientes") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaclientes")
 	public ModelAndView clientes() {
 		ModelAndView andView = new ModelAndView("cliente/lista");
-		andView.addObject("clientes", clienteRepository.listaClientes());
+		andView.addObject("clientes", clientedtoRepository.findAll());
 		return andView;
-	}
+	} 
 	 
-
-
 	@GetMapping("/listaClienteCidade/{idcidade}")
 	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
 		ModelAndView andView = new ModelAndView("cliente/lista");
-		andView.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
+		andView.addObject("clientes", clientedtoRepository.listaClienteCidade(idcidade));
 		return andView;
 	}
 
@@ -60,7 +62,7 @@ public class ClienteController {
 		ModelAndView modelAndView = new ModelAndView("cliente/cadastrocliente");
 		modelAndView.addObject("clientebj", new Cliente());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
-		modelAndView.addObject("cidades", cidadeRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.cidadesOrdem());
 		return modelAndView;
 	}
 	
@@ -68,7 +70,7 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
 		ModelAndView andView = new ModelAndView("cliente/cadastrocliente");
-		andView.addObject("cidades", cidadeRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.cidadesOrdem());
 		andView.addObject("clientebj",clienteRepository.saveAndFlush(cliente));
 		return andView;
 	}

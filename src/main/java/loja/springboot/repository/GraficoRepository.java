@@ -10,3 +10,4 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 	// List<GraficoDTO> despesasReceitas();
  
 }
+ 

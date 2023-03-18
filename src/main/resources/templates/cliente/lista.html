@@ -29,8 +29,8 @@
    <thead>
      <tr>
         <th style="max-width: 3%">Id</th>
-	    <th style="max-width: 40%">Nome</th>
-	    <th style="max-width: 8%">Telefone</th>
+	    <th style="max-width: 30%">Nome</th>
+	    <th style="max-width: 10%">Telefone</th>
 		<th style="max-width: 3%">Whats</th>
 	    <th style="max-width: 8%">Cpf</th>
 	    <th>Cidade</th>
@@ -50,7 +50,7 @@
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}"  target="_blank" th:text="${cliente.telefone}"></a>
 	   </td>  
 	   <td>
-		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +  ${#strings.replace(#strings.replace(#strings.replace(#strings.replace(cliente.telefone,'(',''),')',''),' ',''),'-','')} "	 <i class="material-icons">phone_android</i>  </a>
+		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="${cliente.whats} "	 <i class="material-icons">phone_android</i>  </a>
 		</td>  
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cpf}"></a>
@@ -69,7 +69,5 @@
 <div th:replace="fragments :: footerScript"/>
 
 </body>
-
-
 
 </html>
