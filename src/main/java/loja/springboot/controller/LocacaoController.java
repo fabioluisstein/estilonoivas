@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse; 
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,6 +29,7 @@ import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
 import loja.springboot.model.Produto;
 import loja.springboot.repository.ClienteRepository;
+import loja.springboot.repository.LocacaoDtoRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoRepository;
 import loja.springboot.repository.ParcelaRepository;
@@ -52,7 +53,9 @@ public class LocacaoController {
 	
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
-	
+	@Autowired
+	private LocacaoDtoRepository locacaoDtoRepository;
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
@@ -63,7 +66,7 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {
 		ModelAndView andView = new ModelAndView("locacao/lista");
-		andView.addObject("locacoes", locacaoRepository.topTodas());
+		andView.addObject("locacoes", locacaoDtoRepository.top100Locacao());
 		return andView;
 	}
 	 
@@ -72,15 +75,15 @@ public class LocacaoController {
 	  
 	  ModelAndView modelAndView = new ModelAndView("locacao/lista");
 		if(dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("locacoes", locacaoRepository.topTodas());
-		}
-		
+			modelAndView.addObject("locacoes", locacaoDtoRepository.findAll());
+		} 
+		 
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
-			modelAndView.addObject("locacoes", locacaoRepository.findLocacaoDatas(dataInicio,dataFinal));
+			modelAndView.addObject("locacoes", locacaoDtoRepository.findLocacaoDatas(dataInicio,dataFinal));
 			return modelAndView;
 		}
 		
-		modelAndView.addObject("locacoes", locacaoRepository.topTodas());
+		modelAndView.addObject("locacoes", locacaoDtoRepository.findAll());
 		return modelAndView;
 	}
 	
@@ -102,24 +105,15 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
-	
-
-
-
 
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
 	public ModelAndView locacoesVencidas() {	
 		ModelAndView modelAndView = new ModelAndView("locacao/lista");
-		modelAndView.addObject("locacoes", locacaoRepository.locacoesVencidas());
+		modelAndView.addObject("locacoes", locacaoDtoRepository.locacoesVencidas());
 		return modelAndView;
 	}
 	
-	
-	
-	
 
-
-	
 	@Cacheable("locacoes")  
 	@GetMapping("/cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Long idCliente) {
@@ -171,7 +165,6 @@ public class LocacaoController {
 		Optional<LocacaoProduto> locacaoProduto = locacaoProdutoRepository.findById(idproduto);
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		andView.addObject("locacaobj",locacaoProduto.get().getLocacao());
-		
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("parcelabj", new Parcela());	
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
@@ -265,10 +258,7 @@ public class LocacaoController {
     
 	}   
 	
-	
-	
-	
-	
+
 	@GetMapping(value = "/buscarprodutoid") /* mapeia a url */
 	@ResponseBody /* Descricao da resposta */
 	public ResponseEntity<Produto> buscarprodutoid(@RequestParam(name = "idproduto") Long idproduto) { 

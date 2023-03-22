@@ -18,4 +18,5 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
 	@Query(value = "select * from fornecedor order by nome asc", nativeQuery = true)
 	List<Fornecedor> forcedorOrderBy();
+
 }

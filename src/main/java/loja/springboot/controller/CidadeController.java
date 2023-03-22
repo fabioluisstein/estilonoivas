@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -37,11 +36,11 @@ public class CidadeController {
 	private EstadoRepository estadoRepository;
 	
  
-	@Cacheable("cidades") 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/listacidades")
 	public ModelAndView cidades() {
 		ModelAndView andView = new ModelAndView("cidade/lista");
-		andView.addObject("cidades", cidadeRepository.top10());
+		andView.addObject("cidades", cidadeRepository.listCidadades());
 		return andView;
 	}
 	 
@@ -52,7 +51,7 @@ public class CidadeController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cidade/lista");
 		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("cidades", cidadeRepository.top10());
+			modelAndView.addObject("cidades", cidadeRepository.listCidadades());
 		}
 		modelAndView.addObject("cidades", cidadeRepository.findCidadeByName(nomepesquisa.toUpperCase()));
 		return modelAndView;
@@ -67,18 +66,14 @@ public class CidadeController {
 	}
 	
 	
-	
-	@CacheEvict(value="cidades",allEntries=true)
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
-
 		cidade.setEstado(new Estado(estadoId));
 		Cidade cdCidade = cidadeRepository.saveAndFlush(cidade);		
 		return "redirect:/editarcidade/"+cdCidade.getId().toString();
 		
 	} 
-	
-	  
 	
 	@GetMapping("employees")
 	  public String getEmployees(@PageableDefault(size = 3) Pageable pageable, Model model) {
@@ -102,8 +97,6 @@ public class CidadeController {
 		andView.addObject("cidadebj",cidade);
 		andView.addObject("estadodto", cidade.get().getEstado().getNome());
 		andView.addObject("estadoId", cidade.get().getEstado().getId());
-		
-		  
 		return andView;
 	}  
 	
@@ -113,12 +106,12 @@ public class CidadeController {
         return estadoRepository.filtradas(nome.toLowerCase());   
     }
     
-	@CacheEvict(value="cidades",allEntries=true)
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" }, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
 	public ModelAndView excluir(@PathVariable("idcidade") Long idcidade) {
 		cidadeRepository.deleteById(idcidade);	
 		ModelAndView andView = new ModelAndView("cidade/lista");
-		andView.addObject("cidades", cidadeRepository.top10());
+		andView.addObject("cidades", cidadeRepository.listCidadades());
 		return andView;
 	}
 	

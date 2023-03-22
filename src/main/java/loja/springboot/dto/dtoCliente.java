@@ -6,10 +6,10 @@ import javax.persistence.Id;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 
+@Cacheable
 @Entity
 @Immutable
 @Subselect("select id, nome, telefone, whats, cpf, cidade, cidade_id from vw_datatable_clientes")
-@Cacheable
 
 public class dtoCliente implements Serializable {
  
@@ -22,7 +22,6 @@ public class dtoCliente implements Serializable {
 	private String cidade; 
 	private Long cidade_id;
 	
-
 	public Long getId() {
 		return id;
 	}

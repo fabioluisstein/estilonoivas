@@ -38,13 +38,13 @@ public class PagamentoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	@Cacheable("pagamentos")
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
 		andView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
 		return andView;
-	}
+	} 
 
 	@PostMapping("/pesquisarpagamento")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,
@@ -52,7 +52,7 @@ public class PagamentoController {
 
 		ModelAndView modelAndView = new ModelAndView("pagamento/lista");
 		if (dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
+			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentosTodos());
 		}
 
 		if (!dataInicio.isEmpty() && !dataFinal.isEmpty()) {
@@ -60,7 +60,7 @@ public class PagamentoController {
 			return modelAndView;
 		}
 
-		modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
+		modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentosTodos());
 		return modelAndView;
 	}
 
@@ -74,7 +74,7 @@ public class PagamentoController {
 		return modelAndView;
 	}
 
-	@CacheEvict(value = "pagamentos", allEntries = true)
+	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarpagamento", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
@@ -149,8 +149,7 @@ public class PagamentoController {
 	}
 
 	
-
-	@CacheEvict(value = "pagamentos", allEntries = true)
+	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/editarpagamento/{idpagamento}")
 	public ModelAndView editar(@PathVariable("idpagamento") Long idpagamento) throws ParseException, IOException {
 		Optional<Pagamento> pagamento = pagamentoRepository.findById(idpagamento);
@@ -162,7 +161,7 @@ public class PagamentoController {
 		return andView;
 	}
 
-	@CacheEvict(value = "pagamentos", allEntries = true)
+	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/removerpagamento/{idpagamento}")
 	public ModelAndView excluir(@PathVariable("idpagamento") Long idpagamento) {
 		pagamentoRepository.deleteById(idpagamento);

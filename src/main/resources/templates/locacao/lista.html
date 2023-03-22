@@ -62,7 +62,8 @@
 	    <th style="width:8%">Data Contrato</th>
 	    <th style="width:8%">Valor Total</th>
 	    <th style="width:8%">Pendente</th>
-	    <th>Cliente</th>
+	    <th style="width:10%">Cliente</th>
+		<th style="width:10%">Cidade</th>
 		<th style="max-width: 5%">Whats</th>
 	    <th style="width:10%">Data Retirada</th>
 	    <th style="width:3%">Contrato</th>
@@ -78,11 +79,11 @@
 	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_locacao, 'dd/MM/yyyy')}"></a> 
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.getValorTotalProdutos()), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.total_produto), '.00', '')}"></a>
 	   </td>
 	   
          <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.getDiferencaPagar()), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.falta_pagar), '.00', '')}"></a>
 	   </td>
 	   
 	   <td>
@@ -90,7 +91,12 @@
 	   </td>
 
 	   <td>
-		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="@{https://wa.me/} +  ${#strings.replace(#strings.replace(#strings.replace(#strings.replace(locacao.cliente.telefone,'(',''),')',''),' ',''),'-','')} "	 <i class="material-icons">phone_android</i>  </a>
+		<a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${locacao.cidade}"></a>
+		</td>
+ 
+
+	   <td>
+		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="${locacao.whats} "	 <i class="material-icons">phone_android</i>  </a>
 		</td>  
 
         <td>
