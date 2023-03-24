@@ -26,14 +26,14 @@
   </nav>
 
 <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
-	<table id="tabFilterOrderId" class="table table-striped" style="width:100%">
+	<table id="tabFilter" class="table table-striped" style="width:100%">
   <div style="text-align:right" >
   </div>
    <thead>
      <tr>
      <th style="max-width: 3%">Id</th>
-	    <th style="max-width: 5%">UF</th>
 	    <th>Nome</th>
+		<th style="max-width: 5%">UF</th>
 	    <th style="max-width: 3%">Excluir</th>
 	 </tr>
     </thead>	
@@ -43,11 +43,11 @@
 	   <a onclick="M.toast({html: 'Editando Estado',classes: 'blue rounded'})" th:href="@{/editarestado/{idestado}(idestado=${estado.id})}" th:text="${estado.id}"></a>
 	   </td>
 	   <td>
+		<a onclick="M.toast({html: 'Editando Estado',classes: 'blue rounded'})" th:href="@{/editarestado/{idestado}(idestado=${estado.id})}" th:text="${estado.nome}"></a>
+	   </td>
+	   <td>
 	   <a onclick="M.toast({html: 'Editando Estado',classes: 'blue rounded'})" th:href="@{/editarestado/{idestado}(idestado=${estado.id})}" th:text="${estado.sigla}"></a>
 	   </td>
-	  <td>
-	   <a onclick="M.toast({html: 'Editando Estado',classes: 'blue rounded'})" th:href="@{/editarestado/{idestado}(idestado=${estado.id})}" th:text="${estado.nome}"></a>
-	  </td>
 	    <td><a th:href="@{/removerestado/{idestado}(idestado=${estado.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>

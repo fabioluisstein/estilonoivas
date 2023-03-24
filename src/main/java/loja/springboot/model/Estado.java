@@ -19,15 +19,15 @@ public class Estado implements Serializable {
 	private Long id;
 	private String nome;
 	private String sigla;
-
-	public Estado(Long id) {
-		this.id = id;
-	}
-	
-	public Estado() {
 		
-	}
+
+	public Estado(){
 	
+	} 
+	public Estado(Long id){
+		this.id = id;
+	} 
+
 	public Long getId() {
 		return id;
 	}

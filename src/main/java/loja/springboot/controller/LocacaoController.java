@@ -39,7 +39,6 @@ import loja.springboot.repository.ProdutoRepository;
 @Controller
 public class LocacaoController {
  
-
 	@Autowired
 	private PessoaRepository colaboradorRepository;
 	@Autowired
@@ -87,11 +86,6 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
-
-
-
-
-
 	@Cacheable("locacoes")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {

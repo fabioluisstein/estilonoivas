@@ -2,12 +2,10 @@ package loja.springboot.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,23 +17,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import loja.springboot.dto.EntidadeDTO;
 import loja.springboot.model.Cidade;
 import loja.springboot.model.Estado;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.EstadoRepository;
+import loja.springboot.repository.InterfaceGeneric;
 
 @Controller
 public class CidadeController {
  
-
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
- 
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/listacidades")
 	public ModelAndView cidades() {
@@ -44,19 +38,12 @@ public class CidadeController {
 		return andView;
 	}
 	 
-	
-
-	
 	@PostMapping("/pesquisarcidade")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("cidade/lista");
-		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("cidades", cidadeRepository.listCidadades());
-		}
-		modelAndView.addObject("cidades", cidadeRepository.findCidadeByName(nomepesquisa.toUpperCase()));
+		modelAndView.addObject("cidades", cidadeRepository.listCidadades());
 		return modelAndView;
 	}
-
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocidade")
 	public ModelAndView cadastro(Cidade cidade) {
@@ -65,28 +52,23 @@ public class CidadeController {
 		return modelAndView;
 	}
 	
-	
-	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" }, allEntries = true)
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
 		cidade.setEstado(new Estado(estadoId));
 		Cidade cdCidade = cidadeRepository.saveAndFlush(cidade);		
 		return "redirect:/editarcidade/"+cdCidade.getId().toString();
-		
 	} 
 	
 	@GetMapping("employees")
-	  public String getEmployees(@PageableDefault(size = 3) Pageable pageable, Model model) {
+	  public String getEmployees(Pageable pageable, Model model) {
 	      Page<Cidade> page = cidadeRepository.findAll(pageable);
 	      model.addAttribute("page", page);
 	      return "cidade/employee-page";
 	  }
 	
-	
 	@GetMapping("telanova")
 	  public String getEEmployees() {
-	 
-	    
 	      return "cidade/lista2";
 	  }
  	
@@ -102,17 +84,18 @@ public class CidadeController {
 	
     @RequestMapping("/filtro")
     public @ResponseBody
-    List<EntidadeDTO> filtradas(String nome) {
+    List<InterfaceGeneric.listGeneric> filtradas(String nome) {
         return estadoRepository.filtradas(nome.toLowerCase());   
     }
-    
-	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" }, allEntries = true)
+
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto"}, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
-	public ModelAndView excluir(@PathVariable("idcidade") Long idcidade) {
-		cidadeRepository.deleteById(idcidade);	
-		ModelAndView andView = new ModelAndView("cidade/lista");
-		andView.addObject("cidades", cidadeRepository.listCidadades());
-		return andView;
+	public String excluir(@PathVariable("idcidade") Long idcidade) {
+		try {
+		  cidadeRepository.deleteById(idcidade);	
+		} catch (Exception e) {
+	  }
+	  return "redirect:/listacidades";
 	}
 	
 }

@@ -11,15 +11,21 @@ import loja.springboot.model.Cidade;
 
 @Transactional
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
-	@Query(value = "select c.* from cidade c where UPPER(c.nome) like %?1%", nativeQuery = true)
-	List<Cidade> findCidadeByName(String nome);
+
+	InterfaceGeneric interfaceGeneric = new InterfaceGeneric();
 
 	@Cacheable("cidadesTodas") 
-	@Query(value = "select  id,   nome,  estado,  estado_id , quantidadeCliente as quantidade_cliente   from vw_dataTable_cidades  order by id desc ", nativeQuery = true)
-	List<Cidade> listCidadades();
+	@Query(value = "select  id,   nome,  estado,  estado_id , quantidadeCliente   from vw_dataTable_cidades  order by nome asc ", nativeQuery = true)
+	List<listCidades> listCidadades();
+	public static interface listCidades {
+		String getId(); 
+		String getNome();
+		String getEstado();
+		Long getEstado_id();
+		Long getQuantidadeCliente();
+	}
 
-	@Cacheable("cidadesOrdem") 
-	@Query(value = "select  *   from cidade  order by  nome asc ", nativeQuery = true)
-	List<Cidade> cidadesOrdem();
-
+	@Cacheable("cidadeDtoRelac") 
+	@Query(value = "select id, nome  from cidade order by  nome asc", nativeQuery = true)
+	 List<InterfaceGeneric.listGeneric> cidadeDtoRelac(); 
 }
