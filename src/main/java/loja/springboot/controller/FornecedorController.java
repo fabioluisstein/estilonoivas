@@ -8,10 +8,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import loja.springboot.model.Fornecedor;
@@ -35,23 +33,13 @@ public class FornecedorController {
 		return andView;
 	}
 	 
-	@PostMapping("/pesquisarfornecedor")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("fornecedor/lista");
-		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("fornecedores", fornecedorRepository.listaForcenedores());
-		}
-		modelAndView.addObject("fornecedores", fornecedorRepository.findFornecedorByName(nomepesquisa.toUpperCase()));
-		return modelAndView;
-	}
-
 	
 	@Cacheable("fornecedores")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrofornecedor")
 	public ModelAndView cadastro(Fornecedor fornecedor) {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrofornecedor");
 		modelAndView.addObject("fornecedorbj", new Fornecedor());
-		modelAndView.addObject("cidades", cidadeRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.cidadeDtoRelac());
 		return modelAndView;
 	}
 	

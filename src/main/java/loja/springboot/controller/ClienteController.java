@@ -1,5 +1,4 @@
 package loja.springboot.controller;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
@@ -46,16 +45,20 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
 		ModelAndView andView = new ModelAndView("cliente/cadastrocliente");
-		andView.addObject("cidades", cidadeRepository.cidadeDtoRelac());
 		andView.addObject("clientebj",clienteRepository.saveAndFlush(cliente));
+		andView.addObject("cidades", cidadeRepository.findAll()); 
 		return andView;
 	}
 	
 	@GetMapping("/editarcliente/{idcliente}")
-	public ModelAndView editar(@PathVariable("idcliente") Long idcliente) {
-		Optional<Cliente> cliente = clienteRepository.findById(idcliente);
-		return salvar(cliente.get());
+	public ModelAndView editar(@PathVariable("idcliente") Cliente cliente) {
+		ModelAndView andView = new ModelAndView("cliente/cadastrocliente");
+		andView.addObject("clientebj",cliente);
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		return andView;
 	}
+
+
 	
 	@CacheEvict(value="clienteTodosDto",allEntries=true)
 	@GetMapping("/removercliente/{idcliente}")

@@ -26,6 +26,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 	}
 
 	@Cacheable("cidadeDtoRelac") 
-	@Query(value = "select id, nome  from cidade order by  nome asc", nativeQuery = true)
+	@Query(value = "select id, nome  from vw_datatable_cidades order by  nome asc", nativeQuery = true)
 	 List<InterfaceGeneric.listGeneric> cidadeDtoRelac(); 
 }

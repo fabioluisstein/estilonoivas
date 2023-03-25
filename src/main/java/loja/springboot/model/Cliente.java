@@ -3,9 +3,11 @@ package loja.springboot.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,7 +29,8 @@ public class Cliente implements Serializable {
 	private String rg;
 	private String email;
 	private String senha;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 	private String bairro;
 	private String logradouro;

@@ -3,9 +3,7 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
@@ -26,12 +23,9 @@ import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.ProdutoRepository;
 
-
-
 @Controller
 public class ProdutoController {
  
-
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	@Autowired
@@ -40,8 +34,6 @@ public class ProdutoController {
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
-
-
 	private int quantidadeLocacoes;
 	private double valorFinanceiro;
  

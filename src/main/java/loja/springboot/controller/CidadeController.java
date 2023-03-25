@@ -1,7 +1,6 @@
 package loja.springboot.controller;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
@@ -73,12 +72,11 @@ public class CidadeController {
 	  }
  	
 	@GetMapping("/editarcidade/{idcidade}")
-	public ModelAndView editar(@PathVariable("idcidade") Long idcidade) {
-		Optional<Cidade> cidade = cidadeRepository.findById(idcidade);
+	public ModelAndView editar(@PathVariable("idcidade") Cidade cidade) {
 		ModelAndView andView = new ModelAndView("cidade/cadastrocidade");
 		andView.addObject("cidadebj",cidade);
-		andView.addObject("estadodto", cidade.get().getEstado().getNome());
-		andView.addObject("estadoId", cidade.get().getEstado().getId());
+		andView.addObject("estadodto", cidade.getEstado().getNome());
+		andView.addObject("estadoId", cidade.getEstado().getId());
 		return andView;
 	}  
 	
