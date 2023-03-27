@@ -31,6 +31,10 @@ public class Cidade implements Serializable {
   @TransactionScoped
 	private Long quantidadeCliente; 
 
+
+public Cidade(){
+}
+	
 public Cidade(Long id){
 	this.id = id;
 }
@@ -41,10 +45,6 @@ public Cidade(Long id, String nome){
 	this.nome = nome;
 }
 
-
-public Cidade(){
-
-}
 
 	public Long getQuantidadeCliente() {
 		return quantidadeCliente;

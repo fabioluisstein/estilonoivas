@@ -72,7 +72,7 @@
     <br>
     <select th:field="*{cidade}" class="browser-default" required>
     <option th:each="cid: ${cidades}"
-			th:value="${cid.id}" th:text="${cid.nome}+' - '+ ${cid.estado.sigla}" ></option>
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
      </select> 
     </div>
     

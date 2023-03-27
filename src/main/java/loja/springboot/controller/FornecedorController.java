@@ -2,7 +2,6 @@ package loja.springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ public class FornecedorController {
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
  
-	@Cacheable("fornecedores") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listafornecedores")
 	public ModelAndView fornecedores() {
 		ModelAndView andView = new ModelAndView("fornecedor/lista");
@@ -29,7 +27,6 @@ public class FornecedorController {
 		return andView;
 	}
 	 
-	@Cacheable("fornecedores")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrofornecedor")
 	public ModelAndView cadastro(Fornecedor fornecedor) {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrofornecedor");
@@ -42,8 +39,8 @@ public class FornecedorController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarfornecedor")
 	public ModelAndView salvar(Fornecedor fornecedor) {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
-		andView.addObject("fornecedorbj",fornecedorRepository.saveAndFlush(fornecedor));
 		andView.addObject("cidades", cidadeRepository.findAll());
+		andView.addObject("fornecedorbj",fornecedorRepository.saveAndFlush(fornecedor));
 		return andView;
 	}
 	
