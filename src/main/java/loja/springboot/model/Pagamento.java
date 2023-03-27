@@ -2,17 +2,17 @@ package loja.springboot.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob; 
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,14 +25,10 @@ public class Pagamento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String descricao;
 	private Double valor;
-	
 	private String origem;  
-	
 	private String restrito;  
-	
 	private String moeda;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -46,9 +42,12 @@ public class Pagamento implements Serializable {
 	@Lob
 	private byte[] arquivo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "categoria_id")
 	private Categoria categoria;
-	@ManyToOne
+	
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
 	
 	public Long getId() {

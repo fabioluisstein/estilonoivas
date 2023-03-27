@@ -3,12 +3,9 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Pagamento;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.PagamentoRepository;
-import loja.springboot.repository.dtoPagamentoRepository;
 
 @Controller
 public class PagamentoController {
@@ -33,54 +28,48 @@ public class PagamentoController {
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
 	@Autowired
-	private dtoPagamentoRepository pagamentoDtoRepository;
-	
-	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
+		andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
 		return andView;
 	} 
-
+ 
 	@PostMapping("/pesquisarpagamento")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,
 			@RequestParam("dataFinal") String dataFinal) {
 
 		ModelAndView modelAndView = new ModelAndView("pagamento/lista");
 		if (dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentosTodos());
+			modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
 		}
 
 		if (!dataInicio.isEmpty() && !dataFinal.isEmpty()) {
-			modelAndView.addObject("pagamentos", pagamentoDtoRepository.findPagamentoDatas(dataInicio, dataFinal));
+			modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoDatas(dataInicio, dataFinal));
 			return modelAndView;
 		}
 
-		modelAndView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentosTodos());
+		modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
 		return modelAndView;
 	}
 
-	@Cacheable("pagamentos")
 	@RequestMapping(method = RequestMethod.GET, value = "cadastropagamento")
 	public ModelAndView cadastro(Pagamento pagamento) {
 		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
 		modelAndView.addObject("pagamentobj", new Pagamento());
-		modelAndView.addObject("fornecedores", fornecedorRepository.forcedorOrderBy());
+		modelAndView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
 		return modelAndView;
 	}
 
-	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
+	@CacheEvict(value = { "saidas", "pagamentosTodos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarpagamento", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
-		andView.addObject("fornecedores", fornecedorRepository.forcedorOrderBy());
+		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
-
 		if (pagamento.getId() == null) {
 			if (file.getSize() > 0) {
 				pagamento.setArquivo(file.getBytes());
@@ -106,8 +95,8 @@ public class PagamentoController {
 				pagamento.setNomeArquivo(pdt.get().getNomeArquivo());
 
 			}
-
 			andView.addObject("pagamentobj", pagamentoRepository.saveAndFlush(pagamento));
+			
 		}
 		return andView;
 	}
@@ -148,26 +137,23 @@ public class PagamentoController {
 
 	}
 
-	
-	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/editarpagamento/{idpagamento}")
-	public ModelAndView editar(@PathVariable("idpagamento") Long idpagamento) throws ParseException, IOException {
-		Optional<Pagamento> pagamento = pagamentoRepository.findById(idpagamento);
+	public ModelAndView editar(@PathVariable("idpagamento") Pagamento pagamento) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
 		andView.addObject("pagamentobj", pagamento);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
-
 		return andView;
 	}
 
-	@CacheEvict(value = { "pagamentos", "pagamentosTodos" }, allEntries = true)
+	@CacheEvict(value = { "saidas", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/removerpagamento/{idpagamento}")
-	public ModelAndView excluir(@PathVariable("idpagamento") Long idpagamento) {
+	public String excluir(@PathVariable("idpagamento") Long idpagamento) {
+		try {
 		pagamentoRepository.deleteById(idpagamento);
-		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoDtoRepository.findAllPagamentos());
-		return andView;
+	} catch (Exception e) {
 	}
+	return "redirect:/listapagamentos";
+  }
 
 }

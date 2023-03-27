@@ -1,5 +1,4 @@
 package loja.springboot.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
@@ -35,7 +34,8 @@ public class FornecedorController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value="forncedoresTodosDto",allEntries=true)
+
+	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarfornecedor")
 	public ModelAndView salvar(Fornecedor fornecedor) {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
@@ -52,7 +52,7 @@ public class FornecedorController {
 		return andView;
 	}
 	
-	@CacheEvict(value="forncedoresTodosDto",allEntries=true)
+	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos"} , allEntries=true)
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public String excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		try {

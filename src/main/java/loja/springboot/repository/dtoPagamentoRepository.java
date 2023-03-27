@@ -9,9 +9,7 @@ import loja.springboot.dto.dtoPagamento;
 
 public interface dtoPagamentoRepository extends JpaRepository<dtoPagamento, Long> {
 
-    @Cacheable("pagamentos")
-    @Query(value = "Select id , tipo ,data , data_param,  fornecedor, moeda ,origem ,valor , anexo from vw_pagamentos  where data  BETWEEN ?1 AND  ?2  ", nativeQuery = true)
-	List<dtoPagamento> findPagamentoDatas(String dataInicial, String DataFinal);
+
 
     @Cacheable("pagamentos")
     @Query(value = "Select id , tipo ,data , data_param,  fornecedor, moeda ,origem ,valor , anexo from vw_pagamentos  order by id desc limit 120", nativeQuery = true)
