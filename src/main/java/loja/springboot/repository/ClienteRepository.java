@@ -10,29 +10,10 @@ import loja.springboot.model.Cliente;
 
 @Transactional
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-	@Query(value = "select c.* from cliente c where UPPER(c.nome) like %?1% OR  UPPER(c.cpf) like %?1% OR UPPER(c.telefone) like %?1%", nativeQuery = true)
-	List<Cliente> findClienteByName(String nome);
 
 	@Query(value = "select l.* from cliente l  where l.id = ?1 ", nativeQuery = true)
 	List<Cliente> findLocacaoById(Long id);
 
-	@Cacheable("clienteByID") 
-	@Query(value = "select  * from vw_teste_cliente ", nativeQuery = true)
-	  Cliente  findClienteByIdCustom(Long id);
-
-	public static interface ClienteCustom {
-		Long getId(); 
-		String getBairro();
-		String getCpf();
-		String getEmail();
-		String getLogradouro();
-		String getNome();
-		String getRg();
-		Long getSenha();
-		String getTelefone();
-		Long getCidade_id();  
-	}
-	
 	@Query( value = "select a from vw_datatable_clientes  a  where a.cidade_id= ?1", nativeQuery = true)
 	List<listClientes> listaClienteCidade(Long id);
 

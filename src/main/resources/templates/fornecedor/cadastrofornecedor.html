@@ -12,7 +12,6 @@
 <div th:replace="fragments :: menu"/>
 <br>
 
-
  <div class="container">
   <div class="row">
         <div style="text-align:right" >
@@ -87,9 +86,7 @@
       <label for="logradouro" class="active">Logradouro</label> 
       <input name="logradouro" th:field="*{logradouro}" id="logradouro" class="validate" >
     </div>
-    
-        <br>
-   
+      <br>
        <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listafornecedores" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
        <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
         

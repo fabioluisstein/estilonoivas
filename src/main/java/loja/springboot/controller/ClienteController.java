@@ -58,8 +58,6 @@ public class ClienteController {
 		return andView;
 	}
 
-
-	
 	@CacheEvict(value="clienteTodosDto",allEntries=true)
 	@GetMapping("/removercliente/{idcliente}")
 	public String excluir(@PathVariable("idcliente") Long idcliente) {

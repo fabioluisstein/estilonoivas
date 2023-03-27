@@ -3,9 +3,11 @@ package loja.springboot.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,7 +19,6 @@ import org.springframework.cache.annotation.Cacheable;
 public class Fornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -30,7 +31,8 @@ public class Fornecedor implements Serializable {
 	private String site;
 	private String telefone;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 
 	public Long getId() {
