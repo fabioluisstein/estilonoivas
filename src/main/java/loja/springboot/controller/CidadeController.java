@@ -51,7 +51,7 @@ public class CidadeController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto","forncedoresTodosDto"}, allEntries = true)
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto","forncedoresTodosDto","locacoes"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
 		cidade.setEstado(new Estado(estadoId));
@@ -86,7 +86,7 @@ public class CidadeController {
         return estadoRepository.filtradas(nome.toLowerCase());   
     }
 
-	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto","forncedoresTodosDto"}, allEntries = true)
+	@CacheEvict(value = { "cidadesTodas", "cidadesOrdem" ,"cidadeDtoRelac","clienteTodosDto","forncedoresTodosDto","locacoes"}, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
 	public String excluir(@PathVariable("idcidade") Long idcidade) {
 		try {

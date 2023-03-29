@@ -62,7 +62,7 @@ public class ProdutoController {
 	
 
 
-	@Cacheable("produtos") 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/lista");
@@ -112,7 +112,6 @@ public class ProdutoController {
 		return modelAndView;
 	}
 
-	@Cacheable("produtos")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroproduto")
 	public ModelAndView cadastro(Produto produto) {
 		ModelAndView modelAndView = new ModelAndView("produto/cadastroproduto");
@@ -121,8 +120,8 @@ public class ProdutoController {
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
 		return modelAndView;
 	}
-	
-	@CacheEvict(value="produtos",allEntries=true)
+
+	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto",consumes= {"multipart/form-data"})
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {	
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
@@ -209,7 +208,7 @@ public class ProdutoController {
 		return andView;
 	}
 	
-	@CacheEvict(value="produtos",allEntries=true)
+	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
 	@GetMapping("/removerproduto/{idproduto}")
 	public ModelAndView excluir(@PathVariable("idproduto") Long idproduto) {
 		produtoRepository.deleteById(idproduto);	

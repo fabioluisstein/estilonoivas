@@ -61,6 +61,7 @@ public class LocacaoController {
 	@Autowired
 	private ReportUtil reportUtil;
  
+	/*Ajustar cache na cidade e cliente */
 	@Cacheable("locacoes") 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {

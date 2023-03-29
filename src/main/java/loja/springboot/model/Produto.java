@@ -16,6 +16,8 @@ import javax.persistence.TemporalType;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Cacheable
 @Table(name="produto")
@@ -50,8 +52,10 @@ public class Produto implements Serializable {
 	private byte[] arquivo;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Categoria categoria;
 	@ManyToOne
+	@JsonIgnore
 	private Fornecedor fornecedor;
 	
 
