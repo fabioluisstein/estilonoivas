@@ -63,9 +63,9 @@
 	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#dates.format(produto.data_compra, 'dd/MM/yyyy')}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produto.valorVenda), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarproduto/{idproduto}(idproduto=${produto.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produto.valor), '.00', '')}"></a>
 	   </td>
-	   <td><a th:if="${produto.arquivo !=null}"  th:href="@{/baixarArquivo/{idproduto}(idproduto=${produto.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
+	   <td><a th:if="${produto.foto !=null}"  th:href="@{/baixarArquivo/{idproduto}(idproduto=${produto.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
 	  <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removerproduto/{idproduto}(idproduto=${produto.id})}"><i class="material-icons">delete_forever</i></a></td>
 	  </tr>
 	 </tbody>

@@ -1,5 +1,4 @@
 package loja.springboot.controller;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
@@ -25,7 +24,7 @@ import loja.springboot.repository.ProdutoRepository;
 
 @Controller
 public class ProdutoController {
- 
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	@Autowired
@@ -36,33 +35,27 @@ public class ProdutoController {
 	private LocacaoProdutoRepository locacaoProdutoRepository;
 	private int quantidadeLocacoes;
 	private double valorFinanceiro;
- 
 
-    public void quantidadeLocacoes(Long id){
+	public void quantidadeLocacoes(Long id) {
 		quantidadeLocacoes = 0;
 		valorFinanceiro = 0;
-	  for(LocacaoProduto locacaoProduto : locacaoProdutoRepository.findProdutoById(id)) {  
-		quantidadeLocacoes = quantidadeLocacoes + 1;
-		valorFinanceiro = valorFinanceiro + locacaoProduto.getValor();
-	}  
-
-	}
-  
-
-	
-    public void updateVisitas(Produto produtoAcesso ) throws ParseException, IOException {
-		Integer quantidadeVisitas = produtoAcesso.getQuantidade_acesso();
-		if( produtoAcesso.getQuantidade_acesso() == null){
-			 quantidadeVisitas = 0;
+		for (LocacaoProduto locacaoProduto : locacaoProdutoRepository.findProdutoById(id)) {
+			quantidadeLocacoes = quantidadeLocacoes + 1;
+			valorFinanceiro = valorFinanceiro + locacaoProduto.getValor();
 		}
-    
-	  produtoAcesso.setQuantidade_acesso(quantidadeVisitas+1);
-	  produtoRepository.save(produtoAcesso);
+
 	}
-	
 
+	public void updateVisitas(Produto produtoAcesso) throws ParseException, IOException {
+		Integer quantidadeVisitas = produtoAcesso.getQuantidade_acesso();
+		if (produtoAcesso.getQuantidade_acesso() == null) {
+			quantidadeVisitas = 0;
+		}
 
-	
+		produtoAcesso.setQuantidade_acesso(quantidadeVisitas + 1);
+		produtoRepository.save(produtoAcesso);
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/lista");
@@ -71,45 +64,33 @@ public class ProdutoController {
 	}
 
 
-	@Cacheable("produtosConsulta") 
 	@RequestMapping(method = RequestMethod.GET, value = "/consultaprodutos")
 	public ModelAndView produtosPesquisa() {
 		ModelAndView andView = new ModelAndView("produto/pesquisaProd");
 		return andView;
 	}
 
-	 
+	@Cacheable("produtosConsulta")
 	@PostMapping("/pesquisaprodutocustom")
 	public ModelAndView pesquisaprodutocustom(@RequestParam("idProduto") Long idProduto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/produto");
-		if(idProduto != null && !produtoRepository.findById(idProduto).isEmpty() ) {
-		quantidadeLocacoes(idProduto);
-		Optional<Produto> produto = produtoRepository.findById(idProduto);
-		updateVisitas(produto.get());
-		andView.addObject("produtobj",produto);
-		andView.addObject("locacoes", locacaoProdutoRepository.findProdutoLocacacoesById(idProduto));
-		andView.addObject("quantidadeLocacoes",quantidadeLocacoes);
-		andView.addObject("valorFinanceiro",valorFinanceiro);
-		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
-		return andView;
-		}
- 
-		else {
-			andView = new ModelAndView("produto/pesquisaProd");	
+		if (idProduto != null && !produtoRepository.findById(idProduto).isEmpty()) {
+			quantidadeLocacoes(idProduto);
+			Optional<Produto> produto = produtoRepository.findById(idProduto);
+			updateVisitas(produto.get());
+			andView.addObject("produtobj", produto);
+			andView.addObject("locacoes", locacaoProdutoRepository.findProdutoLocacacoesById(idProduto));
+			andView.addObject("quantidadeLocacoes", quantidadeLocacoes);
+			andView.addObject("valorFinanceiro", valorFinanceiro);
+			andView.addObject("fornecedores", fornecedorRepository.findAll());
+			andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+			return andView;
 		}
 
-		return andView;
-	}
-	 
-	@PostMapping("/pesquisarproduto")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("produto/lista");
-		if(nomepesquisa.isEmpty()) {
-			modelAndView.addObject("produtos", produtoRepository.listaTodos());
+		else {
+			andView = new ModelAndView("produto/pesquisaProd");
 		}
-		modelAndView.addObject("produtos", produtoRepository.findProdutoByName(nomepesquisa.toUpperCase()));
-		return modelAndView;
+		return andView;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroproduto")
@@ -117,104 +98,102 @@ public class ProdutoController {
 		ModelAndView modelAndView = new ModelAndView("produto/cadastroproduto");
 		modelAndView.addObject("produtobj", new Produto());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
-		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
+		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
 		return modelAndView;
 	}
 
 	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
-	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto",consumes= {"multipart/form-data"})
-	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {	
+	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
+	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
-		
-		if(produto.getId()==null) {
-			if(file.getSize()>0) {
-				produto.setArquivo(file.getBytes());	  
-				produto.setTipoArquivo(file.getContentType());	
-				produto.setNomeArquivo(file.getOriginalFilename());	  
-				
-		    }  
-			andView.addObject("produtobj",produtoRepository.saveAndFlush(produto));
+		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+
+		if (produto.getId() == null) {
+			if (file.getSize() > 0) {
+				produto.setArquivo(file.getBytes());
+				produto.setTipoArquivo(file.getContentType());
+				produto.setNomeArquivo(file.getOriginalFilename());
+
+			}
+			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
 			return andView;
 		}
-		
+
 		if (produto.getId() != null) {
 			Optional<Produto> pdt = produtoRepository.findById(produto.getId());
 			if (file.getSize() > 0) {
 				produto.setArquivo(file.getBytes());
-				produto.setTipoArquivo(file.getContentType());	
-				produto.setNomeArquivo(file.getOriginalFilename());	 
+				produto.setTipoArquivo(file.getContentType());
+				produto.setNomeArquivo(file.getOriginalFilename());
 			}
 
-			if (pdt.get().getArquivo() != null && file.getSize()==0) {
+			if (pdt.get().getArquivo() != null && file.getSize() == 0) {
 				produto.setArquivo(pdt.get().getArquivo());
-				produto.setTipoArquivo(pdt.get().getTipoArquivo());	
-				produto.setNomeArquivo(pdt.get().getNomeArquivo());	 
-				
+				produto.setTipoArquivo(pdt.get().getTipoArquivo());
+				produto.setNomeArquivo(pdt.get().getNomeArquivo());
+
 			}
 
 			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
 		}
-	  return andView;
-	} 
-	
-	
-	
+		return andView;
+	}
+
 	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
-		if(file!=null && file.getSize()>0) {
-			
+		if (file != null && file.getSize() > 0) {
+
 		}
 		return true;
-	
+
 	}
-	
 
 	@GetMapping("/baixarArquivo/{idproduto}")
-	public void baixarArquivo(@PathVariable("idproduto") Long idproduto, 
+	public void baixarArquivo(@PathVariable("idproduto") Long idproduto,
 			HttpServletResponse response) throws IOException {
-		
-		/*Consultar o obejto pessoa no banco de dados*/
+
+		/* Consultar o obejto pessoa no banco de dados */
 		Produto produto = produtoRepository.findById(idproduto).get();
 		if (produto.getArquivo() != null) {
-	
-			/*Setar tamanho da resposta*/
+
+			/* Setar tamanho da resposta */
 			response.setContentLength(produto.getArquivo().length);
-			
-			/*Tipo do arquivo para download ou pode ser generica application/octet-stream*/
+
+			/*
+			 * Tipo do arquivo para download ou pode ser generica application/octet-stream
+			 */
 			response.setContentType(produto.getTipoArquivo());
-			
-			/*Define o cabeçalho da resposta*/
+
+			/* Define o cabeçalho da resposta */
 			String headerKey = "Content-Disposition";
 			String headerValue = String.format("attachment; filename=\"%s\"", produto.getNomeArquivo());
 			response.setHeader(headerKey, headerValue);
-			
-			/*Finaliza a resposta passando o arquivo*/
+
+			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(produto.getArquivo());
-			
+
 		}
-		
-	} 
-	
+
+	}
+
 	@GetMapping("/editarproduto/{idproduto}")
-	public ModelAndView editar(@PathVariable("idproduto") Long idproduto) throws ParseException, IOException {
-		Optional<Produto> produto = produtoRepository.findById(idproduto);
-		updateVisitas(produto.get());
+	public ModelAndView editar(@PathVariable("idproduto")  Produto produto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
-		andView.addObject("produtobj",produto);
+		andView.addObject("produtobj", produto);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Produto"));
-		
+		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+		updateVisitas(produto);
 		return andView;
 	}
-	
+
 	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
 	@GetMapping("/removerproduto/{idproduto}")
-	public ModelAndView excluir(@PathVariable("idproduto") Long idproduto) {
-		produtoRepository.deleteById(idproduto);	
-		ModelAndView andView = new ModelAndView("produto/lista");
-		andView.addObject("produtos", produtoRepository.listaTodos());
-		return andView;
-	}
+	public String excluir(@PathVariable("idproduto") Long idproduto) {
+		try {
+			produtoRepository.deleteById(idproduto);
+	    } catch (Exception e) {
+	     }
+	return "redirect:/listaprodutos";
+   }
 	
 }

@@ -1,14 +1,19 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.cache.annotation.Cacheable;
+
 @Entity
+@Cacheable
 @Table(name="categoria")
 public class Categoria implements Serializable {
 
@@ -19,6 +24,17 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String nome;
 	private String tabela;
+
+	@OneToMany(mappedBy = "categoria")
+    private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+	
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
 
 	public Long getId() {
 		return id;

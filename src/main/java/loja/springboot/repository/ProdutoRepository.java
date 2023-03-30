@@ -1,6 +1,8 @@
 package loja.springboot.repository;
 
+import java.util.Date;
 import java.util.List;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,14 +11,20 @@ import loja.springboot.model.Produto;
 
 @Transactional
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-	@Query(value = "select distinct c.* from produto c, fornecedor f where c.fornecedor_id = f.id and  UPPER(f.nome) like %?1% OR 	c.id like %?1%", nativeQuery = true)
-	List<Produto> findProdutoByName(String nome);
-
+	
 	@Cacheable("listProdutos") 
-	@Query(value = "select * from produto order by id desc", nativeQuery = true)
-	List<Produto> listaTodos();
-
-
+	@Query(value = "Select id, fornecedor, categoria, cor, tamanho, data_compra, valor,  foto   from vw_datatable_produtos order by id desc", nativeQuery = true)
+	List<listProdutos> listaTodos();
+	public static interface listProdutos {
+		Long getId(); 
+		String getFornecedor();
+		String getCategoria();
+		String getCor();
+		String getTamanho();
+		Date getData_compra();
+		Double getValor();
+		String getFoto();
+	}
 
 
 

@@ -1,7 +1,6 @@
 package loja.springboot.repository;
 
 import java.util.List;
-
 import javax.persistence.JoinColumn;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +14,7 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 	List<Fornecedor> findFornecedorByName(String nome);
 
 	@Cacheable("forncedoresTodosDto") 
-	@JoinColumn(name = "fornecedor_id")
+	@JoinColumn(name = "fornecedor_id")  
 	@Query(value = "select id, nome, telefone, cidade from vw_datatable_fornecedores  order by nome asc ", nativeQuery = true)
 	List<listFornecedores> fornecedoresTodos();
 	public static interface listFornecedores {

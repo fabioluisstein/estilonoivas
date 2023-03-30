@@ -1,5 +1,4 @@
 package loja.springboot.controller;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
@@ -38,9 +37,7 @@ public class PagamentoController {
 	} 
  
 	@PostMapping("/pesquisarpagamento")
-	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,
-			@RequestParam("dataFinal") String dataFinal) {
-
+	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal) {
 		ModelAndView modelAndView = new ModelAndView("pagamento/lista");
 		if (dataInicio.isEmpty() && dataFinal.isEmpty()) {
 			modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
@@ -50,17 +47,18 @@ public class PagamentoController {
 			modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoDatas(dataInicio, dataFinal));
 			return modelAndView;
 		}
-
 		modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
 		return modelAndView;
 	}
 
+
 	@RequestMapping(method = RequestMethod.GET, value = "cadastropagamento")
 	public ModelAndView cadastro(Pagamento pagamento) {
+
 		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
 		modelAndView.addObject("pagamentobj", new Pagamento());
-		modelAndView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
-		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
+		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
+		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
 		return modelAndView;
 	}
 
@@ -69,7 +67,7 @@ public class PagamentoController {
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
+		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
 		if (pagamento.getId() == null) {
 			if (file.getSize() > 0) {
 				pagamento.setArquivo(file.getBytes());
@@ -106,7 +104,6 @@ public class PagamentoController {
 
 		}
 		return true;
-
 	}
 
 	@GetMapping("/baixarArquivoPagamento/{idpagamento}")
@@ -132,7 +129,6 @@ public class PagamentoController {
 
 			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(pagamento.getArquivo());
-
 		}
 
 	}
@@ -142,7 +138,7 @@ public class PagamentoController {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
 		andView.addObject("pagamentobj", pagamento);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
-		andView.addObject("categorias", categoriaRepository.findCategoriaByTable("Pagamento"));
+		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
 		return andView;
 	}
 

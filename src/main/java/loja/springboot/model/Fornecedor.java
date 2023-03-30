@@ -1,6 +1,8 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.springframework.cache.annotation.Cacheable;
 
 @Entity
@@ -33,6 +37,22 @@ public class Fornecedor implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "cidade_id")
 	private Cidade cidade;
+
+
+
+	@OneToMany()
+	@JoinColumn(name = "fornecedor_id")
+    private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+
+ 
+
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
 
 	public Long getId() {
 		return id;
