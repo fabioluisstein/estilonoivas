@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -87,7 +84,6 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
-	@Cacheable("locacoes")  
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
 		locacao.setData_locacao(new Date());
@@ -109,7 +105,6 @@ public class LocacaoController {
 	}
 	
 
-	@Cacheable("locacoes")  
 	@GetMapping("/cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Long idCliente) {
 		locacao.setData_locacao(new Date());
@@ -277,7 +272,7 @@ public class LocacaoController {
 		return "redirect:/voltar/"+parcela.getLocacao().toString();
 	}
 	
-	
+	@CacheEvict(value="locacoes",allEntries=true)
 	@GetMapping("/removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();
