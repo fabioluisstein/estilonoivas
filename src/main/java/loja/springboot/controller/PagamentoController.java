@@ -42,7 +42,6 @@ public class PagamentoController {
 		if (dataInicio.isEmpty() && dataFinal.isEmpty()) {
 			modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
 		}
-
 		if (!dataInicio.isEmpty() && !dataFinal.isEmpty()) {
 			modelAndView.addObject("pagamentos", pagamentoRepository.findPagamentoDatas(dataInicio, dataFinal));
 			return modelAndView;
