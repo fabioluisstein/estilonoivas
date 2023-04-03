@@ -1,5 +1,6 @@
 package loja.springboot.security;
 
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,15 +17,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 	
 	@Override // Configura as solicitações de acesso por Http
-	protected void configure(HttpSecurity https) throws Exception {
-		https.csrf()
-		.disable() // Desativa as configurações padrão de memória.
-		.authorizeRequests() // Pertimir restringir acessos
-		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
-		.anyRequest().authenticated()
-		.and().formLogin().permitAll() // permite qualquer usuário
-		.and().logout() // Mapeia URL de Logout e invalida usuário autenticado
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+	protected void configure(HttpSecurity http) throws Exception {
+        http.csrf(withDefaults())
+                .authorizeHttpRequests(requests -> requests // Pertimir restringir acessos
+                        .antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
+                        .anyRequest().authenticated()).formLogin(login -> login.permitAll()).logout(logout -> logout // Mapeia URL de Logout e invalida usuário autenticado
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")));
 	
 	}
 	  
