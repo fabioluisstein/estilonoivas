@@ -38,18 +38,18 @@
 	    <option th:each="cid: ${colaboradores}"
 				th:value="${cid.id}" th:text="${cid.nome}" ></option>
 	    </select> 
-    </div>  
-      
+
+    </div>        
     <div class="input-field col s6">
      <label for="Cliente" class="active">Cliente</label> 
      <br>
-       <select th:field="*{cliente}" class="browser-default" required>
+       <select th:field="*{cliente}" class="browser-default">
        <option th:each="cid: ${clientes}"
 			   th:value="${cid.id}" th:text="${cid.nome}" ></option>
        </select> 
     </div>
 
-    <div class="col s6">
+<div class="col s6">
       <label for="papel">Papel</label>  
       <select th:field="*{papel}" class="browser-default" required >
        <option value="Não Informado">Não Informado</option>
@@ -83,9 +83,6 @@
       <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
     </div>
      
-
-
-    
     <div class="col s6">
       <label for="pickdate" class="active">Data Evento</label> 
       <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  required>

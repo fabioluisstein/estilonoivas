@@ -65,6 +65,14 @@ public class Locacao implements Serializable {
 	
 	private String papel;
 
+	public Locacao(){
+
+	}
+
+	public Locacao (Cliente cliente){
+		this.cliente = cliente;
+	}
+
 	public String getOrigem() {
 		return origem;
 	}

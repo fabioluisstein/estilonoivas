@@ -21,16 +21,11 @@ const instancesModal = M.Modal.init(elemsModal);
 
 
 function openModal(id) {
-  
-	
-		
 	  $.ajax({
 			method : "GET",
 			url : "/buscarparcelaid",
 			data : "idparcela="+id,
 			success : function(response) {
-
-
 			
 				$("#id_parcela").val(response.id);
 				$("#observacaoParcela").val(response.observacao);
@@ -51,8 +46,6 @@ function openModal(id) {
 	  
 }
 	
-
-
 $(document).ready(function gerarGrafico() {
 	var myChart = new Chart(document.getElementById('myChart'));
 

@@ -49,6 +49,13 @@ public class Parcela implements Serializable {
 	@Lob
 	private byte[] arquivo;
 	
+    public Parcela (){
+
+	}
+
+  public Parcela (Locacao locacao){
+		this.locacao = locacao;
+	}
 	public Long getId() {
 		return id;
 	}

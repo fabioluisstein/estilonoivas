@@ -57,6 +57,14 @@ public class LocacaoProduto implements Serializable {
 	private byte[] arquivo;
 	
 
+    public LocacaoProduto (){
+
+	}
+
+	public LocacaoProduto (Locacao locacao){
+		this.locacao = locacao;
+	}
+	
 	public Long getId() {
 		return id;
 	}
