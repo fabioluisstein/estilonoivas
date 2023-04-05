@@ -33,7 +33,7 @@ public class LocacaoParcelaController {
 		return andView;
 	}
 	
-	@CacheEvict(value="locacoes",allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarparcelaCustom", consumes = { "multipart/form-data" })
 	public String salvarparcelaCustom(Parcela parcela, final MultipartFile file) throws IOException {
 

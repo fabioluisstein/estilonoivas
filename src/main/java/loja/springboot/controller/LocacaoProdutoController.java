@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +49,7 @@ public class LocacaoProdutoController {
 		return andView;
 	}
 
-
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarprodutoCustom", consumes = { "multipart/form-data" })
 	public String salvarprodutoCustom(LocacaoProduto produtoLocaocao, final MultipartFile file) throws IOException {
 

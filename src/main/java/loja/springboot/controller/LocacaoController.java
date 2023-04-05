@@ -118,7 +118,7 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value={"locacoes120"} , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarlocacao")
 	public String salvar(Locacao locacao) throws IOException {	
 	locacaoRepository.saveAndFlush(locacao);
@@ -140,7 +140,7 @@ public class LocacaoController {
 		return andView;
 	}
 	
-	@CacheEvict(value={"locacoes120"} , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.saveAndFlush(parcela);
@@ -183,7 +183,7 @@ public class LocacaoController {
 		
 	} 
 	
-	@CacheEvict(value={"locacoes120"} , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.saveAndFlush(produtoLocacao);
@@ -248,14 +248,14 @@ public class LocacaoController {
 	
 	
 	
-	@CacheEvict(value="locacoes120" , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@GetMapping("/removerlocacao/{idlocacao}")
 	public String excluir(@PathVariable("idlocacao") Long idlocacao) {
 		locacaoRepository.deleteById(idlocacao);	
 		return "redirect:/listalocacoes";
 	}
 	 
-	@CacheEvict(value="locacoes120" , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@GetMapping("/removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();
@@ -263,7 +263,7 @@ public class LocacaoController {
 		return "redirect:/voltar/"+parcela.getLocacao().toString();
 	}
 	
-	@CacheEvict(value={"locacoes120"} , allEntries=true)
+	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@GetMapping("/removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();

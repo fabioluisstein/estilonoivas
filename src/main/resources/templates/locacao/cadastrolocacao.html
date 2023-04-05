@@ -52,7 +52,6 @@
 <div class="col s6">
       <label for="papel">Papel</label>  
       <select th:field="*{papel}" class="browser-default" required >
-       <option value="Não Informado">Não Informado</option>
        <option value="Convidado">Convidado</option>
        <option value="Formando">Formando</option>
        <option value="Noivo">Noivo</option>
@@ -61,20 +60,26 @@
        <option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
        <option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
        <option value="Pai de debutante">Pai de debutante </option>
+       <option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
+       <option value="Namorado da debutante">Namorado da debutante </option>
+       <option value="Não Informado">Não Informado</option>
        <option value="Outros">Outros</option>
+   
      </select>
   </div>
 
     <div class="col s6">
       <label for="origem">Origem</label>  
       <select th:field="*{origem}" class="browser-default" required >
-       <option value="Não Informado">Não Informado</option>
        <option value="Visita Local">Visita Local</option>
+       <option value="Cliente Estilo Noiva">Cliente Estilo Noiva</option>
+       <option value="Cliente Fibonatti">Cliente Fibonatti</option>
        <option value="Indicação">Indicação</option>
        <option value="Instagram">Instagram</option>
        <option value="Google Ads">Google Ads</option>
        <option value="Facebook">Facebook</option>
        <option value="WhatsAPP">WhatsAPP</option>
+       <option value="Não Informado">Não Informado</option>
      </select>
   </div>
      
@@ -260,7 +265,8 @@
 	 <label for="moeda">Moeda</label>  
 	 <select th:field="*{moeda}" class="browser-default" required>
 	  <option value="Dinheiro">Dinheiro</option>
-	  <option value="Cartao">Cartão</option>
+    <option value="Debito">Cartão Débito</option>
+    <option value="Credito">Cartão Crédito</option>
 	  <option value="Pix">Pix</option>
 	  <option value="Cheque">Cheque</option>
 	</select>
