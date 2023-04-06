@@ -15,7 +15,7 @@
   <div class="row">
         <div style="text-align:right" >
   </div>
-      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Locação </span>
+      <div class="col s12 card-panel teal grey darken-1"><span class="white-text"><h6>Cadastro de Locação </h6></span>
         <br>
       </div>
     </div>
@@ -83,11 +83,52 @@
      </select>
   </div>
      
-    <div class="col s12">
-      <label for="observacao" class="active">Observações</label> 
-      <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
+
+
+
+  <div  style="margin:auto; padding:auto; max-width: 98%">
+
+    <div class="col s12 card-panel grey lighten-5" >
+      <div class="col s12 card-panel teal grey darken-1 white-text">  <h7>Detalhes do Evento</h7>
+      </div>
+          <div >
     </div>
-     
+
+
+    
+        <div  style="margin:auto; padding:auto; max-width: 100%"> 
+          
+          <div class="input-field col s6">
+            <label for="cidade_evento" class="active">Cidade do Evento</label> 
+            <br>
+            <select th:field="*{cidade_evento}" class="browser-default" >
+              <option value=""></option>
+            <option th:each="cid: ${cidades}"
+              th:value="${cid.id}" th:text="${cid.nome}" ></option>
+             </select> 
+            </div> 
+            <div class="input-field col s6">
+              <label for="evento" class="active">Evento</label> 
+              <br>
+              <select th:field="*{evento}" class="browser-default" requred>
+              <option value=""></option>
+              <option th:each="cid: ${eventos}"
+                th:value="${cid.id}" th:text="${cid.nome}" ></option>
+               </select> 
+              </div>  
+        
+              <div class="col s12">
+                <label for="detalhes_evento" class="active">Informações Gerais do Evento</label> 
+                <input name="detalhes_evento" th:field="*{detalhes_evento}" id="detalhes_evento">
+              </div>
+          
+          
+        </div>
+      <br>
+      </div>
+  </div>
+  <br>
+      
     <div class="col s6">
       <label for="pickdate" class="active">Data Evento</label> 
       <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  required>
@@ -118,6 +159,11 @@
     </div>
     
       
+    <div class="col s12">
+      <label for="observacao" class="active">Observações do Contrato</label> 
+      <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
+    </div>
+
    <div class="col s12">
    <br>
     <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listalocacoes" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
@@ -177,14 +223,26 @@
       <a th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></a>
    </td>
    <td>
-   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00', '')}"></a>
+   <a onclick="M.toast({html: 'Editando produto',classes: 'blue rounded'})" th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00,00', '')}"></a>
    </td> 
   </td>
   <td><a th:if="${produtoLocacao.arquivo !=null}"  th:href="@{/baixarArquivoProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" ><i class="material-icons">cloud_download</i></a> </td> 
   <td> <a th:href="@{/editarproduto/{idproduto}(idproduto=${produtoLocacao.produto.id})}"> <i class="material-icons">shopping_cart_checkout</i> </a></td>
   <td> <a onclick="M.toast({html: 'Deletando produto',classes: 'red rounded'})" th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}"> <i class="material-icons">delete_forever</i></a></td>
-  </tr>
+
+</tr>
+
+ 
  </tbody>
+ <tfoot>
+  <tr>
+      <td  >  
+        <input name="totalProdutos"  th:value= "${#strings.replace(#numbers.formatCurrency(totalProdutos), '.00,00', '')}"  id="totalProdutos" readonly="readonly" >
+      </td>
+  </tr>
+</tfoot>
+
+
  </table> 
 
 </div>
@@ -234,7 +292,7 @@
       <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.moeda}"></a>
   </td> 
      <td>
-	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00,00', '')}"></a>
 	   </td>
   <td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="material-icons">cloud_download</i></a>  </td> 
 	  <td> 
@@ -242,7 +300,14 @@
 	  </td>
 	  
   </tr>
-	 </tbody>
+</tbody>
+<tfoot>
+ <tr>
+     <td  >  
+       <input name="totalPagamento"  th:value= "${#strings.replace(#numbers.formatCurrency(totalPagamento), '.00,00', '')}"  id="totalPagamento" readonly="readonly" >
+     </td>
+ </tr>
+</tfoot>
 	 </table> 
    
     </div>

@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
 import loja.springboot.model.Produto;
+import loja.springboot.repository.CategoriaRepository;
+import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
 import loja.springboot.repository.LocacaoDtoRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
@@ -54,6 +59,12 @@ public class LocacaoController {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+
+	@Autowired
+	private CidadeRepository cidadeRepository;
 	
 	@Autowired
 	private ReportUtil reportUtil;
@@ -93,6 +104,8 @@ public class LocacaoController {
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.cidadeDtoRelac()); 
+		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		return modelAndView;
 	}
 	
@@ -115,6 +128,8 @@ public class LocacaoController {
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
+		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		return modelAndView;
 	}
 	
@@ -137,6 +152,10 @@ public class LocacaoController {
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("clientes", clienteRepository.findAll());
 		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",parcela.get().getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",parcela.get().getLocacao().getValorTotal());
 		return andView;
 	}
 	
@@ -158,6 +177,10 @@ public class LocacaoController {
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("clientes", clienteRepository.findAll());
 		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacaoProduto.get().getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacaoProduto.get().getLocacao().getValorTotal());
 		return andView;
 	} 
 	
@@ -204,6 +227,10 @@ public class LocacaoController {
 		andView.addObject("parcelas", locacao.getParcelas());
 		andView.addObject("produtosLocacoes", locacao.getProdutos());	
 		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacao.getValorTotal());
 		return andView;
 	}
 	
@@ -221,6 +248,12 @@ public class LocacaoController {
 		andView.addObject("parcelas", locacao.getParcelas());
 		andView.addObject("produtosLocacoes", locacao.getProdutos());	
 		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacao.getValorTotal());
+		
+
 		return andView;
 	}
 		

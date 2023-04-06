@@ -3,17 +3,17 @@ package loja.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,7 +35,6 @@ public class Locacao implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date data_locacao;
 		
-	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data_evento;
@@ -55,6 +54,16 @@ public class Locacao implements Serializable {
 	@ManyToOne
 	private Pessoa colaborador;
 	
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "cidade_evento_id")
+	private Cidade cidade_evento;
+
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "evento_id")
+	private Categoria evento;
+
+	private String detalhes_evento;
+
 	@OneToMany(mappedBy = "locacao")
 	List<Parcela> parcelas;	
 	
@@ -71,6 +80,30 @@ public class Locacao implements Serializable {
 
 	public Locacao (Cliente cliente){
 		this.cliente = cliente;
+	}
+
+	public Cidade getCidade_evento() {
+		return cidade_evento;
+	}
+
+	public void setCidade_evento(Cidade cidade_evento) {
+		this.cidade_evento = cidade_evento;
+	}
+
+	public Categoria getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Categoria evento) {
+		this.evento = evento;
+	}
+
+	public String getDetalhes_evento() {
+		return detalhes_evento;
+	}
+
+	public void setDetalhes_evento(String detalhes_evento) {
+		this.detalhes_evento = detalhes_evento;
 	}
 
 	public String getOrigem() {
