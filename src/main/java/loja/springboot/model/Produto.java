@@ -1,21 +1,21 @@
 package loja.springboot.model;
-
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -23,16 +23,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="produto")
 public class Produto implements Serializable {
 
-
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String descricao;
 	private Double valorCompra;
 	private Double valorVenda;
-
 	private String cor;  
 	private String tamanho;
 	
@@ -41,8 +38,6 @@ public class Produto implements Serializable {
 	private Date data_compra;
 		
 	private Integer quantidade_acesso;
-	
-
 	private Integer quantidadeEstoque;
 	private String nomeArquivo;
 	
@@ -51,13 +46,26 @@ public class Produto implements Serializable {
 	@Lob
 	private byte[] arquivo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JsonIgnore
+    @JoinColumn(name = "categoria_id")
 	private Categoria categoria;
-	@ManyToOne
+	
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JsonIgnore
+    @JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
 	
+	@OneToMany(mappedBy = "produto")
+    private List<LocacaoProduto> produtosLocacoes;
+
+	public List<LocacaoProduto> getProdutosLocacoes() {
+		return produtosLocacoes;
+	}
+
+	public void setProdutosLocacoes(List<LocacaoProduto> produtosLocacoes) {
+		this.produtosLocacoes = produtosLocacoes;
+	}
 
 	public Long getId() {
 		return id;

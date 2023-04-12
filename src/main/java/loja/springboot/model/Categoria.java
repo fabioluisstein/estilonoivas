@@ -1,7 +1,6 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.springframework.cache.annotation.Cacheable;
 
 @Entity
@@ -25,15 +23,49 @@ public class Categoria implements Serializable {
 	private String nome;
 	private String tabela;
 
-	@OneToMany(mappedBy = "categoria")
-    private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
 	
-	public List<Pagamento> getPagamentos() {
-		return pagamentos;
+	@OneToMany(mappedBy = "categoriaAjuste")
+    private List<LocacaoProduto> locacaoProduto;
+
+	@OneToMany(mappedBy = "categoria")
+    private List<Produto> produto;
+
+	@OneToMany(mappedBy = "categoria")
+    private List<Pagamento> pagamento;	
+
+	@OneToMany(mappedBy = "evento")
+    private List<Locacao> evento;	
+
+	public List<Locacao> getEvento() {
+		return evento;
 	}
 
-	public void setPagamentos(List<Pagamento> pagamentos) {
-		this.pagamentos = pagamentos;
+	public void setEvento(List<Locacao> evento) {
+		this.evento = evento;
+	}
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+	
+	public List<Pagamento> getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(List<Pagamento> pagamento) {
+		this.pagamento = pagamento;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
+
+	public List<LocacaoProduto> getLocacaoProduto() {
+		return locacaoProduto;
+	}
+
+	public void setLocacaoProduto(List<LocacaoProduto> locacaoProduto) {
+		this.locacaoProduto = locacaoProduto;
 	}
 
 	public Long getId() {
@@ -63,6 +95,10 @@ public class Categoria implements Serializable {
 	@Override
 	public String toString() {
 		return nome;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

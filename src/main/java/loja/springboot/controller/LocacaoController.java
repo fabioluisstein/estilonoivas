@@ -1,14 +1,11 @@
 package loja.springboot.controller;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
@@ -31,7 +27,6 @@ import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
-import loja.springboot.repository.LocacaoDtoRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoRepository;
 import loja.springboot.repository.ParcelaRepository;
@@ -54,8 +49,6 @@ public class LocacaoController {
 	
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
-	@Autowired
-	private LocacaoDtoRepository locacaoDtoRepository;
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -68,13 +61,14 @@ public class LocacaoController {
 	
 	@Autowired
 	private ReportUtil reportUtil;
+
  
 	/*Ajustar cache na cidade e cliente */
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {
 		ModelAndView andView = new ModelAndView("locacao/lista");
-		andView.addObject("locacoes", locacaoDtoRepository.top120Locacao());
+		andView.addObject("locacoes", locacaoRepository.top120Locacao());
 		return andView;
 	}
 	 
@@ -83,15 +77,15 @@ public class LocacaoController {
 	  
 	  ModelAndView modelAndView = new ModelAndView("locacao/lista");
 		if(dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			modelAndView.addObject("locacoes", locacaoDtoRepository.findAll());
+			modelAndView.addObject("locacoes", locacaoRepository.findAllTodos());
 		} 
 		 
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
-			modelAndView.addObject("locacoes", locacaoDtoRepository.findLocacaoDatas(dataInicio,dataFinal));
+			modelAndView.addObject("locacoes", locacaoRepository.findLocacaoDatas(dataInicio,dataFinal));
 			return modelAndView;
 		}
 		
-		modelAndView.addObject("locacoes", locacaoDtoRepository.findAll());
+		modelAndView.addObject("locacoes", locacaoRepository.findAllTodos());
 		return modelAndView;
 	}
 	
@@ -104,7 +98,7 @@ public class LocacaoController {
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", clienteRepository.findAll());
-		modelAndView.addObject("cidades", cidadeRepository.cidadeDtoRelac()); 
+		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		return modelAndView;
 	}
@@ -113,7 +107,7 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
 	public ModelAndView locacoesVencidas() {	
 		ModelAndView modelAndView = new ModelAndView("locacao/lista");
-		modelAndView.addObject("locacoes", locacaoDtoRepository.locacoesVencidas());
+		modelAndView.addObject("locacoes", locacaoRepository.locacoesVencidas());
 		return modelAndView;
 	}
 	
@@ -127,7 +121,7 @@ public class LocacaoController {
 		modelAndView.addObject("parcelabj", new Parcela());
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
-		modelAndView.addObject("clientes", clienteRepository.findAll());
+		modelAndView.addObject("clientes", cliente);
 		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		return modelAndView;
@@ -136,17 +130,15 @@ public class LocacaoController {
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarlocacao")
 	public String salvar(Locacao locacao) throws IOException {	
-	locacaoRepository.saveAndFlush(locacao);
+	locacaoRepository.save(locacao);
 	  return "redirect:/voltar/"+locacao.getId().toString()+"";	
 	} 
-	
-	
+
 	
 	@GetMapping("/editarparcela/{idparcela}")
-	public ModelAndView editarParcela(@PathVariable("idparcela") Long idparcela)  {
-		Optional<Parcela> parcela = parcelaRepository.findById(idparcela);
+	public ModelAndView editarParcela(@PathVariable("idparcela") Parcela parcela)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
-		andView.addObject("locacaobj",parcela.get().getLocacao());
+		andView.addObject("locacaobj",parcela);
 		andView.addObject("produtobj", new LocacaoProduto());
 		andView.addObject("parcelabj", parcela);	
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
@@ -154,8 +146,8 @@ public class LocacaoController {
 		andView.addObject("produtos", produtoRepository.findAll());
 		andView.addObject("cidades", cidadeRepository.findAll()); 
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andView.addObject("totalProdutos",parcela.get().getLocacao().getValorTotalProdutos());
-		andView.addObject("totalPagamento",parcela.get().getLocacao().getValorTotal());
+		andView.addObject("totalProdutos",parcela.getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",parcela.getLocacao().getValorTotal());
 		return andView;
 	}
 	
@@ -168,19 +160,17 @@ public class LocacaoController {
 	
 	
 	@GetMapping("/editarprodutolocacao/{idproduto}")
-	public ModelAndView editarProduto(@PathVariable("idproduto") Long idproduto)  {
-		Optional<LocacaoProduto> locacaoProduto = locacaoProdutoRepository.findById(idproduto);
+	public ModelAndView editarProduto(@PathVariable("idproduto") LocacaoProduto locacaoProduto)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
-		andView.addObject("locacaobj",locacaoProduto.get().getLocacao());
+		andView.addObject("locacaobj",locacaoProduto.getLocacao());
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("parcelabj", new Parcela());	
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
-		andView.addObject("clientes", clienteRepository.findAll());
 		andView.addObject("produtos", produtoRepository.findAll());
 		andView.addObject("cidades", cidadeRepository.findAll()); 
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andView.addObject("totalProdutos",locacaoProduto.get().getLocacao().getValorTotalProdutos());
-		andView.addObject("totalPagamento",locacaoProduto.get().getLocacao().getValorTotal());
+		andView.addObject("totalProdutos",locacaoProduto.getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacaoProduto.getLocacao().getValorTotal());
 		return andView;
 	} 
 	
@@ -217,7 +207,7 @@ public class LocacaoController {
 	public ModelAndView voltar(@PathVariable("idlocacao") Locacao locacao)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		Parcela parcela = new Parcela(locacao);
-		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao);
+		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao); 
 	    andView.addObject("locacaobj",locacao);
 		andView.addObject("locacaoId",locacao.getId());
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
@@ -231,6 +221,7 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
+	
 		return andView;
 	}
 	
@@ -278,7 +269,6 @@ public class LocacaoController {
 		Produto produto = produtoRepository.findById(idproduto).get();	
 		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
 	}   
-	
 	
 	
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)

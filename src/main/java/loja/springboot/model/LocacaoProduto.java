@@ -2,12 +2,14 @@ package loja.springboot.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Lob;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,11 +42,13 @@ public class LocacaoProduto implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date data_liberacao;
 	
-	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JsonIgnore
+    @JoinColumn(name = "produto_id")
 	private Produto produto;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JsonIgnore
 	@JoinColumn(name = "id_ajuste", nullable = true)
 	private Categoria categoriaAjuste;
 	
@@ -148,9 +152,6 @@ public class LocacaoProduto implements Serializable {
 	public void setData_liberacao(Date data_liberacao) {
 		this.data_liberacao = data_liberacao;
 	}
-
-
-	
 
 	@Override
 	public String toString() {

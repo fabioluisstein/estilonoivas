@@ -1,6 +1,6 @@
 package loja.springboot.model;
-
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -28,7 +28,8 @@ public class Locacao implements Serializable {
 	private Long id;
 
 	private String observacao;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 	@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -51,7 +52,8 @@ public class Locacao implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date data_devolucao;
 			
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "colaborador_id")
 	private Pessoa colaborador;
 	
 	@ManyToOne(fetch = FetchType.LAZY )
@@ -65,10 +67,10 @@ public class Locacao implements Serializable {
 	private String detalhes_evento;
 
 	@OneToMany(mappedBy = "locacao")
-	List<Parcela> parcelas;	
+	List<Parcela> parcelas = new ArrayList<Parcela>(); 	
 	
 	@OneToMany(mappedBy = "locacao")
-	List<LocacaoProduto> produtos;	
+	List<LocacaoProduto> produtos = new ArrayList<LocacaoProduto>(); 	
 	
 	private String origem;  
 	

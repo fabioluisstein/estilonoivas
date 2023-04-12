@@ -38,13 +38,19 @@ public class Fornecedor implements Serializable {
     @JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 
-
-
-	@OneToMany()
-	@JoinColumn(name = "fornecedor_id")
+	@OneToMany(mappedBy = "fornecedor")
     private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
-
  
+	@OneToMany(mappedBy = "fornecedor")
+    private List<Produto> produtos = new ArrayList<Produto>();
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 	public List<Pagamento> getPagamentos() {
 		return pagamentos;

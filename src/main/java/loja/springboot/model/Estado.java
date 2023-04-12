@@ -1,11 +1,14 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +23,8 @@ public class Estado implements Serializable {
 	private String nome;
 	private String sigla;
 		
+	@OneToMany(mappedBy = "estado")
+    private List<Cidade> clidades = new ArrayList<Cidade>();
 
 	public Estado(){
 	
@@ -52,9 +57,18 @@ public class Estado implements Serializable {
 		this.sigla = sigla;
 	}
 
+
+	
+	public List<Cidade> getClidades() {
+		return clidades;
+	}
+	public void setClidades(List<Cidade> clidades) {
+		this.clidades = clidades;
+	}
 	@Override
 	public String toString() {
 		return nome;
 	}
+
 
 }

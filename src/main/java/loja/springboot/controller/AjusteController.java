@@ -2,6 +2,8 @@ package loja.springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,11 @@ public class AjusteController {
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/ajustes");
 		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
+		
+
+
+
+
 		return andView;
 	}
 	 
@@ -39,6 +46,17 @@ public class AjusteController {
 		return modelAndView;
 	}
 	
+
+
+	@GetMapping("/listarItensContrato/{idproduto}")
+	public ModelAndView editarProduto(@PathVariable("idproduto") Long idproduto)  {
+		ModelAndView andView = new ModelAndView("produto/ajustes");
+		andView.addObject("produtoTeste",idproduto);
+		return andView;
+	} 
+	
+
+
 	
 	
 }

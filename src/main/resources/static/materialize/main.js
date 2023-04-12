@@ -165,7 +165,6 @@ window.onload = function(){
 }
 
 
-
 $(document).ready(function(){
     $('.collapsible').collapsible();
   });

@@ -1,19 +1,19 @@
 package loja.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Lob;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore; 
+import org.springframework.format.annotation.DateTimeFormat; 
 
 @Entity
 @Cacheable
@@ -24,13 +24,11 @@ public class Parcela implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private Double valor;
 	private String observacao;
 	private String moeda;
 	
-	@ManyToOne
-	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "idlocacao", nullable = false)
 	private Locacao locacao;
 	
