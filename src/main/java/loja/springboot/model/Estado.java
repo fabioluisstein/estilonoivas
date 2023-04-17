@@ -1,7 +1,5 @@
 package loja.springboot.model;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,7 +22,7 @@ public class Estado implements Serializable {
 	private String sigla;
 		
 	@OneToMany(mappedBy = "estado")
-    private List<Cidade> clidades = new ArrayList<Cidade>();
+    private List<Cidade> clidades ;
 
 	public Estado(){
 	

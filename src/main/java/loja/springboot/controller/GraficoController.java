@@ -3,13 +3,17 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import loja.springboot.dto.GraficoDTO;
 import loja.springboot.model.Grafico;
 import loja.springboot.repository.GraficoRepository;
@@ -52,6 +56,7 @@ public class GraficoController {
 		 ObjectMapper mapper = new ObjectMapper();
 		 String json = mapper.writeValueAsString(graf);
 		 response.getWriter().write(json);
+		 Runtime.getRuntime().gc();
 	
 	}   
 	

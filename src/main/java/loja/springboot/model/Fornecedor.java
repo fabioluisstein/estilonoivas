@@ -1,9 +1,7 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,10 +37,10 @@ public class Fornecedor implements Serializable {
 	private Cidade cidade;
 
 	@OneToMany(mappedBy = "fornecedor")
-    private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
+    private List<Pagamento> pagamentos;
  
 	@OneToMany(mappedBy = "fornecedor")
-    private List<Produto> produtos = new ArrayList<Produto>();
+    private List<Produto> produtos;
 
 	public List<Produto> getProdutos() {
 		return produtos;

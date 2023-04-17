@@ -34,7 +34,6 @@ public class Cliente implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "cidade_id")
 	private Cidade cidade;
-	
 	private String bairro;
 	private String logradouro;
 

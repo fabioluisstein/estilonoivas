@@ -1,8 +1,5 @@
 package loja.springboot.model;
-
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,9 +8,9 @@ public class Grafico implements Serializable {
 	private static final long serialVersionUID = 1L;
    
 	private Long id;
-	List<String> meses = new ArrayList<String>();
-	List<Double> pagamentos = new ArrayList<Double>();
-	List<Double> entradas = new ArrayList<Double>();
+	List<String> meses;
+	List<Double> pagamentos;
+	List<Double> entradas;
 	
 	
 	

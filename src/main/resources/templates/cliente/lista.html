@@ -47,10 +47,10 @@
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.nome}"></a>
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}"  target="_blank" th:text="${cliente.telefone}"></a>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}"   th:text="${cliente.telefone}"></a>
 	   </td>  
 	   <td>
-		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="${cliente.whats} "	 <i class="material-icons">phone_android</i>  </a>
+		<a onclick="M.toast({html: 'Iniciando WhatsApp',classes: 'blue rounded'})" th:href="${cliente.whats} "	target="_blank" <i class="material-icons">phone_android</i>  </a>
 		</td>  
 	   <td>
 	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarcliente/{idcliente}(idcliente=${cliente.id})}" th:text="${cliente.cpf}"></a>

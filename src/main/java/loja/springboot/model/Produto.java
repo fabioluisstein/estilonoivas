@@ -36,11 +36,9 @@ public class Produto implements Serializable {
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data_compra;
-		
 	private Integer quantidade_acesso;
 	private Integer quantidadeEstoque;
 	private String nomeArquivo;
-	
 	private String tipoArquivo;
 	
 	@Lob

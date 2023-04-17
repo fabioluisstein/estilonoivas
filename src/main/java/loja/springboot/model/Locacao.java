@@ -1,6 +1,5 @@
 package loja.springboot.model;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -67,10 +67,10 @@ public class Locacao implements Serializable {
 	private String detalhes_evento;
 
 	@OneToMany(mappedBy = "locacao")
-	List<Parcela> parcelas = new ArrayList<Parcela>(); 	
+	List<Parcela> parcelas; 	
 	
 	@OneToMany(mappedBy = "locacao")
-	List<LocacaoProduto> produtos = new ArrayList<LocacaoProduto>(); 	
+	List<LocacaoProduto> produtos; 	
 	
 	private String origem;  
 	
