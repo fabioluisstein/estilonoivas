@@ -14,28 +14,17 @@ import loja.springboot.repository.LocacaoProdutoRepository;
 
 @Controller
 public class AjusteController {
- 
-
 
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
-	
-	
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/listaAjustes")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/ajustes");
 		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
-		
-
-
-
-
 		return andView;
 	}
 	 
-	
-
 	@PostMapping("/pesquisarprodutoId")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") Long nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("produto/ajustes");
@@ -46,8 +35,6 @@ public class AjusteController {
 		return modelAndView;
 	}
 	
-
-
 	@GetMapping("/listarItensContrato/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") Long idproduto)  {
 		ModelAndView andView = new ModelAndView("produto/ajustes");

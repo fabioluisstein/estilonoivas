@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
@@ -64,68 +62,69 @@ public class LocacaoController {
 	@Autowired
 	private ReportUtil reportUtil;
 
-	private ModelAndView andViewLista = new ModelAndView("locacao/lista");
-	private ModelAndView andViewCadastro = new ModelAndView("locacao/cadastrolocacao");
  
 	/*Ajustar cache na cidade e cliente */
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {
-		andViewLista.addObject("locacoes", locacaoRepository.top120Locacao());
-		Runtime.getRuntime().gc();
-		return andViewLista;
-	
+		ModelAndView andView = new ModelAndView("locacao/lista");
+		andView.addObject("locacoes", locacaoRepository.top120Locacao());
+		return andView;
 	}
 	 
 	@PostMapping("/pesquisarlocacao")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
-	
+	  
+	  ModelAndView modelAndView = new ModelAndView("locacao/lista");
 		if(dataInicio.isEmpty() && dataFinal.isEmpty()) {
-			andViewLista.addObject("locacoes", locacaoRepository.findAllTodos());
+			modelAndView.addObject("locacoes", locacaoRepository.findAllTodos());
 		} 
 		 
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
-			andViewLista.addObject("locacoes", locacaoRepository.findLocacaoDatas(dataInicio,dataFinal));
-			return andViewLista;
+			modelAndView.addObject("locacoes", locacaoRepository.findLocacaoDatas(dataInicio,dataFinal));
+			return modelAndView;
 		}
 		
-		andViewLista.addObject("locacoes", locacaoRepository.findAllTodos());
-		return andViewLista;
+		modelAndView.addObject("locacoes", locacaoRepository.findAllTodos());
+		return modelAndView;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
 		locacao.setData_locacao(new Date());
-		andViewCadastro.addObject("locacaobj", locacao);
-		andViewCadastro.addObject("parcelabj", new Parcela());
-		andViewCadastro.addObject("produtobj", new LocacaoProduto());
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("clientes", clienteRepository.findAll());
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		return andViewCadastro;
+		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
+		modelAndView.addObject("locacaobj", locacao);
+		modelAndView.addObject("parcelabj", new Parcela());
+		modelAndView.addObject("produtobj", new LocacaoProduto());
+		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
+		modelAndView.addObject("clientes", clienteRepository.findAll());
+		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
+		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		return modelAndView;
 	}
 	
 
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
 	public ModelAndView locacoesVencidas() {	
-		andViewLista.addObject("locacoes", locacaoRepository.locacoesVencidas());
-		return andViewLista;
+		ModelAndView modelAndView = new ModelAndView("locacao/lista");
+		modelAndView.addObject("locacoes", locacaoRepository.locacoesVencidas());
+		return modelAndView;
 	}
 	
 
 	@GetMapping("/cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Cliente cliente) {
 		locacao.setData_locacao(new Date());
+		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
 		locacao.setCliente(cliente);
-		andViewCadastro.addObject("locacaobj", locacao);
-		andViewCadastro.addObject("parcelabj", new Parcela());
-		andViewCadastro.addObject("produtobj", new LocacaoProduto());
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("clientes", cliente);
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		return andViewCadastro;
+		modelAndView.addObject("locacaobj", locacao);
+		modelAndView.addObject("parcelabj", new Parcela());
+		modelAndView.addObject("produtobj", new LocacaoProduto());
+		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
+		modelAndView.addObject("clientes", cliente);
+		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
+		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		return modelAndView;
 	}
 	
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
@@ -138,17 +137,18 @@ public class LocacaoController {
 	
 	@GetMapping("/editarparcela/{idparcela}")
 	public ModelAndView editarParcela(@PathVariable("idparcela") Parcela parcela)  {
-		andViewCadastro.addObject("locacaobj",parcela);
-		andViewCadastro.addObject("produtobj", new LocacaoProduto());
-		andViewCadastro.addObject("parcelabj", parcela);	
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("clientes", clienteRepository.findAll());
-		andViewCadastro.addObject("produtos", produtoRepository.findAll());
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andViewCadastro.addObject("totalProdutos",parcela.getLocacao().getValorTotalProdutos());
-		andViewCadastro.addObject("totalPagamento",parcela.getLocacao().getValorTotal());
-		return andViewCadastro;
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		andView.addObject("locacaobj",parcela);
+		andView.addObject("produtobj", new LocacaoProduto());
+		andView.addObject("parcelabj", parcela);	
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",parcela.getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",parcela.getLocacao().getValorTotal());
+		return andView;
 	}
 	
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
@@ -161,16 +161,17 @@ public class LocacaoController {
 	
 	@GetMapping("/editarprodutolocacao/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") LocacaoProduto locacaoProduto)  {
-		andViewCadastro.addObject("locacaobj",locacaoProduto.getLocacao());
-		andViewCadastro.addObject("produtobj", locacaoProduto);
-		andViewCadastro.addObject("parcelabj", new Parcela());	
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("produtos", produtoRepository.findAll());
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andViewCadastro.addObject("totalProdutos",locacaoProduto.getLocacao().getValorTotalProdutos());
-		andViewCadastro.addObject("totalPagamento",locacaoProduto.getLocacao().getValorTotal());
-		return andViewCadastro;
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		andView.addObject("locacaobj",locacaoProduto.getLocacao());
+		andView.addObject("produtobj", locacaoProduto);
+		andView.addObject("parcelabj", new Parcela());	
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacaoProduto.getLocacao().getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacaoProduto.getLocacao().getValorTotal());
+		return andView;
 	} 
 	
 
@@ -204,42 +205,47 @@ public class LocacaoController {
 	
 	@GetMapping("/voltar/{idlocacao}")
 	public ModelAndView voltar(@PathVariable("idlocacao") Locacao locacao)  {
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		Parcela parcela = new Parcela(locacao);
 		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao); 
-	    andViewCadastro.addObject("locacaobj",locacao);
-		andViewCadastro.addObject("locacaoId",locacao.getId());
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("parcelabj", parcela);
-		andViewCadastro.addObject("produtobj", locacaoProduto);
-		andViewCadastro.addObject("clientes", clienteRepository.findAll());
-		andViewCadastro.addObject("parcelas", locacao.getParcelas());
-		andViewCadastro.addObject("produtosLocacoes", locacao.getProdutos());	
-		andViewCadastro.addObject("produtos", produtoRepository.findAll());
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andViewCadastro.addObject("totalProdutos",locacao.getValorTotalProdutos());
-		andViewCadastro.addObject("totalPagamento",locacao.getValorTotal());
-		return andViewCadastro;
+	    andView.addObject("locacaobj",locacao);
+		andView.addObject("locacaoId",locacao.getId());
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("parcelabj", parcela);
+		andView.addObject("produtobj", locacaoProduto);
+		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("parcelas", locacao.getParcelas());
+		andView.addObject("produtosLocacoes", locacao.getProdutos());	
+		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacao.getValorTotal());
+	
+		return andView;
 	}
 	
 	@GetMapping("/iniciaLocao/{idlocacao}")
 	public ModelAndView iniciaLocao(@PathVariable("idlocacao") Locacao locacao)  {
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		Parcela parcela = new Parcela( locacao);
 		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao);
-	    andViewCadastro.addObject("locacaobj",locacao);
-		andViewCadastro.addObject("locacaoId",locacao.getId());
-		andViewCadastro.addObject("colaboradores", colaboradorRepository.findAll());
-		andViewCadastro.addObject("parcelabj", parcela);
-		andViewCadastro.addObject("produtobj", locacaoProduto);
-		andViewCadastro.addObject("clientes", clienteRepository.findAll());
-		andViewCadastro.addObject("parcelas", locacao.getParcelas());
-		andViewCadastro.addObject("produtosLocacoes", locacao.getProdutos());	
-		andViewCadastro.addObject("produtos", produtoRepository.findAll());
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
-		andViewCadastro.addObject("totalProdutos",locacao.getValorTotalProdutos());
-		andViewCadastro.addObject("totalPagamento",locacao.getValorTotal());
-		return andViewCadastro;
+	    andView.addObject("locacaobj",locacao);
+		andView.addObject("locacaoId",locacao.getId());
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("parcelabj", parcela);
+		andView.addObject("produtobj", locacaoProduto);
+		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("parcelas", locacao.getParcelas());
+		andView.addObject("produtosLocacoes", locacao.getProdutos());	
+		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacao.getValorTotal());
+		
+
+		return andView;
 	}
 		
 	@GetMapping("/editarlocacao/{idlocacao}")

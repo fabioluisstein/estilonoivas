@@ -9,9 +9,6 @@ import loja.springboot.model.Cliente;
 @Transactional
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-	@Query(value = "select l.* from cliente l  where l.id = ?1 ", nativeQuery = true)
-	List<Cliente> findLocacaoById(Long id);
-
 	@Query( value = "select * from vw_datatable_clientes  a  where a.cidade_id= ?1", nativeQuery = true)
 	List<listTodosClientes> listaClienteCidade(Long id);
 

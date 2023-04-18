@@ -41,7 +41,7 @@ public class ClienteController {
 		return andViewCadastro;
 	}
 	
-	@CacheEvict(value = { "clienteTodosDto","locacoes"}, allEntries = true)
+	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
 		andViewCadastro.addObject("clientebj",clienteRepository.saveAndFlush(cliente));
@@ -57,7 +57,7 @@ public class ClienteController {
 	}
 
 
-	@CacheEvict(value = { "clienteTodosDto","locacoes"}, allEntries = true)
+	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
 	@GetMapping("/removercliente/{idcliente}")
 	public String excluir(@PathVariable("idcliente") Long idcliente) {
 		try {

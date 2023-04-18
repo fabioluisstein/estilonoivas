@@ -11,16 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import loja.springboot.dto.GraficoDTO;
 import loja.springboot.model.Grafico;
 import loja.springboot.repository.GraficoRepository;
 
 @Controller
 public class GraficoController {
- 
 
 	@Autowired
 	private GraficoRepository graficoRepository;

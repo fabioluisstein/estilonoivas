@@ -31,7 +31,7 @@ public class EstadoController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value = { "listEstados", "estadoDtoFilter" ,"cidadesTodas", "cidadeDtoRelac"}, allEntries = true)	
+	@CacheEvict(value = { "listEstados", "estadoDtoFilter" ,"cidadesTodas", "cidadeDtoRelac"}, allEntries = true)		
 	@RequestMapping(method = RequestMethod.POST, value ="salvarestado")
 	public ModelAndView salvar(Estado estado) { 
 		ModelAndView andView = new ModelAndView("estado/cadastroestado");

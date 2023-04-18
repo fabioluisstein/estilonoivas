@@ -1,5 +1,4 @@
 package loja.springboot.repository;
-
 import java.util.Date;
 import java.util.List;
 import org.springframework.cache.annotation.Cacheable;

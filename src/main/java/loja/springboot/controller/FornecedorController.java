@@ -34,7 +34,7 @@ public class FornecedorController {
 		return modelAndView;
 	}
 	
-	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos","produtosConsulta", "listProdutos"} , allEntries=true)
+	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos", "listProdutos"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarfornecedor")
 	public ModelAndView salvar(Fornecedor fornecedor) {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
@@ -51,7 +51,7 @@ public class FornecedorController {
 		return andView;
 	}
 	
-	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos","produtosConsulta", "listProdutos"} , allEntries=true)
+	@CacheEvict(value={"forncedoresTodosDto", "saidas", "pagamentosTodos", "listProdutos"} , allEntries=true)
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public String excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		try {

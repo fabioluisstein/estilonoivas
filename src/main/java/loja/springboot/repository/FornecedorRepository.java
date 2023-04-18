@@ -10,8 +10,6 @@ import loja.springboot.model.Fornecedor;
 
 @Transactional
 public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
-	@Query(value = "select c.* from fornecedor c where  UPPER(c.nome) like %?1% OR UPPER(c.telefone) like %?1%", nativeQuery = true)
-	List<Fornecedor> findFornecedorByName(String nome);
 
 	@Cacheable("forncedoresTodosDto") 
 	@JoinColumn(name = "fornecedor_id")  

@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,7 +68,6 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@Cacheable("produtosConsulta")
 	@PostMapping("/pesquisaprodutocustom")
 	public ModelAndView pesquisaprodutocustom(@RequestParam("idProduto") Long idProduto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/produto");
@@ -101,7 +99,7 @@ public class ProdutoController {
 		return modelAndView;
 	}
 
-	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
+	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
@@ -185,7 +183,7 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@CacheEvict(value = { "produtosConsulta", "listProdutos" }, allEntries = true)
+	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
 	@GetMapping("/removerproduto/{idproduto}")
 	public String excluir(@PathVariable("idproduto") Long idproduto) {
 		try {
