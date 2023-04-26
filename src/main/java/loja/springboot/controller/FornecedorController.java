@@ -23,6 +23,8 @@ public class FornecedorController {
 	public ModelAndView fornecedores() {
 		ModelAndView andView = new ModelAndView("fornecedor/lista");
 		andView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	 

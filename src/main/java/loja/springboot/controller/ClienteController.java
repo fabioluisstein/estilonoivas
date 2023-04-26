@@ -25,6 +25,8 @@ public class ClienteController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listaclientes")
 	public ModelAndView clientes() {
 		andViewLista.addObject("clientes", clienteRepository.clientesTodos());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andViewLista;
 	} 
 

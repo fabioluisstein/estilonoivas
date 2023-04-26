@@ -16,8 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 	
 	@Override // Configura as solicitações de acesso por Http
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf()
+	protected void configure(HttpSecurity https) throws Exception { 
+		https.csrf()
 		.disable() // Desativa as configurações padrão de memória.
 		.authorizeRequests() // Pertimir restringir acessos
 		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
@@ -26,7 +26,7 @@ public class WebConfigSecurity  extends WebSecurityConfigurerAdapter{
 		.and().logout() // Mapeia URL de Logout e invalida usuário autenticado
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	
-	} 
+	}
 	  
 	@Override // Cria autenticação do usuário com banco de dados ou em memória
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

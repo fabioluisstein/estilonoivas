@@ -33,6 +33,8 @@ public class PagamentoController {
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
 		andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	} 
  
@@ -95,6 +97,8 @@ public class PagamentoController {
 			andView.addObject("pagamentobj", pagamentoRepository.saveAndFlush(pagamento));
 			
 		}
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 

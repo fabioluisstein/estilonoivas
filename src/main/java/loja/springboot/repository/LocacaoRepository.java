@@ -20,7 +20,7 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	List<listLocacoes> findAllTodos();
 
 	@Cacheable("locacoes120") 
-	@Query(value = "Select * from vw_datatable_locacoes p  order by p.id desc limit 120 ", nativeQuery = true)
+	@Query(value = "Select * from vw_datatable_locacoes p  order by p.id desc limit 60 ", nativeQuery = true)
 	List<listLocacoes> top120Locacao();
 	public static interface listLocacoes {
 		Long getId(); 

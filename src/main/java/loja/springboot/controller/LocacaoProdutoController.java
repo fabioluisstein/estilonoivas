@@ -3,9 +3,7 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -36,16 +33,12 @@ public class LocacaoProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	 
-
-
-
 	@GetMapping("/editarProdutoCustom/{idproduto}")
-	public ModelAndView editarParcelaCustom(@PathVariable("idproduto") Long idproduto)  {
-		Optional<LocacaoProduto> locacaoproduto = locacaoProdutoRepository.findById(idproduto); 
+	public ModelAndView editarParcelaCustom(@PathVariable("idproduto") LocacaoProduto locacaoproduto)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoProduto");
-		andView.addObject("locacao",locacaoproduto.get().getLocacao());
+		andView.addObject("locacao",locacaoproduto.getLocacao());
 		andView.addObject("produtobj", locacaoproduto);	
-		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("produtos", locacaoproduto.getProduto());
 		return andView;
 	}
 
@@ -60,7 +53,7 @@ public class LocacaoProdutoController {
 				produtoLocaocao.setNomeArquivo(file.getOriginalFilename());
 
 			}
-			locacaoProdutoRepository.saveAndFlush(produtoLocaocao); 
+			locacaoProdutoRepository.save(produtoLocaocao); 
 			return "redirect:/editarlocacao/"+produtoLocaocao.getLocacao().getId().toString()+"";
 		
 		}
@@ -80,19 +73,15 @@ public class LocacaoProdutoController {
 
 			}
 
-			locacaoProdutoRepository.saveAndFlush(produtoLocaocao);
+			locacaoProdutoRepository.save(produtoLocaocao);
+			Runtime.getRuntime().gc();
+			Runtime.getRuntime().freeMemory();
+
 		}
 		return "redirect:/editarlocacao/"+produtoLocaocao.getLocacao().getId().toString()+"";
 	} 
 	
 
-	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
-		if (file != null && file.getSize() > 0) {
-
-		}
-		return true;
-
-	}
 
 	@GetMapping("/baixarArquivoProdutoCustom/{idproduto}")
 	public void baixarArquivoProdutoCustom(@PathVariable("idproduto") Long idproduto,

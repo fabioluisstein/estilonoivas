@@ -18,7 +18,7 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	List<listSaidas> findAllPagamentosTodos();
 
 	@Cacheable("saidas") 
-	@Query(value = "select id, tipo, data, fornecedor, moeda,  origem,  valor, anexo from vw_pagamentos a  order by id desc limit 120 ", nativeQuery = true)
+	@Query(value = "select id, tipo, data, fornecedor, moeda,  origem,  valor, anexo from vw_pagamentos a  order by id desc limit 60 ", nativeQuery = true)
 	List<listSaidas> saidasTodos();
 	public static interface listSaidas {
 		Long getId(); 

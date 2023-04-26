@@ -34,6 +34,8 @@ public class CidadeController {
 	public ModelAndView cidades() {
 		ModelAndView andView = new ModelAndView("cidade/lista");
 		andView.addObject("cidades", cidadeRepository.listCidadades());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	 

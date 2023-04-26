@@ -1,9 +1,7 @@
 package loja.springboot.controller;
 import java.io.IOException;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Parcela;
 import loja.springboot.repository.ParcelaRepository;
 
@@ -25,10 +22,9 @@ public class LocacaoParcelaController {
 	private ParcelaRepository parcelaRepository;
 
 	@GetMapping("/editarParcelaCustom/{idparcela}")
-	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Long idparcela)  {
-		Optional<Parcela> parcela = parcelaRepository.findById(idparcela); 
+	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Parcela parcela)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoPagamento");
-		andView.addObject("locacaobj",parcela.get().getLocacao());
+		andView.addObject("locacaobj",parcela.getLocacao());
 		andView.addObject("parcelabj", parcela);	
 		return andView;
 	}
@@ -63,19 +59,13 @@ public class LocacaoParcelaController {
 
 			}
 
-		   parcelaRepository.saveAndFlush(parcela);
+		   parcelaRepository.save(parcela);
+		   Runtime.getRuntime().gc();
+		   Runtime.getRuntime().freeMemory();
 		}
 		return "redirect:/editarlocacao/"+parcela.getLocacao().getId().toString()+"";
 	} 
 	
-
-	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
-		if (file != null && file.getSize() > 0) {
-
-		}
-		return true;
-
-	}
 
 	@GetMapping("/baixarArquivoParcela/{idparcela}")
 	public void baixarArquivoParcela(@PathVariable("idparcela") Long idparcela,

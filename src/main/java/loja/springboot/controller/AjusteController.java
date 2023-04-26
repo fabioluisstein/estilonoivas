@@ -22,6 +22,8 @@ public class AjusteController {
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/ajustes");
 		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	 

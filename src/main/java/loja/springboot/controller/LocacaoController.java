@@ -1,11 +1,14 @@
 package loja.springboot.controller;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
@@ -32,6 +36,7 @@ import loja.springboot.repository.LocacaoRepository;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.PessoaRepository;
 import loja.springboot.repository.ProdutoRepository;
+import loja.springboot.repository.LocacaoRepository.listLocacoes;
 
 @Controller
 public class LocacaoController {
@@ -67,11 +72,16 @@ public class LocacaoController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
 	public ModelAndView locacoes() {
+		List<listLocacoes> locacaoes = new ArrayList<listLocacoes>();
+		locacaoes = locacaoRepository.top120Locacao();
 		ModelAndView andView = new ModelAndView("locacao/lista");
-		andView.addObject("locacoes", locacaoRepository.top120Locacao());
+		andView.addObject("locacoes", locacaoes);
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	 
+
 	@PostMapping("/pesquisarlocacao")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 	  
@@ -88,7 +98,7 @@ public class LocacaoController {
 		modelAndView.addObject("locacoes", locacaoRepository.findAllTodos());
 		return modelAndView;
 	}
-	
+	 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
 		locacao.setData_locacao(new Date());
@@ -100,6 +110,8 @@ public class LocacaoController {
 		modelAndView.addObject("clientes", clienteRepository.findAll());
 		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return modelAndView;
 	}
 	
@@ -124,6 +136,8 @@ public class LocacaoController {
 		modelAndView.addObject("clientes", cliente);
 		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return modelAndView;
 	}
 	
@@ -131,6 +145,8 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarlocacao")
 	public String salvar(Locacao locacao) throws IOException {	
 	locacaoRepository.save(locacao);
+	Runtime.getRuntime().gc();
+	Runtime.getRuntime().freeMemory();
 	  return "redirect:/voltar/"+locacao.getId().toString()+"";	
 	} 
 
@@ -142,12 +158,14 @@ public class LocacaoController {
 		andView.addObject("produtobj", new LocacaoProduto());
 		andView.addObject("parcelabj", parcela);	
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
-		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("clientes", parcela.getLocacao().getCliente());
 		andView.addObject("produtos", produtoRepository.findAll());
 		andView.addObject("cidades", cidadeRepository.findAll()); 
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",parcela.getLocacao().getValorTotalProdutos());
 		andView.addObject("totalPagamento",parcela.getLocacao().getValorTotal());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	
@@ -155,6 +173,8 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.saveAndFlush(parcela);
+		 Runtime.getRuntime().gc();
+		 Runtime.getRuntime().freeMemory();
 		    return "redirect:/voltar/"+parcela.getLocacao().getId().toString()+"";
 	} 
 	
@@ -171,6 +191,8 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacaoProduto.getLocacao().getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacaoProduto.getLocacao().getValorTotal());
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	} 
 	
@@ -178,12 +200,10 @@ public class LocacaoController {
 	@GetMapping("/gerarRelatorio/{idlocacao}")
 	public void imprimePdf(@PathVariable("idlocacao") Long idlocacao, 
 			
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-	
-		
-      Map<String,Object> paramMap = new HashMap<String, Object>();
-      paramMap.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
+		HttpServletRequest request,
+	   HttpServletResponse response) throws Exception {
+       Map<String,Object> paramMap = new HashMap<String, Object>();
+       paramMap.put("idLocacao", idlocacao.toString());//Aqui vc passa os parâmetros para um hashmap, que será enviado para o relatório
       
 		byte[] pdf = reportUtil.gerarRelatorio( "contrato",paramMap, request.getServletContext());
 		response.setContentLength(pdf.length);
@@ -193,13 +213,16 @@ public class LocacaoController {
 		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
 		response.setHeader(headerKey, headerValue);
 		response.getOutputStream().write(pdf);
-		
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 	} 
 	
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.saveAndFlush(produtoLocacao);
+		 Runtime.getRuntime().gc();
+		 Runtime.getRuntime().freeMemory();
 		    return "redirect:/voltar/"+produtoLocacao.getLocacao().getId().toString()+"";
 	} 
 	
@@ -213,7 +236,7 @@ public class LocacaoController {
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("parcelabj", parcela);
 		andView.addObject("produtobj", locacaoProduto);
-		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("clientes", locacao.getCliente());
 		andView.addObject("parcelas", locacao.getParcelas());
 		andView.addObject("produtosLocacoes", locacao.getProdutos());	
 		andView.addObject("produtos", produtoRepository.findAll());
@@ -221,7 +244,8 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
-	
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 	
@@ -235,7 +259,7 @@ public class LocacaoController {
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
 		andView.addObject("parcelabj", parcela);
 		andView.addObject("produtobj", locacaoProduto);
-		andView.addObject("clientes", clienteRepository.findAll());
+		andView.addObject("clientes", locacao.getCliente());
 		andView.addObject("parcelas", locacao.getParcelas());
 		andView.addObject("produtosLocacoes", locacao.getProdutos());	
 		andView.addObject("produtos", produtoRepository.findAll());
@@ -243,8 +267,8 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
-		
-
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
 		

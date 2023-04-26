@@ -54,6 +54,7 @@ public class GraficoController {
 		 String json = mapper.writeValueAsString(graf);
 		 response.getWriter().write(json);
 		 Runtime.getRuntime().gc();
+		 Runtime.getRuntime().freeMemory();
 	
 	}   
 	
