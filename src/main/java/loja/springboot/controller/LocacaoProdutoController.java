@@ -33,12 +33,18 @@ public class LocacaoProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	 
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@GetMapping("/editarProdutoCustom/{idproduto}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idproduto") LocacaoProduto locacaoproduto)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoProduto");
 		andView.addObject("locacao",locacaoproduto.getLocacao());
 		andView.addObject("produtobj", locacaoproduto);	
 		andView.addObject("produtos", locacaoproduto.getProduto());
+		garbageCollection();
 		return andView;
 	}
 
@@ -54,6 +60,7 @@ public class LocacaoProdutoController {
 
 			}
 			locacaoProdutoRepository.save(produtoLocaocao); 
+			garbageCollection();
 			return "redirect:/editarlocacao/"+produtoLocaocao.getLocacao().getId().toString()+"";
 		
 		}
@@ -74,8 +81,7 @@ public class LocacaoProdutoController {
 			}
 
 			locacaoProdutoRepository.save(produtoLocaocao);
-			Runtime.getRuntime().gc();
-			Runtime.getRuntime().freeMemory();
+			garbageCollection();
 
 		}
 		return "redirect:/editarlocacao/"+produtoLocaocao.getLocacao().getId().toString()+"";
@@ -106,7 +112,7 @@ public class LocacaoProdutoController {
 
 			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(locacaoProduto.getArquivo());
-
+			garbageCollection();
 		}
 
 	}
@@ -118,6 +124,7 @@ public class LocacaoProdutoController {
 		andView.addObject("locacaobj",locacaoProduto.get().getLocacao());
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("produtos", produtoRepository.findAll());
+		garbageCollection();
 		return andView;
 	} 
 
@@ -135,16 +142,17 @@ public class LocacaoProdutoController {
 	public ModelAndView liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findProdutoLocaoById(idprodutoLocacao).get(0);
 		locacaoProduto.setData_liberacao(new Date());
-		locacaoProdutoRepository.saveAndFlush(locacaoProduto);
+		locacaoProdutoRepository.save(locacaoProduto);
 		ModelAndView andView = new ModelAndView("produto/ajustes");
 		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
-		
+		garbageCollection();
     return andView;
 	} 
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarprodutoCustom")
 	public String salvarProdutoCustom(LocacaoProduto produtoLocacao) throws IOException {	
-		 locacaoProdutoRepository.saveAndFlush(produtoLocacao);
+		 locacaoProdutoRepository.save(produtoLocacao);
+		 garbageCollection();
 		    return "redirect:/voltar/"+produtoLocacao.getLocacao().getId().toString()+"";
 	} 
 	
@@ -162,6 +170,7 @@ public class LocacaoProdutoController {
 		andView.addObject("parcelas", locacao.get().getParcelas());
 		andView.addObject("produtosLocacoes", locacao.get().getProdutos());	
 		andView.addObject("produtos", produtoRepository.findAll());	
+		garbageCollection();
 		return andView;
 	}
 	

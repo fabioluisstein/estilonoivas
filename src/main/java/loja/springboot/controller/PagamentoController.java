@@ -29,12 +29,16 @@ public class PagamentoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
 		andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		garbageCollection();
 		return andView;
 	} 
  
@@ -49,17 +53,18 @@ public class PagamentoController {
 			return modelAndView;
 		}
 		modelAndView.addObject("pagamentos", pagamentoRepository.findAllPagamentosTodos());
+		garbageCollection();
 		return modelAndView;
 	}
 
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastropagamento")
 	public ModelAndView cadastro(Pagamento pagamento) {
-
 		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
 		modelAndView.addObject("pagamentobj", new Pagamento());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
+		garbageCollection();
 		return modelAndView;
 	}
 
@@ -76,7 +81,8 @@ public class PagamentoController {
 				pagamento.setNomeArquivo(file.getOriginalFilename());
 
 			}
-			andView.addObject("pagamentobj", pagamentoRepository.saveAndFlush(pagamento));
+			andView.addObject("pagamentobj", pagamentoRepository.save(pagamento));
+			garbageCollection();
 			return andView;
 		}
 
@@ -97,16 +103,8 @@ public class PagamentoController {
 			andView.addObject("pagamentobj", pagamentoRepository.saveAndFlush(pagamento));
 			
 		}
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		garbageCollection();
 		return andView;
-	}
-
-	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
-		if (file != null && file.getSize() > 0) {
-
-		}
-		return true;
 	}
 
 	@GetMapping("/baixarArquivoPagamento/{idpagamento}")
@@ -132,6 +130,7 @@ public class PagamentoController {
 
 			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(pagamento.getArquivo());
+			garbageCollection();
 		}
 
 	}
@@ -142,6 +141,7 @@ public class PagamentoController {
 		andView.addObject("pagamentobj", pagamento);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
+		garbageCollection();
 		return andView;
 	}
 
@@ -152,6 +152,7 @@ public class PagamentoController {
 		pagamentoRepository.deleteById(idpagamento);
 	} catch (Exception e) {
 	}
+	garbageCollection();
 	return "redirect:/listapagamentos";
   }
 

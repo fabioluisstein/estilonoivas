@@ -17,15 +17,20 @@ import loja.springboot.repository.ParcelaRepository;
 @Controller
 public class LocacaoParcelaController {
  
-
 	@Autowired
 	private ParcelaRepository parcelaRepository;
+
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
 
 	@GetMapping("/editarParcelaCustom/{idparcela}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Parcela parcela)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoPagamento");
 		andView.addObject("locacaobj",parcela.getLocacao());
 		andView.addObject("parcelabj", parcela);	
+		garbageCollection();
 		return andView;
 	}
 	
@@ -41,6 +46,7 @@ public class LocacaoParcelaController {
 
 			}
 			parcelaRepository.saveAndFlush(parcela); 
+			garbageCollection();
 			return "redirect:/editarlocacao/"+parcela.getLocacao().getId().toString()+"";
 		}
 
@@ -60,8 +66,7 @@ public class LocacaoParcelaController {
 			}
 
 		   parcelaRepository.save(parcela);
-		   Runtime.getRuntime().gc();
-		   Runtime.getRuntime().freeMemory();
+		   garbageCollection();
 		}
 		return "redirect:/editarlocacao/"+parcela.getLocacao().getId().toString()+"";
 	} 
@@ -90,6 +95,7 @@ public class LocacaoParcelaController {
 
 			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(parcela.getArquivo());
+			garbageCollection();
 
 		}
 

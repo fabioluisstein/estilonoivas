@@ -19,12 +19,16 @@ public class FornecedorController {
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
  
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listafornecedores")
 	public ModelAndView fornecedores() {
 		ModelAndView andView = new ModelAndView("fornecedor/lista");
 		andView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		garbageCollection();
 		return andView;
 	}
 	 
@@ -33,6 +37,7 @@ public class FornecedorController {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrofornecedor");
 		modelAndView.addObject("fornecedorbj", new Fornecedor());
 		modelAndView.addObject("cidades", cidadeRepository.cidadeDtoRelac());
+		garbageCollection();
 		return modelAndView;
 	}
 	
@@ -42,6 +47,7 @@ public class FornecedorController {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
 		andView.addObject("cidades", cidadeRepository.findAll());
 		andView.addObject("fornecedorbj",fornecedorRepository.saveAndFlush(fornecedor));
+		garbageCollection();
 		return andView;
 	}
 	
@@ -50,6 +56,7 @@ public class FornecedorController {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedor");
 		andView.addObject("fornecedorbj",fornecedor);
 		andView.addObject("cidades", cidadeRepository.findAll());
+		garbageCollection();
 		return andView;
 	}
 	

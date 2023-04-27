@@ -30,12 +30,16 @@ public class CidadeController {
 	@Autowired
 	private EstadoRepository estadoRepository;
 	
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listacidades")
 	public ModelAndView cidades() {
 		ModelAndView andView = new ModelAndView("cidade/lista");
 		andView.addObject("cidades", cidadeRepository.listCidadades());
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		garbageCollection();
 		return andView;
 	}
 	 
@@ -50,6 +54,7 @@ public class CidadeController {
 	public ModelAndView cadastro(Cidade cidade) {
 		ModelAndView modelAndView = new ModelAndView("cidade/cadastrocidade");
 		modelAndView.addObject("cidadebj", new Cidade());
+		garbageCollection();
 		return modelAndView;
 	}
 	
@@ -57,7 +62,8 @@ public class CidadeController {
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidade")
 	public String salvar(Cidade cidade, BindingResult result, @RequestParam(name = "estadoId", required = false) Long estadoId) {	
 		cidade.setEstado(new Estado(estadoId));
-		Cidade cdCidade = cidadeRepository.save(cidade);		
+		Cidade cdCidade = cidadeRepository.save(cidade);
+		garbageCollection();		
 		return "redirect:/editarcidade/"+cdCidade.getId().toString();
 	} 
 	
@@ -79,6 +85,7 @@ public class CidadeController {
 		andView.addObject("cidadebj",cidade);
 		andView.addObject("estadodto", cidade.getEstado().getNome());
 		andView.addObject("estadoId", cidade.getEstado().getId());
+		garbageCollection();
 		return andView;
 	}  
 	

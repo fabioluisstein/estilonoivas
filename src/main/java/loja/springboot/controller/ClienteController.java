@@ -22,17 +22,22 @@ public class ClienteController {
 	private ModelAndView andViewLista = new ModelAndView("cliente/lista");
 	private ModelAndView andViewCadastro = new ModelAndView("cliente/cadastrocliente");
  
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listaclientes")
 	public ModelAndView clientes() {
 		andViewLista.addObject("clientes", clienteRepository.clientesTodos());
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		garbageCollection();
 		return andViewLista;
 	} 
 
 	@GetMapping("/listaClienteCidade/{idcidade}")
 	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
 		andViewLista.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
+		garbageCollection();
 		return andViewLista;
 	}
 
@@ -40,14 +45,16 @@ public class ClienteController {
 	public ModelAndView cadastro(Cliente cliente) {
 		andViewCadastro.addObject("clientebj", new Cliente());
 		andViewCadastro.addObject("cidades", cidadeRepository.cidadeDtoRelac());
+		garbageCollection();
 		return andViewCadastro;
 	}
 	
 	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
-		andViewCadastro.addObject("clientebj",clienteRepository.saveAndFlush(cliente));
+		andViewCadastro.addObject("clientebj",clienteRepository.save(cliente));
 		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		garbageCollection();
 		return andViewCadastro;
 	}
 	
@@ -55,6 +62,7 @@ public class ClienteController {
 	public ModelAndView editar(@PathVariable("idcliente") Cliente cliente) {
 		andViewCadastro.addObject("clientebj",cliente);
 		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		garbageCollection();
 		return andViewCadastro;
 	}
 

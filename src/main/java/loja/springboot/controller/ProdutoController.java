@@ -35,6 +35,12 @@ public class ProdutoController {
 	private int quantidadeLocacoes;
 	private double valorFinanceiro;
 
+
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	public void quantidadeLocacoes(Long id) {
 		quantidadeLocacoes = 0;
 		valorFinanceiro = 0;
@@ -42,7 +48,7 @@ public class ProdutoController {
 			quantidadeLocacoes = quantidadeLocacoes + 1;
 			valorFinanceiro = valorFinanceiro + locacaoProduto.getValor();
 		}
-
+		garbageCollection();
 	}
 
 	public void updateVisitas(Produto produtoAcesso) throws ParseException, IOException {
@@ -53,18 +59,21 @@ public class ProdutoController {
 
 		produtoAcesso.setQuantidade_acesso(quantidadeVisitas + 1);
 		produtoRepository.save(produtoAcesso);
+		garbageCollection();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/lista");
 		andView.addObject("produtos", produtoRepository.listaTodos());
+		garbageCollection();
 		return andView;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/consultaprodutos")
 	public ModelAndView produtosPesquisa() {
 		ModelAndView andView = new ModelAndView("produto/pesquisaProd");
+		garbageCollection();
 		return andView;
 	}
 
@@ -87,6 +96,7 @@ public class ProdutoController {
 		else {
 			andView = new ModelAndView("produto/pesquisaProd");
 		}
+		garbageCollection();
 		return andView;
 	}
 
@@ -96,6 +106,7 @@ public class ProdutoController {
 		modelAndView.addObject("produtobj", new Produto());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+		garbageCollection();
 		return modelAndView;
 	}
 
@@ -113,7 +124,8 @@ public class ProdutoController {
 				produto.setNomeArquivo(file.getOriginalFilename());
 
 			}
-			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
+			andView.addObject("produtobj", produtoRepository.save(produto));
+			garbageCollection();
 			return andView;
 		}
 
@@ -134,15 +146,8 @@ public class ProdutoController {
 
 			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
 		}
+		garbageCollection();
 		return andView;
-	}
-
-	public boolean verificaImagem(MultipartFile file, byte[] imagem) {
-		if (file != null && file.getSize() > 0) {
-
-		}
-		return true;
-
 	}
 
 	@GetMapping("/baixarArquivo/{idproduto}")
@@ -168,7 +173,7 @@ public class ProdutoController {
 
 			/* Finaliza a resposta passando o arquivo */
 			response.getOutputStream().write(produto.getArquivo());
-
+			garbageCollection();
 		}
 
 	}
@@ -180,6 +185,7 @@ public class ProdutoController {
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
 		updateVisitas(produto);
+		garbageCollection();
 		return andView;
 	}
 
@@ -190,6 +196,7 @@ public class ProdutoController {
 			produtoRepository.deleteById(idproduto);
 	    } catch (Exception e) {
 	     }
+	  garbageCollection();
 	return "redirect:/listaprodutos";
    }
 	

@@ -3,9 +3,7 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +20,10 @@ public class GraficoController {
 	@Autowired
 	private GraficoRepository graficoRepository;
 	
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
 	
 	@RequestMapping("/index2")
 	public String index2() {
@@ -53,8 +55,7 @@ public class GraficoController {
 		 ObjectMapper mapper = new ObjectMapper();
 		 String json = mapper.writeValueAsString(graf);
 		 response.getWriter().write(json);
-		 Runtime.getRuntime().gc();
-		 Runtime.getRuntime().freeMemory();
+		 garbageCollection();
 	
 	}   
 	
