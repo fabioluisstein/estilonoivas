@@ -120,7 +120,7 @@ public class ProdutoController {
 		if (produto.getId() == null) {
 			if (file.getSize() > 0) {
 				produto.setArquivo(file.getBytes());
-				produto.setTipoArquivo(file.getContentType());
+				produto.setTipoArquivo(file.getContentType()); 
 				produto.setNomeArquivo(file.getOriginalFilename());
 
 			}

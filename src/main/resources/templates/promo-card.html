@@ -1,0 +1,23 @@
+		<div class="card-group col-md-3 pb-4" th:each="promo : ${promocoes}">
+			<div th:id="${promo.id}" class="card">
+				<div class="block-img">
+					<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${promo.generateBase64Image()}}" alt="Card image cap">
+					
+			
+				</div>
+				<div class="card-body">
+					<p class="card-text" th:text="${promo.categoria.nome}">Sobre a Promoção</p>
+					<h5 class="card-title" th:text="${promo.tamanho}">site.com.br</h5>
+					<h5 class="card-title" th:text="${promo.cor}">site.com.br</h5>
+		
+
+					<div>
+						<h6 class="badge badge-primary" th:text="|R$ ${{promo.valorVenda}}|">R$ 9,99</h6>
+					</div>
+
+				</div>
+				<div class="card-footer">
+					
+				</div>
+			</div>
+		</div>	

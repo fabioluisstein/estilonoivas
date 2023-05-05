@@ -2,6 +2,7 @@ package loja.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,8 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -92,6 +96,18 @@ public class Produto implements Serializable {
 	public byte[] getArquivo() {
 		return arquivo;
 	}
+
+
+
+	public String generateBase64Image()
+	{
+
+
+		Base64 codec = new Base64();
+
+		return codec.encodeBase64String(this.getArquivo());
+	}
+	
 
 	public void setArquivo(byte[] arquivo) {
 		this.arquivo = arquivo;
