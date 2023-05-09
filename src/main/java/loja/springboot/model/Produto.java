@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -61,6 +62,10 @@ public class Produto implements Serializable {
 	@OneToMany(mappedBy = "produto")
     private List<LocacaoProduto> produtosLocacoes;
 
+	
+	@Column(name = "total_likes", nullable = true)
+	private int likes;
+
 	public List<LocacaoProduto> getProdutosLocacoes() {
 		return produtosLocacoes;
 	}
@@ -79,6 +84,14 @@ public class Produto implements Serializable {
 
 	public String getNomeArquivo() {
 		return nomeArquivo;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 
 	public void setNomeArquivo(String nomeArquivo) {
@@ -102,10 +115,7 @@ public class Produto implements Serializable {
 	public String generateBase64Image()
 	{
 
-
-		Base64 codec = new Base64();
-
-		return codec.encodeBase64String(this.getArquivo());
+		return Base64.encodeBase64String(this.getArquivo());
 	}
 	
 
@@ -175,6 +185,9 @@ public class Produto implements Serializable {
 	}
 
 	public Integer getQuantidade_acesso() {
+		if(quantidade_acesso==null)
+		return 0;
+		else
 		return quantidade_acesso;
 	}
 

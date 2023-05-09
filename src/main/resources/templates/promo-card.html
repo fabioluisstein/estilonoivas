@@ -1,23 +1,40 @@
 		<div class="card-group col-md-3 pb-4" th:each="promo : ${promocoes}">
-			<div th:id="${promo.id}" class="card">
-				<div class="block-img">
-					<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${promo.generateBase64Image()}}" alt="Card image cap">
-					
-			
-				</div>
-				<div class="card-body">
-					<p class="card-text" th:text="${promo.categoria.nome}">Sobre a Promoção</p>
-					<h5 class="card-title" th:text="${promo.tamanho}">site.com.br</h5>
-					<h5 class="card-title" th:text="${promo.cor}">site.com.br</h5>
 		
-
-					<div>
-						<h6 class="badge badge-primary" th:text="|R$ ${{promo.valorVenda}}|">R$ 9,99</h6>
+				<div th:id="${promo.id}" class="card" >
+					<div  style="text-align: center;" class="card-header">	<h5 class="card-title" th:text="| Código: ${promo.id} |"> Tipo </h5></div>
+					<div class="block-img">
+						<img class="card-img-top" th:src="@{'data:image/jpeg;base64,'+${promo.generateBase64Image()}}" alt="Card image cap"   >
 					</div>
-
-				</div>
-				<div class="card-footer">
+					<div class="card-body">
+						<h8	 class="badge badge-success" th:text="| Produto : ${promo.categoria.nome}">Marca</h8>
+						<h8	 class="badge badge-success" th:text="| Marca : ${promo.fornecedor.nome}">Marca</h8>
+						<br>
+						<h8	 class="badge badge-pill badge-primary" th:text="| Tamanho : ${promo.tamanho}">Tamanho</h8>
+						<h8	 class="badge badge-pill badge-primary" th:text="| Cor : ${promo.cor}">Cor</h8>
 					
+						<div>
+							<h6 class="badge badge-primary" th:text="|R$ ${{promo.valorVenda}}|">R$ 9,99</h6>
+							<h6 class="badge badge-primary" th:text="|Consultas ${{promo.quantidade_acesso}}|">R$ 9,99</h6>
+						</div>
+
+						<div class="btn-group">
+							<button th:id="${'likes-count-' + promo.id}" type="button"
+								class="btn btn-sm btn-outline-secondary"
+								th:text="${promo.likes}"></button>
+							<button th:id="${'likes-btn-' + promo.id}" type="button"
+								class="btn btn-sm btn-outline-secondary">
+								<i class="far fa-thumbs-up"></i>
+							</button>
+							
+						</div>
+			
+					</div>
+					<div class="card-footer">
+						<small class="text-muted"
+						th:text="${{promo.descricao}}" > Descrição </small>
+					</div>
 				</div>
-			</div>
-		</div>	
+			</div>	
+
+
+		

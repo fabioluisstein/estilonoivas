@@ -18,9 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import loja.springboot.model.Categorias;
 import loja.springboot.model.Promocao;
 import loja.springboot.repository.CategoriasRepository;
@@ -41,6 +43,37 @@ public class PromocaoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
+
+// ======================================ADD LIKES===============================================
+	
+@PostMapping("/like/{id}")
+public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
+	promocaoRepository.updateSomarLikes(id);
+	int likes = promocaoRepository.findLikesById(id);
+	return ResponseEntity.ok(likes);
+}
+
+
+
+	// ======================================AUTOCOMPLETE===============================================
+	
+	@GetMapping("/site")
+	public ResponseEntity<?> autocompleteByTermo(@RequestParam("termo") String termo) {
+		List<String> sites = promocaoRepository.findSitesByTermo(termo);
+		return ResponseEntity.ok(sites);
+	}
+
+	@GetMapping("/site/list")
+	public String listarPorSite(@RequestParam("site") Long id, ModelMap model) {
+		PageRequest pageRequest = PageRequest.of(0, 8, Sort.by(Sort.Direction.ASC, "id"));
+		model.addAttribute("promocoes", promocaoRepository.findBySite(id, pageRequest));
+		return "promo-card";
+	}
+	
+
+
+
+
 	@PostMapping("/save")
 	public ResponseEntity<?> salvarPromocao(@Valid Promocao promocao, BindingResult result) {
 		
@@ -81,6 +114,9 @@ public class PromocaoController {
 		model.addAttribute("promocoes", produtoRepository.findAll(pageRequest));		
 		return "promo-card";
 	}	
+
+
+	
  
 	@ModelAttribute("categorias")
 	public List<Categorias> getCategorias() {
