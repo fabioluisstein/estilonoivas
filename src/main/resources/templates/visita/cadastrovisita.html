@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Cadastro Visitas</title>
+
+<head th:replace="fragments :: html_head"/>
+
+<body>
+<div th:replace="fragments :: menu"/>
+<br>
+
+ <div class="container">
+  <div class="row">
+        <div style="text-align:right" >
+  </div>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Visitas </span>
+        <br>
+      </div>
+
+    </div>
+</div>
+<br>
+
+<div class="container">
+ 
+   <div class="row" >
+   <form action="/salvarvisita" id="formvisita" method="post" th:object="${visitabj}" >
+      <div class="row">
+       
+       <div class="input-field col s12">
+           <label for="id" class="active">ID</label> 
+          	<input name="id" th:field="*{id}" id="id" class="validate" readonly="readonly">
+        </div>
+        
+      
+    <div class="input-field col s12">
+      <label for="nomeCliente" class="active">Nome Cliente</label> 
+      <input name="nomeCliente" th:field="*{nomeCliente}" id="nomeCliente" class="validate" required>
+    </div>
+
+             
+   <div class="input-field col s6">
+    <label for="cidadeCliente" class="active">Cidade Cliente</label> 
+    <br>
+    <select th:field="*{cidadeCliente}" class="browser-default" required>
+    <option th:each="cid: ${cidades}"
+			th:value="${cid.id}" th:text="${cid.nome}" ></option>
+     </select> 
+    </div>
+
+
+    <div class="input-field col s6">
+      <label for="cidadeEvento" class="active">Cidade Evento</label> 
+      <br>
+      <select th:field="*{cidadeEvento}" class="browser-default" required>
+      <option th:each="cid: ${cidades}"
+        th:value="${cid.id}" th:text="${cid.nome}" ></option>
+       </select> 
+      </div>
+
+      <div class="col s6">
+        <label for="tipoCliente">Tipo Cliente</label>  
+        <select th:field="*{tipoCliente}" class="browser-default" required >
+         <option value="Convidado">Convidado</option>
+         <option value="Convidada">Convidada</option>
+         <option value="Formando">Formando</option>
+         <option value="Formanda">Formanda</option>
+         <option value="Noivo">Noivo</option>
+         <option value="Noiva">Noiva</option>
+         <option value="Pajem">Pajem</option>
+         <option value="Padrinho">Padrinho</option>
+         <option value="Madrinha">Madrinha</option>
+         <option value="Mãe de Noiva (o)">Mãe de Noiva (o)</option>
+         <option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
+         <option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
+         <option value="Pai de debutante">Pai de debutante </option>
+         <option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
+         <option value="Debutante">Debutante </option>
+         <option value="Namorado da debutante">Namorado da debutante </option>
+         <option value="Não Informado">Não Informado</option>
+         <option value="Outros">Outros</option>
+     
+       </select>
+    </div>
+    
+
+    <div class="col s6">
+      <label for="motivo">Motivo</label>  
+      <select th:field="*{motivo}" class="browser-default" required >
+       <option value="Cliente está só Olhando">Cliente está só Olhando</option>
+       <option value="Fora do Orçamento">Fora do Orçamento</option>
+       <option value="Não encontrou o Produto desejado">Não encontrou o Produto desejado</option>
+       <option value="Produto está Locado">Produto está Locado</option>
+       <option value="Outro">Outro</option>
+     </select>
+  </div>
+      
+  <div class="col s6">
+    <label for="retorno">Aceita Retorno</label>  
+    <select th:field="*{retorno}" class="browser-default" required >
+     <option value="Sim">Sim</option>
+     <option value="Não">Não</option>
+   </select>
+</div>
+      
+<div class="col s6">
+  <label for="colaborador">Atendente</label>  
+  <select th:field="*{colaborador}" class="browser-default" required >
+   <option value="Keli">Keli</option>
+   <option value="Deise">Deise</option>
+   <option value="Gabi">Gabi</option>
+   <option value="Equipe">Equipe</option>
+ </select>
+</div>
+    
+
+<div class="col s6">
+  <label for="status">Status</label>  
+  <select th:field="*{status}" class="browser-default" required >
+   <option value="Cliente Potencial">Cliente Potencial</option>
+   <option value="Cliente Efetivo">Cliente Efetivo</option>
+   <option value="Em andamento">Em andamento</option>
+   <option value="Aguardando Retorno">Aguardando Retorno</option>
+   <option value="Concluido">Concluido</option>
+ </select>
+</div>
+    
+
+
+<div class="col s6">
+  <label for="origemContato">Origem do Contato</label>  
+  <select th:field="*{origemContato}" class="browser-default" required >
+   <option value="Presencial">Presencial</option>
+   <option value="WhatsAPP">WhatsAPP</option>
+   <option value="Facebook">Facebook</option>
+   <option value="Instagram">Instagram</option>
+   <option value="Telefone">Telefone</option>
+   <option value="Outros">Outros</option>
+ </select>
+</div>
+    
+<div class="col s6">
+  <label for="evolucao">Evolução</label>  
+  <select th:field="*{evolucao}" class="browser-default" required >
+   <option value="Iniciado">Iniciado</option>
+   <option value="Primeira Etapa Concluída">Primeira Etapa Concluída</option>
+   <option value="Segunda Etapa Concluída">Segunda Etapa Concluída</option>
+   <option value="Aguardando Supervisor">Aguardando Supervisor</option>
+   <option value="Aguardando Fornecedor">Aguardando Fornecedor</option>
+   <option value="Aguardando Fornecedor">Concluido</option>
+ </select>
+</div>
+    
+
+<div class="col s6">
+  <label for="pickdate" class="active">Data Limite</label> 
+  <input type="text" class="datepicker" th:field="*{data_final}"  name="data_final" required >
+</div>
+
+        <div class="input-field col s12">
+      <label for="telefone" class="active">Telefone</label> 
+      <input name="telefone" th:field="*{telefone}" id="telefone" class="validate" >
+    </div>
+              
+    
+    <div class="input-field col s6">
+      <label for="facebook" class="active">Facebook</label> 
+      <input name="facebook" th:field="*{facebook}" id="facebook" class="validate" >
+    </div>
+
+        
+    <div class="input-field col s6">
+      <label for="instagram" class="active">Instagram</label> 
+      <input name="instagram" th:field="*{instagram}" id="instagram" class="validate" >
+    </div>
+
+    
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea name="atendimento" th:field="*{atendimento}" id="atendimento"  class="materialize-textarea" data-length="120"></textarea>
+        <label for="textarea2">Atendimento</label>
+      </div>
+    </div>
+
+
+    <div class="input-field col s12">
+      <label for="id_locacao" class="active">Locacção</label> 
+      <input name="id_locacao" th:field="*{id_locacao}" id="id_locacao" class="validate"  >
+    </div>
+
+
+
+
+        <br>
+   
+       <a  onclick="M.toast({html: 'Voltando',classes: 'blue rounded'})" href="/listavisitas" class="waves-effect waves-light btn grey darken-1 ">Voltar</a>
+       <input onclick="M.toast({html: 'Salvando Registro',classes: 'green rounded'})" class="waves-effect waves-light btn grey darken-1" type="submit" value="Salvar">
+             
+    </form>
+  </div>
+
+ </div>
+
+<div th:replace="fragments :: footer"/>
+
+<script>
+    const input = document.getElementById("cpf");
+    input.addEventListener("keyup", formatarCPF);
+
+    function formatarCPF(e){
+    
+    var v=e.target.value.replace(/\D/g,"");
+    v=v.replace(/(\d{3})(\d)/,"$1.$2");
+    v=v.replace(/(\d{3})(\d)/,"$1.$2");
+    v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+    e.target.value = v;
+} ;
+
+</script>
+
+
+</body>
+</html>

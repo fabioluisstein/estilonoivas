@@ -1,9 +1,14 @@
 package loja.springboot.repository;
 import java.util.List;
+
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
 import loja.springboot.model.Cliente;
 
 @Transactional
@@ -24,5 +29,15 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 		Long getCidade_id();
 		String getCidade();
 	}
+
+	@Query(value = "select id, nome, telefone, whats, cpf,  cidade_id,  cidade from vw_datatable_clientes a  where a.nome like %:search%  ", nativeQuery = true)
+
+	Page<listTodosClientes> findByTituloOrSiteOrCategoria(@Param("search") String search, Pageable pageable);
+
+	@Query(value = "select id, nome, telefone, whats, cpf,  cidade_id,  cidade from vw_datatable_clientes a  order by id desc ", nativeQuery = true)
+	Page<listTodosClientes> findBySite(@Param("id") Long id, Pageable pageable);
+
+
+  
 
 }

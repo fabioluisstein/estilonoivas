@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -26,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import loja.springboot.model.Categorias;
 import loja.springboot.model.Promocao;
 import loja.springboot.repository.CategoriasRepository;
+import loja.springboot.repository.ClienteRepository;
 import loja.springboot.repository.ProdutoRepository;
 import loja.springboot.repository.PromocaoRepository;
+import loja.springboot.service.ClienteDataTablesService;
 
 @Controller
 @RequestMapping("/promocao")
@@ -36,8 +39,11 @@ public class PromocaoController {
 	private static Logger log = LoggerFactory.getLogger(PromocaoController.class);
 	
     @Autowired
-    private PromocaoRepository promocaoRepository;
+    private PromocaoRepository promocaoRepository; 
+
 	@Autowired
+    private ClienteRepository clienteRepository;
+	@Autowired 
 	private CategoriasRepository categoriaRepository;
 
 	@Autowired
@@ -70,10 +76,6 @@ public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
 		return "promo-card";
 	}
 	
-
-
-
-
 	@PostMapping("/save")
 	public ResponseEntity<?> salvarPromocao(@Valid Promocao promocao, BindingResult result) {
 		
@@ -116,7 +118,16 @@ public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
 	}	
 
 
+	@GetMapping("/tabela")
+	public String showTabela( ) {
+		return "promo-datatables";
+	}
 	
+	@GetMapping("/datatables/server")
+	public ResponseEntity<?> datatables(HttpServletRequest request) {
+		Map<String, Object> data = new ClienteDataTablesService().execute(clienteRepository, request);
+		return ResponseEntity.ok(data);
+	}
  
 	@ModelAttribute("categorias")
 	public List<Categorias> getCategorias() {

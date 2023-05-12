@@ -2,6 +2,7 @@ package loja.springboot.model;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.TransactionScoped;
+
 import org.springframework.cache.annotation.Cacheable;
 
 @Entity
@@ -37,7 +39,7 @@ public class Cidade implements Serializable {
 
 	@OneToMany(mappedBy = "cidade")
 	private List<Fornecedor> fornecedores;
-
+	
 	@OneToMany(mappedBy = "cidade")
 	private List<Cliente> clientes;
 

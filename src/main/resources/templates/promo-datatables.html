@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+	<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+	      <nav class="navbar navbar-light" >
+            <div class="container-fluid"  style="max-width:100%" >
+              <a class="navbar-brand">Clientes</a>
+              <form class="d-flex">
+				<a  href="/cadastrocliente"  class="btn btn-primary">Adicionar</a>
+              </form>
+            </div>
+          </nav>	
+		</div>
+	<div class="corpo" layout:fragment="corpo" >
+	
+		<table id="table-server" class="display" >
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Id</th>
+		      <th scope="col">Nome</th>
+		      <th scope="col">Telefone</th>
+		      <th scope="col">Whats</th>
+		      <th scope="col">CPF</th>
+		      <th scope="col">Cidade</th>
+		    </tr>
+		  </thead>
+		</table>
+	</div>
+	<script th:src="@{/js/promo-datatables.js}" th:fragment="js"></script>
+</body>
+</html>

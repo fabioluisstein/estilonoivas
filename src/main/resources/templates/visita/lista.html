@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF8">
+<title>Visitas</title>
+
+<head th:replace="fragments :: html_head"/>
+<body>
+<div th:replace="fragments :: menu"/>
+
+<br>
+  <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
+     <div class="row">
+      <div style="text-align:left"  class="col s6">
+       <h5 class="white-text">Visitas</h5>
+      
+      </div>
+       <div style="text-align:right"  class="col s6">
+         <a  href="/cadastrovisita" class="waves-effect waves-light btn grey darken-1">Adicionar</a>
+       </div>
+    </div>
+  </nav>
+
+<div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">
+	<table id="tabFilterOrderId" class="table table-striped" style="width:100%">
+   <div style="text-align:right" >
+  </div>
+   <thead>
+     <tr>
+        <th style="max-width: 3%">Id</th>
+	    <th style="max-width: 20%">Nome</th>
+		<th style="max-width: 10%">Tipo Cliente</th>
+		<th style="max-width: 10%">Evolução</th>
+	    <th style="max-width: 10%">Status</th>
+		<th style="max-width: 10%">Atendente</th>
+		<th style="max-width: 10%">Origem Contato</th>
+		<th style="max-width: 10%">Data Limite</th>
+		<th style="max-width: 5%">Excluir</th>  
+	 </tr>
+    </thead>	
+	<tbody>
+	  <tr th:each = "visita : ${visitas}">
+	   <td>
+	   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}" th:text="${visita.id}"></a>
+	   </td>
+	   <td>
+	      <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}" th:text="${visita.Nome_cliente}"></a>
+	   </td>
+	   <td>
+		<a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${visita.Tipo_cliente}"></a>
+	</td>
+
+	    <td>
+			<a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${visita.Evolucao}"></a>
+		 </td>  
+		 <td>
+			<a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${visita.Status}"></a>
+		 </td>  
+		<td>
+			<a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${visita.Colaborador}"></a>
+		 </td>  		 
+
+		<td>
+			<a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${visita.Origem_contato}"></a>
+		</td>
+	    <td>
+		   <a onclick="M.toast({html: 'Editando Cliente',classes: 'blue rounded'})" th:href="@{/editarvisita/{idvisita}(idvisita=${visita.id})}"   th:text="${#dates.format(visita.Data_Final, 'dd/MM/yyyy')}" ></a>
+		</td>
+
+		<td> <a onclick="M.toast({html: 'Deletando Cidade',classes: 'red rounded'})" th:href="@{/removervisita/{idvisita}(idvisita=${visita.id})}"><i class="material-icons">delete_forever</i></a></td>
+
+	  </tr> 
+	 </tbody>
+</table>
+
+ </div>  
+  
+<div th:replace="fragments :: footerScript"/>
+
+</body>
+
+</html>
