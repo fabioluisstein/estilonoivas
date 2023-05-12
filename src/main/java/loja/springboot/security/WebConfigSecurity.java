@@ -29,10 +29,9 @@ public class WebConfigSecurity{
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-            .withUser("fibonatti").password("{noop}123").roles("ADMIN")
-            .and()
-            .withUser("estilo").password("{noop}estilo321").roles("ADMIN");
-          
+        .withUser("fibonatti").password("{noop}123").roles("ADMIN")
+        .and()
+        .withUser("estilo").password("{noop}estilo321").roles("ADMIN");
     }
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() throws Exception {
@@ -40,6 +39,8 @@ public class WebConfigSecurity{
             web.ignoring().antMatchers("/materialize/**");
             web.ignoring().antMatchers("/consultaprodutos/**");
             web.ignoring().antMatchers("/pesquisaprodutocustom/**");
+
+
         };
 		
 		

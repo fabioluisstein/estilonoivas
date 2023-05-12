@@ -13,7 +13,12 @@
 	</subDataset>
 	<parameter name="idLocacao" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[Select locacao.id,
+		<![CDATA[Select 
+       empresa.nome as nome_empresa,
+       empresa.cidade as cidade_empresa,
+       empresa.cnpj as cnpj_empresa,
+       empresa.telefone as telefone_empresa,
+        locacao.id,
        cliente.nome as nome_cliente, 
 	   cliente.id as id_cliente, 
        cidade.nome as cidade_cliente,  
@@ -50,6 +55,7 @@ left join (Select idlocacao as idlocacao, sum(valor) as valor_formatado,
  from parcela group by idlocacao) as parcelas on parcelas.idlocacao  = locacao.id
 left join produto on produto.id = locacao_produto.produto_id
 left join categoria on categoria.id = produto.categoria_id
+left join empresa on empresa.id = 1
 
 Where locacao.id = '$P!{idLocacao}'
 group by locacao.id,
@@ -72,6 +78,26 @@ group by locacao.id,
       locacao_produto.valor,
 	  categoria.nome]]>
 	</queryString>
+	<field name="nome_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="cidade_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cidade"/>
+		<property name="com.jaspersoft.studio.field.label" value="cidade_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="cnpj_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cnpj"/>
+		<property name="com.jaspersoft.studio.field.label" value="cnpj_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="telefone_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telefone"/>
+		<property name="com.jaspersoft.studio.field.label" value="telefone_empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
 	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
@@ -187,28 +213,28 @@ group by locacao.id,
 				<reportElement x="0" y="228" width="554" height="23" uuid="22b3b356-187e-4a2b-8657-8be97040b8db"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="80" y="0" width="390" height="60" uuid="e3d356e0-97f3-4dcd-95f5-338470487bde"/>
+				<reportElement x="80" y="0" width="390" height="30" uuid="e3d356e0-97f3-4dcd-95f5-338470487bde"/>
 				<textElement textAlignment="Center">
 					<font size="22"/>
 				</textElement>
 				<text><![CDATA[Contrato de Locação 
-Fibonatti Ternos & Costumes]]></text>
+]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="80" width="168" height="30" uuid="9fdda973-23c3-4d4f-a7a2-f4dc3d4e6ad6"/>
-				<text><![CDATA[CNPJ: 22.139.903/0001-90]]></text>
+				<reportElement x="3" y="80" width="36" height="19" uuid="9fdda973-23c3-4d4f-a7a2-f4dc3d4e6ad6"/>
+				<text><![CDATA[CNPJ: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="100" width="168" height="20" uuid="4981ee8e-4cad-4876-bf98-f5a55ba6fff3"/>
-				<text><![CDATA[Cidade: Passo Fundo - RS]]></text>
+				<reportElement x="3" y="100" width="36" height="19" uuid="4981ee8e-4cad-4876-bf98-f5a55ba6fff3"/>
+				<text><![CDATA[Cidade:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="380" y="80" width="100" height="30" uuid="450c0024-383f-4094-b633-223b148fc70b"/>
 				<text><![CDATA[Atendente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="380" y="100" width="168" height="20" uuid="04b11056-9259-42a0-82f7-768f9e83ebd8"/>
-				<text><![CDATA[Telefone: (54) 9184-5016]]></text>
+				<reportElement x="380" y="100" width="52" height="20" uuid="04b11056-9259-42a0-82f7-768f9e83ebd8"/>
+				<text><![CDATA[Telefone:]]></text>
 			</staticText>
 			<frame>
 				<reportElement x="0" y="70" width="554" height="49" backcolor="#CCC4C4" uuid="75e1f793-0289-427f-88c2-0dbfe8e4c120"/>
@@ -419,6 +445,25 @@ Fibonatti Ternos & Costumes]]></text>
 				</textElement>
 				<text><![CDATA[Detalhes Locação]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="40" y="80" width="100" height="18" uuid="8d35be59-d0bc-4018-a238-a30490e8dde5"/>
+				<textFieldExpression><![CDATA[$F{cnpj_empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="100" width="100" height="18" uuid="0ce67978-4d60-4d89-9254-70a045ec1015"/>
+				<textFieldExpression><![CDATA[$F{cidade_empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="30" width="359" height="39" uuid="d01f24ff-c250-4c49-875e-b693a8f3ea36"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="100" width="100" height="18" uuid="f4b7da8b-0c72-4488-bfe7-fb79c3a4a6c1"/>
+				<textFieldExpression><![CDATA[$F{telefone_empresa}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
