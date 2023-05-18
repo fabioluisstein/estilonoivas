@@ -22,7 +22,7 @@ public class VisitaController {
 	private CidadeRepository cidadeRepository;
 
 	private ModelAndView andViewLista = new ModelAndView("visita/lista");
-	private ModelAndView andViewCadastro = new ModelAndView("visita/cadastroVisita");
+	private ModelAndView andViewCadastro = new ModelAndView("visita/cadastrovisita");
  
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
@@ -38,11 +38,12 @@ public class VisitaController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrovisita")
 	public ModelAndView cadastro(Visita visita) {
+		ModelAndView andViewCad = new ModelAndView("visita/cadastrovisita");
 		visita.setData_inicial(new Date());
-		andViewCadastro.addObject("visitabj", visita);
-		andViewCadastro.addObject("cidades", cidadeRepository.cidadeDtoRelac());
+		andViewCad.addObject("visitabj", visita);
+		andViewCad.addObject("cidades", cidadeRepository.cidadeDtoRelac());
 		garbageCollection();
-		return andViewCadastro;
+		return andViewCad;
 	}
 
 

@@ -94,6 +94,14 @@ public class Visita implements Serializable {
 		return cidadeEvento;
 	}
 
+
+     public String Whats(){
+          String telefoneFormatado = telefone.replace('(', ' ');
+		  telefoneFormatado = telefoneFormatado.replace(')', ' ');
+		  telefoneFormatado = telefoneFormatado.replace('-', ' ');
+		return "https://wa.me/55"+ telefoneFormatado.replaceAll("\\s+","");
+	 }
+
 	public void setCidadeEvento(Cidade cidadeEvento) {
 		this.cidadeEvento = cidadeEvento;
 	}

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF8">
-<title>Cadastro Visitas</title>
+<title>Cadastro Visitas </title>
 
 <head th:replace="fragments :: html_head"/>
 
@@ -14,7 +14,7 @@
   <div class="row">
         <div style="text-align:right" >
   </div>
-      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Visitas </span>
+      <div class="col s12 card-panel teal grey darken-1"><span class="flow-text">Cadastro de Visitas</span>
         <br>
       </div>
 
@@ -43,7 +43,8 @@
    <div class="input-field col s6">
     <label for="cidadeCliente" class="active">Cidade Cliente</label> 
     <br>
-    <select th:field="*{cidadeCliente}" class="browser-default" required>
+    <select th:field="*{cidadeCliente}" class="browser-default" >
+      <option value=""></option>
     <option th:each="cid: ${cidades}"
 			th:value="${cid.id}" th:text="${cid.nome}" ></option>
      </select> 
@@ -53,7 +54,8 @@
     <div class="input-field col s6">
       <label for="cidadeEvento" class="active">Cidade Evento</label> 
       <br>
-      <select th:field="*{cidadeEvento}" class="browser-default" required>
+      <select th:field="*{cidadeEvento}" class="browser-default" >
+        <option value=""></option>
       <option th:each="cid: ${cidades}"
         th:value="${cid.id}" th:text="${cid.nome}" ></option>
        </select> 
@@ -64,8 +66,10 @@
         <select th:field="*{tipoCliente}" class="browser-default" required >
          <option value="Convidado">Convidado</option>
          <option value="Convidada">Convidada</option>
-         <option value="Formando">Formando</option>
-         <option value="Formanda">Formanda</option>
+         <option value="Formando de Faculdade">Formando de Faculdade</option>
+         <option value="Formando de Ensino Médio">Formando de Ensino Médio</option>
+         <option value="Formanda de Faculdade">Formanda de Faculdade</option>
+         <option value="Formando de Ensino Médio">Formando de Ensino Médio</option>
          <option value="Noivo">Noivo</option>
          <option value="Noiva">Noiva</option>
          <option value="Pajem">Pajem</option>
@@ -74,6 +78,8 @@
          <option value="Mãe de Noiva (o)">Mãe de Noiva (o)</option>
          <option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
          <option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
+         <option value="Mãe de Formanda (o) ">Mãe de Formanda (o) </option>
+         <option value="Mãe de dama ">Mãe de dama </option>
          <option value="Pai de debutante">Pai de debutante </option>
          <option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
          <option value="Debutante">Debutante </option>
@@ -92,6 +98,12 @@
        <option value="Fora do Orçamento">Fora do Orçamento</option>
        <option value="Não encontrou o Produto desejado">Não encontrou o Produto desejado</option>
        <option value="Produto está Locado">Produto está Locado</option>
+       <option value="Analisar">Analisar</option>
+       <option value="Conversar com a Familia">Conversar com a Familia</option>
+       <option value="Ficou em dúvida entre as Peças">Ficou em dúvida entre as Peças</option>
+       <option value="Vai Pensar">Vai Pensar</option>
+       <option value="Vai Provar em outra Loja">Vai Provar em outra Loja</option>
+       <option value="Encontrou">Encontrou</option>
        <option value="Outro">Outro</option>
      </select>
   </div>
@@ -136,6 +148,8 @@
    <option value="Facebook">Facebook</option>
    <option value="Instagram">Instagram</option>
    <option value="Telefone">Telefone</option>
+   <option value="Google Ads">Google Ads</option>
+   <option value="Indicação">Indicação</option>
    <option value="Outros">Outros</option>
  </select>
 </div>
@@ -153,17 +167,27 @@
 </div>
     
 
-<div class="col s6">
+<div class="col s3">
+  <label for="pickdate" class="active">Data Visita</label> 
+  <input type="text" class="datepicker" th:field="*{data_inicial}"  name="data_inicial" required >
+ 
+</div>
+
+<div class="col s3">
   <label for="pickdate" class="active">Data Limite</label> 
   <input type="text" class="datepicker" th:field="*{data_final}"  name="data_final" required >
 </div>
 
-        <div class="input-field col s12">
+  <div class="input-field col s12">
+    <div class="input-field col s11">
       <label for="telefone" class="active">Telefone</label> 
       <input name="telefone" th:field="*{telefone}" id="telefone" class="validate" >
     </div>
-              
-    
+    <div class="input-field col s1">
+      <td><a th:if="*{telefone !=null}"   th:href="*{Whats} " target="_blank"  <i class="material-icons">phone_android</i> </a> </td> 
+    </div>
+    </div>
+            
     <div class="input-field col s6">
       <label for="facebook" class="active">Facebook</label> 
       <input name="facebook" th:field="*{facebook}" id="facebook" class="validate" >
@@ -178,7 +202,7 @@
     
     <div class="row">
       <div class="input-field col s12">
-        <textarea name="atendimento" th:field="*{atendimento}" id="atendimento"  class="materialize-textarea" data-length="120"></textarea>
+        <textarea name="atendimento" th:field="*{atendimento}" id="atendimento"  class="materialize-textarea" data-length="120" required></textarea>
         <label for="textarea2">Atendimento</label>
       </div>
     </div>
@@ -188,9 +212,6 @@
       <label for="id_locacao" class="active">Locacção</label> 
       <input name="id_locacao" th:field="*{id_locacao}" id="id_locacao" class="validate"  >
     </div>
-
-
-
 
         <br>
    
@@ -209,7 +230,6 @@
     input.addEventListener("keyup", formatarCPF);
 
     function formatarCPF(e){
-    
     var v=e.target.value.replace(/\D/g,"");
     v=v.replace(/(\d{3})(\d)/,"$1.$2");
     v=v.replace(/(\d{3})(\d)/,"$1.$2");
