@@ -1,9 +1,13 @@
 package loja.springboot.repository;
-
+import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
 import loja.springboot.model.LocacaoProduto;
 
 @Transactional
@@ -14,8 +18,22 @@ public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, 
 	@Query(value = "Select * from locacao_produto p  where  p.data_liberacao  BETWEEN ?1 AND  ?2 ", nativeQuery = true)
 	List<LocacaoProduto> findLocacaoDatas(String dataInicial, String DataFinal);
 
-	@Query(value = "select locacao_produto.* from locacao_produto, locacao where  locacao_produto.idlocacao = locacao.id AND  locacao.data_retirada BETWEEN ADDDATE(now(), INTERVAL -5 DAY) and ADDDATE(now(), INTERVAL +25 DAY) order by  locacao.data_retirada asc", nativeQuery = true)
-	List<LocacaoProduto> locacoesProdutos();
+	@Query(value = "Select  id as id,  idLocacao as locacao, idProduto as produto, tipoProduto as tipo, cor, tamanho, cliente, status, dataLimite as liberacao FROM vw_datatable_ajustes ", nativeQuery = true)
+	List<listLocacaoProduto> locacoesProdutos();
+	public static interface listLocacaoProduto {
+		Long getId(); 
+		Long getLocacao(); 
+		Long getProduto(); 
+		String getTipo();
+		String getCor();
+		String getTamanho();
+		String getCliente();
+		String getStatus();
+		Date getLiberacao();
+	}
+
+	@Query(value = "Select id as id, idLocacao as locacao, idProduto as produto, tipoProduto as tipo, cor, tamanho, cliente, status, dataLimite as liberacao  from vw_datatable_ajustes a  where a.idLocacao like %:search% ", nativeQuery = true)
+	Page<listLocacaoProduto> findByAjuste(@Param("search") String search, Pageable pageable);
 
 	@Query(value = "select l.* from locacao_produto l  where l.produto_id = ?1 ", nativeQuery = true)
 	List<LocacaoProduto> findProdutoById(Long id);

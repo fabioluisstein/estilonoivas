@@ -1,6 +1,12 @@
 package loja.springboot.controller;
 
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import loja.springboot.model.LocacaoProduto;
 import loja.springboot.repository.LocacaoProdutoRepository;
+import loja.springboot.service.AjusteDataTablesService;
 
 @Controller
 public class AjusteController {
@@ -30,6 +39,21 @@ public class AjusteController {
 		return andView;
 	}
 	 
+
+		@GetMapping("/tabelaAjustes")
+		public String showTabela( ) {
+			return "produto/ajustes-datatables";
+		}
+
+
+		@GetMapping("/serverAjustes")
+		public ResponseEntity<?> datatables(HttpServletRequest request) {
+			Map<String, Object> data = new AjusteDataTablesService().execute(locacaoProdutoRepository, request);
+			return ResponseEntity.ok(data);
+		}
+	 
+
+
 	@PostMapping("/pesquisarprodutoId")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") Long nomepesquisa) {
 		ModelAndView modelAndView = new ModelAndView("produto/ajustes");
@@ -49,7 +73,18 @@ public class AjusteController {
 	} 
 	
 
+	/**
+	 * @param idprodutoLocacao
+	 * @return
+	 */
+	@GetMapping("/liberarProdutoAjax/{idprodutoLocacao}")
+	public ResponseEntity<?> liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
+		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findProdutoLocaoById(idprodutoLocacao).get(0);
+		locacaoProduto.setData_liberacao(new Date());
+		locacaoProdutoRepository.save(locacaoProduto);
+		garbageCollection();
+		return ResponseEntity.ok().build();
+	} 
 
-	
-	
+
 }

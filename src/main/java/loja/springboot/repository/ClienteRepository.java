@@ -30,7 +30,11 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 		String getCidade();
 	}
 
-	@Query(value = "select id, nome, telefone, whats, cpf,  cidade_id,  cidade from vw_datatable_clientes a  where a.nome like %:search%  ", nativeQuery = true)
+
+	@Query( value = "select * from vw_datatable_clientes  a  where a.id= ?1", nativeQuery = true)
+	listTodosClientes findClienteID(Long id);
+
+	@Query(value = "select id, nome, telefone, whats, cpf,  cidade_id,  cidade from vw_datatable_clientes a  where a.nome like %:search%  or  a.id like %:search% or cpf  like %:search% or  cidade  like %:search%  or telefone  like %:search%", nativeQuery = true)
 
 	Page<listTodosClientes> findByTituloOrSiteOrCategoria(@Param("search") String search, Pageable pageable);
 

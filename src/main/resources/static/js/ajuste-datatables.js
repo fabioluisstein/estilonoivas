@@ -6,29 +6,56 @@ $(document).ready(function(){
 		responsive: true,
 		scrollY:true,
 		lengthMenu: [ 10, 15, 20, 50 ],
+		"order": [6, "asc"],
+		language: {
+			"emptyTable": "Nenhum registro encontrado",
+			"info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+			"infoFiltered": "(Filtrados de _MAX_ registros)",
+			"infoThousands": ".",
+			"loadingRecords": "Carregando...",
+			"zeroRecords": "Nenhum registro encontrado",
+			"search": "Pesquisar",
+			"lengthMenu": " Mostrar  _MENU_ por página",
+			"zeroRecords": "Sem resultados",
+			"info": "Página _PAGE_ de _PAGES_",
+			"paginate": {
+				"next": "Próximo",
+				"previous": "Anterior",
+				"first": "Primeiro",
+				"last": "Último"
+			},
+			"aria": {
+				"sortAscending": ": Ordenar colunas de forma ascendente",
+				"sortDescending": ": Ordenar colunas de forma descendente"
+			}
+			
+		},
 		ajax: {
-			url: "/promocao/datatables/server",
+			url: "/serverAjustes",
 			data: "data"
 		},
 		columns: [
-	
 			{data: 'id'},
-			{data: 'nome'},
-			{data: 'telefone'},
-			{
-				data: 'telefone',
-				   render: function (data, type) {
-							   link = 'https://wa.me/55';
-						   return '<a href="' + link + '">' + data + '</a>';   
-				   }
-				   },
-			{data: 'cpf'},
-		{data: 'cidade'}
+			{data: 'locacao'},
+			{data: 'produto'},
+			{data: 'tipo'},
+			{data: 'cor'},
+		    {data: 'tamanho'},
+			{data: 'cliente'},
+			{data: 'status'} ,
+			{data: 'liberacao', render: 
+			function(dtCadastro) {
+				return moment( dtCadastro ).format('L'); 
+			},
+
+			
+	}
+		
 	],
 	dom: 'Bfrtip',
 	buttons: [
 		{
-			text: 'Editar',
+			text: 'Detalhes',
 			attr: {
 				id: 'btn-editar',
 				type: 'button'					
@@ -36,7 +63,7 @@ $(document).ready(function(){
 			enabled: false
 		},
 		{
-			text: 'Excluir',
+			text: 'Baixar',
 			attr: {
 				id: 'btn-excluir',
 				type: 'button'
@@ -141,7 +168,7 @@ $(document).ready(function(){
 	// acao do botao de excluir (abrir modal)
 	$("#btn-excluir").on('click', function() {
 		if ( isSelectedRow() ) {
-			$("#modal-delete").modal('show');
+			$("#modal-baixar").modal('show');
 		}
 	});
 	
@@ -150,9 +177,9 @@ $(document).ready(function(){
 		var id = getPromoId();
 		$.ajax({
 			method: "GET",
-			url: "/promocao/delete/" + id,
+			url: "/liberarProdutoAjax/" + id,
 			success: function() {
-				$("#modal-delete").modal('hide');
+				$("#modal-baixar").modal('hide');
 				table.buttons().disable();
 				table.ajax.reload();
 			},

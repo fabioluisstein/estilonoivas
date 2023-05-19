@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+	<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+	      <nav class="navbar navbar-light" >
+            <div class="container-fluid"  style="max-width:100%" >
+              <a class="navbar-brand">Ajustes</a>
+              <form class="d-flex">
+				<a  href="/cadastrocliente"  class="btn btn-primary">Adicionar</a>
+              </form>
+            </div>
+          </nav>	
+		</div>
+	<div class="corpo" layout:fragment="corpo" >
+	
+		<table id="table-server" class="table-striped" >
+		  <thead class="thead-dark">
+		    <tr>
+			 <th scope="col">Id Controle</th>
+		      <th scope="col">Código Locação</th>
+		      <th scope="col">Código Produto</th>
+		      <th scope="col">Tipo Produto</th>
+			  <th scope="col">Cor</th>
+			  <th scope="col">Tamanho</th>
+		      <th scope="col">Cliente</th>
+		      <th scope="col">Status</th>
+			  <th scope="col">Data Limite</th>
+
+		    </tr>
+		  </thead>
+		</table>
+		<div th:replace="produto/ajustes-datatables-modal :: modal-form"></div>	
+		<div th:replace="produto/ajustes-datatables-modal-baixar :: modal-baixar"></div>	
+	</div>
+	<script th:src="@{/js/ajuste-datatables.js}" th:fragment="js"></script>
+</body>
+</html>

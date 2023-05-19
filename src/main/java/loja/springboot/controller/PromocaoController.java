@@ -3,10 +3,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +21,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import loja.springboot.model.Categorias;
+import loja.springboot.model.Cliente;
 import loja.springboot.model.Promocao;
 import loja.springboot.repository.CategoriasRepository;
 import loja.springboot.repository.ClienteRepository;
+import loja.springboot.repository.ClienteRepository.listTodosClientes;
 import loja.springboot.repository.ProdutoRepository;
 import loja.springboot.repository.PromocaoRepository;
 import loja.springboot.service.ClienteDataTablesService;
@@ -58,8 +57,6 @@ public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
 	int likes = promocaoRepository.findLikesById(id);
 	return ResponseEntity.ok(likes);
 }
-
-
 
 	// ======================================AUTOCOMPLETE===============================================
 	
@@ -98,6 +95,42 @@ public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
 
 
 
+	@GetMapping("/delete/{id}")
+	public ResponseEntity<?> excluirPromocao(@PathVariable("id") Long id) {
+		clienteRepository.deleteById(id);
+		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<?> preEditarPromocao(@PathVariable("id") Long id) {
+		listTodosClientes cliente = clienteRepository.findClienteID(id);
+		return ResponseEntity.ok(cliente);
+	}
+
+
+
+	@PostMapping("/edit")
+	public ResponseEntity<?> editarPromocao(@Valid listTodosClientes dto, BindingResult result) {
+		log.info(dto.toString());
+		if (result.hasErrors()) {			
+			Map<String, String> errors = new HashMap<>();
+			for (FieldError error : result.getFieldErrors()) {
+				errors.put(error.getField(), error.getDefaultMessage());
+			}			
+			return ResponseEntity.unprocessableEntity().body(errors);
+		}
+		
+		Cliente cliente = clienteRepository.findById(dto.getId()).get();
+		cliente.setNome(dto.getNome());
+		
+		clienteRepository.save(cliente);
+		
+		return ResponseEntity.ok().build();
+	}
+
+
+
+
 	@GetMapping("/list")
 	public String listarOfertas(ModelMap model) {
 
@@ -116,7 +149,6 @@ public ResponseEntity<?> adicionarLikes(@PathVariable("id") Long id) {
 		model.addAttribute("promocoes", produtoRepository.findAll(pageRequest));		
 		return "promo-card";
 	}	
-
 
 	@GetMapping("/tabela")
 	public String showTabela( ) {
