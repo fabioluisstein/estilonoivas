@@ -64,7 +64,7 @@ public class Produto implements Serializable {
 
 	
 	@Column(name = "total_likes", nullable = true)
-	private int likes;
+	private Integer likes;
 
 	public List<LocacaoProduto> getProdutosLocacoes() {
 		return produtosLocacoes;
@@ -86,7 +86,7 @@ public class Produto implements Serializable {
 		return nomeArquivo;
 	}
 
-	public int getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 

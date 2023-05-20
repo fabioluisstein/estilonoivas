@@ -20,32 +20,68 @@
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarsExample08" aria-controls="navbarsExample08"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <a class="navbar-brand" href="#">Sistema</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" th:href="@{/listalocacoes}">Locação</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/promocao/add}">Adicionar Promoção</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/promocao/list}">Promoções</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/promocao/tabela}">Clientes</a></li>
-            </ul>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/listalocacoes">Locação <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Pagamento
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/listapagamentos">Pagamento</a>
+          <a class="dropdown-item" href="/listaParcelas">Parcela Locação</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/listacontasBancarias">Conta Bancária</a>
         </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Produto
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+          <a class="dropdown-item" href="/listaprodutos">Produto</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/tabelaAjustes">Controle de Ajuste</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cliente/Fornecedor
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+          <a class="dropdown-item" href="/listaclientes">Cliente</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/listafornecedores">Fornecedor</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Localização
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
+          <a class="dropdown-item" href="/listaestados">Estados</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/listacidades">Cidades</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
 
-               
-			
-    </nav>
+  </div>
+</nav>
 </header>
-
 <br>
-
-
-<div class="card" style="background-color: #b6b9bb; margin:auto; padding:auto; max-width: 98%; border-radius: 10px/20px;" >
+<div class="card" style="background-color: #b6b9bb; margin:auto; padding:auto; max-width: 98%;" >
     <div layout:fragment="barraPrincipal">
-  
 </div>
 </div>
 
@@ -63,7 +99,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.js"></script>
 
 <!-- 	MEUS JS -->

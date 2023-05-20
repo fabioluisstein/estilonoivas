@@ -5,8 +5,8 @@ $(document).ready(function(){
 		serverSide: true,
 		responsive: true,
 		scrollY:true,
-		lengthMenu: [ 10, 15, 20, 50 ],
-		"order": [6, "asc"],
+		lengthMenu: [ 15, 40, 60, -1 ],
+		"order": [8, "asc"],
 		language: {
 			"emptyTable": "Nenhum registro encontrado",
 			"info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -43,14 +43,30 @@ $(document).ready(function(){
 		    {data: 'tamanho'},
 			{data: 'cliente'},
 			{data: 'status'} ,
+
+
+
 			{data: 'liberacao', render: 
 			function(dtCadastro) {
 				return moment( dtCadastro ).format('L'); 
-			},
-
-			
-	}
+			},	
+	},
+	{
+		data: 'dias',
 		
+		render: function (data, type, row, meta) {
+			return type === 'display'
+				? '<progress value="' + 1 + '" max="'+data+'"></progress>'
+				: data;
+		}
+	},
+
+	{ data: 'foto' ,
+	render: function ( data) {
+	return '<img src="data:image/jpeg;base64,'+data+'" width="40px">';
+}
+	}
+	
 	],
 	dom: 'Bfrtip',
 	buttons: [
@@ -73,6 +89,10 @@ $(document).ready(function(){
 	]
 });
 	
+
+
+
+
 	// acao para marcar/desmarcar botoes ao clicar na ordenacao 
 	$("#table-server thead").on('click', 'tr', function() {		
 		table.buttons().disable();
@@ -97,7 +117,8 @@ $(document).ready(function(){
 			var id = getPromoId();
 			$.ajax({
 				method: "GET",
-				url: "/promocao/edit/" + id,
+				url: "/editarmodalajuste/" + id,
+			
 				beforeSend: function() {
 					// removendo as mensagens
 					$("span").closest('.error-span').remove();				
@@ -107,9 +128,21 @@ $(document).ready(function(){
 					$("#modal-form").modal('show');
 				},
 				success: function( data ) {
-					$("#edt_id").val(data.id);
-					$("#edt_nome").text(data.nome);
-				
+				 	$("#edt_id").val(data.id);
+					$("#edt_idLocacao").val(data.locacao);
+					$("#edt_cliente").val(data.cliente);
+					$("#edt_produto").val(data.produto);
+					$("#edt_tipo").val(data.tipo);
+					$("#edt_cor").val(data.cor);
+					$("#edt_tamanho").val(data.tamanho);
+					$("#edt_ajuste").val(data.ajuste);
+					$("#edt_foto").val('<img src="data:image/jpeg;base64,'+data.foto+'" width="40px">');
+					$("#edt_cidade").val(data.cidade);
+					$("#edt_telefone").val(data.telefone);
+					$("#edt_atendente").val(data.atendente);
+
+					
+						
 				},
 				error: function() {
 					alert("Ops... algum erro ocorreu, tente novamente.");
@@ -121,17 +154,12 @@ $(document).ready(function(){
 	// submit do formulario para editar
 	$("#btn-edit-modal").on("click", function() {
 		var promo = {};
-		promo.descricao = $("#edt_descricao").val();
-		promo.preco = $("#edt_preco").val();
-		promo.titulo = $("#edt_titulo").val();
-		promo.categoria = $("#edt_categoria").val();
-		promo.linkImagem = $("#edt_linkImagem").val();
-		promo.nome = $("#edt_nome").val();
+		promo.ajuste = $("#edt_ajuste").val();
 		promo.id = $("#edt_id").val();
 		
 		$.ajax({
 			method: "POST",
-			url: "/promocao/edit",
+			url: "/editarmodalajuste",
 			data: promo,
 			beforeSend: function() {
 				// removendo as mensagens

@@ -1,13 +1,17 @@
 package loja.springboot.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.repository.LocacaoProdutoRepository;
+import loja.springboot.repository.LocacaoProdutoRepository.listLocacaoProduto;
 import loja.springboot.service.AjusteDataTablesService;
 
 @Controller
@@ -52,6 +57,36 @@ public class AjusteController {
 			return ResponseEntity.ok(data);
 		}
 	 
+		@GetMapping("/editarmodalajuste/{id}")
+		public ResponseEntity<?> preEditarAjuste(@PathVariable("id") Long id) {
+			listLocacaoProduto  ajuste = locacaoProdutoRepository.findAjusteById(id);	
+		
+		//	generateBase64Image()
+
+			return ResponseEntity.ok(ajuste); 
+		}
+	
+
+
+		@PostMapping("/editarmodalajuste")
+		public ResponseEntity<?> editarPromocao(@Valid listLocacaoProduto dto, BindingResult result) {
+	
+			if (result.hasErrors()) {			
+				Map<String, String> errors = new HashMap<>();
+				for (FieldError error : result.getFieldErrors()) {
+					errors.put(error.getField(), error.getDefaultMessage());
+				}			
+				return ResponseEntity.unprocessableEntity().body(errors);
+			}
+			
+			LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(dto.getId()).get();
+			locacaoProduto.setObservacao(dto.getAjuste());
+			
+			locacaoProdutoRepository.save(locacaoProduto);
+			
+			return ResponseEntity.ok().build();
+		}
+	
 
 
 	@PostMapping("/pesquisarprodutoId")
