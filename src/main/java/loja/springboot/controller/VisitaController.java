@@ -21,9 +21,6 @@ public class VisitaController {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
-	private ModelAndView andViewLista = new ModelAndView("visita/lista");
-	private ModelAndView andViewCadastro = new ModelAndView("visita/cadastrovisita");
- 
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
@@ -31,6 +28,7 @@ public class VisitaController {
   
 	@RequestMapping(method = RequestMethod.GET, value = "/listavisitas")
 	public ModelAndView visitas() {
+		ModelAndView andViewLista = new ModelAndView("visita/lista");
 		andViewLista.addObject("visitas", visitaRepository.listaTodos());
 		garbageCollection();
 		return andViewLista; 
@@ -50,20 +48,22 @@ public class VisitaController {
 	@CacheEvict(value = { "listVisitas"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarvisita")
 	public ModelAndView salvar(Visita visita) {
-		andViewCadastro.addObject("visitabj",visitaRepository.save(visita));
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		ModelAndView andViewCad = new ModelAndView("visita/cadastrovisita");
+		andViewCad.addObject("visitabj",visitaRepository.save(visita));
+		andViewCad.addObject("cidades", cidadeRepository.findAll()); 
 		garbageCollection();
-		return andViewCadastro;
+		return andViewCad;
 	}
 
 	
 
 	@GetMapping("/editarvisita/{idvisita}")
 	public ModelAndView editar(@PathVariable("idvisita") Visita visita) {
-		andViewCadastro.addObject("visitabj",visita);
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		ModelAndView andViewCad = new ModelAndView("visita/cadastrovisita");
+		andViewCad.addObject("visitabj",visita);
+		andViewCad.addObject("cidades", cidadeRepository.findAll()); 
 		garbageCollection();
-		return andViewCadastro;
+		return andViewCad;
 	}
 
 
@@ -78,54 +78,5 @@ public class VisitaController {
 	  }
 
 
-	
-
-
-
-/*
-	@GetMapping("/listaClienteCidade/{idcidade}")
-	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
-		andViewLista.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
-		garbageCollection();
-		return andViewLista;
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "cadastrocliente")
-	public ModelAndView cadastro(Cliente cliente) {
-		andViewCadastro.addObject("clientebj", new Cliente());
-		andViewCadastro.addObject("cidades", cidadeRepository.cidadeDtoRelac());
-		garbageCollection();
-		return andViewCadastro;
-	}
-	
-	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
-	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
-	public ModelAndView salvar(Cliente cliente) {
-		andViewCadastro.addObject("clientebj",clienteRepository.save(cliente));
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		garbageCollection();
-		return andViewCadastro;
-	}
-	
-	@GetMapping("/editarcliente/{idcliente}")
-	public ModelAndView editar(@PathVariable("idcliente") Cliente cliente) {
-		andViewCadastro.addObject("clientebj",cliente);
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		garbageCollection();
-		return andViewCadastro;
-	}
-
-
-	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
-	@GetMapping("/removercliente/{idcliente}")
-	public String excluir(@PathVariable("idcliente") Long idcliente) {
-		try {
-			clienteRepository.deleteById(idcliente);	
-		  } catch (Exception e) {
-		}
-		return "redirect:/listaclientes";
-	  }
-
-	   */
 
 } 

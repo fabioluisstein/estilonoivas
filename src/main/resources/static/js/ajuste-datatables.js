@@ -140,9 +140,14 @@ $(document).ready(function(){
 					$("#edt_cidade").val(data.cidade);
 					$("#edt_telefone").val(data.telefone);
 					$("#edt_atendente").val(data.atendente);
-
-					
-						
+					$("#edt_outros").val(data.outros);
+					var image = $("<img>", {
+					"src": "data:image/png;base64," + data.foto,
+					"width": "350px",
+					"height": "350px"
+					});
+					var row = $('<tr></tr>').append('<td></td>').html(image);
+					$("#edt_foto").html(row);
 				},
 				error: function() {
 					alert("Ops... algum erro ocorreu, tente novamente.");
