@@ -3,7 +3,7 @@
 <head th:fragment="html_head">
 
 
-  <title th:text="${empresa}"> </title> 
+<title th:text="${empresa}"> </title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -23,15 +23,14 @@
             <div class="nav-wrapper grey darken-2">
                 <!-- Logo -->
                 <a href="/administrativo" class="brand-logo" th:text="${empresa}"></a>
-         
-                <!-- Ícone para abrir no Mobile -->
+     
+            <!-- Ícone para abrir no Mobile -->
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
                 <ul id="navbar-items" class="right hide-on-med-and-down">
-                 
+                    <li><a href="/administrativo">Início</a></li>  
                     <li><a href="/listalocacoes">Locação</a></li>  
-                 
                     <li>
                         <a class="dropdown-trigger" data-target="dropdown-menu5" href="#">
                             Pagamento/Produto <i class="material-icons right">arrow_drop_down</i>
