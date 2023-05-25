@@ -3,7 +3,7 @@
 <head th:fragment="html_head">
 
 
-  <title>Estilo Noiva</title> 
+  <title th:text="${empresa}"> </title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -22,7 +22,8 @@
         <nav>
             <div class="nav-wrapper grey darken-2">
                 <!-- Logo -->
-                <a href="/administrativo" class="brand-logo">Estilo Noiva</a>
+                <a href="/administrativo" class="brand-logo" th:text="${empresa}"></a>
+         
                 <!-- Ícone para abrir no Mobile -->
                 <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
@@ -155,12 +156,10 @@
     </div>
     <div class="footer-copyright">
       <div class="container">
-      Estilo Noiva <a class="brown-text text-lighten-3" href="/">Loja</a>
+        <a href="/administrativo" class="brown-text text-lighten-3" th:text="${empresa}"></a>
       </div>
     </div>
   </footer>
-
-
 
  <!--  Scripts-->
  <script type="text/javascript"  src="/materialize/js/jquery.min.js"></script>

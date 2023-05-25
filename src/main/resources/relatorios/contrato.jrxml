@@ -446,7 +446,7 @@ group by locacao.id,
 				<text><![CDATA[Detalhes Locação]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="40" y="80" width="100" height="18" uuid="8d35be59-d0bc-4018-a238-a30490e8dde5"/>
+				<reportElement x="40" y="80" width="142" height="18" uuid="8d35be59-d0bc-4018-a238-a30490e8dde5"/>
 				<textFieldExpression><![CDATA[$F{cnpj_empresa}]]></textFieldExpression>
 			</textField>
 			<textField>

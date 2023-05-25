@@ -202,7 +202,7 @@
     
     <div class="row">
       <div class="input-field col s12">
-        <textarea name="atendimento" th:field="*{atendimento}" id="atendimento"  class="materialize-textarea" data-length="120" required></textarea>
+        <textarea name="atendimento" th:field="*{atendimento}" id="atendimento"  class="materialize-textarea" maxlength="12999" required></textarea>
         <label for="textarea2">Atendimento</label>
       </div>
     </div>
@@ -210,7 +210,7 @@
 
     <div class="input-field col s12">
       <label for="id_locacao" class="active">Locacção</label> 
-      <input name="id_locacao" th:field="*{id_locacao}" id="id_locacao" class="validate"  >
+      <input type="number"  name="id_locacao" th:field="*{id_locacao}" id="id_locacao" class="validate"  >
     </div>
 
         <br>
