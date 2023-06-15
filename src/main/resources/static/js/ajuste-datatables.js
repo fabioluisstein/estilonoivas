@@ -230,9 +230,33 @@ $(document).ready(function(){
 		var trow = table.row(table.$('tr.selected'));
 		return trow.data() !== undefined;
 	}
-	
-	
-	
-	
-	
 });
+
+
+
+// SSE
+window.onload = init();
+var totalOfertas = new Number(0);
+function init() {
+
+	const evtSource = new EventSource("/promocao/notificacao");
+	
+	evtSource.onopen = (event) => {
+	//  console.log("The connection has been established.");
+	};
+	
+	evtSource.onmessage = (event) => { 
+	  	const count = event.data;
+	  	if (count > 0) showButton(count); 
+	};
+}
+
+function showButton(count) {
+	totalOfertas = totalOfertas + new Number(count);
+	$("#btn-alert1").show(function () {
+    	$(this)
+        	.attr("style", "display: block;")
+        	.text("Veja " + totalOfertas + " novo(s) Produtos(s)!");
+    });	
+}
+

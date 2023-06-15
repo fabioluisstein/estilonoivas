@@ -1,12 +1,17 @@
 package loja.springboot.model;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Cacheable
@@ -54,6 +59,21 @@ public class Pessoa implements Serializable {
 		this.cpf = cpf;
 	}
 	
+	public String obterUsuarioLogado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            
+            if (principal instanceof UserDetails) {
+                return ((UserDetails) principal).getUsername();
+            } else {
+                return principal.toString();
+            }
+        }
+        
+        return "Nenhum usuário logado";
+    }
 	
 	
 }

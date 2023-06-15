@@ -1,6 +1,8 @@
 package loja.springboot.repository;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
 import loja.springboot.model.Produto;
 import loja.springboot.model.Promocao;
 
@@ -36,6 +39,11 @@ public interface PromocaoRepository extends JpaRepository<Promocao, Long> {
     @Query(value = "Select id,  campoPesquisa from vw_pesquisa_produto where campoPesquisa like  %:site% ", nativeQuery = true)
 	List<String> findSitesByTermo(@Param("site") String site);
 
- 
+	@Query( "select MAX(p.data_hora) from LocacaoProduto p")
+	LocalDateTime findPromocaoComUltimaData();
+
+	@Query("select count(p.id) as count, max(p.data_hora) as lastDate from LocacaoProduto p  where  p.data_hora > :ultimaData")
+
+	Map<String, Object> countAndMaxNovasPromocoesByDtCadastro(LocalDateTime ultimaData);
 
 }

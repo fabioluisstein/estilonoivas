@@ -11,7 +11,13 @@
 				<a  class="text-black">Controle de Ajustes</a>
 			  </div>
 			</nav>	
+			<nav class="navbar navbar-dark" >
+				<div class="container-fluid"  style="max-width:100%" >
+				  <a id="btn-alert1" class="btn btn-warning btn-lg btn-block hidden"	style="display: none;" href="/tabelaAjustes" role="button">Link</a>
+				</div>
+			  </nav>	
 		</div>
+
 		<div class="card-body">
 			<div class="corpo" layout:fragment="corpo" >
 				<table id="table-server" class="table table-striped" >
@@ -31,6 +37,7 @@
 					</tr>
 				  </thead>
 				</table>
+
 				<div th:replace="produto/ajustes-datatables-modal :: modal-form"></div>	
 				<div th:replace="produto/ajustes-datatables-modal-baixar :: modal-baixar"></div>	
 				<br>

@@ -29,9 +29,11 @@ public class WebConfigSecurity{
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-        .withUser("fibonatti").password("{noop}123").roles("ADMIN")
+        .withUser("adm").password("{noop}admin1050").roles("ADMIN")
         .and()
-        .withUser("estilo").password("{noop}estilo321").roles("ADMIN");
+        .withUser("fibonatti").password("{noop}fb1050").roles("ADMIN")
+        .and()
+        .withUser("estilo").password("{noop}Decantador@01").roles("ADMIN");
     }
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() throws Exception {

@@ -2,7 +2,9 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.Pagamento;
+import loja.springboot.model.Pessoa;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.PagamentoRepository;
@@ -37,7 +40,13 @@ public class PagamentoController {
 	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
-		andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
+		Pessoa p = new Pessoa();
+        if( p.obterUsuarioLogado().equalsIgnoreCase("adm") ){
+			andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
+		} 
+		else{ 
+			andView.addObject("pagamentos", pagamentoRepository.saidasTodosGerais()); 
+	}
 		garbageCollection();
 		return andView;
 	} 
@@ -68,7 +77,7 @@ public class PagamentoController {
 		return modelAndView;
 	}
 
-	@CacheEvict(value = { "saidas", "pagamentosTodos" }, allEntries = true)
+	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarpagamento", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
@@ -145,7 +154,7 @@ public class PagamentoController {
 		return andView;
 	}
 
-	@CacheEvict(value = { "saidas", "pagamentosTodos" }, allEntries = true)
+	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/removerpagamento/{idpagamento}")
 	public String excluir(@PathVariable("idpagamento") Long idpagamento) {
 		try {

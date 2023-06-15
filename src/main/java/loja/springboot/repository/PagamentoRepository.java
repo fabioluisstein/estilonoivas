@@ -33,6 +33,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	}
 
 
-
+	@Cacheable("saidasRestrito") 
+	@Query(value = "select id, tipo, data, fornecedor, moeda,  origem,  valor, anexo from vw_pagamentos a  where restrito ='Nao' order by id desc limit 60 ", nativeQuery = true)
+	List<listSaidas> saidasTodosGerais();
 
 }

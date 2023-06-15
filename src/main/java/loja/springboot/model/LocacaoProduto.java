@@ -1,8 +1,10 @@
 package loja.springboot.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -39,6 +44,10 @@ public class LocacaoProduto implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date data_liberacao;
 	
+	@CreationTimestamp	
+	@Column(name = "data_hora", nullable = true)
+	private LocalDateTime data_hora;
+	
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JsonIgnore
     @JoinColumn(name = "produto_id")
@@ -58,7 +67,15 @@ public class LocacaoProduto implements Serializable {
 	private byte[] arquivo;
 	
 
-    public LocacaoProduto (){
+    public LocalDateTime getData_hora() {
+		return data_hora;
+	}
+
+	public void setData_hora(LocalDateTime data_hora) {
+		this.data_hora = data_hora;
+	}
+
+	public LocacaoProduto (){
 
 	}
 
