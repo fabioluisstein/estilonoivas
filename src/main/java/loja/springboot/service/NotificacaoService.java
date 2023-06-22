@@ -27,7 +27,7 @@ public class NotificacaoService {
 		emissor.getEmitter().send(SseEmitter.event().data(" ").id(emissor.getId()));
 	}
 
-	@Scheduled(fixedRate = 360000)
+	@Scheduled(fixedRate = 36000)
 	public void notificar() {
 		List<Emissor> emissoresErrors = new ArrayList<>();
 		this.emissores.forEach(emissor -> {

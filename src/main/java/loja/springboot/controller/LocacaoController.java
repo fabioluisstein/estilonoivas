@@ -240,7 +240,7 @@ public class LocacaoController {
 		return andView;
 	}
 	
-	@GetMapping("/iniciaLocao/{idlocacao}")
+	@GetMapping("/inicialocao/{idlocacao}")
 	public ModelAndView iniciaLocao(@PathVariable("idlocacao") Locacao locacao)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
 		Parcela parcela = new Parcela( locacao);
@@ -264,7 +264,7 @@ public class LocacaoController {
 		
 	@GetMapping("/editarlocacao/{idlocacao}")
 	public String editar(@PathVariable("idlocacao") Long idlocacao)  {
-	    return "redirect:/iniciaLocao/"+idlocacao.toString()+"";
+	    return "redirect:/inicialocao/"+idlocacao.toString()+"";
 	}
 	
 

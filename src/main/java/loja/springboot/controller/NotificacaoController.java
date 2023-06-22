@@ -14,6 +14,12 @@ import loja.springboot.service.NotificacaoService;
 @Controller
 public class NotificacaoController {
 	
+
+	public void garbageCollection() {
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	}
+
 	@Autowired
 	private PromocaoRepository repository;
 	@Autowired
@@ -21,21 +27,26 @@ public class NotificacaoController {
 
 	@GetMapping("/promocao/notificacao")
 	public SseEmitter enviarNotificacao() throws IOException {
+
+		  if( service.getEmissores().size() < 9){
+			SseEmitter emitter = new SseEmitter(100000L);
+			Emissor emissor = new Emissor(emitter, getDtCadastroUltimaPromocao());
+			service.onOpen(emissor);
+			service.addEmissor(emissor);
+			System.out.println("> size after add: " + service.getEmissores().size());
+			garbageCollection();
+			emissor.getEmitter().onCompletion(() -> service.removeEmissor(emissor));
+			emitter.onTimeout(() -> service.removeEmissor(emissor));
+
 		
-		SseEmitter emitter = new SseEmitter(0L);
-		
-		Emissor emissor = new Emissor(emitter, getDtCadastroUltimaPromocao());
-		service.onOpen(emissor);
-		service.addEmissor(emissor);
-		
-		emissor.getEmitter().onCompletion(() -> service.removeEmissor(emissor));
-		
-		System.out.println("> size after add: " + service.getEmissores().size());
-		
-		return emissor.getEmitter();
+			return emissor.getEmitter();
+		}
+	
+	return  new SseEmitter(0L);
 	}
 	
 	private LocalDateTime getDtCadastroUltimaPromocao() {
+			garbageCollection();
 		return repository.findPromocaoComUltimaData();
 	}
 }
