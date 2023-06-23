@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="card">
+		<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+			<nav class="navbar navbar-dark" >
+			  <div class="container-fluid"  style="max-width:100%" >
+				<a  class="text-black">Painel Gerencial</a>
+			  </div>
+			</nav>	
+			<nav class="navbar navbar-dark" >
+				<div class="container-fluid"  style="max-width:100%" >
+		
+				</div>
+			  </nav>	
+		</div>
+
+		<div class="card-body">
+			<div class="corpo" layout:fragment="corpo" >
+				<div>
+					<canvas id="myChart2"></canvas>
+				  </div>
+				  
+				  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				  
+				  <script>
+					const ctx = document.getElementById('myChart2');
+				  
+					new Chart(ctx, {
+					  type: 'bar',
+					  data: {
+						labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+						datasets: [{
+						  label: '# of Votes',
+						  data: [12, 19, 3, 5, 2, 3],
+						  borderWidth: 1
+						}]
+					  },
+					  options: {
+						scales: {
+						  y: {
+							beginAtZero: true
+						  }
+						}
+					  }
+					});
+				  </script>
+				<div class="row">
+					<div class="col s12 center">
+					   <canvas id="myChart" width="150" height="60%"></canvas>
+					</div>
+				  </div>
+				  
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<div th:replace="fragments :: footer"/>
+				<br>
+			</div>
+			<script  th:fragment="js"></script>
+		</div>
+
+
+
+	
+
+
+
+	  </div>
+
+	  
+</body>
+</html>

@@ -29,5 +29,12 @@ public class IndexController {
 		Runtime.getRuntime().freeMemory();
 		return andView;
 	} 
+
+	@RequestMapping("/administrativo2")
+	public String indexSistma2() {
+		return "principal2";
+	} 
+	  
 	
 }
+ 

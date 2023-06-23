@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exemplo de gráfico com Spring Boot</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart1" width="400" height="200"></canvas>
+    <canvas id="myChart" width="400" height="400"></canvas>
+   
+
+    <script th:inline="javascript">
+        /* Dados do gráfico */
+        var labels = /*[[${labels}]]*/ [];
+        var data = /*[[${data}]]*/ [];
+
+        /* Configuração do gráfico */
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Exemplo de gráfico de barras',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: { 
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+<script th:inline="javascript">
+    /* Dados do gráfico */
+    var labels = /*[[${labels}]]*/ [];
+    var data = /*[[${data}]]*/ [];
+    var titulo = /*[[${titulo}]]*/ [];
+
+    /* Configuração do gráfico */
+    var ctx = document.getElementById('myChart1').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: titulo,
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

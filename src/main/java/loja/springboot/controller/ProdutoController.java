@@ -57,7 +57,7 @@ public class ProdutoController {
 			quantidadeVisitas = 0;
 		}
 
-		produtoAcesso.setQuantidade_acesso(quantidadeVisitas + 1);
+		produtoAcesso.setQuantidade_acesso(quantidadeVisitas + 1); 
 		produtoRepository.save(produtoAcesso);
 		garbageCollection();
 	}
