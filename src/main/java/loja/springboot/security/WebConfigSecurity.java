@@ -38,6 +38,7 @@ public class WebConfigSecurity{
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         return (web) -> {
+            web.ignoring().antMatchers("/novo/**");
             web.ignoring().antMatchers("/materialize/**");
             web.ignoring().antMatchers("/consultaprodutos/**");
             web.ignoring().antMatchers("/pesquisaprodutocustom/**");

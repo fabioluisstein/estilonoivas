@@ -38,7 +38,7 @@ public class AjusteController {
 		andView.addObject("produtosContrato", locacaoProdutoRepository.locacoesProdutos()); 
 		garbageCollection();
 		return andView;
-	}
+	} 
 	 
 
 		@GetMapping("/tabelaAjustes")

@@ -23,5 +23,15 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
         } 
 
 
+		@Query(value = " Select empresa,liquido,cliente,ticket,valuation from painel_indicador_principal", nativeQuery = true)
+		List<listGraficoPrincipal> graficoPrincipal();
+			public static interface listGraficoPrincipal {
+				String getEmpresa(); 
+				String getLiquido(); 
+				String getCliente(); 
+				String getTicket(); 
+				String getValuation(); 
+			} 
+	
 }
  
