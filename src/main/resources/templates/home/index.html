@@ -501,7 +501,7 @@
                   <!-- /.col -->
                   <div class="col-sm-3 col-6">
                     <div class="description-block border-right">
-                      <h4 class="description-percentage text-warning" th:text="${oportunidade}">2</h4>
+                      <h4 class="description-percentage text-warning" th:text="${oportunidade}"></h4>
                       <h5 class="description-header"> Oportunidades</h5>
                     </div>
                     <!-- /.description-block -->
@@ -616,7 +616,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Locações Hoje</span>
-                <span class="info-box-number">5,200</span>
+                <span class="info-box-number" th:text="${locadoHoje}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -626,7 +626,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Locações Futuras</span>
-                <span class="info-box-number">92,050</span>
+                <span class="info-box-number" th:text="${locacaoFutura}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -636,7 +636,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Horas Ajuste Mês</span>
-                <span class="info-box-number">114,381</span>
+                <span class="info-box-text" th:text="${tempo}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -646,7 +646,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Retiradas/Prova</span>
-                <span class="info-box-number">163,921</span>
+                <span class="info-box-number" th:text="${prova}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>

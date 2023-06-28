@@ -29,6 +29,9 @@ public class Categoria implements Serializable {
 	@OneToMany(mappedBy = "categoria")
     private List<Produto> produto;
 
+	@OneToMany(mappedBy = "tipoProduto")
+    private List<TempoOperacao> tempos;
+
 	@OneToMany(mappedBy = "categoria")
     private List<Pagamento> pagamento;	
 

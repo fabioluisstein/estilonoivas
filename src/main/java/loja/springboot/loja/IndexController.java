@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.Empresa;
 import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
+import loja.springboot.repository.GraficoRepository.listGraficoCard;
 import loja.springboot.repository.GraficoRepository.listGraficoMes;
 import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
 import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
@@ -54,6 +55,16 @@ public class IndexController {
 		andView.addObject("valuation", grafico.get(0).getValuation());
 		andView.addObject("tabelaOrigemClientes", 		tabelaOrigemCliente());
       
+
+
+		List<listGraficoCard> graficoCard = graficoRepository.graficoCard();
+
+		andView.addObject("locacaoFutura", graficoCard.get(0).getLocacaoFutura());
+		andView.addObject("locadoHoje", graficoCard.get(0).getLocadoHoje());
+		andView.addObject("tempo", graficoCard.get(0).getTempo());
+		andView.addObject("prova", graficoCard.get(0).getProva());
+
+
 		ArrayList<String> labels = new ArrayList<String>(); 
         ArrayList<Double> data = new ArrayList<Double>(); 
         String titulo = "Entradas/Saidas Mes";

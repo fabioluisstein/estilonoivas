@@ -1,7 +1,6 @@
 package loja.springboot.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -30,8 +29,6 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 			} 
 
 		
-
-
 		@Query(value = " Select empresa,liquido,cliente,ticket,valuation from painel_indicador_principal", nativeQuery = true)
 		List<listGraficoPrincipal> graficoPrincipal();
 			public static interface listGraficoPrincipal {
@@ -42,8 +39,17 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 				String getValuation(); 
 			} 
 
+		
+			@Query(value = " Select locacaoFutura, locadoHoje, tempo, prova  from painel_indicador_card", nativeQuery = true)
+			List<listGraficoCard> graficoCard();
+				public static interface listGraficoCard {
+					String getLocacaoFutura(); 
+					String getLocadoHoje(); 
+					String getTempo(); 
+					String getProva(); 
+				}  
 
-
+			
 			@Query(value = " Select origem,  valor, tabela from painel_origem_clientes", nativeQuery = true)
 			List<listGraficoOrigemCLiente> graficoOrigemCliente();
 				public static interface listGraficoOrigemCLiente {
