@@ -22,6 +22,15 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 			Double getValor(); 
         } 
 
+		@Query(value = "Select papel, valor from painel_papel_clientes", nativeQuery = true)
+		List<listGraficoPapelCliente> graficoPapelCliente();
+			public static interface listGraficoPapelCliente {
+				String getPapel(); 
+				Double getValor(); 
+			} 
+
+		
+
 
 		@Query(value = " Select empresa,liquido,cliente,ticket,valuation from painel_indicador_principal", nativeQuery = true)
 		List<listGraficoPrincipal> graficoPrincipal();
@@ -32,6 +41,31 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 				String getTicket(); 
 				String getValuation(); 
 			} 
+
+
+
+			@Query(value = " Select origem,  valor, tabela from painel_origem_clientes", nativeQuery = true)
+			List<listGraficoOrigemCLiente> graficoOrigemCliente();
+				public static interface listGraficoOrigemCLiente {
+					String getOrigem(); 
+					Double getValor(); 
+					String getTabela(); 
+					
+				} 
+
 	
+				@Query(value = " Select Locacao, Oportunidades, Indice,  EventoFuturos from painel_indicador_secundario", nativeQuery = true)
+				List<listGraficoSecundario> graficoSecundario();
+					public static interface listGraficoSecundario {
+						String getLocacao(); 
+						String getOportunidades(); 
+						String getIndice(); 
+						String getEventoFuturos(); 
+					} 
+	
+
+
+				
+
 }
  

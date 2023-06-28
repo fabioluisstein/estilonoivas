@@ -1,4 +1,5 @@
 package loja.springboot.loja;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.Empresa;
 import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
+import loja.springboot.repository.GraficoRepository.listGraficoMes;
+import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
+import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
 import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
+import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
 
 @Controller
 public class IndexController {
@@ -47,11 +52,65 @@ public class IndexController {
 		andView.addObject("cliente", grafico.get(0).getCliente());
 		andView.addObject("ticket", grafico.get(0).getTicket());
 		andView.addObject("valuation", grafico.get(0).getValuation());
+		andView.addObject("tabelaOrigemClientes", 		tabelaOrigemCliente());
+      
+		ArrayList<String> labels = new ArrayList<String>(); 
+        ArrayList<Double> data = new ArrayList<Double>(); 
+        String titulo = "Entradas/Saidas Mes";
+        String mes = "";
+        ArrayList< listGraficoMes> list = new ArrayList<listGraficoMes>(); 
+
+        list.addAll( graficoRepository.graficoMes());
+
+        for (listGraficoMes listGraficoMes : list) {
+            labels.add(listGraficoMes.getTipo());
+            data.add(listGraficoMes.getValor());
+            mes = listGraficoMes.getMes();
+            }
+            
+			andView.addObject("labels", labels);
+			andView.addObject("titulo", titulo+"/"+mes);
+			andView.addObject("data", data);
+                                    
+
+			ArrayList<String> labelsPapelCliente = new ArrayList<String>(); 
+			ArrayList<Double> dataPapelCliente = new ArrayList<Double>(); 
+			String tituloPapelCliente = "Tipos de Clientes";
+	
+			List<listGraficoPapelCliente> graficoTabela =graficoRepository.graficoPapelCliente();
+			
+			for (listGraficoPapelCliente graficoPapel : graficoTabela) {
+				labelsPapelCliente.add(graficoPapel.getPapel()) ;
+				dataPapelCliente.add(graficoPapel.getValor());
+			 }
+
+				andView.addObject("labelsPapel", labelsPapelCliente);
+				andView.addObject("tituloPapel", tituloPapelCliente);
+				andView.addObject("dataPapel", dataPapelCliente);
+
+			
+			List<listGraficoSecundario> graficoSecundario = graficoRepository.graficoSecundario();
+			andView.addObject("qtdLocacao", graficoSecundario.get(0).getLocacao());
+		    andView.addObject("oportunidade", graficoSecundario.get(0).getOportunidades());
+			andView.addObject("indice", graficoSecundario.get(0).getIndice());
+			andView.addObject("eventos", graficoSecundario.get(0).getEventoFuturos());
+
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
 		return andView;
 	}  
 	   
-	
+
+
+public String tabelaOrigemCliente(){
+	List<listGraficoOrigemCLiente> graficoTabela = graficoRepository.graficoOrigemCliente();
+		String tabela = "";
+	for (listGraficoOrigemCLiente grafico : graficoTabela) {
+		tabela  = tabela  + " " + 	grafico.getTabela().toString();
+	 }
+	  return tabela;
+}
+
+
 }
  
