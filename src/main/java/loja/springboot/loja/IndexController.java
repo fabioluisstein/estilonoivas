@@ -12,6 +12,7 @@ import loja.springboot.model.Empresa;
 import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
 import loja.springboot.repository.GraficoRepository.listGraficoCard;
+import loja.springboot.repository.GraficoRepository.listGraficoClienteCidade;
 import loja.springboot.repository.GraficoRepository.listGraficoMes;
 import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
 import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
@@ -53,7 +54,8 @@ public class IndexController {
 		andView.addObject("cliente", grafico.get(0).getCliente());
 		andView.addObject("ticket", grafico.get(0).getTicket());
 		andView.addObject("valuation", grafico.get(0).getValuation());
-		andView.addObject("tabelaOrigemClientes", 		tabelaOrigemCliente());
+		andView.addObject("tabelaOrigemClientes", tabelaOrigemCliente());
+		andView.addObject("tabelaClientesCidades",tabelaClienteCidade());
       
 
 
@@ -106,6 +108,7 @@ public class IndexController {
 			andView.addObject("indice", graficoSecundario.get(0).getIndice());
 			andView.addObject("eventos", graficoSecundario.get(0).getEventoFuturos());
 
+
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
 		return andView;
@@ -121,6 +124,22 @@ public String tabelaOrigemCliente(){
 	 }
 	  return tabela;
 }
+
+
+
+public String tabelaClienteCidade(){
+	List<listGraficoClienteCidade> graficoTabela = graficoRepository.graficoClienteCidade();
+		String tabela = "";
+	for (listGraficoClienteCidade grafico : graficoTabela) {
+		tabela  = tabela  + " " + 	grafico.getTabela().toString();
+	 }
+	  return tabela;
+}
+
+
+
+
+
 
 
 }

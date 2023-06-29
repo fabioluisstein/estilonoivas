@@ -213,8 +213,6 @@
                   <p>Pagamento</p>
                 </a>
               </li>
-             
-            
             </ul>
           </li>
 
@@ -379,7 +377,6 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
               <div class="info-box-content">
                 <span class="info-box-text">Ticket Médio </span>
                 <span class="info-box-number" th:text="${ticket}"></span>
@@ -392,7 +389,6 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
               <div class="info-box-content">
                 <span class="info-box-text">Valuation</span> 
                 <span class="info-box-number" th:text="${valuation}"></span>
@@ -431,9 +427,8 @@
                     <p class="text-center">
                       <strong>DRE Mensal</strong>
                     </p>
-
-                    <div class="chart">
-                      <!-- Sales Chart Canvas -->
+       <div class="chart">
+      <!-- Sales Chart Canvas -->
               
        
 
@@ -458,7 +453,6 @@
                         datasets: [{
                             label: 'Despesas vs Receita',
                             data: data,
-                         
                             borderWidth: 1
                         }]
                     },
@@ -479,7 +473,6 @@
                     <p class="text-center">
                       <strong>Origem dos Clientes</strong>
                     </p>
-
                     <!-- /.progress-group -->
                       <div th:utext ="${tabelaOrigemClientes}"></div>
                   </div>
@@ -541,9 +534,7 @@
             <!-- MAP & BOX PANE -->
             <div class="card">
               <div class="card-header">
-
                 <h3 class="card-title"> Categoria de Clientes </h3>
-
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -594,17 +585,11 @@
                       </div>
                     </div>
                   </div>
-        
-
-
                 </div><!-- /.d-md-flex -->
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-         
-        
-            
        
           </div>
           <!-- /.col -->
@@ -613,7 +598,6 @@
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-warning">
               <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-
               <div class="info-box-content">
                 <span class="info-box-text">Locações Hoje</span>
                 <span class="info-box-number" th:text="${locadoHoje}"></span>
@@ -651,10 +635,6 @@
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
-
-     
-
- 
           <!-- /.col -->
         </div>
 
@@ -682,26 +662,13 @@
           <table class="table m-0">
             <thead>
             <tr>
-          
               <th>Cidade</th>
               <th>Quantidade</th>
               <th>Valor</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td> Passo Fundo </td>
-              <td> 10 </td>
-              <td><span class="badge badge-success">R$10.500,00</span></td>
-          
-            </tr>
-            <tr>
-              <td> Erechim </td>
-              <td> 2 </td>
-              <td><span class="badge badge-success">R$8.500,00</span></td>
-         
-            </tr>
-            
+              <div th:utext ="${tabelaClientesCidades}"></div>
             </tbody>
           </table>
         </div>
