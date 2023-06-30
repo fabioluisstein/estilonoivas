@@ -66,7 +66,12 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 						
 					} 
 
-				
+				@Query(value = " Select  tabela from painel_locacao_atendente", nativeQuery = true)
+					List<listGraficoLocacaoAtendente> graficoLocacaoAtendente();
+						public static interface listGraficoLocacaoAtendente {
+							String getTabela(); 							
+						} 
+
 				@Query(value = " Select Locacao, Oportunidades, Indice,  EventoFuturos from painel_indicador_secundario", nativeQuery = true)
 				List<listGraficoSecundario> graficoSecundario();
 					public static interface listGraficoSecundario {
