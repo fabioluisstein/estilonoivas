@@ -1,11 +1,15 @@
 package loja.springboot.model;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Cacheable
@@ -13,7 +17,6 @@ import org.springframework.cache.annotation.Cacheable;
 public class Empresa implements Serializable {
  
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -21,6 +24,17 @@ public class Empresa implements Serializable {
 	private String cnpj;
 	private String cidade;
 	private String telefone;
+	private Double investimentoInicial;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date data_inicio;
+
+	public Double getInvestimentoInicial() {
+		return investimentoInicial;
+	}
+	public void setInvestimentoInicial(Double investimentoInicial) {
+		this.investimentoInicial = investimentoInicial;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -41,6 +55,12 @@ public class Empresa implements Serializable {
 	}
 	public String getCidade() {
 		return cidade;
+	}	
+	public Date getData_inicio() {
+		return data_inicio;
+	}
+	public void setData_inicio(Date data_inicio) {
+		this.data_inicio = data_inicio;
 	}
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
@@ -51,8 +71,5 @@ public class Empresa implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	
-
 
 }

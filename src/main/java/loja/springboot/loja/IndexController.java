@@ -55,14 +55,20 @@ public class IndexController {
 		andView.addObject("ticket", grafico.get(0).getTicket());
 		andView.addObject("valuation", grafico.get(0).getValuation());
 	}
-
+ 
 	public void carregaPainelCard() {
 		List<listGraficoCard> graficoCard = graficoRepository.graficoCard();
 		andView.addObject("locacaoFutura", graficoCard.get(0).getLocacaoFutura());
 		andView.addObject("locadoHoje", graficoCard.get(0).getLocadoHoje());
 		andView.addObject("tempo", graficoCard.get(0).getTempo());
 		andView.addObject("prova", graficoCard.get(0).getProva());
-	}
+		andView.addObject("LocacaoTotal", graficoCard.get(0).getLocacaoTotal());
+		andView.addObject("QuantidadeCidades", graficoCard.get(0).getQuantidadeCidades());
+		andView.addObject("LocacaoMedia", graficoCard.get(0).getLocacaoMedia());
+		andView.addObject("SaldoConta", graficoCard.get(0).getSaldoConta());
+		andView.addObject("crescimento", graficoCard.get(0).getCrescimento());
+		
+	} 
 
 	public void carregaPainelEntradasSaidas() {
 		ArrayList<String> labels = new ArrayList<String>();

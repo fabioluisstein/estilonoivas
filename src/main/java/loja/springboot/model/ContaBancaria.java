@@ -28,7 +28,7 @@ public class ContaBancaria implements Serializable {
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
-	
+	 
 	public Long getId() {
 		return id;
 	}
