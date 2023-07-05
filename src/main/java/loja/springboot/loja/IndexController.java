@@ -3,11 +3,14 @@ package loja.springboot.loja;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Empresa;
+import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
 import loja.springboot.repository.GraficoRepository.listGraficoCard;
@@ -28,6 +31,9 @@ public class IndexController {
 	@Autowired
 	private GraficoRepository graficoRepository;
 
+	@Autowired
+	private ContaBancariaRepository contaBancariaRepository;
+
 	private ModelAndView andView = new ModelAndView("home/index");
 
 	@RequestMapping("/")
@@ -35,6 +41,14 @@ public class IndexController {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
 		return "principal";
+	}
+
+
+	@RequestMapping("/administrativo3")
+	public ModelAndView index3() {
+		ModelAndView andView = new ModelAndView("template");
+		andView.addObject("listacontasBancarias", contaBancariaRepository.listContasBancarias());
+		return andView;
 	}
 
 	@RequestMapping("/administrativo")

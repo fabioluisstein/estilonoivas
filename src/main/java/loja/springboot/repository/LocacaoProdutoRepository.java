@@ -54,7 +54,7 @@ public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, 
 	@Query(value = "select l.* from locacao_produto l  where l.id = ?1 ", nativeQuery = true)
 	List<LocacaoProduto> findProdutoLocaoById(Long id); 
 
-	@Query(value = "select l.* from locacao_produto l, locacao lc  where l.produto_id = ?1  and lc.id = l.idlocacao and lc.data_retirada > ADDDATE(now(), INTERVAL -5 DAY) ", nativeQuery = true)
+	@Query(value = "select l.* from locacao_produto l, locacao lc  where l.produto_id = ?1  and lc.id = l.idlocacao  order by lc.data_retirada desc", nativeQuery = true)
 	List<LocacaoProduto> findProdutoLocacacoesById(Long id);
 
 
