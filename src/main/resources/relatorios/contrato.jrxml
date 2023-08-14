@@ -18,7 +18,8 @@
        empresa.cidade as cidade_empresa,
        empresa.cnpj as cnpj_empresa,
        empresa.telefone as telefone_empresa,
-        locacao.id,
+	   locacao.id,
+       locacao_produto.id as id_prod_loc, 
        cliente.nome as nome_cliente, 
 	   cliente.id as id_cliente, 
        cidade.nome as cidade_cliente,  
@@ -58,6 +59,7 @@ left join categoria on categoria.id = produto.categoria_id
 left join empresa on empresa.id = 1
 
 Where locacao.id = '$P!{idLocacao}'
+
 group by locacao.id,
        cliente.nome , 
 	   cliente.id, 
@@ -68,7 +70,8 @@ group by locacao.id,
        cliente.telefone,  
        pessoa.nome,
        produto.id,
-       produto.tamanho ,
+       locacao_produto.id,
+       produto.tamanho,
        produto.cor,
        locacao.data_locacao,
        locacao.data_evento,
@@ -425,7 +428,7 @@ group by locacao.id,
 				<textFieldExpression><![CDATA[$F{cpf_cliente}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="0" y="330" width="554" height="23" uuid="c314cfe8-9857-450d-a443-7b266291862a"/>
+				<reportElement x="0" y="327" width="554" height="25" uuid="c314cfe8-9857-450d-a443-7b266291862a"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="5" y="334" width="150" height="19" uuid="ea31f898-b798-414f-ae67-29eee773ff5d">
