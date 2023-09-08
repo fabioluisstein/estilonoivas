@@ -79,11 +79,11 @@
 	    <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#dates.format(locacao.data_locacao, 'dd/MM/yyyy')}"></a> 
 	   </td>
 	   <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.total_produto), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.total_produto), '.00,00', '')}"></a> 
 	   </td>
 	   
          <td>
-	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.falta_pagar), '.00', '')}"></a>
+	   <a onclick="M.toast({html: 'Editando locacao',classes: 'blue rounded'})" th:href="@{/editarlocacao/{idlocacao}(idlocacao=${locacao.id})}" th:text="${#strings.replace(#numbers.formatCurrency(locacao.falta_pagar), '.00,00', '')}"></a>
 	   </td>
 	   
 	   <td>

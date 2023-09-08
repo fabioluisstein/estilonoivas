@@ -51,7 +51,7 @@
 	   <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.tipo}"></a>
 	  </td>
 	  <td>
-		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#strings.replace(#numbers.formatCurrency(conta.valor), '.00,', '')}"></a>
+		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#strings.replace(#numbers.formatCurrency(conta.valor), '.00,00', '')}"></a>
 	   </td>
 	   <td>
 		<a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></a> 

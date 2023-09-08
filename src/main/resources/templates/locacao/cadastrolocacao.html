@@ -53,18 +53,24 @@
       <label for="papel">Papel</label>  
       <select th:field="*{papel}" class="browser-default" required >
        <option value="Convidado">Convidado</option>
-       <option value="Formando">Formando</option>
+       <option value="Convidada">Convidada</option>
+       <option value="Debutante">Debutante</option>
+       <option value="Formanda">Formanda</option>
+       <option value="Formando">Formando</option>       
+       <option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
+       <option value="Madrinha">Madrinha </option>
+       <option value="Mãe de noiva">Mãe de noiva</option>
+       <option value="Mãe de noivo">Mãe de noivo</option>
+       <option value="Namorado da debutante">Namorado da debutante </option>
        <option value="Noivo">Noivo</option>
+       <option value="Noiva">Noiva</option>
        <option value="Pajem">Pajem</option>
        <option value="Padrinho">Padrinho</option>
        <option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
        <option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
        <option value="Pai de debutante">Pai de debutante </option>
-       <option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
-       <option value="Namorado da debutante">Namorado da debutante </option>
        <option value="Não Informado">Não Informado</option>
        <option value="Outros">Outros</option>
-   
      </select>
   </div>
 
@@ -82,22 +88,14 @@
        <option value="Não Informado">Não Informado</option>
      </select>
   </div>
-     
-
-
 
   <div  style="margin:auto; padding:auto; max-width: 98%">
-
     <div class="col s12 card-panel grey lighten-5" >
       <div class="col s12 card-panel teal grey darken-1 white-text">  <h7>Detalhes do Evento</h7>
       </div>
           <div >
-    </div>
-
-
-    
+    </div>    
         <div  style="margin:auto; padding:auto; max-width: 100%"> 
-          
           <div class="input-field col s6">
             <label for="cidade_evento" class="active">Cidade do Evento</label> 
             <br>
@@ -121,8 +119,6 @@
                 <label for="detalhes_evento" class="active">Informações Gerais do Evento</label> 
                 <input name="detalhes_evento" th:field="*{detalhes_evento}" id="detalhes_evento">
               </div>
-          
-          
         </div>
       <br>
       </div>
