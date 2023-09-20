@@ -127,7 +127,7 @@ public class IndexController {
 		carregaPainelPrinicial();
 		carregaPainelEntradasSaidas();
 		carregaPainelCard();
-		carregaPainelPapelClientes();
+	    carregaPainelPapelClientes();
 		tabelaOrigemCliente();
 		tabelaClienteCidade();
 		tabelaLocacaoAtendente();

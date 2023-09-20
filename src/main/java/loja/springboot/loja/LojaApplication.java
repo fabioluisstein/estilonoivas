@@ -19,6 +19,8 @@ public class LojaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);	
 	}
+
+
 /* 
  // spring boot 2.x
  @Bean
@@ -48,5 +50,7 @@ public class LojaApplication {
  }
 
 */
+
+
 
 }

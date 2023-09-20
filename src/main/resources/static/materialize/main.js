@@ -203,7 +203,7 @@ $("#valorProduto").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousa
 
 $(document).ready(function(){	
 	$('.datepicker').datepicker({
-	    format: 'dd/mm/yyyy',
+		format: 'dd/mm/yyyy',
 		 i18n: {
 			 today: 'Hoje',
 			 container: 'body',
@@ -211,10 +211,11 @@ $(document).ready(function(){
 			 months: [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
 		        monthsShort: [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
 		        weekdaysFull: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
-		        weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+		        weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ], 
              weekdaysAbbrev: ["D","S", "T", "Q", "Q", "S", "S"],
          
          }
+	
 	
 	});
 
