@@ -127,37 +127,33 @@
       
     <div class="col s6">
       <label for="pickdate" class="active">Data Evento</label> 
-      <input type="text" class="datepicker" th:field="*{data_evento}"  name="data_evento"  required>
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_evento}"  name="data_evento"  >
     </div>
 
-        
     <div class="col s6">
       <label for="pickdate" class="active">Data Retirada</label> 
-      <input type="text" class="datepicker" th:field="*{data_retirada}"  name="data_retirada" required >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_retirada}"  name="data_retirada"  >
     </div>
-
 
       
     <div class="col s3">
       <label for="pickdate" class="active">Data Locação</label> 
-      <input type="text" class="datepicker" th:field="*{data_locacao}"  name="data_locacao"  readonly="readonly">
-    </div>
-    
-    <div class="col s3">
-      <label for="pickdate" class="active">Data Prova</label> 
-      <input type="text" class="datepicker" th:field="*{data_prova}"  name="data_prova" required >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_locacao}"  name="data_locacao"   readonly="readonly">
     </div>
 
+    <div class="col s3">
+      <label for="pickdate" class="active">Data Prova</label> 
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_prova}"  name="data_prova"  >
+    </div>
 
     <div class="col s6">
       <label for="pickdate" class="active">Data Devolução</label> 
-      <input type="text" class="datepicker" th:field="*{data_devolucao}"  name="data_devolucao"  required>
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_devolucao}"  name="data_devolucao"  >
     </div>
-    
-      
+
     <div class="col s12">
       <label for="observacao" class="active">Observações do Contrato</label> 
-      <input name="observacao" th:field="*{observacao}" id="observacao" class="validate" required>
+      <input name="observacao" th:field="*{observacao}" id="observacao" >
     </div>
 
    <div class="col s12">
@@ -344,16 +340,13 @@
     </div> 
     <div class="col s5">
       <label for="pickdate" class="active">Data Pagamento</label> 
-      <input type="text" class="datepicker" th:field="*{data_pagamento}"  name="data_pagamento"  >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_pagamento}"  name="data_pagamento"  >
     </div>
-      
 
-     <div class="col s5">
+    <div class="col s5">
       <label for="pickdate" class="active">Data Vencimento</label> 
-      <input type="text" class="datepicker" th:field="*{data_vencimento}"  name="data_vencimento" required >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_vencimento}"  name="data_vencimento"  >
     </div>
-      
-      
       
      <div class="col s10" style="visibility:hidden">
       <label for="locacao" class="active">Locacao</label> 
@@ -402,14 +395,12 @@
       <label for="observacaoProduto" class="active">Observações</label> 
       <input name="observacaoProduto" th:field="*{observacao}" id="observacaoProduto" >
     </div> 
-  
-
-     <div class="col s5">
+   
+    <div class="col s5">
       <label for="pickdate" class="active">Data Liberação</label> 
-      <input type="text" class="datepicker" th:field="*{data_liberacao}"  name="data_liberacao"  >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_liberacao}"  name="data_liberacao"  >
     </div>
-      
-      
+
      <div class="col s10" style="visibility:hidden">
       <label for="locacao" class="active">Locacao</label> 
       <input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" class="validate" required>

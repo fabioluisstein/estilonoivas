@@ -165,17 +165,15 @@
    <option value="Concluido">Concluido</option>
  </select>
 </div>
-    
-
+  
 <div class="col s3">
   <label for="pickdate" class="active">Data Visita</label> 
-  <input type="text" class="datepicker" th:field="*{data_inicial}"  name="data_inicial" required >
- 
+  <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_inicial}"  name="data_inicial"  >
 </div>
 
 <div class="col s3">
   <label for="pickdate" class="active">Data Limite</label> 
-  <input type="text" class="datepicker" th:field="*{data_final}"  name="data_final" required >
+  <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_final}"  name="data_final"  >
 </div>
 
   <div class="input-field col s12">
@@ -209,7 +207,7 @@
 
 
     <div class="input-field col s12">
-      <label for="id_locacao" class="active">Locacção</label> 
+      <label for="id_locacao" class="active">Locação</label> 
       <input type="number"  name="id_locacao" th:field="*{id_locacao}" id="id_locacao" class="validate"  >
     </div>
 

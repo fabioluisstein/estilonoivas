@@ -67,20 +67,16 @@
        </div>
       </div>
       </div>
-
-     <div class="col s6">
-       <label for="pickdate" class="active">Data Pagamento</label> 
-       <input type="text" class="datepicker" th:field="*{data_pagamento}"  name="data_pagamento"  >
-     </div>
-       
  
-      <div class="col s6">
-       <label for="pickdate" class="active">Data Vencimento</label> 
-       <input type="text" class="datepicker" th:field="*{data_vencimento}"  name="data_vencimento" required >
-     </div>
+     <div class="col s6">
+      <label for="pickdate" class="active">Data Pagamento</label> 
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_pagamento}"  name="data_pagamento"  >
+    </div>
 
-
-
+    <div class="col s6">
+      <label for="pickdate" class="active">Data Vencimento</label> 
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_vencimento}"  name="data_vencimento"  >
+    </div>
        
       <div class="col s12" style="visibility:hidden">
        <label for="locacao" class="active">Locacao</label> 

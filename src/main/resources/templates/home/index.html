@@ -524,6 +524,51 @@
                 </div>
                 <!-- /.row -->
               </div>
+
+
+    <!-- ./card-body -->
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-sm-3 col-6">
+          <div class="description-block border-right">
+            <h4 class="description-percentage text-success" th:text="${indicadorGeral}"></h4>
+            <h5 class="description-header"> Indice Geral </h5>
+            <span class="description-text"></span>
+          </div> 
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-3 col-6">
+          <div class="description-block border-right">
+            <h4 class="description-percentage text-warning" th:text="'R$:' + ${cac} "></h4>
+            <h5 class="description-header"> CAC </h5>
+          </div>
+          <!-- /.description-block -->
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-3 col-6">
+          <div class="description-block border-right">
+            <h4 class="description-percentage text-info"  th:text="${percentualAds} + ' % '" > </h4>
+            <h5 class="description-header"> Retorno ADS MKT </h5>
+          </div>
+          <!-- /.description-block -->           
+            
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-3 col-6">
+          <div class="description-block">
+            <h4 class="description-percentage text-info"  th:text="${NegociosPerdidos}" ></h4>
+            <h5 class="description-header"> Negocios Perdidos </h5>
+          </div>
+          <!-- /.description-block -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div>
+
+
+
+
               <!-- /.card-footer -->
             </div>
             <!-- /.card -->

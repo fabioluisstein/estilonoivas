@@ -66,11 +66,11 @@ public class Visita implements Serializable {
 		this.id_locacao = id_locacao;
 	}
 
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date data_inicial;
 			
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date data_final;
 

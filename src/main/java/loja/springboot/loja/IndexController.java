@@ -143,6 +143,11 @@ public class IndexController {
 		andView.addObject("oportunidade", graficoSecundario.get(0).getOportunidades());
 		andView.addObject("indice", graficoSecundario.get(0).getIndice());
 		andView.addObject("eventos", graficoSecundario.get(0).getEventoFuturos());
+		andView.addObject("cac", graficoSecundario.get(0).getCac());
+		andView.addObject("indicadorGeral", graficoSecundario.get(0).getIndicador());
+		andView.addObject("percentualAds", graficoSecundario.get(0).getPercentualAds());
+		andView.addObject("NegociosPerdidos", graficoSecundario.get(0).getNegociosPerdidos());
+
 	}
 
 	public void tabelaOrigemCliente() {

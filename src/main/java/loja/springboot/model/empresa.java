@@ -23,6 +23,7 @@ public class Empresa implements Serializable {
 	private String nome;
 	private String cnpj;
 	private String cidade;
+	private double valorMedioDia;
 	private String telefone;
 	private Double investimentoInicial;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -49,6 +50,13 @@ public class Empresa implements Serializable {
 	}
 	public String getCnpj() {
 		return cnpj;
+	}
+	
+	public double getValorMedioDia() {
+		return valorMedioDia;
+	}
+	public void setValorMedioDia(double valorMedioDia) {
+		this.valorMedioDia = valorMedioDia;
 	}
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;

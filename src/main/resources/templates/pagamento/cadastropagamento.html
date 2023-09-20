@@ -74,12 +74,12 @@
        <label for="valor" class="active">Valor</label> 
        <input name="valor" th:field="*{valor}" id="valor" class="validate" required>
     </div>
-     
+
     <div class="col s6">
       <label for="pickdate" class="active">Data</label> 
-      <input type="text" class="datepicker" th:field="*{data}"  name="data" required >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data}"  name="data"  >
     </div>
-      
+  
      <div class="col s6">  
      <div class="file-field input-field">
       <div class="btn">

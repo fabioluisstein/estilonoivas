@@ -71,7 +71,7 @@ public class PagamentoController {
 	public ModelAndView cadastro(Pagamento pagamento) {
 		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
 		modelAndView.addObject("pagamentobj", new Pagamento());
-		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
+		modelAndView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
 		garbageCollection();
 		return modelAndView;

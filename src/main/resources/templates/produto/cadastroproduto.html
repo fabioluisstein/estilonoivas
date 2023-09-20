@@ -65,9 +65,6 @@
       <input name="descricao" th:field="*{descricao}" id="descricao" class="validate" required>
     </div>
     
-
-    
-
       <div class="col s6">    
       <label for="cor" class="active">Cor</label> 
       <input name="cor" th:field="*{cor}" id="cor" class="validate" required>
@@ -78,9 +75,9 @@
       <input name="tamanho" th:field="*{tamanho}" type="text" id="tamanho" class="validate" >
       </div>
      
-         <div class="col s6">
+    <div class="col s6">
       <label for="pickdate" class="active">Data Compra</label> 
-      <input type="text" class="datepicker" th:field="*{data_compra}"  name="data_compra"  >
+      <input type="date" placeholder="yyyy-mm-dd" th:field="*{data_compra}"  name="data_compra"  >
     </div>
      
      

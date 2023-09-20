@@ -30,7 +30,7 @@ public class Pagamento implements Serializable {
 	private String restrito;  
 	private String moeda;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date data;
 	private String nomeArquivo;

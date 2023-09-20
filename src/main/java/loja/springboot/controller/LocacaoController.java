@@ -135,7 +135,7 @@ public class LocacaoController {
 		modelAndView.addObject("produtobj", new LocacaoProduto());
 		modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
 		modelAndView.addObject("clientes", cliente);
-		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
+		modelAndView.addObject("cidades", cidadeRepository.listCidadades());  
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		garbageCollection(); 
 		return modelAndView;

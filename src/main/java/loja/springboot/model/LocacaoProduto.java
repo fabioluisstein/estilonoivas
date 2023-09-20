@@ -40,7 +40,7 @@ public class LocacaoProduto implements Serializable {
 	@JoinColumn(name = "idlocacao", nullable = false)
 	private Locacao locacao;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date data_liberacao;
 	
