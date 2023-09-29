@@ -16,6 +16,8 @@
 <link type="text/css" rel="stylesheet" href="/materialize/bootstrap/dataTables.bootstrap4.min.css" />
 
 
+
+
 </head> 
  <body>
   <div th:fragment="menu">
@@ -74,7 +76,7 @@
         
              <!-- Dropdown -->
                    <ul id="dropdown-menu9" class="dropdown-content">
-                            <li><a href="/listaParcelas">Parcela Locação </a></li>
+                            <li><a href="/listaParcelas">Parcela Locação \ NF </a></li>
                             <li><a href="/listacontasBancarias">Conta Bancária</a></li>
                             <!-- Logo  <li class="divider"></li> -->
                     </ul>
@@ -291,6 +293,7 @@
         		
         		"lengthMenu": [ [15, 30, -1], [15, 30, 20, "All"] ],
         		  "ordering": false,
+
         		  columnDefs: [
         		        {
         		            type: 'date-br', 

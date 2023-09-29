@@ -6,6 +6,8 @@
 
 <head th:replace="fragments :: html_head"/>
 
+
+
 <body>
 
 <div th:replace="fragments :: menu"/>
@@ -28,6 +30,8 @@
 		 <tr>
 		  <th>Id Locação</th>
 		  <th>Cliente</th>
+		  <th>Cpf</th>
+		  <th>Cidade</th>
 		  <th>Observações</th>
 		  <th>Vencimento</th>
 		  <th>Pagamento</th>
@@ -40,11 +44,17 @@
 	   <tbody>
 		<tr th:each = "parcela : ${parcelas}">
 		  <td>
-			   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.id}"></a>
+			   <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.Idlocacao}"></a>
 		 </td> 
 	   <td>
 			<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.cliente}"></a>
 	  </td> 
+	  <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.cpf}"></a>
+     </td>
+	 <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.cidade}"></a>
+     </td>
 	  <td>
 		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.abbreviate(parcela.observacao,50)}"></a>
        </td> 
