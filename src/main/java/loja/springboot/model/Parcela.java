@@ -26,6 +26,7 @@ public class Parcela implements Serializable {
 	private Long id;
 	private Double valor;
 	private String observacao;
+	private String numeroNf;
 	private String moeda;
 	
 	@ManyToOne(fetch = FetchType.LAZY )
@@ -88,6 +89,14 @@ public class Parcela implements Serializable {
 
 	public Locacao getLocacao() {
 		return locacao;
+	}
+
+	public String getNumeroNf() {
+		return numeroNf;
+	}
+
+	public void setNumeroNf(String numeroNf) {
+		this.numeroNf = numeroNf;
 	}
 
 	public void setLocacao(Locacao locacao) {

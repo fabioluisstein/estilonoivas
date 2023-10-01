@@ -32,6 +32,7 @@
 		  <th>Cliente</th>
 		  <th>Cpf</th>
 		  <th>Cidade</th>
+		  <th>Numero NF</th>
 		  <th>Observações</th>
 		  <th>Vencimento</th>
 		  <th>Pagamento</th>
@@ -55,6 +56,9 @@
 	 <td>
 		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.cidade}"></a>
      </td>
+	 <td>
+		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.numeroNf}"></a>
+       </td> 
 	  <td>
 		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.abbreviate(parcela.observacao,50)}"></a>
        </td> 

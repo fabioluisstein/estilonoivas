@@ -20,7 +20,7 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	List<Parcela> findLocacaoDatas(String dataInicial, String DataFinal);
 
 	@Cacheable("listParcelasMesAtual") 
-	@Query(value = "Select parcela.id, parcela.data_pagamento, parcela.data_vencimento, parcela.moeda, parcela.observacao, parcela.valor, parcela.idlocacao, cliente.nome as cliente,  cliente.cpf as cpf,   cidade.nome as cidade,  parcela.nome_arquivo  as arquivo FROM  parcela, locacao, cliente, cidade where locacao.id = parcela.idlocacao AND " +
+	@Query(value = "Select parcela.id, parcela.data_pagamento, parcela.data_vencimento, parcela.moeda, parcela.observacao, parcela.numero_nf as NumeroNF,  parcela.valor, parcela.idlocacao, cliente.nome as cliente,  cliente.cpf as cpf,   cidade.nome as cidade,  parcela.nome_arquivo  as arquivo FROM  parcela, locacao, cliente, cidade where locacao.id = parcela.idlocacao AND " +
                                "   cliente.cidade_id = cidade.id  and  locacao.cliente_id = cliente.id AND ((parcela.data_pagamento>=DATE(NOW())-40) OR  (parcela.data_vencimento>=DATE(NOW())-40)) order by  parcela.data_pagamento  desc", nativeQuery = true)
 	List<listParcelaDTO> parcelaMesAtual();
         public static interface listParcelaDTO {
@@ -28,12 +28,13 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 			 Date getData_pagamento();
 			 Date getData_vencimento();
 			 String getMoeda(); 
+			 String getNumeroNf(); 
 			 String getObservacao(); 
 			 Double getValor(); 
 			 Long getIdlocacao(); 
-			 String getCliente(); 
-			 String getCpf(); 
+			 String getCliente();  
+			 String getCpf();  
 			 String getCidade(); 
 			 String getArquivo(); 
-        } 
+        }  
 }
