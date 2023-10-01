@@ -16,8 +16,9 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	@Query(value = "select l.* from parcela l  where l.idlocacao = ?1 ", nativeQuery = true)
 	List<Parcela> findLocacaoById(Long id);
 
-	@Query(value = "Select * from parcela p  where  p.data_pagamento  BETWEEN ?1 AND  ?2 ", nativeQuery = true)
-	List<Parcela> findLocacaoDatas(String dataInicial, String DataFinal);
+	@Query(value = "Select parcela.id, parcela.data_pagamento, parcela.data_vencimento, parcela.moeda, parcela.observacao, parcela.numero_nf as NumeroNF,  parcela.valor, parcela.idlocacao, cliente.nome as cliente,  cliente.cpf as cpf,   cidade.nome as cidade,  parcela.nome_arquivo  as arquivo FROM  parcela, locacao, cliente, cidade where locacao.id = parcela.idlocacao AND " +
+	"   cliente.cidade_id = cidade.id  and  locacao.cliente_id = cliente.id AND  parcela.data_pagamento  BETWEEN ?1 AND  ?2 order by  parcela.data_pagamento  desc", nativeQuery = true)
+	List<listParcelaDTO> findLocacaoDatas(String dataInicial, String DataFinal);
 
 	@Cacheable("listParcelasMesAtual") 
 	@Query(value = "Select parcela.id, parcela.data_pagamento, parcela.data_vencimento, parcela.moeda, parcela.observacao, parcela.numero_nf as NumeroNF,  parcela.valor, parcela.idlocacao, cliente.nome as cliente,  cliente.cpf as cpf,   cidade.nome as cidade,  parcela.nome_arquivo  as arquivo FROM  parcela, locacao, cliente, cidade where locacao.id = parcela.idlocacao AND " +
@@ -37,4 +38,15 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 			 String getCidade(); 
 			 String getArquivo(); 
         }  
+
+
+
+		
+		@Query(value = "Select parcela.id, parcela.data_pagamento, parcela.data_vencimento,  parcela.moeda,  parcela.observacao,  parcela.numero_nf as NumeroNF,  parcela.valor,  parcela.idlocacao,  cliente.nome as cliente,  cliente.cpf as cpf,    cidade.nome as cidade,  parcela.nome_arquivo as arquivo  " +
+ " FROM  parcela, locacao,  cliente, cidade  where locacao.id = parcela.idlocacao AND  cliente.cidade_id = cidade.id   AND  locacao.cliente_id = cliente.id AND  (YEAR(parcela.data_pagamento) = YEAR(NOW()) and  MONTH(parcela.data_pagamento) = MONTH(NOW()) ) and (parcela.arquivo is null or parcela.numero_nf is null)  order by  parcela.data_pagamento  desc", nativeQuery = true)
+		List<listParcelaDTO> parcelaMesProblemas();
+			
+
+
+
 }
