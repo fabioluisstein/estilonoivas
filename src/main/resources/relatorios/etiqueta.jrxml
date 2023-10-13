@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2016-12-28T12:47:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiqueta" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="271" leftMargin="26" rightMargin="26" topMargin="28" bottomMargin="28" uuid="9205f0ee-6655-4c45-be49-4eaa2a61e5a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="produto.id" class="java.lang.Long"/>
+	<field name="produto.tipo" class="java.lang.String"/>
+	<field name="produto.tamanho" class="java.lang.String"/>
+	<field name="produto.marca" class="java.lang.String"/>
+	<field name="produto.cor" class="java.lang.String"/>
+	<field name="produto.caracteristica" class="java.lang.String"/>
+	<detail>
+		<band height="184" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<rectangle>
+				<reportElement x="0" y="0" width="269" height="184" uuid="bf33935c-7cb6-4d90-97aa-598530a77541">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="5" y="3" width="160" height="13" uuid="89ae8665-9527-4aa0-8704-03d597152328">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tipo: " + $F{produto.tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="3" width="94" height="13" uuid="be7033e9-63d7-499c-9c70-4f905a7864af">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tamanho: " + $F{produto.tamanho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="17" width="160" height="13" uuid="ac439eee-5ccb-4a2e-998a-4fe992f7cf7d">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Marca: " + $F{produto.marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="17" width="94" height="13" uuid="6ecde490-101d-4e9f-b156-4392ae8321c9">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cor: " + $F{produto.cor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="31" width="259" height="54" uuid="ea5f3185-0e2c-4d08-b555-1cf2993ab960">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Características: " + $F{produto.caracteristica}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="86" width="259" height="13" uuid="caff5cae-121f-4fa0-b4d3-8b8d5fa48d45">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Data Locação: ____/ _____/ _________/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="100" width="259" height="13" uuid="b4821cf6-b7bd-4960-8cc3-771e7cd3468a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Data Locação: ____/ _____/ _________/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="114" width="259" height="13" uuid="033078b8-d313-4a03-be06-37ef34e704b0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Data Locação: ____/ _____/ _________/]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="" positionType="Float" stretchType="RelativeToTallestObject" x="72" y="130" width="126" height="50" uuid="7b5d9775-58ce-4c47-8782-94656e30af5d">
+					<property name="com.jaspersoft.studio.unit.barWidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.barHeight" value="pixel"/>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{produto.id}.toString()]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

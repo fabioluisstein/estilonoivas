@@ -22,6 +22,7 @@ public class Empresa implements Serializable {
 	private Long id;
 	private String nome;
 	private String cnpj;
+	private String dominio;
 	private String cidade;
 	private double valorMedioDia;
 	private String telefone;
@@ -79,5 +80,11 @@ public class Empresa implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
+	public String getDominio() {
+		return dominio;
+	}
+	public void setDominio(String dominio) {
+		this.dominio = dominio;
+	}
+	
 }

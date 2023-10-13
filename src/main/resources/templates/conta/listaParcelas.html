@@ -102,7 +102,7 @@
 		<a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${parcela.moeda}"></a>
 	</td> 
 	   <td>
-		 <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00', '')}"></a>
+		 <a onclick="M.toast({html: 'Editando parcela',classes: 'blue rounded'})" th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00,00', '')}"></a>
 		 </td>
 	<td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="material-icons">cloud_download</i></a>  </td> 		
 	</tr>

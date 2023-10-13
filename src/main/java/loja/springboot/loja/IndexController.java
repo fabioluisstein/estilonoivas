@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import loja.springboot.controller.ReportUtil;
 import loja.springboot.model.Empresa;
+import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
@@ -34,7 +40,21 @@ public class IndexController {
 	@Autowired
 	private ContaBancariaRepository contaBancariaRepository;
 
+	@Autowired
+	private ReportUtil reportUtil;
+
 	private ModelAndView andView = new ModelAndView("home/index");
+
+   public void permissao(){ 
+	Pessoa p = new Pessoa();
+	if( p.obterUsuarioLogado().equalsIgnoreCase("adm") ){
+		andView.addObject("permissao", "info-box-number");
+	} 	
+else{
+	andView.addObject("permissao", "invisible");
+}
+
+}
 
 	@RequestMapping("/")
 	public String index() {
@@ -42,7 +62,6 @@ public class IndexController {
 		Runtime.getRuntime().freeMemory();
 		return "principal";
 	}
-
 
 	@RequestMapping("/administrativo3")
 	public ModelAndView index3() {
@@ -124,6 +143,10 @@ public class IndexController {
 
 	@RequestMapping("/administrativo2")
 	public ModelAndView indexSistma2() {
+
+		
+
+		permissao();
 		carregaPainelPrinicial();
 		carregaPainelEntradasSaidas();
 		carregaPainelCard();
@@ -176,5 +199,23 @@ public class IndexController {
 		}
 		andView.addObject("tabelaLocacaoAtendente", tabela);
 	}
+
+	@GetMapping("/gerarEtiquetas")
+	public void imprimePdf(HttpServletRequest request,
+	   HttpServletResponse response) throws Exception {
+		byte[] pdf = reportUtil.gerarRelatorio( "etiqueta", null, request.getServletContext());
+		response.setContentLength(pdf.length);
+		// envia a resposta com o MIME Type
+		response.setContentType("application/pdf");
+		String headerKey = "Content-Disposition";
+		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+		response.getOutputStream().write(pdf);
+		//garbageCollection(); 
+		Runtime.getRuntime().gc();
+		Runtime.getRuntime().freeMemory();
+	} 
+	
+
 
 }

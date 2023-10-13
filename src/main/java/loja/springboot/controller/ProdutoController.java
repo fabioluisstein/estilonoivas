@@ -100,6 +100,31 @@ public class ProdutoController {
 		return andView;
 	}
 
+	@GetMapping("/consularProdutoQr/{idproduto}")
+	public ModelAndView consultar(@PathVariable("idproduto") Long idproduto) throws ParseException, IOException {
+		ModelAndView andView = new ModelAndView("produto/produto");
+		if (idproduto != null && !produtoRepository.findById(idproduto).isEmpty()) {
+			quantidadeLocacoes(idproduto);
+			Optional<Produto> produto = produtoRepository.findById(idproduto);
+			updateVisitas(produto.get());  
+			andView.addObject("produtobj", produto);
+			andView.addObject("locacoes", locacaoProdutoRepository.findProdutoLocacacoesById(idproduto)); 
+			andView.addObject("quantidadeLocacoes", quantidadeLocacoes);
+			andView.addObject("valorFinanceiro", valorFinanceiro);
+			andView.addObject("fornecedores", fornecedorRepository.findAll());
+			andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+			return andView;
+		}
+
+		else {
+			andView = new ModelAndView("produto/pesquisaProd");
+		}
+		garbageCollection();
+		return andView;
+	
+	
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroproduto")
 	public ModelAndView cadastro(Produto produto) {
 		ModelAndView modelAndView = new ModelAndView("produto/cadastroproduto");

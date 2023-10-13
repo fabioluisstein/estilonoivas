@@ -347,7 +347,7 @@
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
-              <div class="info-box-content">
+              <div class="info-box-content" rendered>
                 <span class="info-box-text">Total Clientes</span>
                 <span class="info-box-number" th:text="${cliente}" >
                 </span>
@@ -363,7 +363,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Liquido</span>
-                <span class="info-box-number" th:text="${liquido}"></span>
+                <span th:class="${permissao}" th:text="${liquido}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -391,7 +391,7 @@
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Valuation</span> 
-                <span class="info-box-number" th:text="${valuation}"></span>
+                <span th:class="${permissao}" th:text="${valuation}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -651,8 +651,8 @@
               <span class="info-box-icon"><i class="fas fa-tag"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Locações Total</span>
-                <span class="info-box-number" th:text="${LocacaoTotal}"></span>
-              </div>
+                <span th:class="${permissao}" th:text="${LocacaoTotal}"></span>
+              </div> 
               <!-- /.info-box-content -->
             </div>
         
@@ -679,7 +679,7 @@
               <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Saldo em Conta</span>
-                <span class="info-box-number" th:text="${SaldoConta}"></span>
+                <span th:class="${permissao}" th:text="${SaldoConta}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -690,7 +690,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Locações Futuras</span>
-                <span class="info-box-number" th:text="${locacaoFutura}"></span>
+                <span th:class="${permissao}" th:text="${locacaoFutura}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -730,7 +730,7 @@
                 <span class="info-box-icon"><i class="far fa-flag"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Crescimento Total / Mensal</span>
-                  <span class="info-box-number" th:text="${crescimento}"></span>
+                  <span th:class="${permissao}" th:text="${crescimento}"></span>
                 </div>
               </div>
             <!-- /.info-box -->

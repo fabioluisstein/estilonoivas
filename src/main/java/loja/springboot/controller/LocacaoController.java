@@ -79,7 +79,7 @@ public class LocacaoController {
 	 
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+		Runtime.getRuntime().freeMemory(); 
 	}
 
 	@PostMapping("/pesquisarlocacao")
@@ -210,6 +210,12 @@ public class LocacaoController {
 		garbageCollection(); 
 	} 
 	
+
+
+
+
+
+
 	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	

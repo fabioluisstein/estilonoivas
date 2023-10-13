@@ -35,6 +35,7 @@ public class Produto implements Serializable {
 	private Double valorVenda;
 	private String cor;  
 	private String tamanho;
+	private Long imprimir;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -61,6 +62,14 @@ public class Produto implements Serializable {
     private List<LocacaoProduto> produtosLocacoes;
 
 	
+	public Long getImprimir() {
+		return imprimir;
+	}
+
+	public void setImprimir(Long imprimir) {
+		this.imprimir = imprimir;
+	}
+
 	@Column(name = "total_likes", nullable = true)
 	private Integer likes;
 

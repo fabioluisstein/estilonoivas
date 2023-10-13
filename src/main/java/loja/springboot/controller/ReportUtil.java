@@ -27,7 +27,7 @@ public class ReportUtil implements Serializable {
 		Connection connection = jdbcTemplate.getDataSource().getConnection();
 		/*Carregar o caminho do arquivo Jasper*/
 		 
-		ClassPathResource reportResource = new ClassPathResource("relatorios/contrato.jasper");
+		ClassPathResource reportResource = new ClassPathResource("relatorios/"+nomeRelatorio+".jasper");
 	    JasperPrint jasperPrint = JasperFillManager.fillReport(reportResource.getInputStream(), params, connection);
         	
     	/*Exporta para byte o PDF para fazer o download*/
