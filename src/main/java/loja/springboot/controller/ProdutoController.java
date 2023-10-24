@@ -100,7 +100,7 @@ public class ProdutoController {
 		return andView;
 	}
 
-	@GetMapping("/consularProdutoQr/{idproduto}")
+	@GetMapping("/consultarProdutoQr/{idproduto}")
 	public ModelAndView consultar(@PathVariable("idproduto") Long idproduto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/produto");
 		if (idproduto != null && !produtoRepository.findById(idproduto).isEmpty()) {

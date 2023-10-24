@@ -33,6 +33,8 @@ public class WebConfigSecurity{
         .and()
         .withUser("fibonatti").password("{noop}fb1050").roles("ADMIN")
         .and()
+        .withUser("danc").password("{noop}daneleti").roles("ADMIN")
+        .and()
         .withUser("estilo").password("{noop}Decantador@01").roles("ADMIN");
     }
     @Bean
@@ -42,8 +44,7 @@ public class WebConfigSecurity{
             web.ignoring().antMatchers("/materialize/**");
             web.ignoring().antMatchers("/consultaprodutos/**");
             web.ignoring().antMatchers("/pesquisaprodutocustom/**");
-
-
+            web.ignoring().antMatchers("/consultarProdutoQr/**");
         };
 		
 		

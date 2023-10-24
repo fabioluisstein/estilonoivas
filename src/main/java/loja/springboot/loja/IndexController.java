@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -200,15 +199,15 @@ else{
 		andView.addObject("tabelaLocacaoAtendente", tabela);
 	}
 
-	@GetMapping("/gerarEtiquetas")
-	public void imprimePdf(HttpServletRequest request,
+	@RequestMapping("etiquetas/gerar")
+	public void imprimePdfEtiquetas(HttpServletRequest request,
 	   HttpServletResponse response) throws Exception {
 		byte[] pdf = reportUtil.gerarRelatorio( "etiqueta", null, request.getServletContext());
 		response.setContentLength(pdf.length);
 		// envia a resposta com o MIME Type
 		response.setContentType("application/pdf");
 		String headerKey = "Content-Disposition";
-		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		String headerValue = String.format("attachment; filename=\"%s\"", "etiquetas.pdf");
 		response.setHeader(headerKey, headerValue);
 		response.getOutputStream().write(pdf);
 		//garbageCollection(); 
