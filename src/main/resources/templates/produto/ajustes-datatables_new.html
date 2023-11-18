@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout2}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+
+
+
 <body>
 	<div class="card">
 		<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
 			<nav class="navbar navbar-dark" >
-			  <div class="container-fluid"  style="max-width:100%" >
+			  <div class="container-fluid" >
 				<a  class="text-black">Controle de Ajustes</a>
 			  </div>
 			</nav>	
 			<nav class="navbar navbar-dark" >
-				<div class="container-fluid"  style="max-width:100%" >
+				<div class="container-fluid"  >
 				  <a id="btn-alert1" class="btn btn-warning btn-lg btn-block hidden"	style="display: none;" href="/tabelaAjustes" role="button">Link</a>
 				</div>
 			  </nav>	
 		</div>
 
-		<div class="card-body">
-			<div class="corpo" layout:fragment="corpo" >
-				<table id="table-server" class="table table-striped" >
+		<div class="card-body" style="width:100%">
+			<div class="corpo" layout:fragment="corpo"  >
+				<table id="table-server"  class="table table-striped" style="width:100%">
 				  <thead >
+					
 					<tr>
-					 <th scope="col">Id Controle</th>
+					 <th scope="col">Id Controle.</th>
 					  <th scope="col">Código Locação</th>
 					  <th scope="col">Código Produto</th>
 					  <th scope="col">Tipo Produto</th>
@@ -32,17 +36,19 @@
 					  <th scope="col">Cliente</th>
 					  <th scope="col">Status</th>
 					  <th scope="col">Data Limite</th>
-					  <th scope="col">Limite</th>
-					  <th scope="col">IMG</th>
+				
+				 
 					</tr>
 				  </thead>
+				  
 				</table>
 				<div th:replace="produto/ajustes-datatables-modal :: modal-form"></div>	
 				<div th:replace="produto/ajustes-datatables-modal-baixar :: modal-baixar"></div>	
 				<br>
 			</div>
-			<script th:src="@{/js/ajuste-datatables.js}" th:fragment="js"></script>
+			<script th:src="@{/js/ajuste-datatables2.js}" th:fragment="js"></script>
 		</div>
-	  </div>
+	  
+	</div>
 </body>
 </html>

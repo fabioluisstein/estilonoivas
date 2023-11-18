@@ -33,9 +33,6 @@ public class LojaApplication extends SpringBootServletInitializer {
 	}
 */
 
-
-	
-
  // spring boot 2.x
  @Bean
  public ServletWebServerFactory servletContainer() {

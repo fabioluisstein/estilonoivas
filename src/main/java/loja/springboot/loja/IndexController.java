@@ -44,16 +44,15 @@ public class IndexController {
 
 	private ModelAndView andView = new ModelAndView("home/index");
 
-   public void permissao(){ 
-	Pessoa p = new Pessoa();
-	if( p.obterUsuarioLogado().equalsIgnoreCase("adm") ){
-		andView.addObject("permissao", "info-box-number");
-	} 	
-else{
-	andView.addObject("permissao", "invisible");
-}
+	public void permissao() {
+		Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			andView.addObject("permissao", "info-box-number");
+		} else {
+			andView.addObject("permissao", "invisible");
+		}
 
-}
+	}
 
 	@RequestMapping("/")
 	public String index() {
@@ -64,8 +63,22 @@ else{
 
 	@RequestMapping("/administrativo3")
 	public ModelAndView index3() {
+		String tabela = "";
+		List<listGraficoPrincipal> grafico = graficoRepository.graficoPrincipal();
+		List<listGraficoCard> graficoCard = graficoRepository.graficoCard();
+		List<listGraficoSecundario> graficoSecundario = graficoRepository.graficoSecundario();
+		List<listGraficoClienteCidade> graficoTabela = graficoRepository.graficoClienteCidade();
+		for (listGraficoClienteCidade grafico2 : graficoTabela) {
+			tabela = tabela + " " + grafico2.getTabela().toString();
+		}
+		andView.addObject("tabelaClientesCidades", tabela);
 		ModelAndView andView = new ModelAndView("template");
 		andView.addObject("listacontasBancarias", contaBancariaRepository.listContasBancarias());
+		andView.addObject("qtdLocacao", graficoSecundario.get(0).getLocacao());
+		andView.addObject("ticket", grafico.get(0).getTicket());
+		andView.addObject("indicadorGeral", graficoSecundario.get(0).getIndicador());
+		andView.addObject("locadoHoje", graficoCard.get(0).getLocadoHoje());
+		andView.addObject("tabelaOrigemClientes", tabela);
 		return andView;
 	}
 
@@ -87,7 +100,7 @@ else{
 		andView.addObject("ticket", grafico.get(0).getTicket());
 		andView.addObject("valuation", grafico.get(0).getValuation());
 	}
- 
+
 	public void carregaPainelCard() {
 		List<listGraficoCard> graficoCard = graficoRepository.graficoCard();
 		andView.addObject("locacaoFutura", graficoCard.get(0).getLocacaoFutura());
@@ -99,8 +112,8 @@ else{
 		andView.addObject("LocacaoMedia", graficoCard.get(0).getLocacaoMedia());
 		andView.addObject("SaldoConta", graficoCard.get(0).getSaldoConta());
 		andView.addObject("crescimento", graficoCard.get(0).getCrescimento());
-		
-	} 
+
+	}
 
 	public void carregaPainelEntradasSaidas() {
 		ArrayList<String> labels = new ArrayList<String>();
@@ -143,13 +156,11 @@ else{
 	@RequestMapping("/administrativo2")
 	public ModelAndView indexSistma2() {
 
-		
-
 		permissao();
 		carregaPainelPrinicial();
 		carregaPainelEntradasSaidas();
 		carregaPainelCard();
-	    carregaPainelPapelClientes();
+		carregaPainelPapelClientes();
 		tabelaOrigemCliente();
 		tabelaClienteCidade();
 		tabelaLocacaoAtendente();
@@ -201,8 +212,8 @@ else{
 
 	@RequestMapping("etiquetas/gerar")
 	public void imprimePdfEtiquetas(HttpServletRequest request,
-	   HttpServletResponse response) throws Exception {
-		byte[] pdf = reportUtil.gerarRelatorio( "etiqueta", null, request.getServletContext());
+			HttpServletResponse response) throws Exception {
+		byte[] pdf = reportUtil.gerarRelatorio("etiqueta", null, request.getServletContext());
 		response.setContentLength(pdf.length);
 		// envia a resposta com o MIME Type
 		response.setContentType("application/pdf");
@@ -210,11 +221,9 @@ else{
 		String headerValue = String.format("attachment; filename=\"%s\"", "etiquetas.pdf");
 		response.setHeader(headerKey, headerValue);
 		response.getOutputStream().write(pdf);
-		//garbageCollection(); 
+		// garbageCollection();
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
-	} 
-	
-
+	}
 
 }

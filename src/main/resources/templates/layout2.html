@@ -6,7 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistema</title>
 
-  <!-- Google Font: Source Sans Pro -->
+   <!-- Google Font: Source Sans Pro -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  	<!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"/>
+    <link rel="stylesheet" href=" //cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>    
+ 
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css"/>
+ 
+    <link rel="stylesheet" href="/materialize/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="/materialize/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/materialize/plugins/fontawesome-free/css/all.min.css">
@@ -14,16 +28,16 @@
   <link rel="stylesheet" href="/materialize/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/materialize/dist/css/adminlte.min.css">
-</head>
+
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
-  
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-dark">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"  ><i class="fas fa-bars"></i></a>
       </li>
 
     </ul>
@@ -320,202 +334,141 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0" th:text="${empresa}"></h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0" th:text="${empresa}"></h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Info boxes -->
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
-              <div class="info-box-content" >
-                <span class="info-box-text">Contratos do Mês</span>
-                <span class="info-box-number" th:text="${qtdLocacao}"  >
-                </span>
-              </div>
-              <!-- /.info-box-content -->
+            <div class="info-box-content" >
+              <span class="info-box-text">Contratos do Mês</span>
+              <span class="info-box-number" th:text="${qtdLocacao}"  >
+              </span>
             </div>
-            <!-- /.info-box -->
+            <!-- /.info-box-content -->
           </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Locado Hoje</span>
-                <span class="info-box-number" th:text="${locadoHoje}"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
-
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Ticket Médio </span>
-                <span class="info-box-number" th:text="${ticket}"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Índice Geral</span> 
-                <span class="info-box-number" th:text="${indicadorGeral}"></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
+          <!-- /.info-box -->
         </div>
-        <!-- /.row -->       
-        <!-- /.row -->
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-<!-- TABLE: LATEST ORDERS -->
-<div class="card" >
-  <div class="card-header border-transparent">
-    <h3 class="card-title">Contas Correntes</h3>
-    <div class="card-tools">
-      <button type="button" class="btn btn-tool" data-card-widget="collapse">
-        <i class="fas fa-minus"></i>
-      </button>
-      <button type="button" class="btn btn-tool" data-card-widget="remove">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-  </div>
-  <!-- /.card-header -->
-  <div class="card-body p-1">
+            <div class="info-box-content">
+              <span class="info-box-text">Locado Hoje</span>
+              <span class="info-box-number" th:text="${locadoHoje}"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
 
-        <table id="tabFilterOrderId" class="table m-0">
-           <thead>
-             <th>Id</th>
-              <th>Instituição</th>
-              <th>Tipo</th>
-            <th>Valor</th>
-            <th>Data</th>
-              <th>Excluir</th>
-            </thead>	
-          <tbody>
-            <tr th:each = "conta : ${listacontasBancarias}">
-            <td>
-             <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.id}"></a>
-             </td>
-             <td>
-             <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.instituicao}"></a>
-             </td>
-            <td>
-             <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${conta.tipo}"></a>
-            </td>
-            <td>
-            <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#strings.replace(#numbers.formatCurrency(conta.valor), '.00,', '')}"></a>
-             </td>
-             <td>
-            <a onclick="M.toast({html: 'Editando Conta',classes: 'blue rounded'})" th:href="@{/editarconta/{idconta}(idconta=${conta.id})}" th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></a> 
-             </td>
-              <td><a th:href="@{/removerconta/{idconta}(idconta=${conta.id})}"><i class="material-icons">delete_forever</i></a></td>
-            </tr>
-           </tbody>
-          
-    
-    <!-- /.table-responsive -->
-  </div>
-  <!-- /.card-body -->
+        <!-- fix for small devices only -->
+        <div class="clearfix hidden-md-up"></div>
 
-  <!-- /.card-footer -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Ticket Médio </span>
+              <span class="info-box-number" th:text="${ticket}"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Índice Geral</span> 
+              <span class="info-box-number" th:text="${indicadorGeral}"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->       
+      <!-- /.row -->
+
+</header>
+
+
+<div class="card" style="background-color: #b6b9bb; margin:auto; padding:auto; " >
+  <div layout:fragment="barraPrincipal">
 </div>
-<!-- /.card -->
-
-
-
-
-
-    <!-- /.card -->
-    </section>
-    <!-- /.content -->
-
-    
-    
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-
-    <strong>
-      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script>
-       Fibonatti  
-      
-      </strong>
-
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.0
-    </div>
-  </footer>
 </div>
-<!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-<!-- jQuery -->
+<div class="card" style="margin: 20px auto; padding:10px;">
+  <div layout:fragment="corpo">
+      <div>conteudo principal das páginas</div>
+  </div>
+</div>
+
+</div>
 <script src="/materialize/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/materialize/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="/materialize/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="/materialize/dist/js/adminlte.js"></script>
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
-<script src="/materialize/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="/materialize/plugins/raphael/raphael.min.js"></script>
-<script src="/materialize/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="/materialize/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+
+
 <!-- ChartJS -->
-<script src="/materialize/plugins/chart.js/Chart.min.js"></script>
+
 
 <!-- AdminLTE for demo purposes -->
-<div th:replace="fragments :: footerScript"/>
 
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/materialize/dist/js/pages/dashboard2.js"></script>
+
+
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+
+<script src="/materialize/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/materialize/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+
+
+
+
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.js"></script>
+
+<!-- 	MEUS JS --> 
+<script th:replace=":: js"></script>
 </body>
 </html>

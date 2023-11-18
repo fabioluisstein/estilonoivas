@@ -47,6 +47,12 @@ public class AjusteController {
 		}
 
 
+		@GetMapping("/tabelaAjustes2")
+		public String showTabela2( ) {
+			return "produto/ajustes-datatables_new";
+		}
+
+
 		@GetMapping("/serverAjustes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new AjusteDataTablesService().execute(locacaoProdutoRepository, request);
