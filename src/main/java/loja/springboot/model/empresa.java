@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cacheable
 @Table(name="empresa") 
 public class Empresa implements Serializable {
-  
+// teste dan
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
