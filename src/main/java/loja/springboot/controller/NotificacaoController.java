@@ -14,7 +14,6 @@ import loja.springboot.service.NotificacaoService;
 @Controller
 public class NotificacaoController {
 	
-
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();

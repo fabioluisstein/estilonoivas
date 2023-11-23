@@ -1,6 +1,7 @@
 package loja.springboot.controller;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -17,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.LocacaoProduto;
+import loja.springboot.repository.GraficoRepository;
+import loja.springboot.repository.GraficoRepository.listGraficoCard;
+import loja.springboot.repository.GraficoRepository.listGraficoClienteCidade;
+import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
+import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoProdutoRepository.listLocacaoProduto;
 import loja.springboot.service.AjusteDataTablesService;
@@ -26,6 +32,9 @@ public class AjusteController {
 
 	@Autowired
 	private LocacaoProdutoRepository locacaoProdutoRepository;
+
+    @Autowired
+	private GraficoRepository graficoRepository;
 	
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
@@ -39,19 +48,24 @@ public class AjusteController {
 		garbageCollection();
 		return andView;
 	} 
-	 
-
+	 /* 
 		@GetMapping("/tabelaAjustes")
-		public String showTabela( ) {
+		public String showTabela( ) {		
 			return "produto/ajustes-datatables";
 		}
-
-
-		@GetMapping("/tabelaAjustes2")
-		public String showTabela2( ) {
-			return "produto/ajustes-datatables_new";
+*/
+		@GetMapping("/tabelaAjustes")
+		public ModelAndView showTabela2( ) {
+	     ModelAndView andView = new ModelAndView("produto/ajustes-datatable");
+		 List<listGraficoPrincipal> grafico = graficoRepository.graficoPrincipal();
+		 List<listGraficoCard> graficoCard = graficoRepository.graficoCard();
+		 List<listGraficoSecundario> graficoSecundario = graficoRepository.graficoSecundario();
+		 andView.addObject("qtdLocacao", graficoSecundario.get(0).getLocacao());
+		 andView.addObject("ticket", grafico.get(0).getTicket());
+		 andView.addObject("indicadorGeral", graficoSecundario.get(0).getIndicador());
+		 andView.addObject("locadoHoje", graficoCard.get(0).getLocadoHoje());
+		  return andView;	
 		}
-
 
 		@GetMapping("/serverAjustes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {

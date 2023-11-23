@@ -4,6 +4,8 @@ $(document).ready(function () {
 		processing: true,
 		serverSide: true,
 		responsive: true,
+		info:true,
+		lengthChange:true,
 		lengthMenu: [15, 40, 60, -1],
 		"order": [8, "asc"],
 		language: {
@@ -65,13 +67,29 @@ $(document).ready(function () {
 					function (dtCadastro) {
 						return moment(dtCadastro).format('L');
 					},
-			}
+			},
+			{
+				data: 'dias',
 
+				render: function (data, type, row, meta) {
+					return type === 'display'
+						? '<progress value="' + 1 + '" max="' + data + '"></progress>'
+						: data;
+				}
+			},
+
+			{
+				data: 'foto',
+				render: function (data) {
+					return '<img src="data:image/jpeg;base64,' + data + '" width="40px">';
+				}
+			}
 		],
 		dom: 'Bfrtip',
 		buttons: [
 			{
 				text: 'Detalhes',
+				color: "#f8f9fa",
 				attr: {
 					id: 'btn-editar',
 					type: 'button'
@@ -234,7 +252,6 @@ $(document).ready(function () {
 });
 
 
-
 // SSE
 window.onload = init();
 var totalOfertas = new Number(0);
@@ -260,4 +277,9 @@ function showButton(count) {
 			.text("Veja " + totalOfertas + " novo(s) Produtos(s)!");
 	});
 }
+
+
+
+
+
 
