@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="card-body">
+		<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+			<nav class="navbar navbar-dark" >
+			  <div class="container-fluid" >
+				<span class="info-box-text">Contas Bancarias </span> 
+			  </div>
+			</nav>	
+		</div>
+	</div>
+		<div class="card-body" style="width:100%">	
+			<div class="corpo" layout:fragment="corpo"  >
+				<table id="table-contas-server"  class="table table-striped" style="width:100%">
+				  <thead >
+					<tr>
+					 <th scope="col">Id</th>
+					  <th scope="col">Instituição</th>
+					  <th scope="col">Tipo</th>
+					  <th scope="col">Valor</th>
+					  <th scope="col">Data</th>
+					  <th scope="col">Excluir</th>
+					</tr>
+				  </thead>
+				</table>	
+				<br>
+			</div>
+			<script th:src="@{/js/conta/conta-datatable.js}" th:fragment="js"></script>
+		</div>
+	</div>
+</body>
+</html>

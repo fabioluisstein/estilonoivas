@@ -1,9 +1,13 @@
 package loja.springboot.controller;
 
+import java.util.Map;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +21,7 @@ import loja.springboot.model.ContaBancaria;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.ParcelaRepository;
+import loja.springboot.service.ContaBancariaService;
 
 @Controller
 public class ContaBancariaController {
@@ -109,6 +114,18 @@ public class ContaBancariaController {
 		contaBancariaRepository.deleteById(idconta);	
 		return "redirect:/listacontasBancarias/";
 		
+	}
+
+	@GetMapping("/listContas")
+		public ModelAndView showTabela2( ) {
+	     ModelAndView andView = new ModelAndView("conta/contas-datatable");
+		  return andView;	
+		}
+
+   @GetMapping("/serverContas")
+		public ResponseEntity<?> datatables(HttpServletRequest request) {
+			Map<String, Object> data = new ContaBancariaService().execute(contaBancariaRepository, request);
+			return ResponseEntity.ok(data);
 	}
 	
 }

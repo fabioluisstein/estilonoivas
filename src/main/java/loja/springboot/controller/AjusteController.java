@@ -66,7 +66,7 @@ public class AjusteController {
 		 andView.addObject("locadoHoje", graficoCard.get(0).getLocadoHoje());
 		  return andView;	
 		}
-
+		
 		@GetMapping("/serverAjustes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new AjusteDataTablesService().execute(locacaoProdutoRepository, request);

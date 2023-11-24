@@ -6,7 +6,7 @@ $(document).ready(function () {
 		responsive: true,
 		info:true,
 		lengthChange:true,
-		lengthMenu: [15, 40, 60, -1],
+		lengthMenu: [12, 40, 60, -1],
 		"order": [8, "asc"],
 		language: {
 			"emptyTable": "Nenhum registro encontrado",
