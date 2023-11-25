@@ -18,7 +18,6 @@ $(document).ready(function () {
 			"search": "Pesquisar",
 			"lengthMenu": " Mostrar  _MENU_ por página",
 			"zeroRecords": "Sem resultados",
-			"copy": "Copiar",
 			"info": "Página _PAGE_ de _PAGES_",
 			"paginate": {
 				"next": "Próximo",
@@ -36,96 +35,72 @@ $(document).ready(function () {
 			url: "/serverContas",
 			data: "data",
 		},
-		columns: [	
+		  columns: [	
 			{ "data": 'id',
-			  render: function ( data, type, row) {
-			  return '<a href="/editarconta/'+row.id+'">'+row.id+'</a>';
-			}
-		 },
-
-			{ "data": 'instituicao',
-			  render: function ( data, type, row) {
-			  return '<a href="/editarconta/'+row.id+'">'+row.instituicao+'</a>';
-			} },
-
-			{ "data": 'tipo',
-			  render: function ( data, type, row) {
-			  return '<a href="/editarconta/'+row.id+'">'+row.tipo+'</a>';
-			}
+			   render: function ( data, type, row) {
+			    return '<a href="/editarconta/'+row.id+'">'+row.id+'</a>';
+			   }
 		    },
-			{
-			  data: 'valor', render:
-			   function (valor) {
-				 return valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-			   },
-			},
-			{
-			 data: 'data', render:
-				function (data) {
-				 return moment(data).format('L');
-				},
-			}, 
+			{ "data": 'instituicao',
+			   render: function ( data, type, row) {
+			    return '<a href="/editarconta/'+row.id+'">'+row.instituicao+'</a>';
+			  } 
+		    },
+			{ "data": 'tipo',
+			   render: function ( data, type, row) {
+			    return '<a href="/editarconta/'+row.id+'">'+row.tipo+'</a>';
+			   }
+		    },
+			{ "data": 'valor',
+			   render: function ( valor, type, row) {	
+			    return  '<a href="/editarconta/'+row.id+'">'+ valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+'</a>';
+		      }
+	      },
+
+			{ "data": 'data',
+			   render: function ( data, type, row) {	
+			    return  '<a href="/editarconta/'+row.id+'">'+moment(row.data).format('L')+'</a>';
+		     }
+		    },
 			{ "data": 'id',
-			 render: function ( data, type, row) {	
-			 return  '<a href="/removerconta/' + row.id + '" class="btn btn-danger"><i class="fas fa-trash">';
-		  }
-		}
+			   render: function ( data, type, row) {	
+			    return  '<a href="/removerconta/' + row.id + '" class="btn btn-danger"><i class="fas fa-trash">';
+		       }
+		    }
 		],
 		dom: 'Bfrtip',
 		buttons: [
-       
-			{
-				extend: 'copy',
-				text: 'Copiar',
-				exportOptions: {
-					columns: ':not(:last-child)',
-				}
-			  },
-			{
-				extend: 'excel',
-				text: 'Excel',
-				exportOptions: {
-					columns: ':not(:last-child)',
-				}
-			  },
-			  {
-				extend: 'pdf',
-				text: 'PDF',
-				exportOptions: {
-					columns: ':not(:last-child)',
-				}
-			  },
-
-			  {
-				extend: 'print',
-				text: 'Imprimir',
-				exportOptions: {
-					columns: ':not(:last-child)',
-				}
-			  },
-
-			  {
-				extend: 'colvis',
-				text: 'Colunas',
-				exportOptions: {
-					columns: ':not(:last-child)',
-				}
+			{ extend: 'excel',
+			  text: 'Excel',
+			  exportOptions: {
+			   columns: ':not(:last-child)',
 			  }
-			  
-			
+			},
+			{
+			  extend: 'pdf',
+			  text: 'PDF',
+			  exportOptions: {
+			   columns: ':not(:last-child)',
+			  }
+			},
+			{
+			  extend: 'print',
+			  text: 'Imprimir',
+			   exportOptions: {
+				columns: ':not(:last-child)',
+			   }
+			},
+			{
+			  extend: 'colvis',
+			  text: 'Colunas',
+			   exportOptions: {
+				columns: ':not(:last-child)',
+			   }
+			}
         ],
-	
-
-	
-
 	});
 
-
-
-
-
-
-}).buttons().container().appendTo('#table-contas-server.col-md-6:eq(0)');
+});
 
 
 

@@ -3,8 +3,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.repository.GraficoRepository;
 import loja.springboot.repository.GraficoRepository.listGraficoCard;
-import loja.springboot.repository.GraficoRepository.listGraficoClienteCidade;
 import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
 import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
 import loja.springboot.repository.LocacaoProdutoRepository;

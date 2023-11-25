@@ -1,5 +1,6 @@
 package loja.springboot.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.ContaBancaria;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
+import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
+import loja.springboot.repository.PainelRepository;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.service.ContaBancariaService;
 
@@ -30,8 +34,11 @@ public class ContaBancariaController {
 	private ContaBancariaRepository contaBancariaRepository;
 	@Autowired
 	private ParcelaRepository parcelaRepository;
+
+	@Autowired
+	private PainelRepository painelRepository;
  
-	@RequestMapping(method = RequestMethod.GET, value = "/listacontasBancarias")
+	@RequestMapping(method = RequestMethod.GET, value = "/listacontasBancariass")
 	public ModelAndView listacontasBancarias() {
 		ModelAndView andView = new ModelAndView("conta/lista");
 		Pessoa p = new Pessoa();
@@ -116,11 +123,17 @@ public class ContaBancariaController {
 		
 	}
 
-	@GetMapping("/listContas")
-		public ModelAndView showTabela2( ) {
-	     ModelAndView andView = new ModelAndView("conta/contas-datatable");
-		  return andView;	
+	@GetMapping("/listacontasBancarias")
+		public ModelAndView showTabela2() {
+		List<listPainelOperacional> grafico = painelRepository.grafico();
+	    ModelAndView andView = new ModelAndView("conta/contas-datatable");
+		andView.addObject("qtdLocacao", grafico.get(0).getLocacoes()); 
+		andView.addObject("ticket", grafico.get(0).getTicket());
+		andView.addObject("indicadorGeral", grafico.get(0).getIndice());
+		andView.addObject("locadoHoje", grafico.get(0).getLocado());
+		return andView;	
 		}
+
 
    @GetMapping("/serverContas")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
