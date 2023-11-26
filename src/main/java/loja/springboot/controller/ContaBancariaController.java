@@ -21,9 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.ContaBancaria;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
-import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
-import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.service.ContaBancariaService;
 
@@ -57,7 +56,7 @@ public class ContaBancariaController {
 	 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroConta")
 	public ModelAndView cadastroConta(ContaBancaria conta) {
-		ModelAndView modelAndView = new ModelAndView("conta/cadastroconta");
+		ModelAndView modelAndView = new ModelAndView("conta/cadastrocontas");
 		modelAndView.addObject("contabj", new ContaBancaria());
 		return modelAndView;
 	}
@@ -65,7 +64,7 @@ public class ContaBancariaController {
 	@CacheEvict(value="contasBancariasTodas",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarconta")
 	public ModelAndView salvarConta(ContaBancaria conta) { 
-		ModelAndView andView = new ModelAndView("conta/cadastroconta");
+		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
 		return andView;
 	}
@@ -82,8 +81,6 @@ public class ContaBancariaController {
 	}
 
 	
-
-
 	@PostMapping("/pesquisarparcela")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 	  
@@ -134,6 +131,13 @@ public class ContaBancariaController {
 		return andView;	
 		}
 
+	    @GetMapping("/listcontasBancarias")
+		public ModelAndView showTabela3() {
+		
+	    ModelAndView andView = new ModelAndView("conta/cadastrocontas");
+				     andView.addObject("contabj", new ContaBancaria());
+		return andView;	
+		}
 
    @GetMapping("/serverContas")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {

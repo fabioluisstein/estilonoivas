@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE -->
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarconta" id="formconta" method="post" th:object="${contabj}" >
+	<div class="card-header">
+	  <h3 class="card-title">Cadastro de Contas</h3>
+
+	  <div class="card-tools">
+		<button type="button" class="btn btn-tool" data-card-widget="collapse">
+		  <i class="fas fa-minus"></i>
+		</button>
+		<button type="button" class="btn btn-tool" data-card-widget="remove">
+		  <i class="fas fa-times"></i>
+		</button>
+	  </div>
+	</div>
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-4">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		</div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-4">
+		  <div class="form-group">
+	      <label for="instituicao">Instituição</label> 
+		  <input class="form-control" type="text" name="instituicao" th:field="*{instituicao}" id="instituicao" >
+		</div>
+	    </div>
+		<!-- /.form-group -->
+
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>Tipo</label>
+		        <select th:field="*{tipo}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+				  <option value="Corrente">Corrente</option>
+				  <option value="Investimento">Investimento</option>
+				</select>
+			</div>
+		  </div>
+		  <!-- /.form-group -->
+
+	</div>
+
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group"> 
+				<label for="valor">Valor</label> 
+				<input class="form-control" name="valor" th:field="*{valor}" id="valor" >
+			</div>
+			</div>
+
+			<!-- /.col -->
+			<div class="col-md-6">
+			  <div class="form-group">
+				<label for="data">Data</label> 
+				<input class="form-control" type="date" placeholder="yyyy-mm-dd" th:field="*{data}"  name="data_compra"  >
+			</div>	
+			</div>
+		
+		</div>
+
+</div>
+
+<div class="card-footer"> 
+  <a  href="/listacontasBancarias" class="btn btn-warning ">Voltar</a>
+  <button type="submit" class="btn btn-success">Salvar</button>
+</div>
+	
+	
+
+</form>
+
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+
+
+	</div>
+</body>
+</html>

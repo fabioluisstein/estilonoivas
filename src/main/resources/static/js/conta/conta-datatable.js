@@ -34,6 +34,9 @@ $(document).ready(function () {
 		ajax: {
 			url: "/serverContas",
 			data: "data",
+			 error : function(e) {
+				window.location.href = "/listacontasBancarias";
+			 }
 		},
 		  columns: [	
 			{ "data": 'id',
@@ -63,6 +66,7 @@ $(document).ready(function () {
 		     }
 		    },
 			{ "data": 'id',
+			   "width": '5%',
 			   render: function ( data, type, row) {	
 			    return  '<a href="/removerconta/' + row.id + '" class="btn btn-danger"><i class="fas fa-trash">';
 		       }
@@ -99,6 +103,8 @@ $(document).ready(function () {
 			}
         ],
 	});
+
+
 
 });
 
