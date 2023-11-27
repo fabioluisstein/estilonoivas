@@ -37,6 +37,8 @@ $(document).ready(function () {
 			 error : function(e) {
 				window.location.href = "/listacontasBancarias";
 			 }
+
+			
 		},
 		  columns: [	
 			{ "data": 'id',

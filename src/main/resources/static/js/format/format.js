@@ -10,7 +10,4 @@ $("#valor").val(formatter.format($("#valor").val()));
 $("#valor").focus();
 $("#valor").maskMoney({showSymbol:true,  decimal:",", thousands:"."});
 
- 
-
-
 });

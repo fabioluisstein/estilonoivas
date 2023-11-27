@@ -21,6 +21,11 @@
 		</button>
 	  </div>
 	</div>
+ 
+		 <div style="width:100%; text-align: center;" id ="mensagens"   class="alert alert-dark" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div>
+
 	<!-- /.card-header -->
 	<div class="card-body">
 		<div class="row">
@@ -75,7 +80,7 @@
 
 <div class="card-footer"> 
   <a  href="/listacontasBancarias" class="btn btn-warning ">Voltar</a>
-  <button type="submit" class="btn btn-success">Salvar</button>
+  <button type="submit"  class="btn btn-success">Salvar</button>
 </div>
 	
 	
@@ -84,7 +89,8 @@
 
     <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
 	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
-
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+	
 
 	</div>
 </body>

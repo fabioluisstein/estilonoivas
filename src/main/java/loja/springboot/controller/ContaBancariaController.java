@@ -57,6 +57,7 @@ public class ContaBancariaController {
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroConta")
 	public ModelAndView cadastroConta(ContaBancaria conta) {
 		ModelAndView modelAndView = new ModelAndView("conta/cadastrocontas");
+		modelAndView.addObject("id", "Cadastrando Conta");
 		modelAndView.addObject("contabj", new ContaBancaria());
 		return modelAndView;
 	}
@@ -66,11 +67,9 @@ public class ContaBancariaController {
 	public ModelAndView salvarConta(ContaBancaria conta) { 
 		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
+		andView.addObject("id", "Gravado com Sucesso");
 		return andView;
 	}
-	
-
-
 	
 	@RequestMapping(method = RequestMethod.GET, value = "parcelasProblemas")
 	public ModelAndView parcelasProblemas() {	
@@ -107,9 +106,11 @@ public class ContaBancariaController {
 
 
 	@GetMapping("/editarconta/{idconta}")
-	public ModelAndView editar(@PathVariable("idconta") Long idconta) {
-		Optional<ContaBancaria> conta = contaBancariaRepository.findById(idconta);
-		return salvarConta(conta.get());
+	public ModelAndView editar(@PathVariable("idconta") ContaBancaria conta) {
+		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
+		andView.addObject("id", "Editando Registro");
+		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
+		return andView; 
 	}
 	
 	@CacheEvict(value="contasBancariasTodas",allEntries=true)
