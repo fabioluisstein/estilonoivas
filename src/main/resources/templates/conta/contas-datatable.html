@@ -13,6 +13,11 @@
 					<a  href="/cadastroConta" class="btn btn-secondary">Adicionar</a>
 				  </div>
 
+				  <td>
+					<!-- Botão de exclusão que dispara o modal -->
+				
+				</td>
+
 			  </div>
 			</nav>	
 		</div>
@@ -24,18 +29,23 @@
 				<table id="table-contas-server"  class="table table-striped" style="width:100%">
 				  <thead >
 					<tr>
+					 <th scope="col">Ação</th>
 					 <th scope="col">Id</th>
 					  <th scope="col">Instituição</th>
 					  <th scope="col">Tipo</th>
 					  <th scope="col">Valor</th>
 					  <th scope="col">Data</th>
-					  <th scope="col">Excluir</th>
+					 
 					</tr>
 				  </thead>
 				</table>	
 				<br>
+	
+
 			</div>
+			
 			<script th:src="@{/js/conta/conta-datatable.js}" th:fragment="js"></script>
+			<script th:src="@{/js/conta/excluir.js}" th:fragment="js"></script>	
 		</div>
 	</div>
 </body>

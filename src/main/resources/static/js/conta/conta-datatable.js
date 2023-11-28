@@ -7,7 +7,7 @@ $(document).ready(function () {
 		info:true,
 		lengthChange:false,
 		lengthMenu: [15, 40, 60, -1],
-		"order": [0, "asc"],
+		"order": [0, "desc"],
 		language: {
 			"emptyTable": "Nenhum registro encontrado",
 			"info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -41,37 +41,30 @@ $(document).ready(function () {
 			
 		},
 		  columns: [	
+
 			{ "data": 'id',
-			   render: function ( data, type, row) {
-			    return '<a href="/editarconta/'+row.id+'">'+row.id+'</a>';
-			   }
+			   "width": '5%',
+			   render: function ( data, type, row) {	
+			    return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarconta/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <a href="/removerconta/'+row.id+'" class="btn btn-danger"><i id="excluir" class="fas fa-trash"></i></a> </div> </td>';
+		       }
 		    },
-			{ "data": 'instituicao',
-			   render: function ( data, type, row) {
-			    return '<a href="/editarconta/'+row.id+'">'+row.instituicao+'</a>';
-			  } 
+
+			{ "data": 'id'
 		    },
-			{ "data": 'tipo',
-			   render: function ( data, type, row) {
-			    return '<a href="/editarconta/'+row.id+'">'+row.tipo+'</a>';
-			   }
+			{ "data": 'instituicao'
 		    },
-			{ "data": 'valor',
+			{ "data": 'tipo'
+		    },
+			{ "data": 'valor' ,
 			   render: function ( valor, type, row) {	
-			    return  '<a href="/editarconta/'+row.id+'">'+ valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+'</a>';
+			    return  valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 		      }
 	      },
 
 			{ "data": 'data',
 			   render: function ( data, type, row) {	
-			    return  '<a href="/editarconta/'+row.id+'">'+moment(row.data).format('L')+'</a>';
+			    return  moment(row.data).format('L');
 		     }
-		    },
-			{ "data": 'id',
-			   "width": '5%',
-			   render: function ( data, type, row) {	
-			    return  '<a href="/removerconta/' + row.id + '" class="btn btn-danger"><i class="fas fa-trash">';
-		       }
 		    }
 		],
 		dom: 'Bfrtip',
@@ -79,34 +72,58 @@ $(document).ready(function () {
 			{ extend: 'excel',
 			  text: 'Excel',
 			  exportOptions: {
-			   columns: ':not(:last-child)',
+				columns: ':not(:first-child)',
 			  }
 			},
 			{
 			  extend: 'pdf',
 			  text: 'PDF',
 			  exportOptions: {
-			   columns: ':not(:last-child)',
+				columns: ':not(:first-child)',
 			  }
 			},
 			{
 			  extend: 'print',
 			  text: 'Imprimir',
 			   exportOptions: {
-				columns: ':not(:last-child)',
+				columns: ':not(:first-child)',
 			   }
 			},
 			{
 			  extend: 'colvis',
 			  text: 'Colunas',
 			   exportOptions: {
-				columns: ':not(:last-child)',
+				columns: ':not(:first-child)',
 			   }
 			}
         ],
 	});
 
 
+
+// acao do botao de excluir (abrir modal)
+$("#btn-excluir").on('click', function () {
+	if (isSelectedRow()) {
+		$("#modal-baixar").modal('show');
+	}
+});
+
+// exclusao de uma promocao
+$("#btn-del-modal").on('click', function () {
+	var id = getPromoId();
+	$.ajax({
+		method: "GET",
+		url: "/liberarProdutoAjax/" + id,
+		success: function () {
+			$("#modal-baixar").modal('hide');
+			table.buttons().disable();
+			table.ajax.reload();
+		},
+		error: function () {
+			alert("Ops... Ocorreu um erro, tente mais tarde.");
+		}
+	});
+});	
 
 });
 

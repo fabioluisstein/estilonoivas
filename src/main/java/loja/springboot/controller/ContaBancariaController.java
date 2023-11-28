@@ -58,6 +58,7 @@ public class ContaBancariaController {
 	public ModelAndView cadastroConta(ContaBancaria conta) {
 		ModelAndView modelAndView = new ModelAndView("conta/cadastrocontas");
 		modelAndView.addObject("id", "Cadastrando Conta");
+		modelAndView.addObject("color", "alert alert-dark");
 		modelAndView.addObject("contabj", new ContaBancaria());
 		return modelAndView;
 	}
@@ -68,6 +69,7 @@ public class ContaBancariaController {
 		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
 		andView.addObject("id", "Gravado com Sucesso");
+		andView.addObject("color", "alert alert-success");
 		return andView;
 	}
 	
@@ -109,6 +111,7 @@ public class ContaBancariaController {
 	public ModelAndView editar(@PathVariable("idconta") ContaBancaria conta) {
 		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
 		andView.addObject("id", "Editando Registro");
+		andView.addObject("color", "alert alert-primary");
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
 		return andView; 
 	}

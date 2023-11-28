@@ -10,22 +10,14 @@
 <div layout:fragment="corpo" style="width:100%">
 	<form action="/salvarconta" id="formconta" method="post" th:object="${contabj}" >
 	<div class="card-header">
-	  <h3 class="card-title">Cadastro de Contas</h3>
 
-	  <div class="card-tools">
-		<button type="button" class="btn btn-tool" data-card-widget="collapse">
-		  <i class="fas fa-minus"></i>
-		</button>
-		<button type="button" class="btn btn-tool" data-card-widget="remove">
-		  <i class="fas fa-times"></i>
-		</button>
-	  </div>
+	
+		  <h3 class="card-title">Cadastro de Contas</h3>
+	  
 	</div>
  
-		 <div style="width:100%; text-align: center;" id ="mensagens"   class="alert alert-dark" role="alert">
-			<span class="info-box-number" th:text="${id}"></span>
-		  </div>
-
+		 
+		  
 	<!-- /.card-header -->
 	<div class="card-body">
 		<div class="row">
@@ -77,7 +69,9 @@
 		</div>
 
 </div>
-
+<div style="text-align: center;" id ="mensagens" th:class="${color}" role="alert">
+	<span class="info-box-number" th:text="${id}"></span>
+  </div>
 <div class="card-footer"> 
   <a  href="/listacontasBancarias" class="btn btn-warning ">Voltar</a>
   <button type="submit"  class="btn btn-success">Salvar</button>

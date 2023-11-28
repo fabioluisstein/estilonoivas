@@ -13,7 +13,7 @@ import loja.springboot.repository.ContaBancariaRepository.listTodasContas;
 public class ContaBancariaService {
  
 	private String[] cols = {
-		"id" , "instituicao", "tipo", "valor", "data","deletar" 
+		"id" , "deletar" ,  "instituicao", "tipo", "valor", "data"
 	};
 	
 	public Map<String, Object> execute(ContaBancariaRepository repository, HttpServletRequest request) {
