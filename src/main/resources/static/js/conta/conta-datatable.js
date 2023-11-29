@@ -42,13 +42,6 @@ $(document).ready(function () {
 		},
 		  columns: [	
 
-			{ "data": 'id',
-			   "width": '5%',
-			   render: function ( data, type, row) {	
-			    return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarconta/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <a href="/removerconta/'+row.id+'" class="btn btn-danger"><i id="excluir" class="fas fa-trash"></i></a> </div> </td>';
-		       }
-		    },
-
 			{ "data": 'id'
 		    },
 			{ "data": 'instituicao'
@@ -65,35 +58,41 @@ $(document).ready(function () {
 			   render: function ( data, type, row) {	
 			    return  moment(row.data).format('L');
 		     }
-		    }
+		    },
+			{ "data": 'id',
+			"width": '5%',
+			render: function ( data, type, row) {	 
+			 return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarconta/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <button onclick="if (confirm(\'Deseja excluir?\')) { window.location.href = \'/removerconta/' + row.id +'\'; }  else {  }" class="btn btn-danger"><i class="fas fa-trash"></i></button> </div> </td>';
+			}
+		 }
 		],
 		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'excel',
 			  text: 'Excel',
 			  exportOptions: {
-				columns: ':not(:first-child)',
+				columns: ':not(:last-child)',
 			  }
 			},
 			{
 			  extend: 'pdf',
 			  text: 'PDF',
 			  exportOptions: {
-				columns: ':not(:first-child)',
+				columns: ':not(:last-child)',
 			  }
 			},
 			{
 			  extend: 'print',
 			  text: 'Imprimir',
 			   exportOptions: {
-				columns: ':not(:first-child)',
+				columns: ':not(:last-child)',
 			   }
 			},
 			{
 			  extend: 'colvis',
 			  text: 'Colunas',
 			   exportOptions: {
-				columns: ':not(:first-child)',
+				columns: ':not(:last-child)',
 			   }
 			}
         ],
@@ -101,29 +100,6 @@ $(document).ready(function () {
 
 
 
-// acao do botao de excluir (abrir modal)
-$("#btn-excluir").on('click', function () {
-	if (isSelectedRow()) {
-		$("#modal-baixar").modal('show');
-	}
-});
-
-// exclusao de uma promocao
-$("#btn-del-modal").on('click', function () {
-	var id = getPromoId();
-	$.ajax({
-		method: "GET",
-		url: "/liberarProdutoAjax/" + id,
-		success: function () {
-			$("#modal-baixar").modal('hide');
-			table.buttons().disable();
-			table.ajax.reload();
-		},
-		error: function () {
-			alert("Ops... Ocorreu um erro, tente mais tarde.");
-		}
-	});
-});	
 
 });
 

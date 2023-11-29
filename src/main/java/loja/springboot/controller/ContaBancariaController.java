@@ -105,7 +105,7 @@ public class ContaBancariaController {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
 	}
-
+ 
 
 	@GetMapping("/editarconta/{idconta}")
 	public ModelAndView editar(@PathVariable("idconta") ContaBancaria conta) {

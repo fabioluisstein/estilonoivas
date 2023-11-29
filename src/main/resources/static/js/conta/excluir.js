@@ -1,31 +1,51 @@
-$(document).ready(function() {
-    // Exibir modal ao clicar no botão de exclusão
-    $('.delete-btn').click(function() {
-        var itemId = $(this).data('item-id');
-        $('.modal').fadeIn();
-        // Ao clicar em 'Sim', chamar a função de exclusão
-        $('.confirm-delete').click(function() {
-            excluirItem(itemId);
-        });
-        // Ao clicar em 'Cancelar', fechar o modal
-        $('.cancel-delete').click(function() {
-            $('.modal').fadeOut();
-        });
+$(document).ready(function myFunction() {
+    var itemIdToDelete;
+
+    // Captura o ID do item ao clicar no botão de exclusão
+    $('.btn-danger').click(function() {
+      
+        //itemIdToDelete = $(this).data('modal-delete:item-id');
+
+        var minhaVar = $('#modal-delete').modal();
+
+        const inputData = document.getElementById('inputData').value;
+
+        const meuModal = document.getElementById('modal-delete');
+        const valorDataVar = meuModal.getAttribute('id');
+
+     
+        console.log(meuModal); // Saída: algum-valor
+        console.log(inputData); // Saída: algum-valor
+        
+       
+
+
+    });
+    
+
+    // Ao confirmar a exclusão no modal, envia a requisição DELETE
+    $('#confirmDelete').click(function() {
+        if (itemIdToDelete) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/seu-endpoint-exclusao/' + itemIdToDelete,
+                success: function(response) {
+                    // Lógica após a exclusão (recarregar página, atualizar lista, etc.)
+                    window.location.reload();
+                },
+                error: function(err) {
+                    console.error('Erro ao excluir item:', err);
+                }
+            });
+        }
     });
 
-    // Função para excluir o item (pode ser chamada via Ajax para o backend)
-    function excluirItem(itemId) {
-        // Chamada Ajax para o backend (Spring Boot) para excluir o item com o ID especificado
-        $.ajax({
-            type: 'DELETE',
-            url: '/seu-endpoint-exclusao/' + itemId,
-            success: function(response) {
-                // Lógica após a exclusão (por exemplo, recarregar a página ou atualizar a lista de itens)
-                window.location.reload();
-            },
-            error: function(err) {
-                console.error('Erro ao excluir item:', err);
-            }
-        });
-    }
+
+
+
+
+
+
+
+
 });
