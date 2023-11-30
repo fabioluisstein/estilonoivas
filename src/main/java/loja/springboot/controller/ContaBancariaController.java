@@ -2,7 +2,6 @@ package loja.springboot.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,7 +35,15 @@ public class ContaBancariaController {
 
 	@Autowired
 	private PainelRepository painelRepository;
- 
+    private listPainelOperacional operacional;
+
+	public void grafico() {
+		List<listPainelOperacional> grafico = painelRepository.grafico();
+		    operacional = grafico.get(0);
+			Runtime.getRuntime().gc();
+			Runtime.getRuntime().freeMemory();
+		}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listacontasBancariass")
 	public ModelAndView listacontasBancarias() {
 		ModelAndView andView = new ModelAndView("conta/lista");
@@ -60,7 +67,7 @@ public class ContaBancariaController {
 		modelAndView.addObject("id", "Cadastrando Conta");
 		modelAndView.addObject("color", "alert alert-dark");
 		modelAndView.addObject("contabj", new ContaBancaria());
-		return modelAndView;
+	    return base(modelAndView);
 	}
 	
 	@CacheEvict(value="contasBancariasTodas",allEntries=true)
@@ -70,7 +77,17 @@ public class ContaBancariaController {
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
 		andView.addObject("id", "Gravado com Sucesso");
 		andView.addObject("color", "alert alert-success");
-		return andView;
+		return base(andView);
+	}
+
+
+
+	public ModelAndView base(ModelAndView modelAndView){
+		modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+		modelAndView.addObject("ticket", operacional.getTicket());
+		modelAndView.addObject("indicadorGeral", operacional.getIndice());
+		modelAndView.addObject("locadoHoje", operacional.getLocado());
+		return modelAndView;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "parcelasProblemas")
@@ -113,7 +130,7 @@ public class ContaBancariaController {
 		andView.addObject("id", "Editando Registro");
 		andView.addObject("color", "alert alert-primary");
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
-		return andView; 
+		 return base(andView);
 	}
 	
 	@CacheEvict(value="contasBancariasTodas",allEntries=true)
@@ -126,13 +143,9 @@ public class ContaBancariaController {
 
 	@GetMapping("/listacontasBancarias")
 		public ModelAndView showTabela2() {
-		List<listPainelOperacional> grafico = painelRepository.grafico();
+		grafico();
 	    ModelAndView andView = new ModelAndView("conta/contas-datatable");
-		andView.addObject("qtdLocacao", grafico.get(0).getLocacoes()); 
-		andView.addObject("ticket", grafico.get(0).getTicket());
-		andView.addObject("indicadorGeral", grafico.get(0).getIndice());
-		andView.addObject("locadoHoje", grafico.get(0).getLocado());
-		return andView;	
+		 return base(andView);
 		}
 
 	    @GetMapping("/listcontasBancarias")

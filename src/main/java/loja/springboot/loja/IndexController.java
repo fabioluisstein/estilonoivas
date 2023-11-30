@@ -6,8 +6,10 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +28,8 @@ import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
 import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
 import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
 import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
+import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
 
 @Controller
 public class IndexController {
@@ -41,6 +45,11 @@ public class IndexController {
 
 	@Autowired
 	private ReportUtil reportUtil;
+
+    @Autowired
+	private PainelRepository painelRepository;
+	private static ApplicationContext applicationContext;
+
 
 	private ModelAndView andView = new ModelAndView("home/index");
 
@@ -91,6 +100,18 @@ public class IndexController {
 		Runtime.getRuntime().freeMemory();
 		return andView;
 	}
+
+	
+    public String definirAtributo(HttpSession session) {
+	List<listPainelOperacional> grafico = painelRepository.grafico();
+		andView.addObject("qtdLocacao", grafico.get(0).getLocacoes());
+        // Definir um atributo na sessão
+        session.setAttribute("meuAtributo", "valorDoAtributo");
+        return "redirect:/pagina";
+    }
+
+
+	
 
 	public void carregaPainelPrinicial() {
 		List<listGraficoPrincipal> grafico = graficoRepository.graficoPrincipal();
