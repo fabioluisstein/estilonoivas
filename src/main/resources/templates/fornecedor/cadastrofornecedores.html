@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="/materialize/select2/css/select2.min.css">
+	
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarfornecedor" id="formfornecedor" method="post" th:object="${fornecedorbj}" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Fornecedor</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	  
+	</div>  
+
+
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-1">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		</div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-8">
+		  <div class="form-group">
+	      <label for="nome">Nome</label> 
+		  <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" >
+		</div>
+	    </div>
+
+		<div class="col-md-3">
+			
+		<div class="form-group">
+			<label>Tipo</label>
+			<select th:field="*{tipo_pessoa}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+			  <option value="Fisica">Fisica</option>
+			  <option value="Juridica">Juridica</option>
+			</select>
+		</div>
+
+	</div>
+		<!-- /.form-group -->
+	</div>
+
+
+		<div class="row">
+
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="telefone">Telefone</label> 
+					<input class="form-control" type="text" name="telefone" th:field="*{telefone}" id="telefone"  required>
+				  </div>
+			  </div>
+			  <!-- /.form-group -->
+			
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="cnpj">CNPJ/CPF</label> 
+						<input class="form-control" type="text" name="cpf_cnpj" th:field="*{cpf_cnpj}" id="cpf_cnpj" >
+					  </div>
+				  </div>
+				  <!-- /.form-group -->
+
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="site">Site</label> 
+						<input class="form-control" type="text" name="site" th:field="*{site}" id="site">
+					  </div> 
+				  </div> 
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="email">E-mail</label> 
+						<input class="form-control" type="email" name="email" th:field="*{email}" id="email">
+					  </div>
+				  </div>
+				  <!-- /.form-group -->
+		
+			</div>
+			<div class="row">
+			<!-- /.col -->
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Cidade</label>
+					<select th:field="*{cidade}" class="form-control select2" style="height: 100%">
+						<option th:each="cid: ${cidades}"
+						th:value="${cid.id}" th:text="${cid.nome}" ></option>
+					</select>
+				</div>
+			</div>
+		
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="Bairro">Bairro</label> 
+					<input class="form-control" type="text" name="bairro" th:field="*{bairro}" id="bairro">
+				  </div>
+			  </div>
+			  <!-- /.form-group -->
+			  <div class="col-md-3">
+				<div class="form-group">
+					<label for="Logradouro">Logradouro</label> 
+					<input class="form-control" type="text" name="logradouro" th:field="*{logradouro}" id="logradouro">
+				  </div>
+			  </div>
+			  <!-- /.form-group -->
+
+		</div>
+
+</div>
+
+<div class="card-footer"> 
+  <a  href="/listafornecedores" class="btn btn-warning ">Voltar</a>
+  <button type="submit"  class="btn btn-success">Salvar</button>
+       
+
+</div>
+	
+
+</form>
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+	<!--
+	<script  th:src="@{/js/table/select2.full.min.js}"  th:fragment="js"></script> -->
+	<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+<!-- Select2 -->
+
+
+</body>
+</html>

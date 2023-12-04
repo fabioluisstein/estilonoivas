@@ -48,9 +48,7 @@ public class IndexController {
 
     @Autowired
 	private PainelRepository painelRepository;
-	private static ApplicationContext applicationContext;
-
-
+	
 	private ModelAndView andView = new ModelAndView("home/index");
 
 	public void permissao() {

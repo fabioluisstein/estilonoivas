@@ -39,85 +39,80 @@ public class ClienteController {
 	public void grafico() {
 		List<listPainelOperacional> grafico = painelRepository.grafico();
 	        operacional = grafico.get(0);
-			Runtime.getRuntime().gc();
-			Runtime.getRuntime().freeMemory();
+			garbageCollection();
 		}
 
-		public ModelAndView base(ModelAndView modelAndView){
-			modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
-			modelAndView.addObject("ticket", operacional.getTicket());
-			modelAndView.addObject("indicadorGeral", operacional.getIndice());
-			modelAndView.addObject("locadoHoje", operacional.getLocado());
-			return modelAndView;
-		}
+	public ModelAndView base(ModelAndView modelAndView){
+		modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+		modelAndView.addObject("ticket", operacional.getTicket());
+		modelAndView.addObject("indicadorGeral", operacional.getIndice());
+		modelAndView.addObject("locadoHoje", operacional.getLocado());
+	  return modelAndView;
+	}
 		
-
 	@GetMapping("/listaClienteCidade/{idcidade}")
 	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
-		ModelAndView andViewLista = new ModelAndView("cliente/lista");
-		andViewLista.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
-		garbageCollection();
-		return andViewLista;
+	 ModelAndView andViewLista = new ModelAndView("cliente/lista");
+		  andViewLista.addObject("clientes", clienteRepository.listaClienteCidade(idcidade));
+		  garbageCollection();
+	 return andViewLista;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocliente")
 	public ModelAndView cadastro(Cliente cliente) {
-		ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
-		andViewCadastro.addObject("clientebj", new Cliente());
-		andViewCadastro.addObject("cidades", cidadeRepository.cidadeDtoRelac());
-		andViewCadastro.addObject("id", "Cadastrando Cliente");
-		andViewCadastro.addObject("color", "alert alert-dark");
-		garbageCollection();
-		return base(andViewCadastro);
+	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
+		  andViewCadastro.addObject("clientebj", new Cliente());
+		  andViewCadastro.addObject("cidades", cidadeRepository.cidadeDtoRelac());
+		  andViewCadastro.addObject("id", "Cadastrando Cliente");
+		  andViewCadastro.addObject("color", "alert alert-dark");
+		  garbageCollection();
+	 return base(andViewCadastro);
 	}
 	
 	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
-		ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
-		andViewCadastro.addObject("clientebj",clienteRepository.save(cliente));
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("id", "Gravado com Sucesso");
-		andViewCadastro.addObject("color", "alert alert-success");
-		garbageCollection();
-		return base(andViewCadastro);
+	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
+		  andViewCadastro.addObject("clientebj",clienteRepository.save(cliente));
+		  andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		  andViewCadastro.addObject("id", "Gravado com Sucesso");
+		  andViewCadastro.addObject("color", "alert alert-success");
+		  garbageCollection();
+	  return base(andViewCadastro);
 	}
 	
 	@GetMapping("/editarcliente/{idcliente}")
 	public ModelAndView editar(@PathVariable("idcliente") Cliente cliente) {
-		ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
-		andViewCadastro.addObject("clientebj",cliente);
-		andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
-		andViewCadastro.addObject("id", "Editando Registro");
-		andViewCadastro.addObject("color", "alert alert-primary");
-		garbageCollection();
-		return base(andViewCadastro);
+	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
+		  andViewCadastro.addObject("clientebj",cliente);
+		  andViewCadastro.addObject("cidades", cidadeRepository.findAll()); 
+		  andViewCadastro.addObject("id", "Editando Registro");
+		  andViewCadastro.addObject("color", "alert alert-primary");
+		  garbageCollection();
+	 return base(andViewCadastro);
 	}
 
 	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
 	@GetMapping("/removercliente/{idcliente}")
-	public String excluir(@PathVariable("idcliente") Long idcliente) {
-		try {
-			clienteRepository.deleteById(idcliente);	
-		  } catch (Exception e) {
+    public String excluir(@PathVariable("idcliente") Long idcliente) {
+	try {
+	   clienteRepository.deleteById(idcliente);	
+		 } catch (Exception e) {
 		}
-		return "redirect:/listaclientes";
-	  }
+	   return "redirect:/listaclientes";
+	}
 
     @GetMapping("/listaclientes")
 	public ModelAndView showTabelas() {
-	    ModelAndView andView = new ModelAndView("cliente/clientes-datatable");
-		grafico();
-		garbageCollection();
-		return base(andView);	 
-		}
-
-   @GetMapping("/serverClientes")
-		public ResponseEntity<?> datatables(HttpServletRequest request) {
-			Map<String, Object> data = new ClienteDataTablesService().execute(clienteRepository, request);
-			return ResponseEntity.ok(data);
+	 ModelAndView andView = new ModelAndView("cliente/clientes-datatable");
+	 grafico();
+	 garbageCollection();
+	 return base(andView);	 
 	}
 
-
-
+   @GetMapping("/serverClientes")
+	 public ResponseEntity<?> datatables(HttpServletRequest request) {
+	  Map<String, Object> data = new ClienteDataTablesService().execute(clienteRepository, request);
+	  return ResponseEntity.ok(data);
+   }
 } 

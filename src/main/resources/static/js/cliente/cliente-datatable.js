@@ -48,7 +48,7 @@ $(document).ready(function () {
 			{ "data": 'whats',
 				"width": '5%',
 				render: function ( data, type, row) {	 
-				return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="'+row.whats+'" class="btn btn-info"><i class="fas fa-phone">';
+					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="'+row.whats+'" class="btn btn-info"><i class="fas fa-phone"></i></a> </div> </td>';
 				}
 		    },
 		    { "data": 'cpf'} , 

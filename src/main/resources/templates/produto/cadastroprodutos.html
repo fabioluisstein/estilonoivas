@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}"  enctype="multipart/form-data" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Produtos</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	  
+	</div>  
+
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-1">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		</div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-4">
+		<div class="form-group">
+			<label for="categoria">Tipo</label> 
+			<select th:field="*{categoria}" class="form-control select">
+				<option th:each="cid: ${categorias}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		  </div>
+	    </div>
+
+		<div class="col-md-7">
+		<div class="form-group">
+			<label for="fornecedor">Fornecedor</label> 
+			<select th:field="*{fornecedor}" class="form-control select">
+				<option th:each="cid: ${fornecedores}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		  </div>
+		  </div>
+	</div>
+	
+
+		<div class="row">
+			<div class="col-md-5">
+				  <div class="form-group">
+					<label for="Bairro">Data Compra</label> 
+					<input class="form-control" type="date" name="data_compra" th:field="*{data_compra}" id="data_compra">
+				  </div>
+			  </div>
+			  <!-- /.form-group -->
+			
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="quantidade_acesso">Imprimir?</label> 
+						<select th:field="*{imprimir}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+							<option value="1">Não</option>
+							<option value="2">Sim</option>
+						</select>
+					</div>
+
+				  </div>
+				  <!-- /.form-group -->
+
+				  <div class="col-md-4">
+					<div class="form-group">
+						<label for="quantidade_acesso">Quantidade de Acessos</label> 
+						<input class="form-control" type="text" name="quantidade_acesso" th:field="*{quantidade_acesso}" id="quantidade_acesso"  readonly="readonly">
+					  </div>
+				  </div>
+				  <!-- /.form-group -->
+		
+			</div>
+			
+			<div class="row">
+		
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="quantidade_acesso">Descrição</label> 
+					<input class="form-control" type="text" name="descricao" th:field="*{descricao}" id="descricao" >
+				  </div>
+			  </div>
+
+			</div>
+			  
+			
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="quantidade_acesso">Cor</label> 
+						<input class="form-control" type="text" name="cor" th:field="*{cor}" id="cor" >
+					  </div>
+				  </div>
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="tamanho">Tamanho</label> 
+						<input class="form-control" type="text" name="tamanho" th:field="*{tamanho}" id="tamanho" >
+					  </div>
+				  </div>
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="tamanho">Tamanho</label> 
+					<input type="file" class="form-control" aria-label="file example" id="file" name="file">
+					<div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
+				  </div>
+		</div>
+	</div>
+					
+		<div class="row">
+		
+			<div class="col-md-6">
+					<div class="form-group"> 
+						<label for="valorCompra">Valor Compra</label> 
+						<input class="form-control" name="valor" th:field="*{valorCompra}" id="valorCompra" >
+				  </div>
+			  </div>
+
+			  <div class="col-md-6">
+				<div class="form-group">
+					<label for="valorVenda">Valor Venda</label> 
+					<input class="form-control"  name="valorVenda" th:field="*{valorVenda}" id="valorVenda" >
+				  </div>
+			  </div>
+	</div>
+
+</div>
+
+<div class="card-footer"> 
+  <a  href="/listaprodutos" class="btn btn-warning ">Voltar</a>
+  <button type="submit"  class="btn btn-success">Salvar</button>
+      
+  
+   
+
+</div>
+	
+
+</form>
+
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+	
+
+	</div>
+</body>
+</html>

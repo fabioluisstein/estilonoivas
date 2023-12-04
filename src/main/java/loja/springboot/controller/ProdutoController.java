@@ -1,10 +1,14 @@
 package loja.springboot.controller;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +23,10 @@ import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
+import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ProdutoRepository;
+import loja.springboot.service.ProdutoDataTablesService;
 
 @Controller
 public class ProdutoController {
@@ -35,6 +42,10 @@ public class ProdutoController {
 	private int quantidadeLocacoes;
 	private double valorFinanceiro;
 
+	private listPainelOperacional operacional;
+
+    @Autowired
+	private PainelRepository painelRepository;
 
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
@@ -62,7 +73,7 @@ public class ProdutoController {
 		garbageCollection();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutos")
+	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutoss")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/lista");
 		andView.addObject("produtos", produtoRepository.listaTodos());
@@ -127,20 +138,24 @@ public class ProdutoController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroproduto")
 	public ModelAndView cadastro(Produto produto) {
-		ModelAndView modelAndView = new ModelAndView("produto/cadastroproduto");
+		ModelAndView modelAndView = new ModelAndView("produto/cadastroprodutos");
 		modelAndView.addObject("produtobj", new Produto());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+		modelAndView.addObject("id", "Cadastrando Produto");
+		modelAndView.addObject("color", "alert alert-dark");
 		garbageCollection();
-		return modelAndView;
+		return base(modelAndView); 
 	}
 
 	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
-		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
+		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
+		andView.addObject("id", "Gravado com Sucesso");
+		andView.addObject("color", "alert alert-success");
 
 		if (produto.getId() == null) {
 			if (file.getSize() > 0) {
@@ -172,7 +187,7 @@ public class ProdutoController {
 			andView.addObject("produtobj", produtoRepository.saveAndFlush(produto));
 		}
 		garbageCollection();
-		return andView;
+		return base(andView);
 	}
 
 	@GetMapping("/baixarArquivo/{idproduto}")
@@ -205,13 +220,15 @@ public class ProdutoController {
 
 	@GetMapping("/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto")  Produto produto) throws ParseException, IOException {
-		ModelAndView andView = new ModelAndView("produto/cadastroproduto");
+		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
+		andView.addObject("id", "Editando Registro");
+		andView.addObject("color", "alert alert-primary");
 		andView.addObject("produtobj", produto);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
 		updateVisitas(produto);
 		garbageCollection();
-		return andView;
+		return base(andView);
 	}
 
 	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
@@ -224,5 +241,36 @@ public class ProdutoController {
 	  garbageCollection();
 	return "redirect:/listaprodutos";
    }
+
+
+   public ModelAndView base(ModelAndView modelAndView){
+	modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+	modelAndView.addObject("ticket", operacional.getTicket());
+	modelAndView.addObject("indicadorGeral", operacional.getIndice());
+	modelAndView.addObject("locadoHoje", operacional.getLocado());
+    return modelAndView;
+  }
+
+  public void grafico() {
+	List<listPainelOperacional> grafico = painelRepository.grafico();
+	 operacional = grafico.get(0);
+	 garbageCollection();
+	}
+
+    @GetMapping("/listaprodutos")
+	public ModelAndView showTabelas() {
+	    ModelAndView andView = new ModelAndView("produto/produtos-datatable");
+		grafico();
+		garbageCollection();
+		return base(andView);	 
+		} 
+
+   @GetMapping("/serverProdutos")
+		public ResponseEntity<?> datatables(HttpServletRequest request) {
+			Map<String, Object> data = new ProdutoDataTablesService().execute(produtoRepository, request);
+			return ResponseEntity.ok(data);
+	}
+
+
 	
 }
