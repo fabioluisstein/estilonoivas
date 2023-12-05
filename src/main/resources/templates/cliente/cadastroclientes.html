@@ -14,13 +14,11 @@
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
 			<span class="info-box-number" th:text="${id}"></span>
 		  </div> 
-	  
 	</div>  
-
 
 	<!-- /.card-header -->
 	<div class="card-body">
-		<div class="row">
+	<div class="row">
 		<div class="col-md-1">
 		  <div class="form-group">
 			<label for="id">Id</label> 
@@ -30,42 +28,40 @@
 		<!-- /.col -->
 		<div class="col-md-11">
 		  <div class="form-group">
-	      <label for="nome">Nome</label> 
-		  <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" >
-		</div>
+	        <label for="nome">Nome</label> 
+		    <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" >
+		  </div>
 	    </div>
 		<!-- /.form-group -->
 	</div>
 
-
-		<div class="row">
-
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="telefone">Telefone</label> 
-					<input class="form-control" type="text" name="telefone" th:field="*{telefone}" id="telefone"  required>
-				  </div>
-			  </div>
-			  <!-- /.form-group -->
-			
-				<div class="col-md-4">
-					<div class="form-group">
-						<label for="cpf">CPF</label> 
-						<input class="form-control" type="text" name="cpf" th:field="*{cpf}" id="cpf"  maxlength="14" required>
-					  </div>
-				  </div>
-				  <!-- /.form-group -->
-
-				  <div class="col-md-4">
-					<div class="form-group">
-						<label for="rg">RG</label> 
-						<input class="form-control" type="text" name="rg" th:field="*{rg}" id="rg">
-					  </div>
-				  </div>
-				  <!-- /.form-group -->
-		
+	<div class="row">
+       <div class="col-md-4">
+			<div class="form-group">
+				<label for="telefone">Telefone</label> 
+				<input class="form-control" type="text" name="telefone" th:field="*{telefone}" id="telefone"  required>
 			</div>
-			<div class="row">
+		</div>
+		<!-- /.form-group -->
+			
+		<div class="col-md-4">
+			<div class="form-group">
+			<label for="cpf">CPF</label> 
+			<input class="form-control" type="text" name="cpf" th:field="*{cpf}" id="cpf"  maxlength="14" required>
+		    </div>
+	   </div>
+	   <!-- /.form-group -->
+
+	   <div class="col-md-4">
+		  <div class="form-group">
+		   <label for="rg">RG</label> 
+		   <input class="form-control" type="text" name="rg" th:field="*{rg}" id="rg">
+		  </div>
+	   </div>
+	   <!-- /.form-group -->
+		
+	    </div>
+		  <div class="row">
 			<!-- /.col -->
 			<div class="col-md-6">
 				<div class="form-group">
@@ -91,28 +87,18 @@
 				  </div>
 			  </div>
 			  <!-- /.form-group -->
-
 		</div>
-
 </div>
 
 <div class="card-footer"> 
   <a  href="/listaclientes" class="btn btn-warning ">Voltar</a>
   <button type="submit"  class="btn btn-success">Salvar</button>
-      
   <td><a th:if="${clientebj.id !=null}"  th:href="@{/cadastrolocacao/{idCliente}(idCliente=${clientebj.id})}" class="btn btn-info" >Nova Locação</a> </td> 
-   
-
 </div>
-	
-
 </form>
-
     <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
 	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
 	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
-	
-
 	</div>
 </body>
 </html>

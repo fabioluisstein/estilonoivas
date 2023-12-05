@@ -52,7 +52,7 @@
 		<div class="row">
 			<div class="col-md-5">
 				  <div class="form-group">
-					<label for="Bairro">Data Compra</label> 
+					<label for="dataCompra">Data Compra</label> 
 					<input class="form-control" type="date" name="data_compra" th:field="*{data_compra}" id="data_compra">
 				  </div>
 			  </div>
@@ -60,7 +60,7 @@
 			
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="quantidade_acesso">Imprimir?</label> 
+						<label for="imprimir">Imprimir?</label> 
 						<select th:field="*{imprimir}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
 							<option value="1">Não</option>
 							<option value="2">Sim</option>
@@ -84,7 +84,7 @@
 		
 			<div class="col-md-12">
 				<div class="form-group">
-					<label for="quantidade_acesso">Descrição</label> 
+					<label for="descricao">Descrição</label> 
 					<input class="form-control" type="text" name="descricao" th:field="*{descricao}" id="descricao" >
 				  </div>
 			  </div>
@@ -95,7 +95,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="quantidade_acesso">Cor</label> 
+						<label for="cor">Cor</label> 
 						<input class="form-control" type="text" name="cor" th:field="*{cor}" id="cor" >
 					  </div>
 				  </div>
@@ -107,7 +107,7 @@
 				  </div>
 				  <div class="col-md-3">
 					<div class="form-group">
-						<label for="tamanho">Tamanho</label> 
+						<label for="arquivo">Tamanho</label> 
 					<input type="file" class="form-control" aria-label="file example" id="file" name="file">
 					<div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
 				  </div>

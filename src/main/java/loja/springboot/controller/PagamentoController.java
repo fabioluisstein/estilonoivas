@@ -1,12 +1,16 @@
 package loja.springboot.controller;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Pagamento;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.PagamentoRepository;
+import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
+import loja.springboot.service.PagamentoDataTablesService;
 
 @Controller
 public class PagamentoController {
@@ -32,12 +40,32 @@ public class PagamentoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	
+	private listPainelOperacional operacional;
+
+    @Autowired
+	private PainelRepository painelRepository;
+
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentos")
+	public ModelAndView base(ModelAndView modelAndView){
+		modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+		modelAndView.addObject("ticket", operacional.getTicket());
+		modelAndView.addObject("indicadorGeral", operacional.getIndice());
+		modelAndView.addObject("locadoHoje", operacional.getLocado());
+		return modelAndView;
+	  }
+
+	public void grafico() {
+	 List<listPainelOperacional> grafico = painelRepository.grafico();
+	 operacional = grafico.get(0);
+	 garbageCollection();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentoss")
 	public ModelAndView pagamentos() {
 		ModelAndView andView = new ModelAndView("pagamento/lista");
 		Pessoa p = new Pessoa();
@@ -69,20 +97,24 @@ public class PagamentoController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "cadastropagamento")
 	public ModelAndView cadastro(Pagamento pagamento) {
-		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamento");
+		ModelAndView modelAndView = new ModelAndView("pagamento/cadastropagamentos");
 		modelAndView.addObject("pagamentobj", new Pagamento());
 		modelAndView.addObject("fornecedores", fornecedorRepository.fornecedoresTodos());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
+		modelAndView.addObject("id", "Cadastrando Pagamento");
+		modelAndView.addObject("color", "alert alert-dark");
 		garbageCollection();
-		return modelAndView;
+		return base(modelAndView);	 
 	}
 
 	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarpagamento", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
-		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
+		ModelAndView andView = new ModelAndView("pagamento/cadastropagamentos");
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
+		andView.addObject("id", "Gravado com Sucesso");
+		andView.addObject("color", "alert alert-success");
 		if (pagamento.getId() == null) {
 			if (file.getSize() > 0) {
 				pagamento.setArquivo(file.getBytes());
@@ -113,7 +145,7 @@ public class PagamentoController {
 			
 		}
 		garbageCollection();
-		return andView;
+		return base(andView);	 
 	}
 
 	@GetMapping("/baixarArquivoPagamento/{idpagamento}")
@@ -146,12 +178,16 @@ public class PagamentoController {
 
 	@GetMapping("/editarpagamento/{idpagamento}")
 	public ModelAndView editar(@PathVariable("idpagamento") Pagamento pagamento) throws ParseException, IOException {
-		ModelAndView andView = new ModelAndView("pagamento/cadastropagamento");
+		ModelAndView andView = new ModelAndView("pagamento/cadastropagamentos");
+		grafico();
 		andView.addObject("pagamentobj", pagamento);
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Pagamento"));
+		andView.addObject("id", "Editando Registro");
+		andView.addObject("color", "alert alert-primary");
+	
 		garbageCollection();
-		return andView;
+		return base(andView);
 	}
 
 	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
@@ -164,5 +200,24 @@ public class PagamentoController {
 	garbageCollection();
 	return "redirect:/listapagamentos";
   }
+
+
+    @GetMapping("/listapagamentos")
+	public ModelAndView showTabelas() {
+	    ModelAndView andView = new ModelAndView("pagamento/pagamentos-datatables");
+		grafico();
+		garbageCollection();
+		return base(andView);	 
+		} 
+
+   @GetMapping("/serverPagamentos")
+		public ResponseEntity<?> datatables(HttpServletRequest request) {
+			Map<String, Object> data = new PagamentoDataTablesService().execute(pagamentoRepository, request);
+			return ResponseEntity.ok(data);   
+	}
+
+
+
+
 
 }

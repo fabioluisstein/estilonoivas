@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarpagamento" id="formpagamento" method="post" th:object="${pagamentobj}"  enctype="multipart/form-data" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Pagamentos</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	</div>  
+
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-1">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		  </div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-4">
+		<div class="form-group">
+			<label for="categoria">Tipo</label> 
+			<select th:field="*{categoria}" class="form-control select">
+				<option th:each="cid: ${categorias}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		  </div>
+	    </div>
+
+		<div class="col-md-7">
+		<div class="form-group">
+			<label for="fornecedor">Fornecedor</label> 
+			<select th:field="*{fornecedor}" class="form-control select">
+				<option th:each="cid: ${fornecedores}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		  </div>
+		  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-md-12">
+		<div class="form-group">
+		  <label for="descricao">Descrição</label> 
+		  <input class="form-control" type="text" name="descricao" th:field="*{descricao}" id="descricao" >
+		</div>
+	  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-md-5">
+		<div class="form-group">
+			<label for="dataCompra">Data</label> 
+			<input class="form-control" type="date" name="data" th:field="*{data}" id="data">
+		  </div>
+	   </div>
+	
+	  <div class="col-md-3">
+		<div class="form-group">
+			<label for="moeda">Moeda</label>  
+			<select th:field="*{moeda}" class="form-control select" required >
+			 <option value="Dinheiro">Dinheiro</option>
+			 <option value="Cartao">Cartão</option>
+			 <option value="Pix">Pix</option>
+			 <option value="Cheque">Cheque</option>
+		     <option value="Boleto">Boleto</option>
+		     <option value="Débito em Conta">Débito em Conta</option>
+		   </select>
+	  </div>
+    </div>
+				
+	<div class="col-md-4">
+	 <div class="form-group">
+	  <label for="valorCompra">Valor</label> 
+	  <input class="form-control" name="valor" th:field="*{valor}" id="valor" >
+	 </div>
+	</div>
+  </div>
+					
+   <div class="row">
+
+	<div class="col-md-5">
+		<div class="form-group">
+		 <label for="origem">Origem</label>  
+		   <select th:field="*{origem}" class="form-control select">
+			 <option value="Interno">Interno</option>
+			 <option value="Externo">Externo</option>
+		   </select>
+		  </div>
+		</div>
+
+		<div class="col-md-3">
+			<div class="form-group">
+			<label for="restrito">Restrito</label>  
+			<select th:field="*{restrito}" class="form-control select">
+			 <option value="Nao">Não</option>
+			 <option value="Sim">Sim</option>
+		   </select>
+			</div>
+		 </div>
+
+	 <div class="col-md-4">
+	  <div class="form-group">
+		<label for="arquivo">Arquivo</label> 
+		<input type="file" class="form-control" aria-label="file example" id="file" name="file">
+		<div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
+	  </div>
+	 </div>
+
+	</div>
+</div>
+
+<div class="card-footer"> 
+  <a href="/listapagamentos" class="btn btn-warning ">Voltar</a>
+  <button type="submit"  class="btn btn-success">Salvar</button>
+</div>
+</form>
+
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+	
+
+	</div>
+</body>
+</html>
