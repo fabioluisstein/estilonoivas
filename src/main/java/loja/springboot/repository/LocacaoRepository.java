@@ -16,11 +16,11 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	@Query(value = "Select * from vw_datatable_locacoes p  where  p.data_locacao  BETWEEN ?1 AND  ?2 ", nativeQuery = true)
 	List<listLocacoes> findLocacaoDatas(String dataInicial, String DataFinal);
 
-	@Query(value = "Select * from vw_datatable_locacoes p  order by p.id desc ", nativeQuery = true)
+	@Query(value = "Select * from vw_datatable_locacoes p  order by p.data_locacao desc ", nativeQuery = true)
 	List<listLocacoes> findAllTodos();
 
 	@Cacheable("locacoes120") 
-	@Query(value = "Select * from vw_datatable_locacoes p  order by p.id desc limit 60 ", nativeQuery = true)
+	@Query(value = "Select * from vw_datatable_locacoes p  order by p.data_locacao desc limit 160 ", nativeQuery = true)
 	List<listLocacoes> top120Locacao();
 	public static interface listLocacoes {
 		Long getId(); 

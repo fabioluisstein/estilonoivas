@@ -69,7 +69,7 @@ public class ClienteController {
 	 return base(andViewCadastro);
 	}
 	
-	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = { "locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
 	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
@@ -92,7 +92,7 @@ public class ClienteController {
 	 return base(andViewCadastro);
 	}
 
-	@CacheEvict(value = { "clienteTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = {"locacoes120"}, allEntries = true)
 	@GetMapping("/removercliente/{idcliente}")
     public String excluir(@PathVariable("idcliente") Long idcliente) {
 	try {

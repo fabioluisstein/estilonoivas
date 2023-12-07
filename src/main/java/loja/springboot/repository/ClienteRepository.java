@@ -17,7 +17,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Query( value = "select * from vw_datatable_clientes  a  where a.cidade_id= ?1", nativeQuery = true)
 	List<listTodosClientes> listaClienteCidade(Long id);
 
-	@Cacheable("clienteTodosDto") 
+
 	@Query(value = "select id, nome, telefone, whats, cpf,  cidade_id,  cidade from vw_datatable_clientes a  order by id desc ", nativeQuery = true)
 	List<listTodosClientes> clientesTodos();
 	public static interface listTodosClientes { 
