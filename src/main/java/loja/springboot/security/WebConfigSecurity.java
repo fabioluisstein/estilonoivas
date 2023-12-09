@@ -42,6 +42,7 @@ public class WebConfigSecurity{
         return (web) -> {
             web.ignoring().antMatchers("/novo/**");
             web.ignoring().antMatchers("/materialize/**");
+            web.ignoring().antMatchers("/js/**");
             web.ignoring().antMatchers("/consultaprodutos/**");
             web.ignoring().antMatchers("/pesquisaprodutocustom/**");
             web.ignoring().antMatchers("/consultarProdutoQr/**");

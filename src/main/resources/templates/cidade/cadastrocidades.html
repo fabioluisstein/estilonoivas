@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE -->
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarcidades" id="formestado" method="post" th:object="${cidadebj}" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Cidades</h3>
+		  <div style="text-align: center;" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	</div>  
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-2">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		</div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-5">
+		  <div class="form-group">
+	      <label for="nome">Nome</label> 
+		  <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" required>
+		</div>
+	    </div>
+		<!-- /.form-group -->
+
+		<div class="col-sm-5">
+			<div class="form-group" style="position:top;">
+			<label>Estado</label>
+			<select th:field="*{estado}" class="form-control select2" >
+			<option th:each="cid: ${listaEstados}"  th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		   </div>	
+		</div>
+	
+</div>
+<div class="card-footer"> 
+  <a  href="/listacidades" class="btn btn-warning ">Voltar</a>
+  <button type="submit"  class="btn btn-success">Salvar</button>
+</div>
+	
+	
+
+</form>
+
+<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+<script th:src="@{/js/table/select2.full.min.js}" th:fragment="js"></script>
+<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+	</div>
+</body>
+</html>

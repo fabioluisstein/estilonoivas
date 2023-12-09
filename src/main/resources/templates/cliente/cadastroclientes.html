@@ -64,7 +64,7 @@
 		  <div class="row">
 			<!-- /.col -->
 			<div class="col-md-6">
-				<div class="form-group">
+				<div >
 					<label>Cidade</label>
 					<select th:field="*{cidade}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
 						<option th:each="cid: ${cidades}"
@@ -99,6 +99,8 @@
     <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
 	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
 	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+
 	</div>
 </body>
 </html>

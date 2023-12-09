@@ -1,22 +1,20 @@
 package loja.springboot.loja;
-import org.apache.catalina.Context; 
+import java.util.Arrays;
+import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
-
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
-
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EntityScan(basePackages = "loja.springboot.*")
@@ -29,6 +27,14 @@ public class LojaApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);	
 	}
+
+
+@Bean
+public StrictHttpFirewall httpFirewall() {
+    StrictHttpFirewall firewall = new StrictHttpFirewall();
+    firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
+    return firewall;
+}
 
 /* 
 	@Override
