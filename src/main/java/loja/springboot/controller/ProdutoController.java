@@ -190,10 +190,10 @@ public class ProdutoController {
 		return base(andView);
 	}
 
-	@GetMapping("/baixarArquivo/{idproduto}")
+	@GetMapping("baixarArquivoProduto/{idproduto}")
 	public void baixarArquivo(@PathVariable("idproduto") Long idproduto,
 			HttpServletResponse response) throws IOException {
-
+ 
 		/* Consultar o obejto pessoa no banco de dados */
 		Produto produto = produtoRepository.findById(idproduto).get();
 		if (produto.getArquivo() != null) {

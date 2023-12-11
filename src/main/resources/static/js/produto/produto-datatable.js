@@ -61,17 +61,22 @@ $(document).ready(function () {
 	   },
 
 
-			{ "data": 'id',
+			{ "data": 'foto',
 				"width": '5%',
 				render: function ( data, type, row) {	 
-					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/baixarArquivo/'+row.id+'" class="btn btn-info"><i class="fas fa-image"></i></a> </div> </td>';
+					if (row.foto === null) { 
+						return  '<td class="text-right py-0 align-middle"> </td>';
+				}
+					else{
+					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="baixarArquivoProduto/'+row.id+'" class="btn btn-info"><i class="fas fa-download"></i></a> </div> </td>';
+					}
 				}
 		    },
 		   
 			{ "data": 'id',
 			  "width": '5%',
-			   render: function ( data, type, row) {	 
-			   return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarproduto/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <button onclick="if (confirm(\'Deseja excluir?\')) { window.location.href = \'/removerproduto/' + row.id +'\'; }  else {  }" class="btn btn-danger"><i class="fas fa-trash"></i></button> </div> </td>';
+			   render: function ( data, type, row) {	 	
+				return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarproduto/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <button onclick="if (confirm(\'Deseja excluir?\')) { window.location.href = \'/removerproduto/' + row.id +'\'; }  else {  }" class="btn btn-danger"><i class="fas fa-trash"></i></button> </div> </td>';
 			}
 		 }
 		],

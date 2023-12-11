@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class LojaApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);	
+		
 	}
 
 
@@ -33,6 +34,9 @@ public class LojaApplication extends SpringBootServletInitializer {
 public StrictHttpFirewall httpFirewall() {
     StrictHttpFirewall firewall = new StrictHttpFirewall();
     firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
+	firewall.setAllowedHeaderNames((header) -> true);
+    firewall.setAllowedHeaderValues((header) -> true);
+    firewall.setAllowedParameterNames((parameter) -> true);
     return firewall;
 }
 

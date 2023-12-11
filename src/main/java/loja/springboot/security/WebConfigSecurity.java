@@ -21,9 +21,8 @@ public class WebConfigSecurity{
 		.authorizeHttpRequests() // Pertimir restringir acessos
 		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
 		.anyRequest().authenticated()
-		.and().formLogin().permitAll();
+        .and().formLogin().loginPage("/login").defaultSuccessUrl("/administrativo",true).failureUrl("/login").permitAll();
         return http.build();
-	
 	}
 
     @Autowired
