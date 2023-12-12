@@ -23,6 +23,7 @@ import loja.springboot.repository.PainelRepository;
 import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.service.ContaBancariaService;
+import loja.springboot.service.ParcelaService;
 
 @Controller
 public class ContaBancariaController {
@@ -42,7 +43,7 @@ public class ContaBancariaController {
 	garbageCollection();
   }
 	 
-  @RequestMapping(method = RequestMethod.GET, value = "/listaParcelas")
+  @RequestMapping(method = RequestMethod.GET, value = "/listaParcelass")
   public ModelAndView listaPagamentos() {
 		 ModelAndView andView = new ModelAndView("conta/listaParcelas");
 		 andView.addObject("parcelas", parcelaRepository.parcelaMesAtual()); 
@@ -79,7 +80,7 @@ public class ContaBancariaController {
 	@RequestMapping(method = RequestMethod.GET, value = "parcelasProblemas")
 	public ModelAndView parcelasProblemas() {	
 		   ModelAndView andView = new ModelAndView("conta/listaParcelas");
-		        andView.addObject("parcelas", parcelaRepository.parcelaMesProblemas());
+		   //     andView.addObject("parcelas", parcelaRepository.parcelaMesProblemas());
 	   garbageCollection(); 
 	 return andView;
 	}
@@ -92,7 +93,7 @@ public class ContaBancariaController {
 		} 
 		 
 		if(!dataInicio.isEmpty() && !dataFinal.isEmpty()) {	
-			andView.addObject("parcelas", parcelaRepository.findLocacaoDatas(dataInicio,dataFinal));
+		//	andView.addObject("parcelas", parcelaRepository.findLocacaoDatas(dataInicio,dataFinal));
 			return andView;
 		}
 		andView.addObject("parcelas", parcelaRepository.parcelaMesAtual());
@@ -134,5 +135,21 @@ public class ContaBancariaController {
 			Map<String, Object> data = new ContaBancariaService().execute(contaBancariaRepository, request);
 			return ResponseEntity.ok(data);
 	}
+
+
+
+	@GetMapping("/listaParcelas")
+		public ModelAndView showTabelaParcelas() {
+		grafico();
+	    ModelAndView andView = new ModelAndView("conta/parcelas-datatable");
+		 return base(andView);
+		}
+
+   @GetMapping("/serverParcelas")
+		public ResponseEntity<?> datatablesParcelas(HttpServletRequest request) {
+			Map<String, Object> data = new ParcelaService().execute(parcelaRepository, request);
+			return ResponseEntity.ok(data);
+	}
+
 	
 }

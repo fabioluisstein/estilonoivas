@@ -36,7 +36,7 @@
 		<div class="col-sm-5">
 			<div class="form-group" style="position:top;">
 			<label>Estado</label>
-			<select th:field="*{estado}" class="form-control select2" >
+			<select th:field="*{estado}" class="form-control select2" required>
 			<option th:each="cid: ${listaEstados}"  th:value="${cid.id}" th:text="${cid.nome}" ></option>
 			</select>
 		   </div>	

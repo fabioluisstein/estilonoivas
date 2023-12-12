@@ -30,7 +30,7 @@
 		<div class="col-md-4">
 		<div class="form-group">
 			<label for="categoria">Tipo</label> 
-			<select th:field="*{categoria}" class="form-control select">
+			<select th:field="*{categoria}" class="form-control select" required>
 				<option th:each="cid: ${categorias}"
 				th:value="${cid.id}" th:text="${cid.nome}" ></option>
 			</select>
@@ -40,7 +40,7 @@
 		<div class="col-md-7">
 		<div class="form-group">
 			<label for="fornecedor">Fornecedor</label> 
-			<select th:field="*{fornecedor}" class="form-control select">
+			<select th:field="*{fornecedor}" class="form-control select" required>
 				<option th:each="cid: ${fornecedores}"
 				th:value="${cid.id}" th:text="${cid.nome}" ></option>
 			</select>
@@ -53,7 +53,7 @@
 			<div class="col-md-5">
 				  <div class="form-group">
 					<label for="dataCompra">Data Compra</label> 
-					<input class="form-control" type="date" name="data_compra" th:field="*{data_compra}" id="data_compra">
+					<input class="form-control" type="date" name="data_compra" th:field="*{data_compra}" id="data_compra" required>
 				  </div>
 			  </div>
 			  <!-- /.form-group -->
@@ -85,7 +85,7 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<label for="descricao">Descrição</label> 
-					<input class="form-control" type="text" name="descricao" th:field="*{descricao}" id="descricao" >
+					<input class="form-control" type="text" name="descricao" th:field="*{descricao}" id="descricao"  required>
 				  </div>
 			  </div>
 
@@ -107,7 +107,7 @@
 				  </div>
 				  <div class="col-md-3">
 					<div class="form-group">
-						<label for="arquivo">Tamanho</label> 
+						<label for="arquivo">Arquivo</label> 
 					<input type="file" class="form-control" aria-label="file example" id="file" name="file">
 					<div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
 				  </div>
@@ -119,14 +119,14 @@
 			<div class="col-md-6">
 					<div class="form-group"> 
 						<label for="valorCompra">Valor Compra</label> 
-						<input class="form-control" name="valor" th:field="*{valorCompra}" id="valorCompra" >
+						<input class="form-control" name="valor" th:field="*{valorCompra}" id="valorCompra" required>
 				  </div>
 			  </div>
 
 			  <div class="col-md-6">
 				<div class="form-group">
 					<label for="valorVenda">Valor Venda</label> 
-					<input class="form-control"  name="valorVenda" th:field="*{valorVenda}" id="valorVenda" >
+					<input class="form-control"  name="valorVenda" th:field="*{valorVenda}" id="valorVenda" required>
 				  </div>
 			  </div>
 	</div>

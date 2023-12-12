@@ -66,6 +66,9 @@ $(document).ready(function () {
 			}
 		 }
 		],
+		columnDefs: [
+			{ targets: [ 5], orderable: false },	
+		  ],
 		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'excel',

@@ -34,9 +34,11 @@ public class LojaApplication extends SpringBootServletInitializer {
 public StrictHttpFirewall httpFirewall() {
     StrictHttpFirewall firewall = new StrictHttpFirewall();
     firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
-	firewall.setAllowedHeaderNames((header) -> true);
-    firewall.setAllowedHeaderValues((header) -> true);
-    firewall.setAllowedParameterNames((parameter) -> true);
+	firewall.setAllowSemicolon(true);
+	firewall.setAllowUrlEncodedSlash(true);
+	firewall.setAllowBackSlash(true);
+	firewall.setAllowUrlEncodedPercent(true);
+	firewall.setAllowUrlEncodedPeriod(true);
     return firewall;
 }
 

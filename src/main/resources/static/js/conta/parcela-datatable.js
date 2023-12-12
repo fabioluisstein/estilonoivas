@@ -1,12 +1,12 @@
 $(document).ready(function () {
 	moment.locale('pt-br');
-	var table = $("#table-pagamento-server").DataTable({
+	var table = $("#table-parcelas-server").DataTable({
 		processing: true,
 		serverSide: true,
 		responsive: true,
 		info:true,
 		lengthChange:false,
-		lengthMenu: [10, 40, 60, -1],
+		lengthMenu: [15, 40, 60, -1],
 		"order": [0, "desc"],
 		language: {
 			"emptyTable": "Nenhum registro encontrado",
@@ -32,56 +32,61 @@ $(document).ready(function () {
 		},
 
 		ajax: {
-			url: "/serverPagamentos",
+			url: "/serverParcelas",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/serverPagamentos";
+				window.location.href = "/listaParcelas";
 			 }
 
 			
 		},
 		  columns: [	
-			
-			{ "data": 'id'},
-			{ "data": 'tipo'},
-			{
-				data: 'data', render:
-					function (dtCadastro) {
-						return moment(dtCadastro).format('L');
-					},
-			},
-			{ "data": 'fornecedor'},
-			{ "data": 'moeda'},
-			{ "data": 'origem'},
-			{ "data": 'valor' ,
-			render: function ( valor, type, row) {	
-			 return  valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-		   }
-	   },
-
-			{ "data": 'anexo',
-			"width": '5%',
+            { "data": 'id'} ,
+			{ "data": 'cliente'},              
+		    { "data": 'cpf'},
+			{ "data": 'cidade'},
+		    { "data": 'nf'},
+	        { "data": 'observacao'},
+			{ "data": 'vencimento',
+			  render: function ( data, type, row) {	
+			  return  moment(row.data).format('L');
+		    }
+		    },
+			{ "data": 'pagamento',
+			  render: function ( data, type, row) {	
+			   return  moment(row.data).format('L');
+		      }
+		    },
+            { "data": 'moeda' },
+		    { "data": 'valor' ,
+			   render: function ( valor, type, row) {	
+			    return  valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+		       }
+	        },
+			{ "data": 'atendente'},
+			{ "data": 'arquivo',
+			"width": '3%',
 			render: function ( data, type, row) {	 
-				if (row.anexo === null) { 
+				if (row.arquivo === null) { 
 					return  '<td class="text-right py-0 align-middle"> </td>';
 			}
 				else{
-				return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="baixarArquivoPagamento/'+row.id+'" class="btn btn-info"><i class="fas fa-download"></i></a> </div> </td>';
+				return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="baixarArquivoParcela/'+row.id+'" class="btn btn-info"><i class="fas fa-download"></i></a> </div>    </td>';
 				}
 			}
 		},
-
-		    
 			{ "data": 'id',
-			  "width": '5%',
-			   render: function ( data, type, row) {	 
-			   return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarpagamento/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <button onclick="if (confirm(\'Deseja excluir?\')) { window.location.href = \'/removerpagamento/' + row.id +'\'; }  else {  }" class="btn btn-danger"><i class="fas fa-trash"></i></button> </div> </td>';
+			"width": '3%',
+			render: function ( data, type, row) {	 
+			 return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarParcelaCustom/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> </div>  </td>';
 			}
 		 }
 		],
+
 		columnDefs: [
-			{ targets: [ 7, 8 ], orderable: false },	
+			{ targets: [ 11, 12 ], orderable: false },	
 		  ],
+
 		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'excel',
@@ -113,6 +118,9 @@ $(document).ready(function () {
 			}
         ],
 	});
+
+
+
 
 });
 

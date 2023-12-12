@@ -55,6 +55,9 @@ $(document).ready(function () {
 			}
 		 }
 		],
+		columnDefs: [
+			{ targets: [ 3 ], orderable: false },	
+		  ],
 		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'excel',

@@ -80,6 +80,9 @@ $(document).ready(function () {
 			}
 		 }
 		],
+		columnDefs: [
+			{ targets: [ 7, 8 ], orderable: false },	
+		  ],
 		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'excel',

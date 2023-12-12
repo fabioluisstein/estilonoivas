@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="card-body">
+		<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+			<nav class="navbar navbar-dark" >
+			  <div class="container-fluid" >
+				<span class="info-box-text">Lista de Parcelas </span> 
+				<div style="text-align:right"  class="col s6">
+					
+				  </div>
+
+				  <td>
+					<!-- Botão de exclusão que dispara o modal -->
+				
+				</td>
+
+			  </div>
+			</nav>	
+		</div>
+
+	
+	</div>
+		<div class="card-body" style="width:100%">	
+			<div class="corpo" layout:fragment="corpo"  >
+				<table id="table-parcelas-server"  class="table table-striped" style="width:100%">
+				  <thead >
+					<tr>
+					 
+					 <th scope="col">Id Locação</th>
+					  <th scope="col">Cliente</th>
+					  <th scope="col">Cpf</th>
+					  <th scope="col">Cidade</th>
+					  <th scope="col">Numero NF</th>
+					  <th scope="col">Observações</th>
+					  <th scope="col">Vencimento</th>
+					  <th scope="col">Pagamento</th>
+					  <th scope="col">Moeda</th>
+					  <th scope="col">Valor Total</th>
+					  <th scope="col">Atentende</th>
+					  <th scope="col">Anexo</th>
+					  <th scope="col">Operação</th>
+					</tr>
+				  </thead>
+				</table>	
+				<br>
+	        <!-- Button trigger modal -->
+	
+			</div>
+			<script th:src="@{/js/conta/parcela-datatable.js}" th:fragment="js"></script>
+		
+			 
+		</div>
+	</div>
+</body>
+
+
+
+</html>

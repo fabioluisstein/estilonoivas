@@ -33,7 +33,7 @@
 		<div class="col-md-8">
 		  <div class="form-group">
 	      <label for="nome">Nome</label> 
-		  <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" >
+		  <input class="form-control" type="text" name="nome" th:field="*{nome}" id="nome" required>
 		</div>
 	    </div>
 
@@ -41,7 +41,7 @@
 			
 		<div class="form-group">
 			<label>Tipo</label>
-			<select th:field="*{tipo_pessoa}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+			<select th:field="*{tipo_pessoa}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" required>
 			  <option value="Fisica">Fisica</option>
 			  <option value="Juridica">Juridica</option>
 			</select>
@@ -90,7 +90,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label>Cidade</label>
-					<select th:field="*{cidade}" class="form-control select2" style="height: 100%">
+					<select th:field="*{cidade}" class="form-control select2" style="height: 100%" required>
 						<option th:each="cid: ${cidades}"
 						th:value="${cid.id}" th:text="${cid.nome}" ></option>
 					</select>
