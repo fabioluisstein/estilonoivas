@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/materialize/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/materialize/dist/css/adminlte.min.css">
 </head>
@@ -19,14 +17,14 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="/login" class="h1"><b>Estilo Noivas</a>
+      <a href="/login" class="h1"><b>Estilo Noiva</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Insira suas informações</p>
 
       <form th:action="@{/login}" method="post">
         <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control">
+          <input type="text" name="username" class="form-control" placeholder="Usuário">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +32,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password">
+          <input type="password" name="password" class="form-control" placeholder="Senha">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -49,6 +47,10 @@
           </div>
           <!-- /.col -->
         </div>
+        <br>
+        <p class="mb-0">
+          <p class="text-center">Versão 2 - 14/12/23 Atualizado 21:40</p>
+        </p>
       </form>
 
     </div>

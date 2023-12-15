@@ -10,10 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import loja.springboot.model.Pessoa;
 import loja.springboot.repository.PagamentoRepository;
 import loja.springboot.repository.PagamentoRepository.listaSaidasGerais;;
 
 public class PagamentoDataTablesService {
+
 
 	private String[] cols = {
 		"id", "tipo", "data", "fornecedor", "moeda", "origem", "valor"
@@ -45,9 +47,14 @@ public class PagamentoDataTablesService {
 	}
 
 	private Page<listaSaidasGerais> queryBy(String search, PagamentoRepository repository, Pageable pageable) {		
-		return repository.findByPagamento(search, pageable);
+		Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			return repository.findByPagamento(search, pageable);
+		} else {
+		  return repository.findByPagamentoRestrito(search, pageable);
+		}
 	}
-	 
+
 	private String searchBy(HttpServletRequest request) {
 		
 		return request.getParameter("search[value]").isEmpty()

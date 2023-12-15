@@ -33,6 +33,9 @@ public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Lo
 	" or  tipo like %:search% or valor like %:search% or data like %:search% " , nativeQuery = true)
     Page<listTodasContas> findByConta(@Param("search") String search, Pageable pageable);
 
+	@Query(value = " Select id, instituicao, tipo, valor, data from conta_bancaria   where  id = 0 " , nativeQuery = true)
+    Page<listTodasContas> findByContaRestrito(@Param("search") String search, Pageable pageable);
+
 	@Query(value = "select id, instituicao, tipo, valor, data from conta_bancaria order by id desc ", nativeQuery = true)
 	Page<listTodasContas> findByContPage(@Param("id") Long id, Pageable pageable);
 	

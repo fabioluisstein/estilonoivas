@@ -16,7 +16,7 @@ import loja.springboot.repository.ParcelaRepository.listParcelasNf;
 public class ParcelaService {
  
 	private String[] cols = {
-		"id","cliente", "cpf", "cidade", "nf", "observacao", "pagamento", "vencimento", "moeda", "valor","atendente","anexo"};
+		"stparcela", "id", "locacao", "cliente", "cpf", "cidade", "nf", "observacao", "pagamento", "vencimento", "moeda", "valor","atendente", "banco"};
 	
 	public Map<String, Object> execute(ParcelaRepository repository, HttpServletRequest request) {
 		

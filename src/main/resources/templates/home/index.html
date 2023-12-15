@@ -281,7 +281,7 @@
                   <p>Parcela Locação</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li  th:class="${permissao}">
                 <a href="/listacontasBancarias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conta Bancária</p>
@@ -661,7 +661,7 @@
               <span class="info-box-icon"><i class="far fa-copy"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Locações Média Mensal</span>
-                <span class="info-box-number" th:text="${LocacaoMedia}"></span>
+                <span th:class="${permissao}" th:text="${LocacaoMedia}"></span>
               </div>
               <!-- /.info-box-content -->
             </div>

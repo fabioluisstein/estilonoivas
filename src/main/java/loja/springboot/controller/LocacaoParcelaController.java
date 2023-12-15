@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import loja.springboot.model.Parcela;
+import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ParcelaRepository;
 
 @Controller
@@ -28,6 +29,13 @@ public class LocacaoParcelaController {
 	@GetMapping("/editarParcelaCustom/{idparcela}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Parcela parcela)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoPagamento");
+			Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			andView.addObject("seguranca",false);
+		}
+		else{
+				andView.addObject("seguranca",true);
+		}
 		andView.addObject("locacaobj",parcela.getLocacao());
 		andView.addObject("parcelabj", parcela);	
 		garbageCollection();

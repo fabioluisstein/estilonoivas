@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" > 
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
@@ -306,13 +306,14 @@
                   <p>Parcela Locação</p>
                 </a>
               </li>
+              <div sec:authorize="hasUser('ROLE_ADMIN')">
               <li class="nav-item">
                 <a href="/listacontasBancarias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conta Bancária</p>
                 </a>
               </li>
-
+               <div>
             </ul>
           </li>
           <li class="nav-item">

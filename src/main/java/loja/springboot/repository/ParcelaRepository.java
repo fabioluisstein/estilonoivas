@@ -22,10 +22,12 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 	"   cliente.cidade_id = cidade.id  and  locacao.cliente_id = cliente.id AND  parcela.data_pagamento  BETWEEN ?1 AND  ?2 order by  parcela.data_pagamento  desc", nativeQuery = true)
 	List<listParcelaDTO> findLocacaoDatas(String dataInicial, String DataFinal);
 */
-	@Query(value = " Select id, cliente,cpf ,  cidade, NumeroNF, observacao,  pagamento, vencimento, moeda,   valor,   atendente,  arquivo FROM  vw_datatable_parcelas", nativeQuery = true)
+	@Query(value = " Select stparcela, id, locacao,  cliente,cpf ,  cidade, NumeroNF, observacao,  pagamento, vencimento, moeda,   valor,   atendente, banco,  arquivo FROM  vw_datatable_parcelas", nativeQuery = true)
 	List<listParcelasNf> parcelaMesAtual();
       public static interface listParcelasNf {
-         Long getId(); 
+         String getStparcela(); 
+		 Long getId(); 
+		 Long getLocacao(); 
 		 String getCliente();
 		 String getCpf();  
 		 String getCidade(); 
@@ -36,14 +38,16 @@ public interface ParcelaRepository extends JpaRepository<Parcela, Long> {
 		 String getMoeda(); 
 		 Double getValor(); 
 		 String getAtendente(); 
+         String getBanco(); 
 		 String getArquivo(); 
+	
         }  
 
-	@Query(value = " Select id, cliente,cpf ,  cidade, nf, observacao, pagamento, vencimento,  moeda,   valor,   atendente,  arquivo FROM  vw_datatable_parcelas  where id like %:search%  or  pagamento like %:search% " +
+	@Query(value = " Select stparcela, id, locacao, cliente,cpf ,  cidade, nf, observacao, pagamento, vencimento,  moeda,   valor,   atendente, banco, arquivo FROM  vw_datatable_parcelas  where id like %:search%  or  pagamento like %:search% " +
 	" or  vencimento like %:search% or moeda like %:search% or observacao like %:search%  or nf like %:search%  or valor like %:search% or idlocacao like %:search% or cliente like %:search%  or cpf like %:search%  or cidade like %:search%  or atendente like %:search%  " , nativeQuery = true)
     Page<listParcelasNf> findByParcela(@Param("search") String search, Pageable pageable); 
 
-    @Query(value = " Select id, cliente,cpf ,  cidade, nf, observacao, pagamento, vencimento,  moeda,   valor,   atendente,  arquivo FROM  vw_datatable_parcelas ", nativeQuery = true)
+    @Query(value = " Select stparcela, id, locacao, cliente,cpf ,  cidade, nf, observacao, pagamento, vencimento,  moeda,   valor,   atendente, banco,  arquivo FROM  vw_datatable_parcelas ", nativeQuery = true)
 	Page<listParcelasNf> findByParcelaPage(@Param("id") Long id, Pageable pageable);
 
 

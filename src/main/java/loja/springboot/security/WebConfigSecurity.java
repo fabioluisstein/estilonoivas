@@ -34,17 +34,16 @@ public class WebConfigSecurity{
         .and()
         .withUser("danc").password("{noop}daneleti").roles("ADMIN")
         .and()
-        .withUser("estilo").password("{noop}Decantador@01").roles("ADMIN");
+        .withUser("estilo").password("{noop}Decantador@01").roles("User");
     }
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         return (web) -> {
-            web.ignoring().antMatchers("/novo/**");
             web.ignoring().antMatchers("/materialize/**");
             web.ignoring().antMatchers("/js/**");
             web.ignoring().antMatchers("/consultaprodutos/**");
             web.ignoring().antMatchers("/pesquisaprodutocustom/**");
-            web.ignoring().antMatchers("/consultarProdutoQr/**");
+           
         };
 		
 		

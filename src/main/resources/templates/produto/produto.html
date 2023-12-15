@@ -68,18 +68,13 @@
       <input name="tamanho" th:field="*{tamanho}" type="text" id="tamanho" readonly="readonly" >
       </div>
      
-         <div class="col s6">
+    <div class="col s6">
       <label for="pickdate" class="active">Data Compra</label> 
       <input type="text" class="datepicker" th:field="*{data_compra}"  name="data_compra"  readonly="readonly" >
-    </div>
-     
+     </div>
+   
        <div class="col s6">
-       <label for="valorCompra" class="active">Valor Compra</label> 
-       <input name="valorCompra" th:field="*{valorCompra}" id="valorCompra" readonly="readonly" >
-      </div>
-        
-       <div class="col s6">
-       <label for="valorVenda" class="active">Valor Venda</label> 
+       <label for="valorVenda" class="active">Valor </label> 
        <input name="valorVenda" th:field="*{valorVenda}" id="valorVenda" readonly="readonly" >
       </div>
 
@@ -89,19 +84,10 @@
        </div>
 
        <div class="col s6">
-        <label for="quantidadeLocacaoes" class="active">Retorno Financeiro</label> 
-        <input name="valorFinanceiro"  th:value="${#strings.replace(#numbers.formatCurrency(valorFinanceiro), '.00,00', '')}"  id="valorFinanceiro" readonly="readonly" >
-       </div> 
-
-
-       <div class="col s6">
         <label for="quantidade_acesso" class="active">Quantidade de Pesquisas</label> 
         <input name="quantidade_acesso"  th:field="*{quantidade_acesso}"  id="quantidade_acesso" readonly="readonly" >
        </div>
-       
-
-  
-        
+               
     </form>
   </div>
   <div class="card" style="margin: 20px auto; padding:20px; max-width: 98%">

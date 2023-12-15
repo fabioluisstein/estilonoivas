@@ -61,6 +61,16 @@
       <input name="numeroNf" th:field="*{numeroNf}" id="numeroNf" >
     </div> 
 
+
+    
+      <label for="Banco" class="active">Conciliação Bancária</label> 
+      <select th:field="*{banco}" class="browser-default" th:disabled="${seguranca}">
+        <option value="Não">Não</option>
+        <option value="Sim">Sim</option>
+     </select>
+  
+
+
      <div class="col s12">  
       <div class="file-field input-field">
        <div class="btn">

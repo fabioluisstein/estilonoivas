@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+
+import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.ContaBancariaRepository.listTodasContas;
 
@@ -42,7 +44,14 @@ public class ContaBancariaService {
 	}
 
 	private Page<listTodasContas> queryBy(String search, ContaBancariaRepository repository, Pageable pageable) {		
-		return repository.findByConta(search, pageable);
+	
+		Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+				return repository.findByConta(search, pageable);
+		} else {
+		  return repository.findByContaRestrito(search, pageable);
+		}
+
 	} 
 	
 	private String searchBy(HttpServletRequest request) {
