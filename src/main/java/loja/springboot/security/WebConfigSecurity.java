@@ -1,4 +1,6 @@
 package loja.springboot.security;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 
 @Configuration
@@ -16,14 +19,28 @@ public class WebConfigSecurity{
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+        httpFirewall();
 		http.csrf()
 		.disable() // Desativa as configurações padrão de memória.
 		.authorizeHttpRequests() // Pertimir restringir acessos
-		.antMatchers(HttpMethod.GET, "/").permitAll() // Qualquer usuário acessa a pagina inicial
+		.antMatchers(HttpMethod.GET, "/", "/materialize/**","/js/**").permitAll() // Qualquer usuário acessa a pagina inicial
 		.anyRequest().authenticated()
-        .and().formLogin().loginPage("/login").defaultSuccessUrl("/administrativo",true).failureUrl("/login").permitAll();
+        .and().formLogin().loginPage("/login").failureUrl("/login").permitAll();
         return http.build();
 	}
+
+
+@Bean
+public StrictHttpFirewall httpFirewall() {
+    StrictHttpFirewall firewall = new StrictHttpFirewall();
+    firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
+	firewall.setAllowSemicolon(true);
+	firewall.setAllowUrlEncodedSlash(true);
+	firewall.setAllowBackSlash(true);
+	firewall.setAllowUrlEncodedPercent(true);
+	firewall.setAllowUrlEncodedPeriod(true);
+    return firewall;
+}
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

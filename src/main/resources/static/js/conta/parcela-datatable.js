@@ -87,7 +87,7 @@ $(document).ready(function () {
 			{ "data": 'atendente'},
 			{ "data": 'banco'},
 			{ "data": 'id',
-			"width": '3%',
+			 "width": '3%',
 			render: function ( data, type, row) {	 
 
 				if (row.arquivo === null) { 

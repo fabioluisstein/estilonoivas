@@ -32,10 +32,10 @@ $(document).ready(function () {
 		},
 
 		ajax: {
-			url: "/serverCidades",
+			url: "serverCidades",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/listacidades";
+				window.location.href = "listacidades";
 			 }
 
 			

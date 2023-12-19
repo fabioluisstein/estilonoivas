@@ -1,5 +1,4 @@
 package loja.springboot.loja;
-import java.util.Arrays;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -14,7 +13,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EntityScan(basePackages = "loja.springboot.*")
@@ -30,17 +28,7 @@ public class LojaApplication extends SpringBootServletInitializer {
 	}
 
 
-@Bean
-public StrictHttpFirewall httpFirewall() {
-    StrictHttpFirewall firewall = new StrictHttpFirewall();
-    firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
-	firewall.setAllowSemicolon(true);
-	firewall.setAllowUrlEncodedSlash(true);
-	firewall.setAllowBackSlash(true);
-	firewall.setAllowUrlEncodedPercent(true);
-	firewall.setAllowUrlEncodedPeriod(true);
-    return firewall;
-}
+
 
 /* 
 	@Override
