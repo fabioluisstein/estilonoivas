@@ -146,14 +146,14 @@ public class CidadeController {
 	 garbageCollection();
 	}
 		
-	@GetMapping("/listacidades")
+	@GetMapping("listacidades")
 	 public ModelAndView showTabela2() {
 	  grafico();
 	  ModelAndView andView = new ModelAndView("cidade/cidades-datatable");
 	  return base(andView);
 	}
 
-   @GetMapping("/serverCidades")
+   @GetMapping("serverCidades")
 	 public ResponseEntity<?> datatables(HttpServletRequest request) {
 	  Map<String, Object> data = new CidadeService().execute(cidadeRepository, request);
 	return ResponseEntity.ok(data);
