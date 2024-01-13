@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.LocacaoProduto;
+import loja.springboot.model.Pessoa;
 import loja.springboot.model.Produto;
 import loja.springboot.repository.CategoriaRepository;
 import loja.springboot.repository.FornecedorRepository;
@@ -139,6 +143,13 @@ public class ProdutoController {
 	@RequestMapping(method = RequestMethod.GET, value = "cadastroproduto")
 	public ModelAndView cadastro(Produto produto) {
 		ModelAndView modelAndView = new ModelAndView("produto/cadastroprodutos");
+			Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			modelAndView.addObject("classe", "col-md-6");
+		}
+		else{
+           modelAndView.addObject("classe", "col-md-6 invisible");
+		}
 		modelAndView.addObject("produtobj", new Produto());
 		modelAndView.addObject("fornecedores", fornecedorRepository.findAll());
 		modelAndView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
@@ -152,6 +163,14 @@ public class ProdutoController {
 	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
+			Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			andView.addObject("classe", "col-md-6");
+		}
+		else{
+           andView.addObject("classe", "col-md-6 invisible");
+		}
+
 		andView.addObject("fornecedores", fornecedorRepository.findAll());
 		andView.addObject("categorias", categoriaRepository.findCategoriaByOriginal("Produto"));
 		andView.addObject("id", "Gravado com Sucesso");
@@ -221,6 +240,13 @@ public class ProdutoController {
 	@GetMapping("/editarproduto/{idproduto}")
 	public ModelAndView editar(@PathVariable("idproduto")  Produto produto) throws ParseException, IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
+		Pessoa p = new Pessoa();
+		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
+			andView.addObject("classe", "col-md-6");
+		}
+		else{
+           andView.addObject("classe", "col-md-6 invisible");
+		}	
 		andView.addObject("id", "Editando Registro");
 		andView.addObject("color", "alert alert-primary");
 		andView.addObject("produtobj", produto);
