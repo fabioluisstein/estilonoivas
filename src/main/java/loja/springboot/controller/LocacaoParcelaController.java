@@ -15,7 +15,7 @@ import loja.springboot.model.Parcela;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ParcelaRepository;
 
-@Controller
+@Controller 
 public class LocacaoParcelaController {
  
 	@Autowired

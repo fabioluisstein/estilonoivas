@@ -2,10 +2,15 @@ package loja.springboot.repository;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
 import loja.springboot.model.Visita;
 
 @Transactional
@@ -28,5 +33,33 @@ public interface VisitaRepository extends JpaRepository<Visita, Long> {
 		String getTelefone();
 		String getCidade_cliente();
 	}
+
+
+
+	@Query(value = "SELECT id, nome_cliente as cliente,  colaborador as atendente, tipo_cliente as tpcliente,  status, origem_contato as origem, data_final as datalimite FROM visita order by visita.id desc ", nativeQuery = true)
+	List<listaVisitas> TodosVisitas();
+	public static interface listaVisitas { 
+		Long getId(); 
+		String getCliente();
+		String getAtendente();
+		String getTpcliente();
+		String getStatus();
+		String getOrigem();
+		String getDatalimite();
+	}
+
+	@Query(value = " SELECT id, nome_cliente as cliente,  colaborador as atendente, tipo_cliente as tpcliente, status, origem_contato as origem, data_final as datalimite FROM visita   where id like %:search%  or  nome_cliente like %:search% or  colaborador like %:search% or  tipo_cliente like %:search%" +
+	" or  status like %:search%  or  origem_contato like %:search%  or  data_final like %:search% " , nativeQuery = true)
+    Page<listaVisitas> findByVisitas(@Param("search") String search, Pageable pageable);
+
+	@Query(value = "SELECT id, nome_cliente as cliente,  colaborador as atendente, tipo_cliente as tpcliente,  status, origem_contato as origem, data_final as datalimite FROM visita order by visita.id desc ", nativeQuery = true)
+	Page<listaVisitas> findByVisitaPage(@Param("id") Long id, Pageable pageable);
+	
+
+
+
+
+
+
 
 }

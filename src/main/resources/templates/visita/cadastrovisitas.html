@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="/materialize/select2/css/select2.min.css">
+	
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarvisita" id="formvisita" method="post" th:object="${visitabj}" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Visitas</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	  
+	</div>  
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-2">
+		  <div class="form-group">
+			<label for="id">Id</label> 
+			<input class="form-control" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		</div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-4">
+		  <div class="form-group">
+	      <label for="nome">Nome Cliente</label> 
+		  <input class="form-control" type="text" name="nomeCliente" th:field="*{nomeCliente}" id="nome" required>
+		</div>
+	    </div>
+
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>Cidade</label>
+				<select th:field="*{cidadeCliente}" class="form-control select2" style="height: 100%" required>
+					<option th:each="cid: ${cidades}"
+					th:value="${cid.id}" th:text="${cid.nome}" ></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>Cidade Evento</label>
+				<select th:field="*{cidadeEvento}" class="form-control select2" style="height: 100%" required>
+					<option th:each="cid: ${cidades}"
+					th:value="${cid.id}" th:text="${cid.nome}" ></option>
+				</select>
+			</div>
+		</div>
+
+
+	</div>
+		<!-- /.form-group -->
+
+		<div class="row">
+         <div class="col-md-3">
+			<label for="tipoCliente">Tipo Cliente</label>  
+			<select th:field="*{tipoCliente}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" required>
+				<option value="Convidado">Convidado</option>
+				<option value="Convidada">Convidada</option>
+				<option value="Formando de Faculdade">Formando de Faculdade</option>
+				<option value="Formando de Ensino Médio">Formando de Ensino Médio</option>
+				<option value="Formanda de Faculdade">Formanda de Faculdade</option>
+				<option value="Formando de Ensino Médio">Formando de Ensino Médio</option>
+				<option value="Noivo">Noivo</option>
+				<option value="Noiva">Noiva</option>
+				<option value="Pajem">Pajem</option>
+				<option value="Padrinho">Padrinho</option>
+				<option value="Madrinha">Madrinha</option>
+				<option value="Mãe de Noiva (o)">Mãe de Noiva (o)</option>
+				<option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
+				<option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
+				<option value="Mãe de Formanda (o) ">Mãe de Formanda (o) </option>
+				<option value="Mãe de dama ">Mãe de dama </option>
+				<option value="Pai de debutante">Pai de debutante </option>
+				<option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
+				<option value="Debutante">Debutante </option>
+				<option value="Namorado da debutante">Namorado da debutante </option>
+				<option value="Não Informado">Não Informado</option>
+				<option value="Outros">Outros</option>
+			</select>
+		</div>
+			  <!-- /.form-group -->
+			
+				<div class="col-md-3">
+						  <div class="form-group">
+							<label for="origemContato">Origem do Contato</label>  
+							<select th:field="*{origemContato}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;"  required >
+							<option value="Presencial">Presencial</option>
+							<option value="WhatsAPP">WhatsAPP</option>
+							<option value="Facebook">Facebook</option>
+							<option value="Instagram">Instagram</option>
+							<option value="Telefone">Telefone</option>
+							<option value="Google Ads">Google Ads</option>
+							<option value="Indicação">Indicação</option>
+							<option value="Outros">Outros</option>
+							</select>
+						  </div>
+
+					  </div>
+				 
+				  <!-- /.form-group -->
+
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="retorno">Aceita Retorno</label>  
+						<select th:field="*{retorno}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;"  required >
+						 <option value="Sim">Sim</option>
+						 <option value="Não">Não</option>
+					   </select>
+					  </div> 
+				  </div> 
+				  <div class="col-md-3">
+					<div class="form-group">
+						<label for="colaborador">Atendente</label>  
+						<select th:field="*{colaborador}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;"  required >
+						<option value="Keli">Keli</option>
+						<option value="Deise">Deise</option>
+						<option value="Gabi">Gabi</option>
+						<option value="Grazi">Grazi</option>
+						<option value="Estevon">Estevon</option>
+						<option value="Equipe">Equipe</option>
+						</select>
+					  </div>
+				  </div>
+				  <!-- /.form-group -->
+		
+			</div>
+			<div class="row">
+			<!-- /.col -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="status">Status</label>  
+					<select th:field="*{status}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" required >
+					 <option value="Em andamento">Em andamento</option>
+					 <option value="Cliente Efetivo">Cliente Efetivo</option>
+					 <option value="Aguardando Retorno Cliente">Aguardando Retorno Cliente</option>
+					 <option value="Aguardando Supervisor">Aguardando Supervisor</option>
+					 <option value="Aguardando Fornecedor">Aguardando Fornecedor</option>
+					 <option value="Venda Perdida">Venda Perdida</option>
+				   </select>
+				  </div>
+			  </div>
+			  <!-- /.form-group -->
+			  <div class="col-md-3">
+				<label for="motivo">Motivo</label>  
+				<select th:field="*{motivo}" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" required>
+					<option value="Fora do Orçamento">Fora do Orçamento</option>
+					<option value="Não encontrou o Produto desejado">Não encontrou o Produto desejado</option>
+					<option value="Produto está Locado">Produto está Locado</option>
+					<option value="Analisar">Analisar</option>
+					<option value="Conversar com a Familia">Conversar com a Familia</option>
+					<option value="Ficou em dúvida entre as Peças">Ficou em dúvida entre as Peças</option>
+					<option value="Vai Pensar">Vai Pensar</option>
+					<option value="Vai Provar em outra Loja">Vai Provar em outra Loja</option>
+					<option value="Encontrou">Encontrou</option>
+					<option value="Outro">Outro</option>
+				  </select>
+			  </div>
+			  <!-- /.form-group -->
+
+			  <div class="col-md-3">
+				<div class="form-group">
+					<label for="dataVisita">Data Visita</label> 
+					<input class="form-control" type="date" name="data" th:field="*{data_inicial}" id="data_inicial" required>
+				  </div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="data_final">Data Limite</label> 
+					<input class="form-control" type="date" name="data" th:field="*{data_final}" id="data_final" required>
+				  </div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="telefone">Telefone</label> 
+					<input class="form-control" type="text" name="telefone" th:field="*{telefone}" id="telefone"  required>
+				</div>
+				
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+				   <label for="facebook">Facebook</label> 
+				   <input class="form-control" type="text" name="facebook" th:field="*{facebook}" id="facebook" required>
+				</div>
+				
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="instagram">Instagram</label> 
+					<input class="form-control" type="text" name="instagram" th:field="*{instagram}" id="instagram" required>
+				</div>	
+			</div>
+		</div>	
+
+		<div class="row">
+			<div class="input-field col s12">
+			 <label>Atendimento</label>
+			 <textarea class="form-control" rows="6" th:field="*{atendimento}" id="atendimento"   maxlength="12999" ></textarea>
+	    </div>
+
+</div>
+<br>
+<div class="card-footer"> 
+  <a  href="/listavisitas" class="btn btn-warning ">Voltar</a>
+  <button type="submit"  class="btn btn-success">Salvar</button>
+       
+
+</div>
+	
+
+</form>
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+	<!--
+	<script  th:src="@{/js/table/select2.full.min.js}"  th:fragment="js"></script> -->
+	<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+<!-- Select2 -->
+
+
+</body>
+</html>
