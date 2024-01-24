@@ -1,9 +1,10 @@
 package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Estado;
 import loja.springboot.repository.EstadoRepository;
 import loja.springboot.repository.PainelRepository;
@@ -36,7 +38,6 @@ public class EstadoController {
 		 return base(modelAndView);
 	}
 	
-	@CacheEvict(value = { "listEstados", "estadoDtoFilter" ,"cidadesTodas", "cidadeDtoRelac"}, allEntries = true)		
 	@RequestMapping(method = RequestMethod.POST, value ="salvarestado")
 	public ModelAndView salvar(Estado estado) { 
 		ModelAndView andView = new ModelAndView("estado/cadastroestados");
@@ -55,7 +56,6 @@ public class EstadoController {
 		 return base(andView);
 	}
 
-	@CacheEvict(value = { "listEstados", "estadoDtoFilter" ,"cidadesTodas", "cidadeDtoRelac"}, allEntries = true)	
 	@GetMapping("/removerestado/{idestado}")
 	public String excluir(@PathVariable("idestado") Long idestado) {
 		try {
@@ -73,9 +73,9 @@ public class EstadoController {
 	   return modelAndView;
 	  }
 	  
-	  public void garbageCollection() {
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
+	public void garbageCollection() {
+	  Runtime.getRuntime().gc();
+	  Runtime.getRuntime().freeMemory();
 	}
  
 	public void grafico() {
@@ -96,6 +96,5 @@ public class EstadoController {
 	  Map<String, Object> data = new EstadoService().execute(estadoRepository, request);
 	return ResponseEntity.ok(data);
    }
-
 	
 } 

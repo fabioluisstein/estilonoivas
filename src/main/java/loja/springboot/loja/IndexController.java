@@ -91,15 +91,7 @@ public class IndexController {
 		return andView;
 	}
 
-	@RequestMapping("/administrativo")
-	public ModelAndView indexSistma() {
-		Optional<Empresa> empresa = empresaRepository.findById(1L);
-		ModelAndView andView = new ModelAndView("administrativo");
-		andView.addObject("empresa", empresa.get().getNome());
-		Runtime.getRuntime().gc();
-		Runtime.getRuntime().freeMemory();
-		return andView;
-	}
+	
 
 
 
@@ -167,7 +159,7 @@ public class IndexController {
 		andView.addObject("dataPapel", dataPapelCliente);
 	}
 
-	@RequestMapping("/administrativo2")
+	@RequestMapping("/administrativo")
 	public ModelAndView indexSistma2() {
 
 		permissao();

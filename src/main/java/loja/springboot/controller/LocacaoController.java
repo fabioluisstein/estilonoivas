@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
@@ -30,10 +33,13 @@ import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoRepository;
+import loja.springboot.repository.LocacaoRepository.listLocacoes;
+import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.PessoaRepository;
 import loja.springboot.repository.ProdutoRepository;
-import loja.springboot.repository.LocacaoRepository.listLocacoes;
+import loja.springboot.service.LocacaoDataTablesService;
 
 @Controller
 public class LocacaoController {
@@ -54,6 +60,13 @@ public class LocacaoController {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	private listPainelOperacional operacional;
+
+	
+    @Autowired
+	private PainelRepository painelRepository;
+
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -318,5 +331,35 @@ public class LocacaoController {
 		return "redirect:/voltar/"+locacaoProduto.getLocacao().toString();
 	}
 	
-	
+	public void grafico() {
+		List<listPainelOperacional> grafico = painelRepository.grafico();
+	        operacional = grafico.get(0);
+			garbageCollection();
+		}
+
+		public ModelAndView base(ModelAndView modelAndView){
+			modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+			modelAndView.addObject("ticket", operacional.getTicket());
+			modelAndView.addObject("indicadorGeral", operacional.getIndice());
+			modelAndView.addObject("locadoHoje", operacional.getLocado());
+			return modelAndView;  
+		}
+
+
+    @GetMapping("/listalocacoesnew")
+	public ModelAndView showTabelas() {
+	    ModelAndView andView = new ModelAndView("locacao/locacao-datatable");
+		grafico();
+		garbageCollection();
+		return base(andView);	 
+		} 
+
+   @GetMapping("/serverLocacoes")
+		public ResponseEntity<?> datatables(HttpServletRequest request) {
+			Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request);
+			return ResponseEntity.ok(data);   
+	}
+
+
+
 }

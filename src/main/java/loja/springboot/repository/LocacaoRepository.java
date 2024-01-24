@@ -2,8 +2,11 @@ package loja.springboot.repository;
 import java.util.Date;
 import java.util.List;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import loja.springboot.model.Locacao;
 
@@ -33,6 +36,31 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 		Double getTotal_produto();
 		Double getFalta_pagar();
 	}
+
+
+	@Query(value = "Select id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  from vw_datatable_locacoes p  order by p.data_locacao desc", nativeQuery = true)
+	List<listaLocacoesGerais> TodosVisitas();
+	public static interface listaLocacoesGerais { 
+		Long getId(); 
+		Date getData_locacao();
+		Double getTotal_produto();
+		Double getFalta_pagar();
+		String getCliente();
+		String getCidade();
+		String getTelefone();
+		String getWhats();
+		Date getData_retirada();
+	}
+
+	@Query(value = " SELECT id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  " + 
+	" FROM vw_datatable_locacoes   where id like %:search%  or  data_locacao like %:search%  or  data_retirada like %:search%   or  cidade like %:search% or   cliente like %:search%" +
+	" or  cidade like %:search%  or  telefone like %:search%  or  total_produto like %:search% or  falta_pagar like %:search% " , nativeQuery = true)
+    Page<listaLocacoesGerais> findByLocacoes(@Param("search") String search, Pageable pageable);
+
+	@Query(value = " SELECT id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  FROM vw_datatable_locacoes order by id desc ", nativeQuery = true)
+	Page<listaLocacoesGerais> findByLocacoesPage(@Param("id") Long id, Pageable pageable);
+	
+
 
 
 }

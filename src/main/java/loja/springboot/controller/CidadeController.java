@@ -2,9 +2,7 @@ package loja.springboot.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
@@ -44,30 +42,23 @@ public class CidadeController {
 		Runtime.getRuntime().freeMemory();
 	}
 
-	@PostMapping("/pesquisarcidade")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView modelAndView = new ModelAndView("cidade/lista");
-		modelAndView.addObject("cidades", cidadeRepository.listCidadades());
-		return modelAndView;
-	}
-
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocidade")
 	public ModelAndView cadastro(Cidade cidade) {
 		ModelAndView modelAndView = new ModelAndView("cidade/cadastrocidades");
 		modelAndView.addObject("id", "Cadastrando Cidade");
 		modelAndView.addObject("color", "alert alert-dark");
 		modelAndView.addObject("cidadebj", new Cidade());
-		modelAndView.addObject("listaEstados", estadoRepository.listEstados());
+		modelAndView.addObject("listaEstados", estadoRepository.TodosEstados());
 		garbageCollection();
 		return base(modelAndView);
 	}
 	
-	@CacheEvict(value = { "cidadesTodas", "cidadeDtoRelac","forncedoresTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = {"forncedoresTodosDto","locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidades")
     public ModelAndView salvar(Cidade cidade) {	
 	 ModelAndView andView = new ModelAndView("cidade/cadastrocidades");
 	  andView.addObject("cidadebj",cidadeRepository.saveAndFlush(cidade));
-	  andView.addObject("listaEstados", estadoRepository.listEstados());
+	  andView.addObject("listaEstados", estadoRepository.TodosEstados());
 	  andView.addObject("id", "Gravado com Sucesso");
 	  andView.addObject("color", "alert alert-success"); 
 	  garbageCollection();	
@@ -75,18 +66,6 @@ public class CidadeController {
 
 	} 
 	
-
-
-	/* 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidades")
-	public String salvar2(Cidade cidade) {	
-	
-		Cidade cdCidade = cidadeRepository.save(cidade);
-		garbageCollection();		
-		return "redirect:/editarcidade/"+cdCidade.getId().toString();
-	} 
-	*/
-
-
 	@GetMapping("employees")
 	  public String getEmployees(Pageable pageable, Model model) {
 	      Page<Cidade> page = cidadeRepository.findAll(pageable);
@@ -103,23 +82,14 @@ public class CidadeController {
 	public ModelAndView editar(@PathVariable("idcidade") Cidade cidade) {
 		ModelAndView andView = new ModelAndView("cidade/cadastrocidades");
 		andView.addObject("cidadebj",cidade);
-	    andView.addObject("listaEstados", estadoRepository.listEstados());
+	    andView.addObject("listaEstados", estadoRepository.TodosEstados());
 		andView.addObject("id", "Editando Registro");
 		andView.addObject("color", "alert alert-primary");
 		garbageCollection();
 		return base(andView);
 	}  
-
-
-
 	
-    @RequestMapping("/filtro")
-    public @ResponseBody
-    List<InterfaceGeneric.listGeneric> filtradas(String nome) {
-        return estadoRepository.filtradas(nome.toLowerCase());   
-    }
-
-	@CacheEvict(value = { "cidadesTodas", "cidadeDtoRelac","forncedoresTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = { "forncedoresTodosDto","locacoes120"}, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
 	public String excluir(@PathVariable("idcidade") Long idcidade) {
 		try {
