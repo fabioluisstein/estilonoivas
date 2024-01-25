@@ -57,6 +57,12 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 	" or  cidade like %:search%  or  telefone like %:search%  or  total_produto like %:search% or  falta_pagar like %:search% " , nativeQuery = true)
     Page<listaLocacoesGerais> findByLocacoes(@Param("search") String search, Pageable pageable);
 
+
+	@Query(value = " SELECT id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  " + 
+	" FROM vw_datatable_locacoes_vencidas   where id like %:search%  or  data_locacao like %:search%  or  data_retirada like %:search%   or  cidade like %:search% or   cliente like %:search%" +
+	" or  cidade like %:search%  or  telefone like %:search%  or  total_produto like %:search% or  falta_pagar like %:search% " , nativeQuery = true)
+    Page<listaLocacoesGerais> findByLocacoesVencidas(@Param("search") String search, Pageable pageable);
+	
 	@Query(value = " SELECT id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  FROM vw_datatable_locacoes order by id desc ", nativeQuery = true)
 	Page<listaLocacoesGerais> findByLocacoesPage(@Param("id") Long id, Pageable pageable);
 	

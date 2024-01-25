@@ -29,7 +29,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 		String getCidade();
 	}
 
-
 	@Query( value = "select * from vw_datatable_clientes  a  where a.id= ?1", nativeQuery = true)
 	listTodosClientes findClienteID(Long id);
 

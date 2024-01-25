@@ -2,7 +2,9 @@ package loja.springboot.controller;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
@@ -12,16 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Cidade;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.EstadoRepository;
-import loja.springboot.repository.InterfaceGeneric;
 import loja.springboot.repository.PainelRepository;
 import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.service.CidadeService;
@@ -53,7 +52,7 @@ public class CidadeController {
 		return base(modelAndView);
 	}
 	
-	@CacheEvict(value = {"forncedoresTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = {"locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidades")
     public ModelAndView salvar(Cidade cidade) {	
 	 ModelAndView andView = new ModelAndView("cidade/cadastrocidades");
@@ -66,6 +65,7 @@ public class CidadeController {
 
 	} 
 	
+
 	@GetMapping("employees")
 	  public String getEmployees(Pageable pageable, Model model) {
 	      Page<Cidade> page = cidadeRepository.findAll(pageable);
@@ -89,7 +89,7 @@ public class CidadeController {
 		return base(andView);
 	}  
 	
-	@CacheEvict(value = { "forncedoresTodosDto","locacoes120"}, allEntries = true)
+	@CacheEvict(value = { "locacoes120"}, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
 	public String excluir(@PathVariable("idcidade") Long idcidade) {
 		try {

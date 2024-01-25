@@ -20,7 +20,7 @@ public class LocacaoDataTablesService {
 		"id","data_locacao", "total_produto","falta_pagar", "cliente","cidade", "data_retirada", "telefone","whats", "Contrato","Operacao"
 	};  
 	 
-	public Map<String, Object> execute(LocacaoRepository repository, HttpServletRequest request) {
+	public Map<String, Object> execute(LocacaoRepository repository, HttpServletRequest request, int valor) {
 		
 		int start = Integer.parseInt(request.getParameter("start")); 
 		int lenght = Integer.parseInt(request.getParameter("length"));
@@ -34,7 +34,7 @@ public class LocacaoDataTablesService {
 		
 		Pageable pageable = PageRequest.of(current, lenght, direction, column);
 		
-		Page<listaLocacoesGerais> page = queryBy(search, repository, pageable); 
+		Page<listaLocacoesGerais> page = queryBy(search, repository, pageable, valor); 
 		
 		Map<String, Object> json = new LinkedHashMap<>();
 		json.put("draw", draw);
@@ -45,11 +45,12 @@ public class LocacaoDataTablesService {
 		return json;
 	}
 
-	private Page<listaLocacoesGerais> queryBy(String search, LocacaoRepository repository, Pageable pageable) {		
-	  return repository.findByLocacoes(search, pageable);
+	private Page<listaLocacoesGerais> queryBy(String search, LocacaoRepository repository, Pageable pageable, int valor) {	
+		if(valor == 0) { 	
+	      return repository.findByLocacoes(search, pageable);
+	    } else 
+	       return repository.findByLocacoesVencidas(search, pageable);
 	}
-
-	
 
 	private String searchBy(HttpServletRequest request) {
 		

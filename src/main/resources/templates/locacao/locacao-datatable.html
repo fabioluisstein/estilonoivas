@@ -11,13 +11,12 @@
 				<span class="info-box-text">Locações </span> 
 				<div style="text-align:right"  class="col s6">
 					<a  href="/cadastrolocacao" class="btn btn-secondary">Adicionar</a>
-				  </div>
-
-				  <td>
-					<!-- Botão de exclusão que dispara o modal -->
-				
+					<button class="btn btn-secondary" onclick="mostrarAlerta()">Vencidas</button>
+				</div>
+				<td>
+			
 				</td>
-
+			
 			  </div>
 			</nav>	
 		</div>
@@ -46,6 +45,8 @@
 				<br>
 			</div>
 			<script th:src="@{js/locacao/locacao-datatable.js}" th:fragment="js"></script>
+			<script th:src="@{js/table/vencidas.js}" th:fragment="js"></script>
+		
 		</div>
 	</div>
 </body>

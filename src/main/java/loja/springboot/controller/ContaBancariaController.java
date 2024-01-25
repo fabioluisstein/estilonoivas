@@ -59,7 +59,6 @@ public class ContaBancariaController {
 	    return base(modelAndView);
 	}
 	
-	@CacheEvict(value="contasBancariasTodas",allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarconta")
 	public ModelAndView salvarConta(ContaBancaria conta) { 
 	  ModelAndView andView = new ModelAndView("conta/cadastrocontas");

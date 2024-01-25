@@ -27,9 +27,6 @@ public class LojaApplication extends SpringBootServletInitializer {
 		
 	}
 
-
-
-
 /* 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {

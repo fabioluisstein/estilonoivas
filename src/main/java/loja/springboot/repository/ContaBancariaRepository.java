@@ -14,7 +14,6 @@ import loja.springboot.model.ContaBancaria;
 @Transactional
 public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Long> {
 
-	@Cacheable("contasBancariasTodas") 
 	@Query(value = "select * from conta_bancaria order by id desc", nativeQuery = true)
 	List<ContaBancaria> listContasBancarias();
 	
@@ -29,6 +28,7 @@ public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Lo
 		Date getData();
 		
 	}
+	
 	@Query(value = " Select id, instituicao, tipo, valor, data from conta_bancaria   where id like %:search%  or  instituicao like %:search% " +
 	" or  tipo like %:search% or valor like %:search% or data like %:search% " , nativeQuery = true)
     Page<listTodasContas> findByConta(@Param("search") String search, Pageable pageable);

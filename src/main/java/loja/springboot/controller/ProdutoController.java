@@ -159,7 +159,7 @@ public class ProdutoController {
 		return base(modelAndView); 
 	}
 
-	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
+	@CacheEvict(value = { "locacoes120" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
@@ -257,7 +257,7 @@ public class ProdutoController {
 		return base(andView);
 	}
 
-	@CacheEvict(value = { "locacoes120", "listProdutos" }, allEntries = true)
+	@CacheEvict(value = { "locacoes120"}, allEntries = true)
 	@GetMapping("/removerproduto/{idproduto}")
 	public String excluir(@PathVariable("idproduto") Long idproduto) {
 		try {

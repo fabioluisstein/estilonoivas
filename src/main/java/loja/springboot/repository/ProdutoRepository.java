@@ -16,7 +16,7 @@ import loja.springboot.model.Produto;
 @Transactional
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
-	@Cacheable("listProdutos")  
+
 	@Query(value = "Select id, fornecedor, categoria, cor, tamanho, data_compra, valor,  foto   from vw_datatable_produtos order by id desc", nativeQuery = true)
 	List<listProdutos> listaTodos();
 	public static interface listProdutos {
@@ -29,7 +29,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 		Double getValor();
 		String getFoto();
 	}
-
 
 	@Query(value = "Select id, fornecedor, categoria, cor, tamanho, data_compra, valor,  foto   from vw_datatable_produtos order by id desc", nativeQuery = true)
 	List<listTodosProdutos> listProdutos();

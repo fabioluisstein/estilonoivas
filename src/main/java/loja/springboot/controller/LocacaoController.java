@@ -80,7 +80,7 @@ public class LocacaoController {
  
 	/*Ajustar cache na cidade e cliente */
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoes")
+	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoesold")
 	public ModelAndView locacoes() {
 		List<listLocacoes> locacaoes = new ArrayList<listLocacoes>();
 		locacaoes = locacaoRepository.top120Locacao();
@@ -346,7 +346,7 @@ public class LocacaoController {
 		}
 
 
-    @GetMapping("/listalocacoesnew")
+    @GetMapping("/listalocacoes")
 	public ModelAndView showTabelas() {
 	    ModelAndView andView = new ModelAndView("locacao/locacao-datatable");
 		grafico();
@@ -356,10 +356,15 @@ public class LocacaoController {
 
    @GetMapping("/serverLocacoes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
-			Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request);
+			Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request, 0);
 			return ResponseEntity.ok(data);   
 	}
 
+	@GetMapping("/serverLocacoesVencidas")
+	public ResponseEntity<?> datatablesLocacaoVenvidas(HttpServletRequest request) {
+		Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request, 1);
+		return ResponseEntity.ok(data);   
+}
 
 
 }

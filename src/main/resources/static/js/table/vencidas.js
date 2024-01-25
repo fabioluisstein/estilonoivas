@@ -1,4 +1,8 @@
-$(document).ready(function () {
+function mostrarAlerta  () {
+
+  var table = $('#table-locacoes-server').DataTable();
+  table.destroy();
+
 	moment.locale('pt-br');
 	var table = $("#table-locacoes-server").DataTable({
 		processing: true,
@@ -7,7 +11,7 @@ $(document).ready(function () {
 		info:true,
 		lengthChange:false,
 		lengthMenu: [10, 40, 60, -1],
-		"order": [1, "desc"],
+		"order": [0, "desc"],
 		language: {
 			"emptyTable": "Nenhum registro encontrado",
 			"info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -32,10 +36,10 @@ $(document).ready(function () {
 		},
 
 		ajax: {
-			url: "/serverLocacoes",
+			url: "/serverLocacoesVencidas",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/serverLocacoes";
+				window.location.href = "/serverLocacoesVencidas";
 			 }	
 		},
 		  columns: [	
@@ -128,9 +132,4 @@ $(document).ready(function () {
         ],
 	});
 
-});
-
-
-
-
-
+}
