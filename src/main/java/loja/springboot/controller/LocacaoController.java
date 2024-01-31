@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -22,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import loja.springboot.model.Cliente;
+import loja.springboot.model.Fornecedor;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -80,16 +79,7 @@ public class LocacaoController {
  
 	/*Ajustar cache na cidade e cliente */
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listalocacoesold")
-	public ModelAndView locacoes() {
-		List<listLocacoes> locacaoes = new ArrayList<listLocacoes>();
-		locacaoes = locacaoRepository.top120Locacao();
-		ModelAndView andView = new ModelAndView("locacao/lista");
-		andView.addObject("locacoes", locacaoes);
-		garbageCollection(); 
-		return andView;
-	}
-	 
+
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory(); 
@@ -116,7 +106,7 @@ public class LocacaoController {
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
 		locacao.setData_locacao(new Date());
-		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
+		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacoes");
 		modelAndView.addObject("locacaobj", locacao);
 		modelAndView.addObject("parcelabj", new Parcela());
 		modelAndView.addObject("produtobj", new LocacaoProduto());
@@ -125,10 +115,9 @@ public class LocacaoController {
 		modelAndView.addObject("cidades", cidadeRepository.findAll()); 
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		garbageCollection(); 
-		return modelAndView;
+		return base(modelAndView);
 	}
 	
-
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
 	public ModelAndView locacoesVencidas() {	
 		ModelAndView modelAndView = new ModelAndView("locacao/lista");
@@ -141,7 +130,7 @@ public class LocacaoController {
 	@GetMapping("/cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Cliente cliente) {
 		locacao.setData_locacao(new Date());
-		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacao");
+		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacoes");
 		locacao.setCliente(cliente);
 		modelAndView.addObject("locacaobj", locacao);
 		modelAndView.addObject("parcelabj", new Parcela());
@@ -151,10 +140,10 @@ public class LocacaoController {
 		modelAndView.addObject("cidades", cidadeRepository.listCidadades());  
 		modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		garbageCollection(); 
-		return modelAndView;
+		return base(modelAndView);
 	}
 	
-	@CacheEvict(value = { "locacoes120", "listParcelasMesAtual","painelOperacional"}, allEntries = true)
+	
 	@RequestMapping(method = RequestMethod.POST, value = "salvarlocacao")
 	public String salvar(Locacao locacao) throws IOException {
 		locacaoRepository.save(locacao);
@@ -162,10 +151,13 @@ public class LocacaoController {
 		return "redirect:/voltar/" + locacao.getId().toString() + "";
 	}
 
+
+
+
 	
 	@GetMapping("/editarparcela/{idparcela}")
 	public ModelAndView editarParcela(@PathVariable("idparcela") Parcela parcela)  {
-		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		andView.addObject("locacaobj",parcela);
 		andView.addObject("produtobj", new LocacaoProduto());
 		andView.addObject("parcelabj", parcela);	
@@ -177,10 +169,19 @@ public class LocacaoController {
 		andView.addObject("totalProdutos",parcela.getLocacao().getValorTotalProdutos());
 		andView.addObject("totalPagamento",parcela.getLocacao().getValorTotal());
 		garbageCollection(); 
-		return andView;
+		return base(andView);
 	}
+
+
+    @GetMapping("/detalhesProduto/{id}")
+    @ResponseBody
+    public ResponseEntity<LocacaoProduto> detalhesProduto(@PathVariable Long id) {
+        LocacaoProduto produto = locacaoProdutoRepository.findById(id).orElse(null);
+        return ResponseEntity.ok(produto);
+    }
+
 	
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual","painelOperacional"} , allEntries=true)
+	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.save(parcela);
@@ -190,7 +191,7 @@ public class LocacaoController {
 	
 	@GetMapping("/editarprodutolocacao/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") LocacaoProduto locacaoProduto)  {
-		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		andView.addObject("locacaobj",locacaoProduto.getLocacao());
 		andView.addObject("produtobj", locacaoProduto);
 		andView.addObject("parcelabj", new Parcela());	
@@ -223,13 +224,6 @@ public class LocacaoController {
 		garbageCollection(); 
 	} 
 	
-
-
-
-
-
-
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual","painelOperacional"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.save(produtoLocacao);
@@ -239,7 +233,7 @@ public class LocacaoController {
 	
 	@GetMapping("/voltar/{idlocacao}")
 	public ModelAndView voltar(@PathVariable("idlocacao") Locacao locacao)  {
-		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		Parcela parcela = new Parcela(locacao);
 		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao); 
 	    andView.addObject("locacaobj",locacao);
@@ -256,14 +250,17 @@ public class LocacaoController {
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
 		garbageCollection(); 
-		return andView;
+		return base(andView);
 	}
+
+
+
 	
-	@GetMapping("/inicialocao/{idlocacao}")
-	public ModelAndView iniciaLocao(@PathVariable("idlocacao") Locacao locacao)  {
-		ModelAndView andView = new ModelAndView("locacao/cadastrolocacao");
-		Parcela parcela = new Parcela( locacao);
-		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao);
+	@GetMapping("/voltarnew/{idlocacao}")
+	public ModelAndView voltarnew(@PathVariable("idlocacao") Locacao locacao)  {
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
+		Parcela parcela = new Parcela(locacao);
+		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao); 
 	    andView.addObject("locacaobj",locacao);
 		andView.addObject("locacaoId",locacao.getId());
 		andView.addObject("colaboradores", colaboradorRepository.findAll());
@@ -278,9 +275,45 @@ public class LocacaoController {
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
 		garbageCollection(); 
-		return andView;
+		return base(andView);
+	}
+
+
+	
+
+	
+	@GetMapping("/inicialocao/{idlocacao}")
+	public ModelAndView iniciaLocao(@PathVariable("idlocacao") Locacao locacao)  {
+		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
+		Parcela parcela = new Parcela( locacao);
+		LocacaoProduto locacaoProduto = new LocacaoProduto(locacao);
+		andView.addObject("id", "Editando Registro");
+		andView.addObject("color", "alert alert-primary");
+	    andView.addObject("locacaobj",locacao);
+		andView.addObject("locacaoId",locacao.getId());
+		andView.addObject("colaboradores", colaboradorRepository.findAll());
+		andView.addObject("parcelabj", parcela);
+		andView.addObject("produtobj", locacaoProduto);
+		andView.addObject("clientes", locacao.getCliente());
+		andView.addObject("parcelas", locacao.getParcelas());
+		andView.addObject("produtosLocacoes", locacao.getProdutos());	
+		andView.addObject("produtos", produtoRepository.findAll());
+		andView.addObject("cidades", cidadeRepository.findAll()); 
+		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
+		andView.addObject("totalPagamento",locacao.getValorTotal());
+		garbageCollection(); 
+		return base(andView);
 	}
 		
+
+
+
+
+		
+
+
+
 	@GetMapping("/editarlocacao/{idlocacao}")
 	public String editar(@PathVariable("idlocacao") Long idlocacao)  {
 	    return "redirect:/inicialocao/"+idlocacao.toString()+"";
@@ -305,7 +338,6 @@ public class LocacaoController {
 	}   
 	
 	
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual","painelOperacional"} , allEntries=true)
 	@GetMapping("/removerlocacao/{idlocacao}")
 	public String excluir(@PathVariable("idlocacao") Long idlocacao) {
 		locacaoRepository.deleteById(idlocacao);	
@@ -313,22 +345,21 @@ public class LocacaoController {
 		return "redirect:/listalocacoes";
 	}
 	 
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual","painelOperacional"} , allEntries=true)
 	@GetMapping("/removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();
 		parcelaRepository.deleteById(idparcela);
 		garbageCollection(); 
-		return "redirect:/voltar/"+parcela.getLocacao().toString();
+		return "redirect:/voltarnew/"+parcela.getLocacao().toString();
 	}
 	
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual","painelOperacional"} , allEntries=true)
+	
 	@GetMapping("/removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();
 		locacaoProdutoRepository.deleteById(idproduto);	
 		garbageCollection(); 
-		return "redirect:/voltar/"+locacaoProduto.getLocacao().toString();
+		return "redirect:/voltarnew/"+locacaoProduto.getLocacao().toString();
 	}
 	
 	public void grafico() {
@@ -365,6 +396,86 @@ public class LocacaoController {
 		Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request, 1);
 		return ResponseEntity.ok(data);   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacaonew")
+public ModelAndView cadastronew(Locacao locacao) {
+	locacao.setData_locacao(new Date());
+	ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacoes");
+	modelAndView.addObject("locacaobj", locacao);
+	modelAndView.addObject("parcelabj", new Parcela());
+	modelAndView.addObject("produtobj", new LocacaoProduto());
+	modelAndView.addObject("colaboradores", colaboradorRepository.findAll());
+	modelAndView.addObject("clientes", clienteRepository.findAll());
+	modelAndView.addObject("cidades", cidadeRepository.findAll()); 
+	modelAndView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+	garbageCollection(); 
+	return modelAndView;
+}
+
+
+@RequestMapping(method = RequestMethod.POST, value = "salvarlocacaonew")
+public ModelAndView salvarlocacaonew(Locacao locacao) throws IOException {
+	Locacao loc  =  locacaoRepository.saveAndFlush(locacao);
+	ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
+	Parcela parcela = new Parcela( loc);
+	LocacaoProduto locacaoProduto = new LocacaoProduto(loc);
+	andView.addObject("locacaobj",loc);
+	andView.addObject("id", "Gravado com Sucesso");
+	andView.addObject("color", "alert alert-success");
+	andView.addObject("locacaoId",loc.getId());
+	andView.addObject("colaboradores", colaboradorRepository.findAll());
+	andView.addObject("parcelabj", parcela);
+	andView.addObject("produtobj", locacaoProduto);
+	andView.addObject("clientes", loc.getCliente());
+	andView.addObject("parcelas", loc.getParcelas());
+    andView.addObject("produtosLocacoes", loc.getProdutos());	
+	andView.addObject("produtos", produtoRepository.findAll());  
+	andView.addObject("cidades", cidadeRepository.findAll()); 
+	andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
+	andView.addObject("totalProdutos",loc.getValorTotalProdutos());
+    andView.addObject("totalPagamento",loc.getValorTotal());
+	garbageCollection(); 
+	return base(andView);	
+}
+
+
+
+@RequestMapping(method = RequestMethod.POST, value ="salvarprodutonew")
+public String salvarProdutoNew(LocacaoProduto produtoLocacao) throws IOException {	
+	 locacaoProdutoRepository.save(produtoLocacao);
+	 garbageCollection(); 
+   return "redirect:/voltarnew/"+produtoLocacao.getLocacao().getId().toString()+"";
+} 
+
+
+
+@RequestMapping(method = RequestMethod.POST, value ="salvarparcelanew")
+public String salvarParcelaNew(Parcela parcela) throws IOException {	
+	 parcelaRepository.save(parcela);
+	 garbageCollection(); 
+   return "redirect:/voltarnew/"+parcela.getLocacao().getId().toString()+"";
+} 
+
+
+
+
+
 
 
 }

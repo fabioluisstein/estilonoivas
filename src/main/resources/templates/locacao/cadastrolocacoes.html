@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- Cabeçalho da Locação --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarlocacaonew" id="formlocacao" method="post" th:object="${locacaobj}"  enctype="multipart/form-data" >
+	<div class="card-header">
+		  <h3 class="card-title">Cadastro de Locação</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	</div>  
+
+	<!-- /.Corpo da Locação -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-sm-2">
+		  <div class="form-group">
+			<label  class="h10" for="id">Id</label> 
+			<input class="form-control form-control-sm" type="text" name="id" th:field="*{id}" id="id" readonly="readonly" >
+		  </div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-3">
+		<div class="form-group">
+			<label class="h10"  for="atendente">Atendente</label> 
+			<select th:field="*{colaborador}" class="form-control form-control-sm select" required>
+				<option th:each="cid: ${colaboradores}"
+				th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		  </div>
+	    </div>
+
+		<div class="col-sm-4">
+			<div class="form-group">
+			<label>Cliente</label>
+			<select th:field="*{cliente}" class="form-control form-control-sm select2" required>
+			<option th:each="cid: ${clientes}"  th:value="${cid.id}" th:text="${cid.nome}" ></option>
+			</select>
+		   </div>	
+		</div>
+
+		<div class="col-md-3">
+			<div class="form-group">
+				<label for="origem">Origem</label>  
+				<select th:field="*{origem}"  class="form-control form-control-sm select2" required >
+					<option value="Visita Local">Visita Local</option>
+					<option value="Cliente Estilo Noiva">Cliente Estilo Noiva</option>
+					<option value="Cliente Fibonatti">Cliente Fibonatti</option>
+					<option value="Indicação">Indicação</option>
+					<option value="Instagram">Instagram</option>
+					<option value="Google Ads">Google Ads</option>
+					<option value="Facebook">Facebook</option>
+					<option value="WhatsAPP">WhatsAPP</option>
+					<option value="Radio">Radio</option>
+					<option value="Não Informado">Não Informado</option>
+			   </select>
+		  </div>
+		</div>
+	</div>
+	<!-- /.Fim da primeira linha  -->
+
+	<div class="callout callout-info">
+		<h5> Detalhes do Evento </h5>
+		<div class="row"> 			
+			<div class="col-sm-3">
+			<div class="form-group">
+			<label for="cidade_evento">Cidade do Evento</label>  
+			<select th:field="*{cidade_evento}"  class="form-control form-control-sm select2" required >
+              <option value=""></option>
+              <option th:each="cid: ${cidades}"
+                    th:value="${cid.id}" th:text="${cid.nome}" ></option>
+             </select> 
+            </div>
+		</div> 
+
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label for="papel">Papel</label>  
+				<select th:field="*{papel}"  class="form-control form-control-sm select2" required >
+					<option value="Convidado">Convidado</option>
+					<option value="Convidada">Convidada</option>
+					<option value="Debutante">Debutante</option>
+					<option value="Formanda">Formanda</option>
+					<option value="Formando">Formando</option>       
+					<option value="Irmao da noiva (o)">Irmão da noiva (o) </option>
+					<option value="Madrinha">Madrinha </option>
+					<option value="Mãe de noiva">Mãe de noiva</option>
+					<option value="Mãe de noivo">Mãe de noivo</option>
+					<option value="Namorado da debutante">Namorado da debutante </option>
+					<option value="Noivo">Noivo</option>
+					<option value="Noiva">Noiva</option>
+					<option value="Pajem">Pajem</option>
+					<option value="Padrinho">Padrinho</option>
+					<option value="Pai de Noiva (o) ">Pai de Noiva (o) </option>
+					<option value="Pai de Formanda (o) ">Pai de Formanda (o) </option>
+					<option value="Pai de debutante">Pai de debutante </option>
+					<option value="Não Informado">Não Informado</option>
+					<option value="Outros">Outros</option>
+			    </select>
+		    </div>
+		</div>
+	    
+		<div class="col-md-3">
+			 <div class="form-group">
+				 <label for="evento">Evento</label>  
+				 <select th:field="*{evento}"  class="form-control form-control-sm select2"  >
+				   <option value=""></option>
+				   <option th:each="cid: ${eventos}" th:value="${cid.id}" th:text="${cid.nome}" ></option>
+				 </select> 
+				</div>
+			</div> 
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="detalhes_evento">Informações Gerais do Evento</label> 
+					<input class="form-control form-control-sm" type="text" name="detalhes_evento" th:field="*{detalhes_evento}" id="detalhes_evento" >
+				  </div>
+			  </div>
+			</div>
+	</div>
+
+		    <div class="row">
+			  <div class="col-md-2">
+			   <div class="form-group">
+				  <label for="data_locacao">Data Locação</label> 
+				  <input class="form-control form-control-sm" type="date" name="data_locacao" th:field="*{data_locacao}" id="data_locacao" required>
+			   </div>
+			  </div>
+			
+		    <div class="col-md-2">
+			  <div class="form-group">
+				  <label for="data_evento">Data Evento</label> 
+				  <input class="form-control form-control-sm" type="date" name="data_evento" th:field="*{data_evento}" id="data_evento" required>
+			  </div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+				  <label for="data_retirada">Data Prova</label> 
+				  <input class="form-control form-control-sm" type="date" name="data_prova" th:field="*{data_prova}" id="data_prova" required>
+				</div>
+			</div>
+			<div class="col-md-2">
+			  <div class="form-group">
+				  <label for="data_retirada">Data Retirada</label> 
+				  <input class="form-control form-control-sm" type="date" name="data_retirada" th:field="*{data_retirada}" id="data_retirada" required>
+			  </div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+				  <label for="data_retirada">Data Devolução</label> 
+				  <input class="form-control form-control-sm" type="date" name="data_devolucao" th:field="*{data_devolucao}" id="data_devolucao" required>
+				</div>
+			</div>
+			</div>
+			<div class="card-footer"> 
+				<a href="/listalocacoes" class="btn btn-warning ">Voltar</a>
+				<button type="submit"  class="btn btn-success">Salvar</button>
+				<td><a th:if="${locacaoId !=null}"  th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacaoId})}" class="btn btn-primary">Contrato</a> </td> 
+			</div>
+        </div>			
+</form>
+ <!-- Fim do Formulario aba Inicial da locação -->
+
+
+<!-- Inicio datatable produtos do contrato -->
+<div class="card-body">
+<div class="card-footer">
+	<h3 class="card-title">Produtos do Contrato</h3>
+	 <div style="text-align:right"  class="col s6">
+	   <a th:if="${locacaoId !=null}"   type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProdutos"> Adicionar </a>
+	</div>
+	<br> 
+ <table  class="table table-sm" >
+ <thead >
+   <tr>
+	 <th>Cod. Produto</th>
+	 <th>Produto</th>
+	 <th>Tamanho</th>
+	 <th>Cor</th> 
+	 <th>Liberação </th>
+	 <th>Valor</th>
+	 <th>Foto</th>
+	 <th>Atalho</th>
+   </tr>
+ </thead>
+ <tbody>
+  <tr th:each = "produtoLocacao : ${produtosLocacoes}">
+   <td>   
+	 <p th:text=${produtoLocacao.produto.id}></p>
+   </td>
+   <td>   
+	 <p th:text=${produtoLocacao.produto.categoria.nome}></p>
+   </td>
+   <td>   
+	 <p th:text=${produtoLocacao.produto.tamanho}></p>
+   </td>
+   <td>  
+	<p th:text=${produtoLocacao.produto.cor}></p> 
+   </td>
+   <td>
+	<p th:text="${#dates.format(produtoLocacao.data_liberacao, 'dd/MM/yyyy')}"></p> 
+   </td>
+   <td>
+	<p th:text="${#strings.replace(#numbers.formatCurrency(produtoLocacao.valor), '.00,00', '')}"></p> 
+   </td> 
+   <td> <a th:if="${produtoLocacao.arquivo !=null}"  th:href="@{/baixarArquivoProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" ><i class="fas fa-download"></i></a> </td> 
+   <td> <a th:href="@{/editarProdutoCustom/{idproduto}(idproduto=${produtoLocacao.id})}" class="btn btn-info"> <i class="fas fa-edit"></i> </a>
+		<a th:href="@{/removereprodutolocacao/{idproduto}(idproduto=${produtoLocacao.id})}" class="btn btn-danger"> <i class="fas fa-trash"></i> </a> </td>
+   <!--	<td>
+		Botão para abrir o modal 
+	   <button type="button" class="btn btn-primary" th:attr="data-id=${produtoLocacao.id}" data-toggle="modal" data-target="#detalhesModal"> Detalhes </button> </td> -->
+	</tr>
+</tbody> 
+</table> 
+	   <input class="form-control" type="text" name="totalProdutos"  th:value= "${#strings.replace(#numbers.formatCurrency(totalProdutos), '.00,00', '')}"  id="totalProdutos" readonly="readonly" >
+</div>
+</div>
+
+<div class="card-body">
+<div class="card-footer">
+	<h3 class="card-title">Plano de Pagamento</h3>
+	<div style="text-align:right"  class="col s6">
+		<a th:if="${locacaoId !=null}"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#incluirPagamento"> Adicionar </a>
+	  </div>
+	  <br> 
+<table  class="table table-sm" >
+<thead >
+<tr>
+<th>id</th>
+<th>Vencimento</th>
+<th>Pagamento</th>
+<th>Moeda</th>
+<th>Valor Total</th>
+<th>Anexo</th> 
+<th>Atalho</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each = "parcela : ${parcelas}">
+<td>   
+<p th:text=${parcela.id}></p>
+</td>
+<td>   
+<p th:text="${#dates.format(parcela.data_vencimento, 'dd/MM/yyyy')}" > </p>
+</td>
+<td>   
+<p th:text="${#dates.format(parcela.data_pagamento, 'dd/MM/yyyy')}"></p>
+</td>
+<td>  
+<p th:text="${parcela.moeda}"></p> 
+</td>
+<td>
+<p th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00,00', '')}"></p> 
+</td>
+
+	<td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="fas fa-download"></i></a> </td> 
+	<td> <a th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" class="btn btn-info"> <i class="fas fa-edit"></i> </a> 
+		 <a th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}" class="btn btn-danger">  <i class="fas fa-trash"></i> </a></td>
+		 
+		 <!--	<td>
+ Botão para abrir o modal 
+<button type="button" class="btn btn-primary" th:attr="data-id=${produtoLocacao.id}" data-toggle="modal" data-target="#detalhesModal">
+	Detalhes
+</button>
+</td>
+-->
+</tr>
+</tbody> 
+</table> 
+<input class="form-control" type="text" name="totalPagamento"   th:value= "${#strings.replace(#numbers.formatCurrency(totalPagamento), '.00,00', '')}"  id="totalPagamento" readonly="readonly" >
+</div>
+
+</div>
+
+<!-- Modal  Produtos -->
+<div class="modal fade bd-example-modal-lg" id="modalProdutos" tabindex="-1" role="dialog" aria-labelledby="modalProdutosLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="detalhesModalLabel">Detalhes do Produto</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="/salvarprodutonew" id="formproduto" method="post" th:object="${produtobj}">
+					<div class="row">
+							<div class="col-md-1">
+								<div class="form-group">
+								<label for="id_locacao_produto">Id</label> 
+								<input class="form-control" type="text" name="id_locacao_produto" th:field="*{id}" id="id_locacao_produto"  >
+								</div>
+							</div>
+							<!-- /.col --> 
+							<div class="col-md-6">
+									<div class="form-group">
+									<label for="Produto">Produto</label> 
+									<select onblur="consultaPrecoProduto()" th:field="*{produto}" class="form-control select">
+									<option th:each="prod: ${produtos}" th:value="${prod.id}"  th:text="${prod.id} + ' - ' + ${prod.categoria.nome}"> </option>
+									</select> 
+								</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group"> 
+										<label for="valor">Valor</label> 
+										<input class="form-control" name="valorProduto" th:field="*{valor}" id="valorProduto">
+									</div>
+								</div>
+						</div>
+                        <!-- Fim da primeira linha da Modal -->
+
+						<div class="row">
+						<div class="input-field col s12">
+							<label>Observações</label>
+							<textarea class="form-control" rows="3" th:field="*{observacao}" id="observacaoProduto" name="observacaoProduto"  maxlength="12999" ></textarea>
+						</div> 
+						</div> 
+						<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+							  <label for="data_retirada">Data Liberação</label> 
+							  <input class="form-control" type="date" name="data_liberacao" th:field="*{data_liberacao}" id="data_liberacao">
+						    </div>
+						</div>
+						<div class="col s10" style="visibility:hidden">
+							<label for="locacao" class="active">Locacao</label> 
+							<input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" >
+						</div> 
+						</div> 
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+  </div>
+
+<!-- Modal  Pagamento -->
+<div class="modal fade bd-example-modal-lg" id="incluirPagamento" tabindex="-1" role="dialog" aria-labelledby="incluirPagamentoLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="detalhesModalLabel">Detalhes do Pagamento</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+					<form action="/salvarparcelanew" id="formparcela" method="post" th:object="${parcelabj}">
+						<div class="row">
+							<div class="col-md-1">
+								<div class="form-group">
+									<label for="id_parcela">Id</label> 
+									<input class="form-control" type="text" name="id_parcela" th:field="*{id}" id="id_parcela"  >
+								</div>
+							</div>
+							<!-- /.col --> 
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="moeda">Moeda</label>  
+									<select th:field="*{moeda}"  class="form-control select2" required >
+										<option value="Dinheiro">Dinheiro</option>
+										<option value="Debito">Cartão Débito</option>
+										<option value="Credito">Cartão Crédito</option>
+										<option value="Pix">Pix</option>
+										<option value="Cheque">Cheque</option>
+								   </select>
+							  </div>
+							</div>
+							<div class="col-md-6">
+							  <div class="form-group">
+						         <label for="valor">Valor</label> 
+						         <input class="form-control" name="valorProduto" th:field="*{valor}" id="valor" required>
+                              </div>
+				            </div>
+					    </div>
+						<div class="row">
+						  <div class="col-md-6">
+								<div class="form-group">								
+									<label for="data_retirada">Data Pagamento</label> 
+									<input class="form-control" type="date" name="data_pagamento" th:field="*{data_pagamento}" id="data_pagamento" required>
+								</div>
+						  </div>
+				          <div class="col-md-6">
+							<div class="form-group">
+						       <label for="data_retirada">Data Vencimento</label> 
+						       <input class="form-control" type="date" name="data_vencimento" th:field="*{data_vencimento}" id="data_vencimento">			
+				            </div>
+						  </div>
+					    </div>
+					    <div class="input-field col s12">
+						  <label>Observações</label>
+						   <textarea class="form-control" rows="3" th:field="*{observacao}" id="observacaoNovo" name="observacaoNovo"  maxlength="12999" ></textarea>
+					    </div> 
+						<div class="row">
+						<div class="col s10" style="visibility:hidden">
+							<label for="locacao" class="active">Locacao</label> 
+							<input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" >
+						</div> 
+						</div> 
+			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+  </div>
+
+<!-- Fim da Modal -->
+
+
+
+
+<!-- Modal Dinâmico de Detalhes -->
+<div class="modal fade" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="detalhesModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<!-- Conteúdo do modal que será preenchido dinamicamente -->
+			<div class="modal-header">
+				<h5 class="modal-title" id="detalhesModalLabel">Detalhes do Produto</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+					<form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}">
+						<div class="row">
+							<div class="col-md-1">
+							<div class="form-group">
+								<label for="id_locacao_produto">Id</label> 
+								<input class="form-control" type="text" name="id_locacao_produto" th:field="*{id}" id="id_locacao_produto"  >
+							</div>
+							</div>
+							<!-- /.col --> 
+							<div class="col-md-6">
+							<div class="form-group">
+								<label for="Produto">Produto</label> 
+								<select onblur="consultaPrecoProduto()" th:field="*{produto}" class="form-control select">
+									<option th:each="prod: ${produtos}"
+											th:value="${prod.id}"  th:text="${prod.id} + ' - ' + ${prod.categoria.nome}">   </option>
+								</select> 
+							</div>
+							</div>
+							<div class="col-md-5">
+							<div class="form-group"> 
+								<label for="valor">Valor</label> 
+								<input class="form-control" name="valorProduto" th:field="*{valor}" id="valorProduto">
+							</div>
+							</div>
+						</div>
+						<div class="row">
+						<div class="input-field col s12">
+							<label>Observações</label>
+							<textarea class="form-control" rows="3" th:field="*{observacao}" id="observacaoProduto" name="observacaoProduto"  maxlength="12999" ></textarea>
+						</div> 
+						</div> 
+						<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+							<label for="data_retirada">Data Liberação</label> 
+							<input class="form-control" type="date" name="data_liberacao" th:field="*{data_liberacao}" id="data_liberacao" required>
+							</div>
+						</div>
+						<div class="col s10" style="visibility:hidden">
+							<label for="locacao" class="active">Locacao</label> 
+							<input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" >
+						</div> 
+						</div> 
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+				</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+<script  th:src="@{/materialize/produto.js}"  th:fragment="js"></script>
+<script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+<script  th:src="@{/js/table/select2.full.min.js}" th:fragment="js"></script>
+
+
+</body>
+</html>
