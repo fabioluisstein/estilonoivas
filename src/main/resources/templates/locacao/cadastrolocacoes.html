@@ -8,7 +8,7 @@
 
 <!-- Cabeçalho da Locação --> 
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarlocacaonew" id="formlocacao" method="post" th:object="${locacaobj}"  enctype="multipart/form-data" >
+	<form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}"  enctype="multipart/form-data" >
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Locação</h3>
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
@@ -486,10 +486,9 @@
 </div>
 
 
-
+<script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
 <script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
 <script  th:src="@{/materialize/produto.js}"  th:fragment="js"></script>
-<script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
 <script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
 <script  th:src="@{/js/table/select2.full.min.js}" th:fragment="js"></script>
 

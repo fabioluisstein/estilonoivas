@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarparcelaCustom" id="formparcela" method="post" th:object="${parcelabj}"  enctype="multipart/form-data" >
+	<div class="card-header">
+		  <h3 class="card-title">Alteração da Parcela</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	</div>  
+
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-1">
+		  <div class="form-group">
+			<label for="id_parcela">Id</label> 
+			<input class="form-control" type="text" name="id_parcela" th:field="*{id}" id="id_parcela" readonly="readonly" >
+		  </div>
+		</div>
+		<!-- /.col -->
+		<div class="col-md-3">
+		 <div class="form-group">
+			<label for="moeda">Moeda</label>  
+			<select th:field="*{moeda}" class="form-control select" required >
+			 <option value="Dinheiro">Dinheiro</option>
+			 <option value="Debito">Debito</option>
+			 <option value="Credito">Credito</option>
+			 <option value="Pix">Pix</option>
+		     <option value="Cheque">Cheque</option>
+		   </select>
+	   </div>
+	  </div>
+		<div class="col-sm-3">
+			<div class="form-group">
+			  <label for="valor">Valor</label> 
+	      <input class="form-control" name="valor" th:field="*{valor}" id="valor" required>
+		  </div>	
+		</div>
+
+    <div class="col-md-2">
+		 <div class="form-group">
+		  <label for="numeroNf">Numero NF</label> 
+		  <input class="form-control" type="text" name="numeroNf" th:field="*{numeroNf}" id="numeroNf" >
+		 </div>
+	  </div>
+	  
+	  <div class="col-md-2">
+		 <div class="form-group">
+		  <label for="banco">Conciliação Bancária</label> 
+		  <select th:field="*{banco}" class="form-control select" required  th:disabled="${seguranca}">
+			       <option value="Não">Não</option>
+			       <option value="Sim">Sim</option>
+		  </select>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-md-12">
+		 <div class="form-group">
+		   <label for="observacaoNovo">Observações</label> 
+		  <input class="form-control" type="text" name="observacaoParcela" th:field="*{observacao}" id="observacaoParcela" >
+		 </div>
+	  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-md-4">
+		  <div class="form-group">
+			  <label for="data_pagamento">Data Pagamento</label> 
+			  <input class="form-control" type="date" name="data_pagamento" th:field="*{data_pagamento}" id="data_pagamento" required>
+		  </div>
+	  </div>
+	  <div class="col-md-4">
+		<div class="form-group">
+	    <label for="dataCompra">Data Vencimento</label> 
+			<input class="form-control" type="date" name="data_vencimento" th:field="*{data_vencimento}" id="data_vencimento" >
+	  </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+      <label for="arquivo">Comprovante</label> 
+      <input type="file" class="form-control" aria-label="file example" id="file" name="file">
+      <div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
+      </div>
+     </div>
+  </div>
+					
+  <div class="row">
+	<div class="col s12" style="visibility:hidden">
+       <label for="locacao" class="active">Locacao</label> 
+       <input name="locacao" th:field="*{locacao}" id="locacao" class="validate" required>
+  </div> 
+  </div>
+
+  <div class="card-footer"> 
+    <button type="submit"  class="btn btn-success">Salvar</button>
+  </div>
+</form>
+  
+  <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+  <script  th:src="@{/js/table/select2.full.min.js}" th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+	</div>
+</body>
+</html>

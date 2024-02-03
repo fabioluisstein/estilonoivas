@@ -40,7 +40,7 @@ public class LocacaoProdutoController {
 
 	@GetMapping("/editarProdutoCustom/{idproduto}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idproduto") LocacaoProduto locacaoproduto)  {
-		ModelAndView andView = new ModelAndView("locacao/locacaoProduto");
+		ModelAndView andView = new ModelAndView("locacao/locacaoProdutos");
 		andView.addObject("locacao",locacaoproduto.getLocacao());
 		andView.addObject("produtobj", locacaoproduto);	
 		andView.addObject("produtos", locacaoproduto.getProduto());

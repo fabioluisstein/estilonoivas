@@ -35,7 +35,7 @@ $(document).ready(function () {
 			url: "/serverLocacoes",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/serverLocacoes";
+				window.location.href = "/listalocacoes";
 			 }	
 		},
 		  columns: [	

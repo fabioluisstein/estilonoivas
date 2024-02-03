@@ -35,7 +35,7 @@ $(document).ready(function () {
 			url: "/serverProdutos",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/serverProdutos";
+				window.location.href = "/listaprodutos";
 			 }
 
 			

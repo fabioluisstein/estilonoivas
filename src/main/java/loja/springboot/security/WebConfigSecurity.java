@@ -19,28 +19,17 @@ public class WebConfigSecurity{
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-        httpFirewall();
 		http.csrf()
 		.disable() // Desativa as configurações padrão de memória.
 		.authorizeHttpRequests() // Pertimir restringir acessos
-		.antMatchers(HttpMethod.GET, "/", "/materialize/**","/js/**").permitAll() // Qualquer usuário acessa a pagina inicial
+        .antMatchers("/materialize/**","/js/**","/consultaprodutos/**","/pesquisaprodutocustom/**").permitAll()
 		.anyRequest().authenticated()
         .and().formLogin().loginPage("/login").failureUrl("/login").permitAll();
         return http.build();
 	}
 
 
-@Bean
-public StrictHttpFirewall httpFirewall() {
-    StrictHttpFirewall firewall = new StrictHttpFirewall();
-    firewall.setAllowedHttpMethods(Arrays.asList("HEAD", "DELETE", "POST", "GET", "OPTIONS", "PATCH", "PUT", "PROPFIND"));
-	firewall.setAllowSemicolon(true);
-	firewall.setAllowUrlEncodedSlash(true);
-	firewall.setAllowBackSlash(true);
-	firewall.setAllowUrlEncodedPercent(true);
-	firewall.setAllowUrlEncodedPeriod(true);
-    return firewall;
-}
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,18 +42,9 @@ public StrictHttpFirewall httpFirewall() {
         .and()
         .withUser("estilo").password("{noop}Decantador@01").roles("User");
     }
-    @Bean
-    WebSecurityCustomizer webSecurityCustomizer() throws Exception {
-        return (web) -> {
-            web.ignoring().antMatchers("/materialize/**");
-            web.ignoring().antMatchers("/js/**");
-            web.ignoring().antMatchers("/consultaprodutos/**");
-            web.ignoring().antMatchers("/pesquisaprodutocustom/**");
-           
-        };
+    
 		
-		
-	}
+	
 
     
 

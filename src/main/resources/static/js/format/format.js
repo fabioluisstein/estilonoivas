@@ -19,10 +19,22 @@ $("#valorCompra").focus();
 $("#valorCompra").maskMoney({showSymbol:true,  decimal:",", thousands:"."});
 
 
+$("#valorProduto").maskMoney({ allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+$("#valorProduto").val(formatter.format($("#valorProduto").val()));
+$("#valorProduto").focus();
+$("#valorProduto").maskMoney({showSymbol:true,  decimal:",", thousands:"."});
+
+
 $("#valorVenda").maskMoney({ allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
 $("#valorVenda").val(formatter.format($("#valorVenda").val()));
 $("#valorVenda").focus();
 $("#valorVenda").maskMoney({showSymbol:true,  decimal:",", thousands:"."});
+
+
+
+
+
+
 
 
 const input = document.getElementById("cpf");

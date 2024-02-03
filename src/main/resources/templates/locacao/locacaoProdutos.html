@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form action="/salvarprodutoCustom" id="formproduto" method="post" th:object="${produtobj}"  enctype="multipart/form-data" >
+	<div class="card-header">
+		  <h3 class="card-title">Alteração de Produto</h3>
+		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		  </div> 
+	</div>  
+
+	<!-- /.card-header -->
+	<div class="card-body">
+		<div class="row">
+		<div class="col-md-1">
+		  <div class="form-group">
+			<label for="id_produto">Id</label> 
+			<input class="form-control" type="text" name="id_produto" th:field="*{id}" id="id_produto" readonly="readonly" >
+		  </div>
+		</div>
+		<!-- /.col -->
+	
+      <div class="col-md-7">
+        <div class="form-group">
+        <label for="Produto">Produto</label> 
+        <select th:field="*{produto}" class="form-control select" >
+        <option th:each="prod: ${produtos}" th:value="${prod.id}"  th:text="${prod.id} + ' - ' + ${prod.categoria.nome}"> </option>
+        </select> 
+      </div>
+      </div>
+	   
+
+		<div class="col-sm-4">
+			<div class="form-group">
+			<label for="valorProduto">Valor</label> 
+	         <input class="form-control" name="valorProduto" th:field="*{valor}" id="valorProduto" required>
+		   </div>	
+		</div>
+  </div>
+  <div class="row"> 
+	  <div class="col-md-6">
+      <div class="form-group">
+        <label for="data_pagamento">Data Liberação</label> 
+        <input class="form-control" type="date" name="data_liberacao" th:field="*{data_liberacao}" id="data_liberacao">
+        </div>
+       </div>
+	  
+       <div class="col-md-6">
+        <div class="form-group">
+        <label for="arquivo">Foto Produto</label> 
+        <input type="file" class="form-control" aria-label="file example" id="file" name="file">
+        <div class="invalid-feedback">Nenhum Arquivo Selecionado</div>
+        </div>
+       </div>
+
+
+	</div>
+	
+	<div class="row">
+	  <div class="col-md-12">
+		<div class="form-group">
+		   <label for="observacaoNovo">Observações</label> 
+		  <input class="form-control" type="text" name="observacaoproduto" th:field="*{observacao}" id="observacaoproduto" >
+		</div>
+	  </div>
+	  
+
+	  
+	</div>
+
+					
+   <div class="row">
+
+	<div class="col s12" style="visibility:hidden">
+       <label for="locacao" class="active">Locacao</label> 
+       <input name="locacao" th:field="*{locacao}" id="locacao" class="validate" required>
+     </div> 
+	
+</div>
+
+<div class="card-footer"> 
+  <button type="submit"  class="btn btn-success">Salvar</button>
+</div>
+</form>
+
+  <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+  <script  th:src="@{/materialize/produto.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+	
+
+	</div>
+</body>
+</html>
+
+

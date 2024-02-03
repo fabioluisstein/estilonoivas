@@ -28,7 +28,7 @@ public class LocacaoParcelaController {
 
 	@GetMapping("/editarParcelaCustom/{idparcela}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Parcela parcela)  {
-		ModelAndView andView = new ModelAndView("locacao/locacaoPagamento");
+		ModelAndView andView = new ModelAndView("locacao/locacaoPagamentos");
 			Pessoa p = new Pessoa();
 		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
 			andView.addObject("seguranca",false);

@@ -35,7 +35,7 @@ $(document).ready(function () {
 			url: "/serverPagamentos",
 			data: "data",
 			 error : function(e) {
-				window.location.href = "/serverPagamentos";
+				window.location.href = "/listapagamentos";
 			 }
 
 			
