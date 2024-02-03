@@ -2,7 +2,6 @@ package loja.springboot.repository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import loja.springboot.dto.GraficoDTO;
 
 public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
@@ -88,11 +87,7 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 						String getIndicador(); 
 						String getPercentualAds(); 
 						String getNegociosPerdidos(); 
-					} 
-	
-
-
-				
+					} 		
 
 }
  

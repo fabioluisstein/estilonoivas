@@ -14,10 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.TransactionScoped;
 
-import org.springframework.cache.annotation.Cacheable;
-
 @Entity
-@Cacheable
 @Table(name = "cidade")
 public class Cidade implements Serializable {
 

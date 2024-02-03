@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,7 +113,6 @@ public class ContaBancariaController {
 		 return base(andView);
 	}
 	
-	@CacheEvict(value="contasBancariasTodas",allEntries=true)
 	@GetMapping("/removerconta/{idconta}")
 	public String excluir(@PathVariable("idconta") Long idconta) {
 		contaBancariaRepository.deleteById(idconta);	

@@ -9,11 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Cacheable
 @Table(name="conta_bancaria")
 public class ContaBancaria implements Serializable {
 

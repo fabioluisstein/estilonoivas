@@ -1,9 +1,10 @@
 package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Fornecedor;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.FornecedorRepository;
@@ -47,7 +49,6 @@ public class FornecedorController {
 		return base(modelAndView);
 	}
 	
-	@CacheEvict(value={"saidas", "saidasRestrito","pagamentosTodos"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarfornecedor")
 	public ModelAndView salvar(Fornecedor fornecedor) {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedores");
@@ -72,7 +73,6 @@ public class FornecedorController {
 		return base(andView);
 	}
 	
-	@CacheEvict(value={"saidas", "saidasRestrito", "pagamentosTodos"} , allEntries=true)
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public String excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		try {

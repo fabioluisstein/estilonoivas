@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -159,7 +158,6 @@ public class ProdutoController {
 		return base(modelAndView); 
 	}
 
-	@CacheEvict(value = { "locacoes120" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarproduto", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Produto produto, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("produto/cadastroprodutos");
@@ -257,7 +255,6 @@ public class ProdutoController {
 		return base(andView);
 	}
 
-	@CacheEvict(value = { "locacoes120"}, allEntries = true)
 	@GetMapping("/removerproduto/{idproduto}")
 	public String excluir(@PathVariable("idproduto") Long idproduto) {
 		try {

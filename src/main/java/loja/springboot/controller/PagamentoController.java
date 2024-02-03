@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +106,6 @@ public class PagamentoController {
 		return base(modelAndView);	 
 	}
 
-	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarpagamento", consumes = { "multipart/form-data" })
 	public ModelAndView salvar(Pagamento pagamento, final MultipartFile file) throws IOException {
 		ModelAndView andView = new ModelAndView("pagamento/cadastropagamentos");
@@ -190,7 +188,6 @@ public class PagamentoController {
 		return base(andView);
 	}
 
-	@CacheEvict(value = { "saidas", "saidasRestrito", "pagamentosTodos" }, allEntries = true)
 	@GetMapping("/removerpagamento/{idpagamento}")
 	public String excluir(@PathVariable("idpagamento") Long idpagamento) {
 		try {

@@ -2,6 +2,7 @@ package loja.springboot.model;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,10 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.cache.annotation.Cacheable;
-
 @Entity
-@Cacheable
 @Table(name="fornecedor")
 public class Fornecedor implements Serializable {
 

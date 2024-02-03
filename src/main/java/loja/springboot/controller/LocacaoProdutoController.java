@@ -3,9 +3,10 @@ package loja.springboot.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -48,7 +50,6 @@ public class LocacaoProdutoController {
 		return andView;
 	}
 
-	@CacheEvict(value={"locacoes120","listParcelasMesAtual"} , allEntries=true)
 	@RequestMapping(method = RequestMethod.POST, value = "salvarprodutoCustom", consumes = { "multipart/form-data" })
 	public String salvarprodutoCustom(LocacaoProduto produtoLocaocao, final MultipartFile file) throws IOException {
 

@@ -13,10 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.cache.annotation.Cacheable;
-
 @Entity
-@Cacheable
 @Table(name="cliente")
 public class Cliente implements Serializable {
 

@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +51,6 @@ public class CidadeController {
 		return base(modelAndView);
 	}
 	
-	@CacheEvict(value = {"locacoes120"}, allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidades")
     public ModelAndView salvar(Cidade cidade) {	
 	 ModelAndView andView = new ModelAndView("cidade/cadastrocidades");
@@ -89,7 +87,6 @@ public class CidadeController {
 		return base(andView);
 	}  
 	
-	@CacheEvict(value = { "locacoes120"}, allEntries = true)
 	@GetMapping("/removercidade/{idcidade}")
 	public String excluir(@PathVariable("idcidade") Long idcidade) {
 		try {

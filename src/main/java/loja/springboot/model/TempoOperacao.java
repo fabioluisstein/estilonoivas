@@ -10,11 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.springframework.cache.annotation.Cacheable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Cacheable
 @Table(name="tempo_operacao")
 public class TempoOperacao implements Serializable {
 
