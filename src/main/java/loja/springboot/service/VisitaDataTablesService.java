@@ -2,14 +2,14 @@ package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.VisitaRepository;
 import loja.springboot.repository.VisitaRepository.listaVisitas;
 
@@ -43,6 +43,7 @@ public class VisitaDataTablesService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listaVisitas> queryBy(String search, VisitaRepository repository, Pageable pageable) {		
 		return repository.findByVisitas(search, pageable);
 	} 

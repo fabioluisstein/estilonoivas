@@ -2,8 +2,6 @@ package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.Cliente;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
@@ -38,6 +37,7 @@ public class ClienteController {
 		Runtime.getRuntime().freeMemory();
 	}
 
+	
 	public void grafico() {
 		List<listPainelOperacional> grafico = painelRepository.grafico();
 	        operacional = grafico.get(0);
@@ -52,6 +52,7 @@ public class ClienteController {
 	  return modelAndView;
 	}
 		
+	
 	@GetMapping("/listaClienteCidade/{idcidade}")
 	public ModelAndView clientesCidades(@PathVariable("idcidade") Long idcidade) {
 	 ModelAndView andViewLista = new ModelAndView("cliente/lista");
@@ -60,6 +61,7 @@ public class ClienteController {
 	 return andViewLista;
 	}
 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocliente")
 	public ModelAndView cadastro(Cliente cliente) {
 	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
@@ -71,6 +73,7 @@ public class ClienteController {
 	 return base(andViewCadastro);
 	}
 	
+	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcliente")
 	public ModelAndView salvar(Cliente cliente) {
 	 ModelAndView andViewCadastro = new ModelAndView("cliente/cadastroclientes");
@@ -81,6 +84,7 @@ public class ClienteController {
 		  garbageCollection();
 	  return base(andViewCadastro);
 	}
+	
 	
 	@GetMapping("/editarcliente/{idcliente}")
 	public ModelAndView editar(@PathVariable("idcliente") Cliente cliente) {
@@ -94,6 +98,7 @@ public class ClienteController {
 	}
 
 
+	
 	@GetMapping("/removercliente/{idcliente}")
     public String excluir(@PathVariable("idcliente") Long idcliente) {
 	try {
@@ -111,6 +116,7 @@ public class ClienteController {
 	 return base(andView);	 
 	}
 
+   	
    @GetMapping("/serverClientes")
 	 public ResponseEntity<?> datatables(HttpServletRequest request) {
 	  Map<String, Object> data = new ClienteDataTablesService().execute(clienteRepository, request);

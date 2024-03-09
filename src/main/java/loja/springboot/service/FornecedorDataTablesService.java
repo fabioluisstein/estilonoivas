@@ -2,13 +2,14 @@ package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.FornecedorRepository;
 import loja.springboot.repository.FornecedorRepository.listFornecedores;
 
@@ -31,6 +32,7 @@ public class FornecedorDataTablesService {
 		Sort.Direction direction = orderBy(request);
 		String search = searchBy(request);
 		
+		@SuppressWarnings("null")
 		Pageable pageable = PageRequest.of(current, lenght, direction, column);
 		
 		Page<listFornecedores> page = queryBy(search, repository, pageable);
@@ -43,10 +45,8 @@ public class FornecedorDataTablesService {
 		
 		return json;
 	}
-
+	@Transactional(readOnly = true)
 	private Page<listFornecedores> queryBy(String search, FornecedorRepository repository, Pageable pageable) {		
-		
-
 		return repository.findByTituloOrSiteOrCategoria(search, pageable);
 	}
 	

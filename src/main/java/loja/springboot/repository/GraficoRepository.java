@@ -38,7 +38,7 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 			} 
 
 		
-			@Query(value = " Select locacaoFutura, locadoHoje, tempo, prova, locacaoTotal,  quantidadeCidades, locacaoMedia, SaldoConta, crescimento from painel_indicador_card", nativeQuery = true)
+			@Query(value = " Select locacaoFutura, locadoHoje, tempo, prova, locacaoTotal,  quantidadeCidades, locacaoMedia, SaldoConta, crescimento, naolocados, valorcaixa from painel_indicador_card", nativeQuery = true)
 			List<listGraficoCard> graficoCard();
 				public static interface listGraficoCard {
 					String getLocacaoFutura(); 
@@ -50,6 +50,10 @@ public interface GraficoRepository extends JpaRepository<GraficoDTO, Long> {
 					String getLocacaoMedia(); 
 					String getSaldoConta(); 
 					String getCrescimento(); 
+					String getNaolocados(); 
+					String getValorcaixa(); 
+					
+
 				}  
 
 

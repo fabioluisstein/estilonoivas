@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Grupo Estilo Noiva ::: Login</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="Grupo Estilo Noiva" />
+<link rel="icon" th:href="@{/image/favicon.ico}" />
+<!-- Icons fontawesome -->
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous" rel="stylesheet" />
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.circle {
+  background-color: #aaa;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.circle img {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/style-login.css}" rel="stylesheet" />
+</head>
+<body>
+	<form class="form-signin was-validated" method="post" 
+		th:action="@{/login}">
+
+	
+			<main role="main">
+		
+				<section class="jumbotron text-center">			
+					<img class="circle"  th:src="@{/images/logo.png}" alt=""
+					width="30" height="30">
+	
+					<div class="container">
+						<h1 class="jumbotron-heading">Grupo Estilo Noiva</h1>
+						<p class="lead text-muted">Permissão Insuficiente</p>
+					</div>
+				</section>
+	
+				<div class="album py-5 bg-light">
+					<div class="container">
+						<div class="text-center">
+							<h1 class="h3 mb-3 font-weight-normal">
+								<i class="oi oi-warning"></i>
+								<span th:text="${status}"></span>
+							</h1>
+				
+							<i class="fas fa-user-lock"></i>
+							<h5 class="text-danger" th:text="${error}"></h5>
+				
+							<div>
+								<span th:text="${message}"></span><br/><br/>
+								<a class="btn btn-primary" type="button" href="javascript:history.back()">Voltar a página anterior</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		<p class="mt-5 mb-3 text-muted text-center">Versão 5 - 05/02/24 Atualizado 12:00</p>
+	</form>
+</body>
+</html>

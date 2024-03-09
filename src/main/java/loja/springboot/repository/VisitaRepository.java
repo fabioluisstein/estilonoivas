@@ -8,11 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
 import loja.springboot.model.Visita;
 
-@Transactional
+
 public interface VisitaRepository extends JpaRepository<Visita, Long> {
 	
 	@Query(value = "SELECT visita.id, nome_cliente,  colaborador, tipo_cliente, data_inicial, status, data_final, evolucao, origem_contato, retorno, telefone, cidade.nome as cidade_cliente FROM visita left join cidade on  visita.cidade_cliente = cidade.id ", nativeQuery = true)

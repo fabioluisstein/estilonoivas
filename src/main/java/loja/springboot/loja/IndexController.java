@@ -2,21 +2,19 @@ package loja.springboot.loja;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import loja.springboot.controller.ReportUtil;
-import loja.springboot.model.Empresa;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
-import loja.springboot.repository.EmpresaRepository;
 import loja.springboot.repository.GraficoRepository;
 import loja.springboot.repository.GraficoRepository.listGraficoCard;
 import loja.springboot.repository.GraficoRepository.listGraficoClienteCidade;
@@ -30,8 +28,6 @@ import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
 @Controller
 public class IndexController {
 
-	@Autowired
-	private EmpresaRepository empresaRepository;
 
 	@Autowired
 	private GraficoRepository graficoRepository;
@@ -67,8 +63,40 @@ public class IndexController {
 	public String login() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
-		return "login";
+		return "login2";
 	}
+
+
+	// login invalido
+	@GetMapping({"/login-error"})
+	public String loginError(ModelMap model) {
+		model.addAttribute("alerta", "erro");
+		model.addAttribute("titulo", "Crendenciais inválidas!");
+		model.addAttribute("texto", "Login ou senha incorretos, tente novamente.");
+		model.addAttribute("subtexto", "Acesso permitido apenas para usuários autorizados.");
+		return "login2";
+	}
+
+
+	@GetMapping("/expired")
+	public String sessaoExpirada(ModelMap model) {
+		model.addAttribute("alerta", "erro");
+		model.addAttribute("titulo", "Acesso recusado!");
+		model.addAttribute("texto", "Sua sessão expirou.");
+		model.addAttribute("subtexto", "Você logou em outro dispositivo");
+		return "login";
+	}	
+	
+	// acesso negado
+	@GetMapping({"/acesso-negado"})
+	public String acessoNegado(ModelMap model, HttpServletResponse resp) {
+		model.addAttribute("status", resp.getStatus());
+		model.addAttribute("error", "Acesso Negado");
+		model.addAttribute("message", "Você não tem permissão para acesso a esta área ou ação.");
+		return "error";
+	}	
+
+	
 
 	@RequestMapping("/administrativo3")
 	public ModelAndView index3() {
@@ -116,6 +144,8 @@ public class IndexController {
 		andView.addObject("LocacaoTotal", graficoCard.get(0).getLocacaoTotal());
 		andView.addObject("QuantidadeCidades", graficoCard.get(0).getQuantidadeCidades());
 		andView.addObject("LocacaoMedia", graficoCard.get(0).getLocacaoMedia());
+		andView.addObject("NaoLocado", graficoCard.get(0).getNaolocados());
+		andView.addObject("ValorCaixa", graficoCard.get(0).getValorcaixa()); 
 		andView.addObject("SaldoConta", graficoCard.get(0).getSaldoConta());
 		andView.addObject("crescimento", graficoCard.get(0).getCrescimento());
 

@@ -155,8 +155,11 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+        <a class="nav-link"  href="#" role="button">
+
+            <i class="fas fa-user"></i> <span class=""
+              sec:authentication="name"></span>
+        
         </a>
       </li>
     </ul>
@@ -276,7 +279,7 @@
       
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i  class="nav-icon fas fa-table"></i>
               <p>
                 Conta/Lançamento
                 <i class="fas fa-angle-left right"></i>
@@ -289,14 +292,12 @@
                   <p>Parcela Locação</p>
                 </a>
               </li>
-              <div sec:authorize="hasUser('ROLE_ADMIN')">
               <li class="nav-item">
                 <a href="/listacontasBancarias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conta Bancária</p>
                 </a>
               </li>
-               <div>
             </ul>
           </li>
           <li class="nav-item">
@@ -322,7 +323,33 @@
               </li>
 
             </ul>
-          </li>        
+          </li>    
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Usuários
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/u/lista" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Usuários</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/u/novo/cadastro/usuario" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cadastro</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>   
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -463,6 +490,6 @@
 
 
 <!-- 	MEUS JS --> 
-<script th:replace=":: js"></script>
+<script th:replace="~{:: js}"></script>
 </body>
 </html>

@@ -1,13 +1,15 @@
 package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.Pessoa;
 import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.ContaBancariaRepository.listTodasContas;
@@ -43,8 +45,8 @@ public class ContaBancariaService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listTodasContas> queryBy(String search, ContaBancariaRepository repository, Pageable pageable) {		
-	
 		Pessoa p = new Pessoa();
 		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
 				return repository.findByConta(search, pageable);

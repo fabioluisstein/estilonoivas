@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+
 import loja.springboot.model.Pagamento;
 
-@Transactional
+
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 	
     @Query(value = "select id, tipo, data, fornecedor, moeda,  origem,  valor, anexo from vw_pagamentos  where data  BETWEEN ?1 AND  ?2  ", nativeQuery = true)

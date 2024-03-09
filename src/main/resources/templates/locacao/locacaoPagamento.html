@@ -5,11 +5,12 @@
 <title>Alteração de Parcela</title>
 
 
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
 
 <body>
 
-<div th:replace="fragments :: menu"/>
+<div th:replace="~{fragments :: menu}"/>
+
 <br>
 
  <div class="container">
@@ -106,7 +107,7 @@
     
   </div>
 
-<div th:replace="fragments :: footer"/> </div>
+<div th:replace="~{fragments :: footer}"/> </div>
 
 </body>
 </html>

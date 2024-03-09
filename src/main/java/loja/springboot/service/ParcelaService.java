@@ -2,14 +2,14 @@ package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.ParcelaRepository.listParcelasNf;
 
@@ -43,6 +43,7 @@ public class ParcelaService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listParcelasNf> queryBy(String search, ParcelaRepository repository, Pageable pageable) {		
 		return repository.findByParcela(search, pageable);
 	} 

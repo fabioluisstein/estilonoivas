@@ -2,14 +2,14 @@ package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.LocacaoRepository;
 import loja.springboot.repository.LocacaoRepository.listaLocacoesGerais;;
 
@@ -45,6 +45,7 @@ public class LocacaoDataTablesService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listaLocacoesGerais> queryBy(String search, LocacaoRepository repository, Pageable pageable, int valor) {	
 		if(valor == 0) { 	
 	      return repository.findByLocacoes(search, pageable);

@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div class="card-body">
+		<div class="barraPrincipal" layout:fragment="barraPrincipal"   >
+			<nav class="navbar navbar-dark" >
+			  <div class="container-fluid" >
+				<span class="info-box-text">Usuários Cadastrados </span> 
+				<div style="text-align:right"  class="col s6">
+					<a  href="/u/novo/cadastro/usuario" class="btn btn-secondary">Adicionar</a>
+				  </div>
+
+				  <td>
+					<!-- Botão de exclusão que dispara o modal -->
+				
+				</td>
+
+			  </div>
+			</nav>	
+
+	
+		</div>
+	</div>
+    <div class="card-body" style="width:100%">	
+		<div class="corpo" layout:fragment="corpo">
+		 	<table id="table-usuarios"  class="table table-striped" style="width:100%">
+			 <thead>
+              <tr>
+				<th scope="col">#</th>
+				<th scope="col">Nome de Usuário (email)</th>
+				<th scope="col">Cadastro Ativo</th>
+				<th scope="col">Perfis</th>
+				<th scope="col">Credenciais</th>
+				<th scope="col">Excluir</th>
+			  </tr>
+			 </thead>
+			</table>
+			<br>
+	          <!-- Button trigger modal -->
+			</div>
+			<script	th:src="@{/js/usuario/usuario.js}" th:fragment="js"></script>
+		</div>
+	</div>
+</body>
+</html>

@@ -37,8 +37,8 @@
 					</tr>
 				  </thead>
 				</table>
-				<div th:replace="produto/ajustes-datatables-modal :: modal-form"></div>	
-				<div th:replace="produto/ajustes-datatables-modal-baixar :: modal-baixar"></div>	
+				<div th:replace="~{produto/ajustes-datatables-modal :: modal-form}"></div>	
+				<div th:replace="~{produto/ajustes-datatables-modal-baixar :: modal-baixar}"></div>	
 				<br>
 			</div>
 			<script th:src="@{js/ajustes/ajuste-datatables.js}" th:fragment="js"></script>

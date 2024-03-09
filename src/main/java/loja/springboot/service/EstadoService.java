@@ -1,12 +1,15 @@
 package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.EstadoRepository;
 import loja.springboot.repository.EstadoRepository.listTodosEstados;
 
@@ -39,6 +42,7 @@ public class EstadoService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listTodosEstados> queryBy(String search, EstadoRepository repository, Pageable pageable) {		
 		return repository.findByEstado(search, pageable);
 	} 

@@ -4,11 +4,12 @@
 <meta charset="UTF8">
 <title>Lista de Locações</title>
 
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
 
 <body>
 
-<div th:replace="fragments :: menu"/>
+<div th:replace="~{fragments :: menu}"/>
+
 
 <br>
   <nav class="grey darken-1" style="margin:auto; padding:auto; max-width: 98%">
@@ -110,7 +111,7 @@
 
  </div>  
   
-<div th:replace="fragments :: footerScript"/>
+<div th:replace="~{fragments :: footerScript}"/>
 
 </body>
 

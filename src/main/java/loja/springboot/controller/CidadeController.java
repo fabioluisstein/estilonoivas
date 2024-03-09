@@ -3,8 +3,6 @@ package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.Cidade;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.EstadoRepository;
@@ -40,6 +39,7 @@ public class CidadeController {
 		Runtime.getRuntime().freeMemory();
 	}
 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrocidade")
 	public ModelAndView cadastro(Cidade cidade) {
 		ModelAndView modelAndView = new ModelAndView("cidade/cadastrocidades");
@@ -50,6 +50,7 @@ public class CidadeController {
 		garbageCollection();
 		return base(modelAndView);
 	}
+	
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarcidades")
     public ModelAndView salvar(Cidade cidade) {	
@@ -76,6 +77,7 @@ public class CidadeController {
 	      return "cidade/lista2";
 	  }
  	
+	  
 	@GetMapping("/editarcidade/{idcidade}")
 	public ModelAndView editar(@PathVariable("idcidade") Cidade cidade) {
 		ModelAndView andView = new ModelAndView("cidade/cadastrocidades");
@@ -86,6 +88,7 @@ public class CidadeController {
 		garbageCollection();
 		return base(andView);
 	}  
+	
 	
 	@GetMapping("/removercidade/{idcidade}")
 	public String excluir(@PathVariable("idcidade") Long idcidade) {
@@ -107,6 +110,7 @@ public class CidadeController {
 	  }
 	  
 
+	  
 	public void grafico() {
 	List<listPainelOperacional> grafico = painelRepository.grafico();
 	 operacional = grafico.get(0);
@@ -120,7 +124,8 @@ public class CidadeController {
 	  return base(andView);
 	}
 
-   @GetMapping("serverCidades")
+	
+	@GetMapping("serverCidades")
 	 public ResponseEntity<?> datatables(HttpServletRequest request) {
 	  Map<String, Object> data = new CidadeService().execute(cidadeRepository, request);
 	return ResponseEntity.ok(data);

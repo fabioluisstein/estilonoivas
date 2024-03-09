@@ -2,8 +2,6 @@ package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.Fornecedor;
 import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.FornecedorRepository;
@@ -38,6 +37,7 @@ public class FornecedorController {
 		Runtime.getRuntime().freeMemory();
 	}
 	 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrofornecedor")
 	public ModelAndView cadastro(Fornecedor fornecedor) {
 		ModelAndView modelAndView = new ModelAndView("fornecedor/cadastrofornecedores");
@@ -48,6 +48,7 @@ public class FornecedorController {
 		garbageCollection();
 		return base(modelAndView);
 	}
+	
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarfornecedor")
 	public ModelAndView salvar(Fornecedor fornecedor) {
@@ -61,6 +62,7 @@ public class FornecedorController {
 		return base(andView);
 	}
 	
+	
 	@GetMapping("/editarfornecedor/{idfornecedor}")
 	public ModelAndView editar(@PathVariable("idfornecedor") Fornecedor fornecedor) {
 		ModelAndView andView = new ModelAndView("fornecedor/cadastrofornecedores");
@@ -73,6 +75,7 @@ public class FornecedorController {
 		return base(andView);
 	}
 	
+	
 	@GetMapping("/removerfornecedor/{idfornecedor}")
 	public String excluir(@PathVariable("idfornecedor") Long idfornecedor) {
 		try {
@@ -83,19 +86,20 @@ public class FornecedorController {
   } 
 	
   
-	public void grafico() {
-		List<listPainelOperacional> grafico = painelRepository.grafico();
-	        operacional = grafico.get(0);
-			garbageCollection();
-		}
+  public void grafico() {
+	List<listPainelOperacional> grafico = painelRepository.grafico();
+	  operacional = grafico.get(0);
+	  garbageCollection();
+		
+    }
 
-		public ModelAndView base(ModelAndView modelAndView){
-			modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
-			modelAndView.addObject("ticket", operacional.getTicket());
-			modelAndView.addObject("indicadorGeral", operacional.getIndice());
-			modelAndView.addObject("locadoHoje", operacional.getLocado());
-			return modelAndView;  
-		}
+   public ModelAndView base(ModelAndView modelAndView){
+	 modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+	 modelAndView.addObject("ticket", operacional.getTicket());
+	 modelAndView.addObject("indicadorGeral", operacional.getIndice());
+	 modelAndView.addObject("locadoHoje", operacional.getLocado());
+    return modelAndView;  
+  }
 
   @GetMapping("/listafornecedores")
 	public ModelAndView showTabelas() {
@@ -105,7 +109,8 @@ public class FornecedorController {
 		return base(andView);	 
 		}
 
-   @GetMapping("/serverFornecedores")
+	
+	@GetMapping("/serverFornecedores")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new FornecedorDataTablesService().execute(fornecedorRepository, request);
 			return ResponseEntity.ok(data);

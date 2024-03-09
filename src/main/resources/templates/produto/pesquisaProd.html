@@ -4,11 +4,11 @@
 <meta charset="UTF8">
 <title>Pesquisa Produtos</title>
 
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
 
 <body>
 
-<div th:replace="fragments :: menu"/>
+<div th:replace="~{fragments :: menu}"/>
 
   <nav class="grey darken-1" >
      <div class="row">
@@ -33,6 +33,6 @@
 	</div>
    </form>
 </div>
-<div th:replace="fragments :: footerScript"/>
+<div th:replace="~{fragments :: footerScript}"/>
 </body>
 </html>

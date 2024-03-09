@@ -2,8 +2,6 @@ package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.Estado;
 import loja.springboot.repository.EstadoRepository;
 import loja.springboot.repository.PainelRepository;
@@ -38,6 +37,7 @@ public class EstadoController {
 		 return base(modelAndView);
 	}
 	
+	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarestado")
 	public ModelAndView salvar(Estado estado) { 
 		ModelAndView andView = new ModelAndView("estado/cadastroestados");
@@ -46,6 +46,7 @@ public class EstadoController {
 		andView.addObject("color", "alert alert-success");
 		 return base(andView);
 	}
+	
 	
 	@GetMapping("/editarestado/{idestado}")
 	public ModelAndView editar(@PathVariable("idestado") Estado idestado) {
@@ -56,6 +57,7 @@ public class EstadoController {
 		 return base(andView);
 	}
 
+	
 	@GetMapping("/removerestado/{idestado}")
 	public String excluir(@PathVariable("idestado") Long idestado) {
 		try {
@@ -78,6 +80,7 @@ public class EstadoController {
 	  Runtime.getRuntime().freeMemory();
 	}
  
+	
 	public void grafico() {
 	List<listPainelOperacional> grafico = painelRepository.grafico();
 	 operacional = grafico.get(0);
@@ -91,6 +94,7 @@ public class EstadoController {
 	  return base(andView);
 	}
 
+   
    @GetMapping("/serverEstados")
 	 public ResponseEntity<?> datatables(HttpServletRequest request) {
 	  Map<String, Object> data = new EstadoService().execute(estadoRepository, request);

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
 <body>
-  <div th:replace="fragments :: menu"/>
+  <div th:replace="~{fragments :: menu}"/>
 
       <div class="row">
         <div class="col s12 center">
@@ -10,6 +10,6 @@
         </div>
       </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div th:replace="fragments :: footer"/>
+<div th:replace="~{fragments :: footer}"/>
   </body>
 </html>

@@ -1,12 +1,15 @@
 package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.ProdutoRepository;
 import loja.springboot.repository.ProdutoRepository.listTodosProdutos;;
 
@@ -41,6 +44,7 @@ public class ProdutoDataTablesService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listTodosProdutos> queryBy(String search, ProdutoRepository repository, Pageable pageable) {		
 		return repository.findByProduto(search, pageable);
 	}

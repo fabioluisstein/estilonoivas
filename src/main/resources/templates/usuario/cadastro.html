@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layoutDataTable}" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<!-- SELECT2 EXAMPLE --> 
+<div layout:fragment="corpo" style="width:100%">
+	<form th:action="@{/u/cadastro/salvar}" th:object="${usuario}" method="POST" class="was-validated">
+							
+		<div class="card-header">
+		<h3 class="card-title">Cadastro de Usuários</h3>
+		<div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
+			<span class="info-box-number" th:text="${id}"></span>
+		</div> 
+		
+	    </div>  
+		 <div class="mb-3">
+			<label for="usuaio">Usuario</label>
+			<div class="input-group">
+		    <input type="text" class="form-control" id="email"
+				   th:field="*{email}" placeholder="Usuario" aria-describedby="validationTooltipUsernamePrepend" required />
+			<div class="invalid-feedback">Usuario é requerido.</div>
+			</div>
+			</div>
+			<div class="mb-3">
+			  <label for="senha">Senha</label> 
+			  <input type="password" class="form-control" id="senha" maxlength="6"
+					 th:field="*{senha}" placeholder="Insira sua senha de acesso" required />
+			<div class="invalid-feedback">Senha é requerida para confirmar a operação.</div>
+			
+		    </div>
+            <div class="mb-3">
+				<label for="perfis">Perfil</label>
+				<select id="perfis" class="custom-select" size="4"
+				  th:field="*{perfis}" multiple required>
+				  <option value="1">ADMIN</option>
+				  <option value="2">ATENDENTE</option>
+				  <option value="3">Cliente</option>
+				</select>
+			<input type="hidden" value="0" name="perfis" />
+			<div class="invalid-feedback">Pelo menos um perfil é requerido.</div>
+			</div>
+							
+			<div class="mb-3">
+			  <div class="custom-control custom-switch">
+			  <input type="checkbox" class="custom-control-input" 
+				th:field="*{ativo}" id="ativo" 
+				th:if="${ativo == true ? 'checked=checked' : ''}" />
+			<label class="custom-control-label" for="ativo">Cadastro Ativo</label>
+			</div>
+			</div>
+
+			<input type="hidden" th:field="*{id}"> 
+			  <div class="form-group row">
+			  <div class="col-sm-10">
+			<button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Salvar">
+			<i class="fas fa-save"></i>
+			</button>
+			</div>
+			</div>
+		</form>
+
+    <script  th:src="@{/js/format/jquery.maskMoney.min.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/format.js}"  th:fragment="js"></script>
+	<script  th:src="@{/js/format/table.js}"  th:fragment="js"></script>
+    <script  th:src="@{/js/table/select2.full.min.js}" th:fragment="js"></script>
+	<script  th:src="@{/js/format/alert.js}"  th:fragment="js"></script>
+
+	</div>
+</body>
+</html>

@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.repository.GraficoRepository;
 import loja.springboot.repository.GraficoRepository.listGraficoCard;
@@ -42,6 +43,7 @@ public class AjusteController {
 		Runtime.getRuntime().freeMemory();
 	}
 
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listaAjustes")
 	public ModelAndView produtos() {
 		ModelAndView andView = new ModelAndView("produto/ajustes");
@@ -55,6 +57,7 @@ public class AjusteController {
 			return "produto/ajustes-datatables";
 		}
 */
+        @Transactional(readOnly = true)
 		@GetMapping("/tabelaAjustes")
 		public ModelAndView showTabela2( ) {
 	     ModelAndView andView = new ModelAndView("produto/ajustes-datatable");
@@ -68,23 +71,23 @@ public class AjusteController {
 		  return andView;	
 		}
 		
+		
+	
 		@GetMapping("/serverAjustes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new AjusteDataTablesService().execute(locacaoProdutoRepository, request);
 			return ResponseEntity.ok(data);
 		}
 	 
+	
 		@GetMapping("/editarmodalajuste/{id}")
 		public ResponseEntity<?> preEditarAjuste(@PathVariable("id") Long id) {
 			listLocacaoProduto  ajuste = locacaoProdutoRepository.findAjusteById(id);	
-		
-		//	generateBase64Image()
-
 			return ResponseEntity.ok(ajuste); 
 		}
 	
 
-
+	
 		@PostMapping("/editarmodalajuste")
 		public ResponseEntity<?> editarPromocao(@Valid listLocacaoProduto dto, BindingResult result) {
 	
@@ -128,6 +131,7 @@ public class AjusteController {
 	 * @param idprodutoLocacao
 	 * @return
 	 */
+
 	@GetMapping("/liberarProdutoAjax/{idprodutoLocacao}")
 	public ResponseEntity<?> liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findProdutoLocaoById(idprodutoLocacao).get(0);

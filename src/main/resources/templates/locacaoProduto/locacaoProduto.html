@@ -5,11 +5,12 @@
 <title>Produto da Locação</title>
 
 
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
 
 <body>
 
-<div th:replace="fragments :: menu"/>
+<div th:replace="~{fragments :: menu}"/>
+
 <br>
 
 
@@ -73,6 +74,7 @@
 
  </div>
 
-<div th:replace="fragments :: footer"/>
+<div th:replace="~{fragments :: footer}"/>
+
 </body>
 </html>

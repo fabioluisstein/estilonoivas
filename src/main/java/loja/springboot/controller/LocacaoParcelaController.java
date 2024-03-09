@@ -1,8 +1,7 @@
 package loja.springboot.controller;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletResponse;
 import loja.springboot.model.Parcela;
 import loja.springboot.model.Pessoa;
+import loja.springboot.repository.PainelRepository;
+import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 
 @Controller 
@@ -23,6 +25,26 @@ public class LocacaoParcelaController {
 	@Autowired
 	private ParcelaRepository parcelaRepository;
 
+    @Autowired
+	private PainelRepository painelRepository;
+
+	private listPainelOperacional operacional;
+
+	
+	public void grafico() {
+	 List<listPainelOperacional> grafico = painelRepository.grafico();
+	    operacional = grafico.get(0);
+	    garbageCollection();
+	}
+
+	public ModelAndView base(ModelAndView modelAndView){
+	 modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+	 modelAndView.addObject("ticket", operacional.getTicket());
+	 modelAndView.addObject("indicadorGeral", operacional.getIndice());
+	 modelAndView.addObject("locadoHoje", operacional.getLocado());
+	 return modelAndView;  
+	}
+
 	public void garbageCollection() {
 		Runtime.getRuntime().gc();
 		Runtime.getRuntime().freeMemory();
@@ -30,6 +52,7 @@ public class LocacaoParcelaController {
 
 	@GetMapping("/editarParcelaCustom/{idparcela}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idparcela") Parcela parcela)  {
+		grafico();
 		ModelAndView andView = new ModelAndView("locacao/locacaoPagamentos");
 			Pessoa p = new Pessoa();
 		if (p.obterUsuarioLogado().equalsIgnoreCase("adm")) {
@@ -41,8 +64,9 @@ public class LocacaoParcelaController {
 		andView.addObject("locacaobj",parcela.getLocacao());
 		andView.addObject("parcelabj", parcela);	
 		garbageCollection();
-		return andView;
+		return base(andView);
 	}
+	
 	
 	@RequestMapping(method = RequestMethod.POST, value = "salvarparcelaCustom", consumes = { "multipart/form-data" })
 	public String salvarparcelaCustom(Parcela parcela, final MultipartFile file) throws IOException {

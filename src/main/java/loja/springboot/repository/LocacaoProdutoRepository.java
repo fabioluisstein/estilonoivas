@@ -6,10 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 import loja.springboot.model.LocacaoProduto;
 
-@Transactional
 public interface LocacaoProdutoRepository extends JpaRepository<LocacaoProduto, Long> {
 	@Query(value = "select l.* from locacao_produto l  where l.idlocacao = ?1 ", nativeQuery = true)
 	List<LocacaoProduto> findLocacaoById(Long id);

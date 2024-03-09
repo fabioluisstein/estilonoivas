@@ -4,11 +4,14 @@
 <meta charset="UTF8">
 <title>Cadastro Locação</title>
 
-<head th:replace="fragments :: html_head"/>
+<head th:replace="~{fragments :: html_head}"/>
+
+
 
 <body>
 
-<div th:replace="fragments :: menu"/>
+<div th:replace="~{fragments :: menu}"/>
+
 <br>
 
  <div class="container">
@@ -419,7 +422,7 @@
           
     </div>
 
-<div th:replace="fragments :: footer"/> </div>
+<div th:replace="~{fragments :: footer}"/> </div>
 
 </body>
 </html>

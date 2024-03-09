@@ -8,14 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
-
 import loja.springboot.model.Produto;
 
-@Transactional
+
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
-
 	@Query(value = "Select id, fornecedor, categoria, cor, tamanho, data_compra, valor,  foto   from vw_datatable_produtos order by id desc", nativeQuery = true)
 	List<listProdutos> listaTodos();
 	public static interface listProdutos {

@@ -137,15 +137,14 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+        <a class="nav-link"  href="#" role="button">
+
+            <i class="fas fa-user"></i> <span class=""
+              sec:authentication="name"></span>
+        
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+  
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -274,14 +273,13 @@
                   <p>Parcela Locação</p>
                 </a>
               </li>
-              <div sec:authorize="hasUser('ROLE_ADMIN')">
+              
               <li class="nav-item">
                 <a href="/listacontasBancarias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conta Bancária</p>
                 </a>
               </li>
-               <div>
             </ul>
           </li>
           <li class="nav-item">
@@ -307,7 +305,40 @@
               </li>
 
             </ul>
-          </li>        
+          </li>    
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Usuários
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/u/lista" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Usuários</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/u/novo/cadastro/usuario" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cadastro</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>   
+          
+          <li class="nav-item">
+
+          <a href="/logout" class="nav-link">
+            <i class="nav-icon far fa-circle text-danger"></i>
+            <p class="text">Sair</p>
+            </a>
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -729,6 +760,27 @@
                   <span th:class="${permissao}" th:text="${crescimento}"></span>
                 </div>
               </div>
+
+
+              <div class="info-box mb-3 bg-warning">
+                <span class="info-box-icon"><i class="far fa-copy"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Produtos sem Locacão 300 dias</span>
+                  <span th:class="${permissao}" th:text="${NaoLocado}"></span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+
+              
+              <div class="info-box mb-3 bg-warning">
+                <span class="info-box-icon"><i class="far fa-copy"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Valor em Caixa</span>
+                  <span th:class="${permissao}" th:text="${ValorCaixa}"></span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+
             <!-- /.info-box -->
           <!-- /.col -->
         </div>

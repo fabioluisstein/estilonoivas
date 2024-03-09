@@ -5,12 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 import loja.springboot.model.Cliente;
 
-@Transactional
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-
+	
 	@Query( value = "select * from vw_datatable_clientes  a  where a.cidade_id= ?1", nativeQuery = true)
 	List<listTodosClientes> listaClienteCidade(Long id);
 

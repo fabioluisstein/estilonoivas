@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class LojaApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);	
-		
+		//System.out.println(new BCryptPasswordEncoder().encode("Decantador@01"));
 	}
 
 /* 

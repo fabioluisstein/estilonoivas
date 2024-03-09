@@ -1,12 +1,14 @@
 package loja.springboot.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoProdutoRepository.listLocacaoProduto;
 
@@ -41,6 +43,7 @@ public class AjusteDataTablesService {
 		return json;
 	}
 
+	@Transactional(readOnly = true)
 	private Page<listLocacaoProduto> queryBy(String search, LocacaoProdutoRepository repository, Pageable pageable) {		
 		return repository.findByAjuste(search, pageable);
 	}

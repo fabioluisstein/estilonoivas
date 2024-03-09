@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletResponse;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
 import loja.springboot.model.Parcela;
@@ -40,6 +39,8 @@ public class LocacaoProdutoController {
 		Runtime.getRuntime().freeMemory();
 	}
 
+	
+    
 	@GetMapping("/editarProdutoCustom/{idproduto}")
 	public ModelAndView editarParcelaCustom(@PathVariable("idproduto") LocacaoProduto locacaoproduto)  {
 		ModelAndView andView = new ModelAndView("locacao/locacaoProdutos");
@@ -50,6 +51,7 @@ public class LocacaoProdutoController {
 		return andView;
 	}
 
+	
 	@RequestMapping(method = RequestMethod.POST, value = "salvarprodutoCustom", consumes = { "multipart/form-data" })
 	public String salvarprodutoCustom(LocacaoProduto produtoLocaocao, final MultipartFile file) throws IOException {
 
@@ -118,6 +120,7 @@ public class LocacaoProdutoController {
 
 	}
 
+	
 	@GetMapping("/editarprodutolocacaoCustoms/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") Long idproduto)  {
 		Optional<LocacaoProduto> locacaoProduto = locacaoProdutoRepository.findById(idproduto);
@@ -139,6 +142,7 @@ public class LocacaoProdutoController {
 	 * @param idprodutoLocacao
 	 * @return
 	 */
+	
 	@GetMapping("/liberarProduto/{idprodutoLocacao}")
 	public ModelAndView liberacaoProduto(@PathVariable("idprodutoLocacao") Long idprodutoLocacao)  {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findProdutoLocaoById(idprodutoLocacao).get(0);
@@ -149,6 +153,7 @@ public class LocacaoProdutoController {
 		garbageCollection();
     return andView;
 	} 
+	
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarprodutoCustom")
 	public String salvarProdutoCustom(LocacaoProduto produtoLocacao) throws IOException {	
@@ -174,14 +179,6 @@ public class LocacaoProdutoController {
 		garbageCollection();
 		return andView;
 	}
-	
-	
-
-
-	
-	
-	
-
 	
 	
 }

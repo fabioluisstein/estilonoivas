@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import loja.springboot.model.Cliente;
 import loja.springboot.model.Locacao;
 import loja.springboot.model.LocacaoProduto;
@@ -59,11 +58,9 @@ public class LocacaoController {
 	private ProdutoRepository produtoRepository;
 
 	private listPainelOperacional operacional;
-
 	
     @Autowired
 	private PainelRepository painelRepository;
-
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -83,6 +80,7 @@ public class LocacaoController {
 		Runtime.getRuntime().freeMemory(); 
 	}
 
+	
 	@PostMapping("/pesquisarlocacao")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 	  
@@ -101,6 +99,7 @@ public class LocacaoController {
 		return modelAndView;
 	}
 	 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "cadastrolocacao")
 	public ModelAndView cadastro(Locacao locacao) {
 		locacao.setData_locacao(new Date());
@@ -116,6 +115,7 @@ public class LocacaoController {
 		return base(modelAndView);
 	}
 	
+	
 	@RequestMapping(method = RequestMethod.GET, value = "locacoesVencidas")
 	public ModelAndView locacoesVencidas() {	
 		ModelAndView modelAndView = new ModelAndView("locacao/lista");
@@ -125,8 +125,10 @@ public class LocacaoController {
 	}
 	
 
-	@GetMapping("/cadastrolocacao/{idCliente}")
+	
+	@GetMapping("cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Cliente cliente) {
+		grafico();
 		locacao.setData_locacao(new Date());
 		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacoes");
 		locacao.setCliente(cliente);
@@ -142,9 +144,8 @@ public class LocacaoController {
 	}
 	
 	
-
-
-	@GetMapping("/editarparcela/{idparcela}")
+	
+	@GetMapping("editarparcela/{idparcela}")
 	public ModelAndView editarParcela(@PathVariable("idparcela") Parcela parcela)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		andView.addObject("locacaobj",parcela);
@@ -162,6 +163,7 @@ public class LocacaoController {
 	}
 
 
+	
     @GetMapping("/detalhesProduto/{id}")
     @ResponseBody
     public ResponseEntity<LocacaoProduto> detalhesProduto(@PathVariable Long id) {
@@ -177,7 +179,8 @@ public class LocacaoController {
 	   return "redirect:/voltar/"+parcela.getLocacao().getId().toString()+"";
 	} 
 	
-	@GetMapping("/editarprodutolocacao/{idproduto}")
+	
+	@GetMapping("editarprodutolocacao/{idproduto}")
 	public ModelAndView editarProduto(@PathVariable("idproduto") LocacaoProduto locacaoProduto)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		andView.addObject("locacaobj",locacaoProduto.getLocacao());
@@ -193,9 +196,8 @@ public class LocacaoController {
 		return andView;
 	} 
 	
-	@GetMapping("/gerarRelatorio/{idlocacao}")
+	@GetMapping("gerarRelatorio/{idlocacao}")
 	public void imprimePdf(@PathVariable("idlocacao") Long idlocacao, 
-			
 	   HttpServletRequest request,
 	   HttpServletResponse response) throws Exception {
        Map<String,Object> paramMap = new HashMap<String, Object>();
@@ -212,6 +214,7 @@ public class LocacaoController {
 		garbageCollection(); 
 	} 
 	
+	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.save(produtoLocacao);
@@ -219,8 +222,8 @@ public class LocacaoController {
 	   return "redirect:/voltar/"+produtoLocacao.getLocacao().getId().toString()+"";
 	} 
 	
-
-	@GetMapping("/editarlocacao/{idlocacao}")
+	
+	@GetMapping("editarlocacao/{idlocacao}")
 	public ModelAndView editarlocacao(@PathVariable("idlocacao") Locacao locacao)  {
 		ModelAndView andView = new ModelAndView("locacao/cadastrolocacoes");
 		Parcela parcela = new Parcela( locacao);
@@ -243,7 +246,8 @@ public class LocacaoController {
 		garbageCollection(); 
 		return base(andView);
 	}
-		
+	
+	
 	@GetMapping(value = "/buscarparcelaid") /* mapeia a url */
 	@ResponseBody /* Descricao da resposta */
 	public ResponseEntity<Parcela> buscarparcelaid(@RequestParam(name = "idparcela") Long idparcela) { 
@@ -253,6 +257,7 @@ public class LocacaoController {
 	}   
 	
 
+	
 	@GetMapping(value = "/buscarprodutoid") /* mapeia a url */
 	@ResponseBody /* Descricao da resposta */
 	public ResponseEntity<Produto> buscarprodutoid(@RequestParam(name = "idproduto") Long idproduto) { 
@@ -262,14 +267,15 @@ public class LocacaoController {
 	}   
 	
 	
-	@GetMapping("/removerlocacao/{idlocacao}")
+	@GetMapping("removerlocacao/{idlocacao}")
 	public String excluir(@PathVariable("idlocacao") Long idlocacao) {
 		locacaoRepository.deleteById(idlocacao);	
 		garbageCollection(); 
 		return "redirect:/listalocacoes";
 	}
 	 
-	@GetMapping("/removerparcela/{idparcela}")
+	
+	@GetMapping("removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();
 		parcelaRepository.deleteById(idparcela);
@@ -278,7 +284,7 @@ public class LocacaoController {
 	}
 	
 	
-	@GetMapping("/removereprodutolocacao/{idproduto}")
+	@GetMapping("removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();
 		locacaoProdutoRepository.deleteById(idproduto);	
@@ -286,22 +292,23 @@ public class LocacaoController {
 		return "redirect:/editarlocacao/"+locacaoProduto.getLocacao().toString();
 	}
 	
+	
 	public void grafico() {
 		List<listPainelOperacional> grafico = painelRepository.grafico();
 	        operacional = grafico.get(0);
 			garbageCollection();
 		}
 
-		public ModelAndView base(ModelAndView modelAndView){
-			modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
-			modelAndView.addObject("ticket", operacional.getTicket());
-			modelAndView.addObject("indicadorGeral", operacional.getIndice());
-			modelAndView.addObject("locadoHoje", operacional.getLocado());
-			return modelAndView;  
-		}
+	public ModelAndView base(ModelAndView modelAndView){
+	 modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+	 modelAndView.addObject("ticket", operacional.getTicket());
+	 modelAndView.addObject("indicadorGeral", operacional.getIndice());
+	 modelAndView.addObject("locadoHoje", operacional.getLocado());
+	  return modelAndView;  
+	}
 
 
-    @GetMapping("/listalocacoes")
+    @GetMapping("listalocacoes")
 	public ModelAndView showTabelas() {
 	    ModelAndView andView = new ModelAndView("locacao/locacao-datatable");
 		grafico();
@@ -309,22 +316,19 @@ public class LocacaoController {
 		return base(andView);	 
 		} 
 
-   @GetMapping("/serverLocacoes")
+   
+   @GetMapping("serverLocacoes")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request, 0);
 			return ResponseEntity.ok(data);   
 	}
 
-	@GetMapping("/serverLocacoesVencidas")
+	
+	@GetMapping("serverLocacoesVencidas")
 	public ResponseEntity<?> datatablesLocacaoVenvidas(HttpServletRequest request) {
 		Map<String, Object> data = new LocacaoDataTablesService().execute(locacaoRepository, request, 1);
 		return ResponseEntity.ok(data);   
 }
-
-
-
-
-
 
 
 

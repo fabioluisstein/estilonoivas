@@ -3,8 +3,6 @@ package loja.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.model.ContaBancaria;
 import loja.springboot.repository.ContaBancariaRepository;
 import loja.springboot.repository.PainelRepository;
@@ -36,12 +35,14 @@ public class ContaBancariaController {
   private PainelRepository painelRepository;
   private listPainelOperacional operacional;
 
+  
   public void grafico() {
    List<listPainelOperacional> grafico = painelRepository.grafico();
 	operacional = grafico.get(0);
 	garbageCollection();
   }
-	 
+
+  
   @RequestMapping(method = RequestMethod.GET, value = "/listaParcelass")
   public ModelAndView listaPagamentos() {
 		 ModelAndView andView = new ModelAndView("conta/listaParcelas");
@@ -57,6 +58,7 @@ public class ContaBancariaController {
 		modelAndView.addObject("contabj", new ContaBancaria());
 	    return base(modelAndView);
 	}
+	
 	
 	@RequestMapping(method = RequestMethod.POST, value ="salvarconta")
 	public ModelAndView salvarConta(ContaBancaria conta) { 
@@ -78,11 +80,11 @@ public class ContaBancariaController {
 	@RequestMapping(method = RequestMethod.GET, value = "parcelasProblemas")
 	public ModelAndView parcelasProblemas() {	
 		   ModelAndView andView = new ModelAndView("conta/listaParcelas");
-		   //     andView.addObject("parcelas", parcelaRepository.parcelaMesProblemas());
 	   garbageCollection(); 
 	 return andView;
 	}
 
+	
 	@PostMapping("/pesquisarparcela")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal)  {
 		ModelAndView andView = new ModelAndView("conta/listaParcelas");
@@ -104,6 +106,7 @@ public class ContaBancariaController {
 		Runtime.getRuntime().freeMemory();
 	}
  
+	
 	@GetMapping("/editarconta/{idconta}")
 	public ModelAndView editar(@PathVariable("idconta") ContaBancaria conta) {
 		ModelAndView andView = new ModelAndView("conta/cadastrocontas");
@@ -112,6 +115,7 @@ public class ContaBancariaController {
 		andView.addObject("contabj",contaBancariaRepository.saveAndFlush(conta));
 		 return base(andView);
 	}
+	
 	
 	@GetMapping("/removerconta/{idconta}")
 	public String excluir(@PathVariable("idconta") Long idconta) {
@@ -127,6 +131,7 @@ public class ContaBancariaController {
 		 return base(andView);
 		}
 
+   		
    @GetMapping("/serverContas")
 		public ResponseEntity<?> datatables(HttpServletRequest request) {
 			Map<String, Object> data = new ContaBancariaService().execute(contaBancariaRepository, request);
@@ -142,11 +147,10 @@ public class ContaBancariaController {
 		 return base(andView);
 		}
 
+   
    @GetMapping("/serverParcelas")
 		public ResponseEntity<?> datatablesParcelas(HttpServletRequest request) {
 			Map<String, Object> data = new ParcelaService().execute(parcelaRepository, request);
 			return ResponseEntity.ok(data);
-	}
-
-	
+	}	
 }
