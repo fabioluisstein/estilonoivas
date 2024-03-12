@@ -15,13 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
-import loja.springboot.model.Medico;
 import loja.springboot.model.Perfil;
-import loja.springboot.model.PerfilTipo;
 import loja.springboot.model.Usuario;
 import loja.springboot.repository.PainelRepository;
-import loja.springboot.repository.UsuarioRepository;
 import loja.springboot.repository.PainelRepository.listPainelOperacional;
+import loja.springboot.repository.UsuarioRepository;
 import loja.springboot.service.MedicoService;
 import loja.springboot.service.UsuarioService;
 
@@ -34,7 +32,7 @@ public class UsuarioController {
 	private UsuarioService service;
 
 	@Autowired
-  private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
 
 	@Autowired

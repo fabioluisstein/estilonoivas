@@ -76,6 +76,8 @@ public class Locacao implements Serializable {
 	
 	private String papel;
 
+	private Integer emailEnviado;
+
 	public Locacao(){
 
 	}
@@ -86,6 +88,16 @@ public class Locacao implements Serializable {
 
 	public Cidade getCidade_evento() {
 		return cidade_evento;
+	}
+
+	
+
+	public Integer getEmailEnviado() {
+		return emailEnviado;
+	}
+
+	public void setEmailEnviado(Integer emailEnviado) {
+		this.emailEnviado = emailEnviado;
 	}
 
 	public void setCidade_evento(Cidade cidade_evento) {

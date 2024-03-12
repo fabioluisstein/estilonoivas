@@ -49,6 +49,25 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
 		Date getData_retirada();
 	}
 
+
+
+	@Query(value = "Select * from vw_email_locacao where id= ?1", nativeQuery = true)
+	List<listEmailLocacoes> emailLocacao(Long idLocacao);
+	public static interface listEmailLocacoes {
+		Long getId(); 
+		String getOrigem();
+		String getTipo();
+		String getCliente();
+		String getCidade();
+		String getColaborador();
+		String getData_locacao();
+		String getData_evento();
+		String getData_retirada();
+		String getTotal();
+		String getPago();
+		String getPendente();
+	}
+
 	@Query(value = " SELECT id, data_locacao , total_produto, falta_pagar,  cliente,  cidade, telefone , whats,   data_retirada  " + 
 	" FROM vw_datatable_locacoes   where id like %:search%  or  data_locacao like %:search%  or  data_retirada like %:search%   or  cidade like %:search% or   cliente like %:search%" +
 	" or  cidade like %:search%  or  telefone like %:search%  or  total_produto like %:search% or  falta_pagar like %:search% " , nativeQuery = true)

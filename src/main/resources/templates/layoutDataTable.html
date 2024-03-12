@@ -155,12 +155,21 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  href="#" role="button">
-
-            <i class="fas fa-user"></i> <span class=""
-              sec:authentication="name"></span>
-        
-        </a>
+				<form th:action="@{/logout}" 
+					  method="post"  class="form-inline mt-2 mt-sm-0">
+					<div class="btn-group sm-2 mr-sm-2">
+						<button type="button" class="btn btn-navbar">
+							<i class="fas fa-user"></i> <span class="" sec:authentication="name">Bob</span>
+						</button>
+						<button type="button"
+							class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						</button>
+						<div class="dropdown-menu">
+							<button type="submit" class="dropdown-item">Sair</button>
+						</div>
+					</div>
+				</form>
       </li>
     </ul>
   </nav>
@@ -292,7 +301,7 @@
                   <p>Parcela Locação</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a href="/listacontasBancarias" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Conta Bancária</p>
@@ -325,7 +334,7 @@
             </ul>
           </li>    
           
-          <li class="nav-item">
+          <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>

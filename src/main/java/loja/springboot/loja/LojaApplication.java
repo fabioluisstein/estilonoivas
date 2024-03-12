@@ -62,8 +62,4 @@ public class LojaApplication extends SpringBootServletInitializer {
 	 return connector;
  }
 
- 
-
-
-
 }

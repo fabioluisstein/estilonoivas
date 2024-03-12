@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +37,7 @@ import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.PessoaRepository;
 import loja.springboot.repository.ProdutoRepository;
+import loja.springboot.repository.LocacaoRepository.listEmailLocacoes;
 import loja.springboot.service.LocacaoDataTablesService;
 
 @Controller
@@ -44,6 +47,9 @@ public class LocacaoController {
 	private PessoaRepository colaboradorRepository;
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	JavaMailSender sender;
 	
 	@Autowired
 	private LocacaoRepository locacaoRepository;
@@ -211,6 +217,9 @@ public class LocacaoController {
 		String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
 		response.setHeader(headerKey, headerValue);
 		response.getOutputStream().write(pdf);
+		if(locacaoRepository.findById(idlocacao).get().getEmailEnviado()==null){
+		   enviaEmail(idlocacao);
+	     }
 		garbageCollection(); 
 	} 
 	
@@ -256,6 +265,45 @@ public class LocacaoController {
 		return new ResponseEntity<Parcela>(parcela, HttpStatus.OK);
 	}   
 	
+
+
+
+public void enviaEmail(Long idLocacao) throws Exception {
+
+List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
+try{
+if(email.size()>0) {
+String titulo = "Nova Locação Valor: "+ email.get(0).getTotal();
+String mensagem = "Locação Nº:" + email.get(0).getId() + "\n" +
+"Cliente:" + email.get(0).getCliente() + "\n" +
+"Atendente:" + email.get(0).getColaborador() + "\n" +
+"Tipo:" + email.get(0).getTipo() + "\n" +
+"Origem:" + email.get(0).getOrigem() + "\n" +
+"Cidade:" + email.get(0).getCidade() + "\n" +
+"Valor da locação:" + email.get(0).getTotal() + "\n" +
+"Valor Pago:" + email.get(0).getPago() + "\n" +
+"Valor Pendente:" + email.get(0).getPendente() + "\n" +
+"Data da Locação:" + email.get(0).getData_locacao() + "\n" +
+"Data do Evento:" + email.get(0).getData_evento() + "\n" +
+"Data da Retirada:" + email.get(0).getData_retirada() + "\n";
+
+SimpleMailMessage simple = new SimpleMailMessage();
+simple.setTo("dancarlos22@gmail.com");
+simple.setText(mensagem);
+simple.setSubject(titulo);
+sender.send(simple);
+
+Locacao locacao = locacaoRepository.findById(idLocacao).get();
+locacao.setEmailEnviado(1);
+locacaoRepository.save(locacao);
+ }
+}
+ catch (Exception e) {
+	System.out.println("erro ao enviar email");
+}
+
+
+}
 
 	
 	@GetMapping(value = "/buscarprodutoid") /* mapeia a url */

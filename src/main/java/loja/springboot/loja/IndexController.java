@@ -84,7 +84,7 @@ public class IndexController {
 		model.addAttribute("titulo", "Acesso recusado!");
 		model.addAttribute("texto", "Sua sessão expirou.");
 		model.addAttribute("subtexto", "Você logou em outro dispositivo");
-		return "login";
+		return "login2";
 	}	
 	
 	// acesso negado
