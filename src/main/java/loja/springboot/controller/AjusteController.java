@@ -99,6 +99,7 @@ public class AjusteController {
 				return ResponseEntity.unprocessableEntity().body(errors);
 			}
 			
+			@SuppressWarnings("null")
 			LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(dto.getId()).get();
 			locacaoProduto.setObservacao(dto.getAjuste());
 			
