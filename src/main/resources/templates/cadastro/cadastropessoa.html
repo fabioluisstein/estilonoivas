@@ -75,7 +75,8 @@
         
         
       <div class="row" >
-   <form action="salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" >
+   <form th:action="@{salvarpessoa}" id="formpessoa" method="POST" th:object="${pessoaobj}" >
+
       <div class="row">
       
        <div class="input-field col s12">
@@ -110,7 +111,7 @@
 
 
       <div class="container">
-		<form action="pesquisarpessoa" method="post" class="col s12">
+		<form th:action="@{pesquisarpessoa}" method="POST" class="col s12">
 			<div class="row">
 				<div class="input-field col s12">
 					<label for="nomepesquisa" class="active">Pesquia por nome:</label>

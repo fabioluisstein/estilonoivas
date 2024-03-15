@@ -28,8 +28,7 @@
    <div class="row">    
 
  
-    <form action="/salvarparcelaCustom" id="formparcela" method="post" th:object="${parcelabj}" enctype="multipart/form-data" >
-     
+    <form th:action="@{/salvarparcelaCustom}" id="formparcela" method="POST" th:object="${parcelabj}" enctype="multipart/form-data" >
        <div class="row">  
      <div class="input-field">
        <label for="id_parcela" class="active">ID</label> 

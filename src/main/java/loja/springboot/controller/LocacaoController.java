@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,12 +33,12 @@ import loja.springboot.repository.CidadeRepository;
 import loja.springboot.repository.ClienteRepository;
 import loja.springboot.repository.LocacaoProdutoRepository;
 import loja.springboot.repository.LocacaoRepository;
+import loja.springboot.repository.LocacaoRepository.listEmailLocacoes;
 import loja.springboot.repository.PainelRepository;
 import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.ParcelaRepository;
 import loja.springboot.repository.PessoaRepository;
 import loja.springboot.repository.ProdutoRepository;
-import loja.springboot.repository.LocacaoRepository.listEmailLocacoes;
 import loja.springboot.service.LocacaoDataTablesService;
 
 @Controller
@@ -177,7 +178,7 @@ public class LocacaoController {
         return ResponseEntity.ok(produto);
     }
 
-	
+	@CacheEvict(value = "grafico")
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.save(parcela);
@@ -223,7 +224,7 @@ public class LocacaoController {
 		garbageCollection(); 
 	} 
 	
-	
+	@CacheEvict(value = "grafico")
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.save(produtoLocacao);
@@ -252,6 +253,7 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
+		grafico();
 		garbageCollection(); 
 		return base(andView);
 	}
@@ -269,34 +271,33 @@ public class LocacaoController {
 
 
 public void enviaEmail(Long idLocacao) throws Exception {
-
 List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
-try{
-if(email.size()>0) {
-String titulo = "Nova Locação Valor: "+ email.get(0).getTotal();
-String mensagem = "Locação Nº:" + email.get(0).getId() + "\n" +
-"Cliente:" + email.get(0).getCliente() + "\n" +
-"Atendente:" + email.get(0).getColaborador() + "\n" +
-"Tipo:" + email.get(0).getTipo() + "\n" +
-"Origem:" + email.get(0).getOrigem() + "\n" +
-"Cidade:" + email.get(0).getCidade() + "\n" +
-"Valor da locação:" + email.get(0).getTotal() + "\n" +
-"Valor Pago:" + email.get(0).getPago() + "\n" +
-"Valor Pendente:" + email.get(0).getPendente() + "\n" +
-"Data da Locação:" + email.get(0).getData_locacao() + "\n" +
-"Data do Evento:" + email.get(0).getData_evento() + "\n" +
-"Data da Retirada:" + email.get(0).getData_retirada() + "\n";
+		try{
+		if(email.size()>0) {
+		String titulo = "Nova Locação Valor: "+ email.get(0).getTotal();
+		String mensagem = "Locação Nº:" + email.get(0).getId() + "\n" +
+		"Cliente:" + email.get(0).getCliente() + "\n" +
+		"Atendente:" + email.get(0).getColaborador() + "\n" +
+		"Tipo:" + email.get(0).getTipo() + "\n" +
+		"Origem:" + email.get(0).getOrigem() + "\n" +
+		"Cidade:" + email.get(0).getCidade() + "\n" +
+		"Valor da locação:" + email.get(0).getTotal() + "\n" +
+		"Valor Pago:" + email.get(0).getPago() + "\n" +
+		"Valor Pendente:" + email.get(0).getPendente() + "\n" +
+		"Data da Locação:" + email.get(0).getData_locacao() + "\n" +
+		"Data do Evento:" + email.get(0).getData_evento() + "\n" +
+		"Data da Retirada:" + email.get(0).getData_retirada() + "\n";
 
-SimpleMailMessage simple = new SimpleMailMessage();
-simple.setTo("dancarlos22@gmail.com");
-simple.setText(mensagem);
-simple.setSubject(titulo);
-sender.send(simple);
+		SimpleMailMessage simple = new SimpleMailMessage();
+		simple.setTo("dancarlos22@gmail.com");
+		simple.setText(mensagem);
+		simple.setSubject(titulo);
+		sender.send(simple);
 
-Locacao locacao = locacaoRepository.findById(idLocacao).get();
-locacao.setEmailEnviado(1);
-locacaoRepository.save(locacao);
- }
+		Locacao locacao = locacaoRepository.findById(idLocacao).get();
+		locacao.setEmailEnviado(1);
+		locacaoRepository.save(locacao);
+		}
 }
  catch (Exception e) {
 	System.out.println("erro ao enviar email");
@@ -314,7 +315,7 @@ locacaoRepository.save(locacao);
 		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
 	}   
 	
-	
+	@CacheEvict(value = "grafico")
 	@GetMapping("removerlocacao/{idlocacao}")
 	public String excluir(@PathVariable("idlocacao") Long idlocacao) {
 		locacaoRepository.deleteById(idlocacao);	
@@ -322,7 +323,7 @@ locacaoRepository.save(locacao);
 		return "redirect:/listalocacoes";
 	}
 	 
-	
+	@CacheEvict(value = "grafico")
 	@GetMapping("removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();
@@ -331,7 +332,7 @@ locacaoRepository.save(locacao);
 		return "redirect:/editarlocacao/"+parcela.getLocacao().toString();
 	}
 	
-	
+	@CacheEvict(value = "grafico")
 	@GetMapping("removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();

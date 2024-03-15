@@ -63,19 +63,6 @@ public class PagamentoController {
 	 garbageCollection();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listapagamentoss")
-	public ModelAndView pagamentos() {
-		ModelAndView andView = new ModelAndView("pagamento/lista");
-		Pessoa p = new Pessoa();
-        if( p.obterUsuarioLogado().equalsIgnoreCase("adm") ){
-			andView.addObject("pagamentos", pagamentoRepository.saidasTodos());
-		} 
-		else{ 
-			andView.addObject("pagamentos", pagamentoRepository.saidasTodosGerais()); 
-	}
-		garbageCollection();
-		return andView;
-	} 
  
 	@PostMapping("/pesquisarpagamento")
 	public ModelAndView pesquisar(@RequestParam("dataInicio") String dataInicio,@RequestParam("dataFinal") String dataFinal) {
@@ -121,7 +108,7 @@ public class PagamentoController {
 			}
 			andView.addObject("pagamentobj", pagamentoRepository.save(pagamento));
 			garbageCollection();
-			return andView;
+			base(andView);	
 		}
 
 		if (pagamento.getId() != null) {

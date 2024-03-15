@@ -10,7 +10,7 @@
 
 <!-- SELECT2 EXAMPLE --> 
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarfornecedor" id="formfornecedor" method="post" th:object="${fornecedorbj}" >
+	<form th:action="@{/salvarfornecedor}" id="formfornecedor" method="POST" th:object="${fornecedorbj}" >
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Fornecedor</h3>
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">

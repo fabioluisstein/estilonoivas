@@ -24,6 +24,8 @@ import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
 import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
 import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
 import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
+import loja.springboot.repository.UsuarioRepository;
+import loja.springboot.service.UsuarioService;
 
 @Controller
 public class IndexController {
@@ -70,6 +72,7 @@ public class IndexController {
 	// login invalido
 	@GetMapping({"/login-error"})
 	public String loginError(ModelMap model) {
+
 		model.addAttribute("alerta", "erro");
 		model.addAttribute("titulo", "Crendenciais inválidas!");
 		model.addAttribute("texto", "Login ou senha incorretos, tente novamente.");

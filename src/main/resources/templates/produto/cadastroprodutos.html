@@ -8,7 +8,7 @@
 
 <!-- SELECT2 EXAMPLE --> 
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}"  enctype="multipart/form-data" >
+	<form th:action="@{/salvarproduto}"  id="formproduto" method="post" th:object="${produtobj}"  enctype="multipart/form-data" >
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Produtos</h3>
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">

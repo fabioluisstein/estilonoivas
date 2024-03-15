@@ -17,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.servlet.http.HttpServletRequest;
 import loja.springboot.datatables.Datatables;
 import loja.springboot.datatables.DatatablesColunas;
+import loja.springboot.model.LoginInfo;
 import loja.springboot.model.Perfil;
 import loja.springboot.model.Usuario;
+import loja.springboot.repository.LoginRepository;
 import loja.springboot.repository.UsuarioRepository;
 
 @Service
@@ -28,24 +30,50 @@ public class UsuarioService implements UserDetailsService {
 	private UsuarioRepository repository;
 	@Autowired
 	private Datatables datatables;
-	
-	@Transactional(readOnly = true)
-	public Usuario buscarPorEmail(String email) {
-		
-		return repository.findByEmail(email);
-	}
+	@Autowired
+	private LoginRepository loginrepository;
 
-	@Override @Transactional(readOnly = true)
+
+	@Override @Transactional(readOnly = false)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = buscarPorEmail(username);
+		//salvarLogin(usuario.getEmail(),"Não Autorizado");
+		Usuario usuario = repository.findByEmail(username).get();
+          if(usuario.getId() == null){
+			new UsernameNotFoundException("Usuario " + username + " não encontrado.");
+		  }
+
+		  salvarLogin(usuario.getEmail(),"Autorizado");	
+
 		return new User(
+		
 			usuario.getEmail(),
 			usuario.getSenha(),
+			
 			AuthorityUtils.createAuthorityList(getAtuthorities(usuario.getPerfis()))
 		);
+		
 	}
 	
+	
+
+  
+    public void salvarLogin( String usuario, String Operacao) {
+	
+
+		 String ipAddress = "122221112";
+        String ip = ipAddress;
+
+
+        // Salva o login
+        LoginInfo loginInfo = new LoginInfo(ip, usuario, Operacao);
+		
+       loginrepository.save(loginInfo); 
+    }
+
+
+
 	private String[] getAtuthorities(List<Perfil> perfis) {
+	
 		String[] authorities = new String[perfis.size()];
 		for (int i = 0; i < perfis.size(); i++) {
 			authorities[i] = perfis.get(i).getDesc();
@@ -85,7 +113,7 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	public static boolean isSenhaCorreta(String senhaDigitada, String senhaArmazenada) {
-		
+	
 		return new BCryptPasswordEncoder().matches(senhaDigitada, senhaArmazenada);
 	}
 

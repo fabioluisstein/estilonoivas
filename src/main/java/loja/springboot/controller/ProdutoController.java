@@ -75,13 +75,7 @@ public class ProdutoController {
 		garbageCollection();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/listaprodutoss")
-	public ModelAndView produtos() {
-		ModelAndView andView = new ModelAndView("produto/lista");
-		andView.addObject("produtos", produtoRepository.listaTodos());
-		garbageCollection();
-		return andView;
-	}
+
 
 	@RequestMapping(method = RequestMethod.GET, value = "/consultaprodutos")
 	public ModelAndView produtosPesquisa() {
@@ -182,7 +176,7 @@ public class ProdutoController {
 			}
 			andView.addObject("produtobj", produtoRepository.save(produto));
 			garbageCollection();
-			return andView;
+			return base(andView); 
 		}
 
 		if (produto.getId() != null) {

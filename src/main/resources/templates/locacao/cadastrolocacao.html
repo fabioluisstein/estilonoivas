@@ -27,7 +27,7 @@
 
 <div class="container">
    <div class="row">
-   <form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}">
+   <form th:action="@{/salvarlocacao}" id="formlocacao" method="POST" th:object="${locacaobj}">
     
     <div class="input-field col s12">
       <label for="id" class="active">ID</label> 
@@ -315,7 +315,7 @@
 
      <h4>Incluir Parcela</h4>
  
-   <form action="/salvarparcela" id="formparcela" method="post" th:object="${parcelabj}">
+   <form th:action="@{/salvarparcela}"  id="formparcela" method="POST" th:object="${parcelabj}">
     
    <div class="row">  
     <div class="input-field col s10">
@@ -374,7 +374,7 @@
 
      <h4>Incluir Produtos</h4>
  
-   <form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}">
+   <form th:action="@{/salvarproduto}" id="formproduto" method="POST" th:object="${produtobj}">
     
       <div class="row">  
     <div class="input-field col s10">

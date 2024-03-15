@@ -8,7 +8,8 @@
 
 <!-- SELECT2 EXAMPLE --> 
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarpagamento" id="formpagamento" method="post" th:object="${pagamentobj}"  enctype="multipart/form-data" >
+	<form th:action="@{/salvarpagamento}" id="formpagamento" method="POST" th:object="${pagamentobj}"  enctype="multipart/form-data" >
+		
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Pagamentos</h3>
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">

@@ -8,7 +8,7 @@
 
 <!-- SELECT2 EXAMPLE -->
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarestado" id="formestado" method="post" th:object="${estadobj}" >
+	<form th:action="@{/salvarestado}" id="formestado" method="POST" th:object="${estadobj}" >
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Estados</h3>
 		  <div style="text-align: center;" id ="mensagens" th:class="${color}" role="alert">

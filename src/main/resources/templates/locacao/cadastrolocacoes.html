@@ -8,13 +8,13 @@
 
 <!-- Cabeçalho da Locação --> 
 <div layout:fragment="corpo" style="width:100%">
-	<form action="/salvarlocacao" id="formlocacao" method="post" th:object="${locacaobj}"  enctype="multipart/form-data" >
+	<form th:action="@{/salvarlocacao}"  id="formlocacao" method="POST" th:object="${locacaobj}"  enctype="multipart/form-data" >
 	<div class="card-header">
 		  <h3 class="card-title">Cadastro de Locação</h3>
 		  <div style="text-align:center" id ="mensagens" th:class="${color}" role="alert">
 			<span class="info-box-number" th:text="${id}"></span>
 		  </div> 
-	</div>  
+	</div>   
 
 	<!-- /.Corpo da Locação -->
 	<div class="card-body">
@@ -162,7 +162,8 @@
 				<button type="submit"  class="btn btn-success">Salvar</button>
 				<td><a th:if="${locacaoId !=null}"  th:href="@{/gerarRelatorio/{idlocacao}(idlocacao=${locacaoId})}" class="btn btn-primary">Contrato</a> </td> 
 			</div>
-        </div>			
+        </div>		
+		<input type="hidden" th:field="*{emailEnviado}" id="emailEnviado" name="emailEnviado">	
 </form>
  <!-- Fim do Formulario aba Inicial da locação -->
 
@@ -288,7 +289,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="/salvarprodutonew" id="formproduto" method="post" th:object="${produtobj}">
+				<form th:action="@{/salvarprodutonew}" id="formproduto" method="POST" th:object="${produtobj}">
 					<div class="row">
 							<div class="col-md-1">
 								<div class="form-group">
@@ -353,7 +354,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-					<form action="/salvarparcelanew" id="formparcela" method="post" th:object="${parcelabj}">
+					<form th:action="@{/salvarparcelanew}" id="formparcela" method="POST" th:object="${parcelabj}">
 						<div class="row">
 							<div class="col-md-1">
 								<div class="form-group">
@@ -432,7 +433,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-					<form action="/salvarproduto" id="formproduto" method="post" th:object="${produtobj}">
+					<form th:action="@{/salvarproduto}"  id="formproduto" method="POST" th:object="${produtobj}">
 						<div class="row">
 							<div class="col-md-1">
 							<div class="form-group">
@@ -475,6 +476,8 @@
 							<input name="locacaoProduto" th:field="*{locacao}" id="locacaoProduto" >
 						</div> 
 						</div> 
+
+						
 					</form>
 				</div>
 				<div class="modal-footer">
