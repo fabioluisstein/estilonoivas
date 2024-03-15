@@ -24,8 +24,6 @@ import loja.springboot.repository.GraficoRepository.listGraficoOrigemCLiente;
 import loja.springboot.repository.GraficoRepository.listGraficoPapelCliente;
 import loja.springboot.repository.GraficoRepository.listGraficoPrincipal;
 import loja.springboot.repository.GraficoRepository.listGraficoSecundario;
-import loja.springboot.repository.UsuarioRepository;
-import loja.springboot.service.UsuarioService;
 
 @Controller
 public class IndexController {

@@ -1,5 +1,4 @@
 package loja.springboot.security;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +18,6 @@ import loja.springboot.service.UsuarioService;
 @EnableWebSecurity
 public class WebConfigSecurity{
     
-    @Autowired
-	private UsuarioService service;
-
     @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception { 

@@ -20,7 +20,6 @@ import loja.springboot.model.Usuario;
 import loja.springboot.repository.PainelRepository;
 import loja.springboot.repository.PainelRepository.listPainelOperacional;
 import loja.springboot.repository.UsuarioRepository;
-import loja.springboot.service.MedicoService;
 import loja.springboot.service.UsuarioService;
 
 
@@ -35,8 +34,6 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
 
-	@Autowired
-	private MedicoService medicoService;
 
     private listPainelOperacional operacional;
 
