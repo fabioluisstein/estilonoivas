@@ -135,7 +135,6 @@ public class LocacaoController {
 	
 	@GetMapping("cadastrolocacao/{idCliente}")
 	public ModelAndView cadastroLocacaoCLiente(Locacao locacao, @PathVariable("idCliente") Cliente cliente) {
-		grafico();
 		locacao.setData_locacao(new Date());
 		ModelAndView modelAndView = new ModelAndView("locacao/cadastrolocacoes");
 		locacao.setCliente(cliente);
@@ -178,7 +177,7 @@ public class LocacaoController {
         return ResponseEntity.ok(produto);
     }
 
-	@CacheEvict(value = "grafico")
+	@CacheEvict(value = "grafico", allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarparcela")
 	public String salvarParcela(Parcela parcela) throws IOException {	
 		 parcelaRepository.save(parcela);
@@ -224,7 +223,7 @@ public class LocacaoController {
 		garbageCollection(); 
 	} 
 	
-	@CacheEvict(value = "grafico")
+	@CacheEvict(value = "grafico", allEntries = true)
 	@RequestMapping(method = RequestMethod.POST, value ="salvarproduto")
 	public String salvarProduto(LocacaoProduto produtoLocacao) throws IOException {	
 		 locacaoProdutoRepository.save(produtoLocacao);
@@ -253,7 +252,6 @@ public class LocacaoController {
 		andView.addObject("eventos", categoriaRepository.findCategoriaByOriginal("Evento"));
 		andView.addObject("totalProdutos",locacao.getValorTotalProdutos());
 		andView.addObject("totalPagamento",locacao.getValorTotal());
-		grafico();
 		garbageCollection(); 
 		return base(andView);
 	}
@@ -315,7 +313,7 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
 		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
 	}   
 	
-	@CacheEvict(value = "grafico")
+	@CacheEvict(value = "grafico", allEntries = true)
 	@GetMapping("removerlocacao/{idlocacao}")
 	public String excluir(@PathVariable("idlocacao") Long idlocacao) {
 		locacaoRepository.deleteById(idlocacao);	
@@ -323,7 +321,7 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
 		return "redirect:/listalocacoes";
 	}
 	 
-	@CacheEvict(value = "grafico")
+	@CacheEvict(value = "grafico", allEntries = true)
 	@GetMapping("removerparcela/{idparcela}")
 	public String excluirParcela(@PathVariable("idparcela") Long idparcela) {
 		Parcela parcela = parcelaRepository.findById(idparcela).get();
@@ -332,7 +330,7 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
 		return "redirect:/editarlocacao/"+parcela.getLocacao().toString();
 	}
 	
-	@CacheEvict(value = "grafico")
+	@CacheEvict(value = "grafico", allEntries = true)
 	@GetMapping("removereprodutolocacao/{idproduto}")
 	public String excluirProduto(@PathVariable("idproduto") Long idproduto) {
 		LocacaoProduto locacaoProduto = locacaoProdutoRepository.findById(idproduto).get();
@@ -343,13 +341,14 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
 	
 	
 	public void grafico() {
-		List<listPainelOperacional> grafico = painelRepository.grafico();
+	  List<listPainelOperacional> grafico = painelRepository.grafico();
 	        operacional = grafico.get(0);
-			garbageCollection();
+		
+		
 		}
 
 	public ModelAndView base(ModelAndView modelAndView){
-	 modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
+	 grafico();	 modelAndView.addObject("qtdLocacao", operacional.getLocacoes()); 
 	 modelAndView.addObject("ticket", operacional.getTicket());
 	 modelAndView.addObject("indicadorGeral", operacional.getIndice());
 	 modelAndView.addObject("locadoHoje", operacional.getLocado());
@@ -360,7 +359,6 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
     @GetMapping("listalocacoes")
 	public ModelAndView showTabelas() {
 	    ModelAndView andView = new ModelAndView("locacao/locacao-datatable");
-		grafico();
 		garbageCollection();
 		return base(andView);	 
 		} 
@@ -380,15 +378,6 @@ List<listEmailLocacoes> email = locacaoRepository.emailLocacao(idLocacao);
 }
 
 
-
-
-
-
-
-
-
-
-
  
 @RequestMapping(method = RequestMethod.GET, value = "cadastrolocacaonew")
 public ModelAndView cadastronew(Locacao locacao) {
@@ -405,7 +394,7 @@ public ModelAndView cadastronew(Locacao locacao) {
 	return modelAndView;
 }
 
-
+@CacheEvict(value = "grafico", allEntries = true)
 @RequestMapping(method = RequestMethod.POST, value = "salvarlocacao")
 public ModelAndView salvarlocacao(Locacao locacao) throws IOException {
 	Locacao loc  =  locacaoRepository.saveAndFlush(locacao);
@@ -432,7 +421,7 @@ public ModelAndView salvarlocacao(Locacao locacao) throws IOException {
 }
 
 
-
+@CacheEvict(value = "grafico", allEntries = true)
 @RequestMapping(method = RequestMethod.POST, value ="salvarprodutonew")
 public String salvarProdutoNew(LocacaoProduto produtoLocacao) throws IOException {	
 	 locacaoProdutoRepository.save(produtoLocacao);
@@ -441,7 +430,7 @@ public String salvarProdutoNew(LocacaoProduto produtoLocacao) throws IOException
 } 
 
 
-
+@CacheEvict(value = "grafico", allEntries = true)
 @RequestMapping(method = RequestMethod.POST, value ="salvarparcelanew")
 public String salvarParcelaNew(Parcela parcela) throws IOException {	
 	 parcelaRepository.save(parcela);

@@ -34,7 +34,7 @@ public class LojaApplication extends SpringBootServletInitializer {
 	}
 */
 
- // spring boot 2.x
+ // spring boot 3.x
  @Bean
  public ServletWebServerFactory servletContainer() {
 	 TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
