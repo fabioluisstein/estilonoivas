@@ -47,6 +47,8 @@ public class Parcela implements Serializable {
 	
 
 	private byte[] arquivo;
+
+	private String arquivoPath; 
 	
     public Parcela (){
 
@@ -57,6 +59,23 @@ public class Parcela implements Serializable {
   public Parcela (Locacao locacao){
 		this.locacao = locacao;
 	}
+
+
+
+
+	
+	public String getArquivoPath() {
+	return arquivoPath;
+}
+
+
+
+public void setArquivoPath(String arquivoPath) {
+	this.arquivoPath = arquivoPath;
+}
+
+
+
 	public Long getId() {
 		return id;
 	}

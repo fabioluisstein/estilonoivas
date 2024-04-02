@@ -62,7 +62,7 @@ $(document).ready(function () {
 			{ "data": 'anexo',
 			"width": '5%',
 			render: function ( data, type, row) {	 
-				if (row.anexo === null) { 
+				if (row.anexo  === '') { 
 					return  '<td class="text-right py-0 align-middle"> </td>';
 			}
 				else{

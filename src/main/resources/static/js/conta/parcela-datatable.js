@@ -90,11 +90,13 @@ $(document).ready(function () {
 			 "width": '3%',
 			render: function ( data, type, row) {	 
 
-				if (row.arquivo === null) { 
-					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarParcelaCustom/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> </div> </td>';
-			    }
-				else{
+				if (row.arquivo  !== null &&  row.arquivo  !== '') { 
+					
 					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarParcelaCustom/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> <div> </div>  <button onclick="if (confirm(\'Deseja baixar o arquivo?\')) { window.location.href = \'/baixarArquivoParcela/' + row.id +'\'; }  else {  }" class="btn btn-danger"><i class="fas fa-download"></i></button> </div> </td>';
+				
+				}
+				else{
+					return  '<td class="text-right py-0 align-middle"> <div class="btn-group btn-group-sm"> <a href="/editarParcelaCustom/'+row.id+'" class="btn btn-info"><i class="fas fa-edit"></i></a> </div> </td>';
 				}
 			 
 			

@@ -259,7 +259,7 @@
 <p th:text="${#strings.replace(#numbers.formatCurrency(parcela.valor), '.00,00', '')}"></p> 
 </td>
 
-	<td><a th:if="${parcela.arquivo !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="fas fa-download"></i></a> </td> 
+	<td><a th:if="${parcela.arquivoPath !=null}"  th:href="@{/baixarArquivoParcela/{idparcela}(idparcela=${parcela.id})}" ><i class="fas fa-download"></i></a> </td> 
 	<td> <a th:href="@{/editarParcelaCustom/{idparcela}(idparcela=${parcela.id})}" class="btn btn-info"> <i class="fas fa-edit"></i> </a> 
 		 <a th:href="@{/removerparcela/{idparcela}(idparcela=${parcela.id})}" class="btn btn-danger">  <i class="fas fa-trash"></i> </a></td>
 		 

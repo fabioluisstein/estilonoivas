@@ -1,9 +1,7 @@
 package loja.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +35,8 @@ public class Pagamento implements Serializable {
 	
 	
 	private byte[] arquivo;
+
+	private String arquivoPath; 
 	
 	@ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "categoria_id")
@@ -68,6 +68,16 @@ public class Pagamento implements Serializable {
 
 	public void setTipoArquivo(String tipoArquivo) {
 		this.tipoArquivo = tipoArquivo;
+	}
+
+
+
+	public String getArquivoPath() {
+		return arquivoPath;
+	}
+
+	public void setArquivoPath(String arquivoPath) {
+		this.arquivoPath = arquivoPath;
 	}
 
 	public byte[] getArquivo() {
